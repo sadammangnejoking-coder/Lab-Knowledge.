@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#075985">
+<meta name="mobile-web-app-capable" content="yes">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lab Knowledge</title>
@@ -60,5 +65,14 @@ document.getElementById("tests").innerHTML=data.filter(t=>t.name.toLowerCase().i
 }
 showTests();
 </script>
+  
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js");
+  });
+}
+</script>
+
 </body>
 </html>
