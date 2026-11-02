@@ -2,78 +2,465 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#075985">
-<meta name="mobile-web-app-capable" content="yes">
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab Knowledge</title>
+<meta name="theme-color" content="#075985">
+<title>Lab Knowledge - Sadam Hussain</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f0f5fa;color:#172b40}
-header{background:#075985;color:white;padding:25px 18px;text-align:center}
-header h1{margin:0;font-size:25px}
-header p{margin:8px 0 0}
-main{padding:16px;max-width:700px;margin:auto}
-input{width:100%;padding:14px;border:1px solid #bbb;border-radius:10px;font-size:16px}
-h2{color:#075985}
-.card{background:white;padding:16px;margin:12px 0;border-radius:12px;box-shadow:0 2px 8px #0001}
-.card h3{margin:0 0 8px;color:#075985}
-button{background:#0284c7;color:white;border:0;padding:10px 14px;border-radius:8px}
-footer{text-align:center;background:#075985;color:white;padding:20px;margin-top:25px}
-small{color:#dbeafe}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f0f5fa;
+ color:#172b40;
+}
+header{
+ background:#075985;
+ color:white;
+ text-align:center;
+ padding:25px 15px;
+}
+header h1{margin:0;font-size:28px}
+header p{margin:8px 0}
+main{max-width:850px;margin:auto;padding:16px}
+.controls{
+ display:flex;
+ gap:10px;
+ margin:15px 0;
+}
+button{
+ background:#0284c7;
+ color:white;
+ border:0;
+ padding:12px 16px;
+ border-radius:9px;
+ cursor:pointer;
+}
+input{
+ width:100%;
+ padding:14px;
+ border:1px solid #bbb;
+ border-radius:10px;
+ font-size:16px;
+}
+.card{
+ background:white;
+ padding:17px;
+ margin:13px 0;
+ border-radius:12px;
+ box-shadow:0 2px 8px #0001;
+}
+.card h3{color:#075985}
+.detail{margin:9px 0;line-height:1.6}
+footer{
+ background:#075985;
+ color:white;
+ text-align:center;
+ padding:20px;
+ margin-top:25px;
+}
+[dir="rtl"]{text-align:right}
+[dir="rtl"] .controls{flex-direction:row-reverse}
 </style>
 </head>
+
 <body>
 <header>
 <h1>🔬 Lab Knowledge</h1>
-<p>Laboratory Investigations Theory</p>
+<p id="subtitle">Laboratory Investigations Theory</p>
+<p>Developer: Sadam Hussain</p>
+<p>Contact: +92 315 3847467</p>
 </header>
+
 <main>
-<h2>Search Laboratory Tests</h2>
-<input id="search" placeholder="Search test name..." oninput="showTests()">
+<div class="controls">
+<button onclick="setLanguage('en')">English</button>
+<button onclick="setLanguage('ur')">اردو</button>
+</div>
+
+<h2 id="heading">Search Laboratory Tests</h2>
+<input id="search" placeholder="Search test name..."
+oninput="showTests()">
+
+<p id="total">Loading tests...</p>
+<p id="testCount">Total Tests: 0</p>
 <div id="tests"></div>
 </main>
+
 <footer>
 <p>Developer by Sadam Hussain</p>
 <p>Contact: +92 315 3847467</p>
 <p>Email: Sadam_mangnejo@yahoo.com</p>
-<small>Educational purpose only</small>
+<small>Educational purpose only. Verify ranges with your laboratory.</small>
 </footer>
+
 <script>
-const data=[
-{name:"CBC",range:"Hemoglobin: Male 13.5–17.5 g/dL; Female 12–15.5 g/dL",info:"Complete Blood Count measures red cells, white cells and platelets.",sample:"EDTA blood"},
-{name:"Blood Glucose Fasting",range:"Common reference: 70–99 mg/dL",info:"Measures blood sugar after fasting.",sample:"Fluoride plasma"},
-{name:"HbA1c",range:"Normal: Below 5.7%",info:"Reflects average blood glucose over approximately 2–3 months.",sample:"EDTA blood"},
-{name:"Serum Creatinine",range:"Approximately 0.6–1.3 mg/dL in adults",info:"Helps assess kidney function.",sample:"Serum"},
-{name:"Blood Urea",range:"Approximately 15–40 mg/dL",info:"Helps evaluate kidney function and nitrogen metabolism.",sample:"Serum"},
-{name:"ALT",range:"Often 7–56 U/L",info:"An enzyme used in assessment of liver injury.",sample:"Serum"},
-{name:"AST",range:"Often 10–40 U/L",info:"An enzyme found in liver and other tissues.",sample:"Serum"},
-{name:"TSH",range:"Approximately 0.4–4.0 mIU/L",info:"Used to assess thyroid function.",sample:"Serum"},
-{name:"Vitamin D",range:"Interpretation depends on laboratory and clinical context.",info:"Measures 25-hydroxy vitamin D.",sample:"Serum"}
+const data = [
+{name:"CBC",ur:"خون کی مکمل جانچ",full:"Complete Blood Count",sample:"EDTA Blood",range:"Male Hb 13.5–17.5; Female Hb 12–15.5 g/dL",info:"Evaluates blood cells.",infoUr:"خون کے خلیات کی جانچ۔"},
+{name:"Hemoglobin",ur:"ہیموگلوبن",full:"Hemoglobin Test",sample:"EDTA Blood",range:"Male 13.5–17.5; Female 12–15.5 g/dL",info:"Measures oxygen-carrying protein.",infoUr:"آکسیجن لے جانے والے پروٹین کی مقدار۔"},
+{name:"RBC Count",ur:"سرخ خون کے خلیات",full:"Red Blood Cell Count",sample:"EDTA Blood",range:"Male 4.5–5.9; Female 4.1–5.1 million/µL",info:"Measures red blood cells.",infoUr:"سرخ خلیات کی تعداد۔"},
+{name:"WBC Count",ur:"سفید خون کے خلیات",full:"White Blood Cell Count",sample:"EDTA Blood",range:"4,000–11,000 cells/µL",info:"Measures white blood cells.",infoUr:"سفید خلیات کی تعداد۔"},
+{name:"Platelet Count",ur:"پلیٹلیٹس",full:"Platelet Count",sample:"EDTA Blood",range:"150,000–450,000/µL",info:"Evaluates clotting cells.",infoUr:"خون جمانے والے خلیات کی جانچ۔"},
+{name:"ESR",ur:"ای ایس آر",full:"Erythrocyte Sedimentation Rate",sample:"EDTA/Citrate Blood",range:"Depends on age, sex and method",info:"A nonspecific inflammation marker.",infoUr:"سوزش کا عمومی اشارہ۔"},
+{name:"Fasting Blood Glucose",ur:"خالی پیٹ شوگر",full:"Fasting Blood Glucose",sample:"Fluoride Plasma",range:"70–99 mg/dL",info:"Measures fasting glucose.",infoUr:"خالی پیٹ شوگر کی مقدار۔"},
+{name:"Random Blood Glucose",ur:"رینڈم شوگر",full:"Random Blood Glucose",sample:"Fluoride Plasma",range:"No single universal normal range",info:"Measures glucose at any time.",infoUr:"کسی بھی وقت شوگر کی مقدار۔"},
+{name:"HbA1c",ur:"تین ماہ کی شوگر",full:"Glycated Hemoglobin",sample:"EDTA Blood",range:"Normal: Below 5.7%",info:"Estimates average glucose over 2–3 months.",infoUr:"دو سے تین ماہ کی اوسط شوگر۔"},
+{name:"Serum Creatinine",ur:"سیرم کریٹینین",full:"Serum Creatinine",sample:"Serum",range:"Approximately 0.6–1.3 mg/dL",info:"Assesses kidney function.",infoUr:"گردوں کی کارکردگی کا جائزہ۔"},
+{name:"Blood Urea",ur:"خون میں یوریا",full:"Blood Urea",sample:"Serum",range:"Approximately 15–40 mg/dL",info:"Measures blood urea.",infoUr:"خون میں یوریا کی مقدار۔"},
+{name:"BUN",ur:"بلڈ یوریا نائٹروجن",full:"Blood Urea Nitrogen",sample:"Serum",range:"Approximately 7–20 mg/dL",info:"Assesses kidney function.",infoUr:"گردوں کی جانچ۔"},
+{name:"ALT",ur:"ایل اے ٹی",full:"Alanine Aminotransferase",sample:"Serum",range:"Often 7–56 U/L",info:"Liver enzyme assessment.",infoUr:"جگر کے انزائم کی جانچ۔"},
+{name:"AST",ur:"اے ایس ٹی",full:"Aspartate Aminotransferase",sample:"Serum",range:"Often 10–40 U/L",info:"Liver and tissue enzyme.",infoUr:"جگر اور بافتوں کے انزائم کی جانچ۔"},
+{name:"TSH",ur:"تھائرائیڈ ہارمون",full:"Thyroid Stimulating Hormone",sample:"Serum",range:"Approximately 0.4–4.0 mIU/L",info:"Evaluates thyroid function.",infoUr:"تھائرائیڈ کی کارکردگی۔"},
+{name:"Vitamin D",ur:"وٹامن ڈی",full:"25-Hydroxy Vitamin D",sample:"Serum",range:"Lab and clinical context dependent",info:"Measures vitamin D status.",infoUr:"وٹامن ڈی کی سطح۔"},
+{name:"Vitamin B12",ur:"وٹامن بی 12",full:"Cobalamin",sample:"Serum",range:"Approximately 200–900 pg/mL",info:"Checks vitamin B12 status.",infoUr:"وٹامن بی 12 کی سطح۔"}
 ];
+
+function setLanguage(lang){
+document.documentElement.lang=lang;
+document.documentElement.dir=lang==="ur"?"rtl":"ltr";
+document.getElementById("subtitle").textContent=
+lang==="ur"?"لیبارٹری ٹیسٹ کی معلومات":"Laboratory Investigations Theory";
+document.getElementById("heading").textContent=
+lang==="ur"?"لیبارٹری ٹیسٹ تلاش کریں":"Search Laboratory Tests";
+document.getElementById("search").placeholder=
+lang==="ur"?"ٹیسٹ تلاش کریں":"Search test name...";
+showTests();
+}
+
 function showTests(){
-let q=document.getElementById("search").value.toLowerCase();
-document.getElementById("tests").innerHTML=data.filter(t=>t.name.toLowerCase().includes(q)).map(t=>`
+const q=document.getElementById("search").value.toLowerCase();
+const lang=document.documentElement.lang;
+const uniqueData = [...new Map(
+data.map(t => [t.name.toLowerCase().trim(), t])
+).values()];
+
+const filtered = uniqueData.filter(t =>
+(t.name+" "+t.ur+" "+t.full).toLowerCase().includes(q)
+);
+document.getElementById("total").textContent=
+"Showing "+filtered.length+" of "+data.length+" tests";
+document.getElementById("testCount").innerText =
+"Total Tests: " + uniqueData.length;
+document.getElementById("tests").innerHTML=filtered.map(t=>`
 <div class="card">
-<h3>${t.name}</h3>
-<p><b>Reference range:</b> ${t.range}</p>
-<p><b>Clinical significance:</b> ${t.info}</p>
-<p><b>Specimen:</b> ${t.sample}</p>
-</div>`).join("")||"<p>No test found.</p>";
+<h3>${t.name} / ${t.ur}</h3>
+<p><b>Full Form:</b> ${t.full}</p>
+<p><b>Specimen / نمونہ:</b> ${t.sample}</p>
+<p><b>Reference Range / نارمل حد:</b> ${t.range}</p>
+<p><b>${lang==="ur"?"طبی اہمیت":"Clinical Significance"}:</b> ${lang==="ur"?t.infoUr:t.info}</p>
+</div>
+`).join("")||"<p>No test found.</p>";
 }
 showTests();
 </script>
-  
+
+
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js");
-  });
-}
+data.push(
+
+{name:"MCV",ur:"ایم سی وی",full:"Mean Corpuscular Volume",sample:"EDTA Blood",range:"80–100 fL",info:"Measures average red cell size.",infoUr:"سرخ خلیات کا اوسط سائز۔"},
+
+{name:"MCH",ur:"ایم سی ایچ",full:"Mean Corpuscular Hemoglobin",sample:"EDTA Blood",range:"27–33 pg",info:"Measures average hemoglobin per red cell.",infoUr:"ہر سرخ خلیے میں ہیموگلوبن کی مقدار۔"},
+
+{name:"MCHC",ur:"ایم سی ایچ سی",full:"Mean Corpuscular Hemoglobin Concentration",sample:"EDTA Blood",range:"32–36 g/dL",info:"Measures hemoglobin concentration in red cells.",infoUr:"سرخ خلیات میں ہیموگلوبن کا ارتکاز۔"},
+
+{name:"RDW",ur:"آر ڈی ڈبلیو",full:"Red Cell Distribution Width",sample:"EDTA Blood",range:"Approximately 11.5–14.5%",info:"Measures variation in red cell size.",infoUr:"سرخ خلیات کے سائز میں فرق۔"},
+
+{name:"Neutrophils",ur:"نیوٹروفِلز",full:"Neutrophil Count",sample:"EDTA Blood",range:"Approximately 40–70% of WBCs",info:"A type of white blood cell.",infoUr:"سفید خون کے خلیات کی ایک قسم۔"},
+
+{name:"Lymphocytes",ur:"لمفوسائٹس",full:"Lymphocyte Count",sample:"EDTA Blood",range:"Approximately 20–40% of WBCs",info:"Important immune system cells.",infoUr:"مدافعتی نظام کے اہم خلیات۔"},
+
+{name:"Eosinophils",ur:"ایوزینوفِلز",full:"Eosinophil Count",sample:"EDTA Blood",range:"Approximately 1–4% of WBCs",info:"May increase in allergies and some infections.",infoUr:"الرجی اور بعض انفیکشن میں بڑھ سکتے ہیں۔"},
+
+{name:"Basophils",ur:"بیسوفِلز",full:"Basophil Count",sample:"EDTA Blood",range:"Approximately 0–1% of WBCs",info:"Participate in allergic responses.",infoUr:"الرجی کے ردعمل میں حصہ لیتے ہیں۔"},
+
+{name:"Monocytes",ur:"مونوسائٹس",full:"Monocyte Count",sample:"EDTA Blood",range:"Approximately 2–8% of WBCs",info:"Help remove germs and damaged cells.",infoUr:"جراثیم اور خراب خلیات کو ختم کرنے میں مدد۔"},
+
+{name:"Total Bilirubin",ur:"ٹوٹل بلیروبن",full:"Total Bilirubin",sample:"Serum",range:"Approximately 0.1–1.2 mg/dL",info:"Helps assess jaundice and liver function.",infoUr:"یرقان اور جگر کی جانچ۔"},
+
+{name:"Direct Bilirubin",ur:"ڈائریکٹ بلیروبن",full:"Conjugated Bilirubin",sample:"Serum",range:"Approximately 0–0.3 mg/dL",info:"Measures conjugated bilirubin.",infoUr:"ڈائریکٹ بلیروبن کی مقدار۔"},
+
+{name:"Indirect Bilirubin",ur:"ان ڈائریکٹ بلیروبن",full:"Unconjugated Bilirubin",sample:"Serum",range:"Calculated value; lab dependent",info:"Calculated from total and direct bilirubin.",infoUr:"ٹوٹل اور ڈائریکٹ بلیروبن سے حساب کیا جاتا ہے۔"},
+
+{name:"ALP",ur:"اے ایل پی",full:"Alkaline Phosphatase",sample:"Serum",range:"Often 44–147 U/L in adults",info:"Helps assess liver and bone conditions.",infoUr:"جگر اور ہڈیوں کی جانچ۔"},
+
+{name:"GGT",ur:"جی جی ٹی",full:"Gamma Glutamyl Transferase",sample:"Serum",range:"Method and sex dependent; often 5–55 U/L",info:"Enzyme used in liver and bile duct assessment.",infoUr:"جگر اور صفراوی نالیوں کی جانچ۔"},
+
+{name:"Total Protein",ur:"ٹوٹل پروٹین",full:"Total Serum Protein",sample:"Serum",range:"Approximately 6.0–8.3 g/dL",info:"Measures major blood proteins.",infoUr:"خون کے اہم پروٹین کی مقدار۔"},
+
+{name:"Albumin",ur:"البیومن",full:"Serum Albumin",sample:"Serum",range:"Approximately 3.5–5.0 g/dL",info:"Helps assess liver, kidney and nutritional status.",infoUr:"جگر، گردوں اور غذائیت کا جائزہ۔"},
+
+{name:"Globulin",ur:"گلوبیولن",full:"Serum Globulin",sample:"Serum",range:"Approximately 2.0–3.5 g/dL",info:"Includes several blood proteins.",infoUr:"خون کے مختلف پروٹین کا مجموعہ۔"},
+
+{name:"A/G Ratio",ur:"البیومن گلوبیولن تناسب",full:"Albumin Globulin Ratio",sample:"Serum",range:"Approximately 1.0–2.2",info:"Compares albumin and globulin levels.",infoUr:"البیومن اور گلوبیولن کا تناسب۔"},
+
+{name:"Uric Acid",ur:"یورک ایسڈ",full:"Serum Uric Acid",sample:"Serum",range:"Male 3.4–7.0; Female 2.4–6.0 mg/dL",info:"Used in gout assessment.",infoUr:"گاؤٹ اور یورک ایسڈ کی جانچ۔"},
+
+{name:"Sodium",ur:"سوڈیم",full:"Serum Sodium",sample:"Serum",range:"135–145 mmol/L",info:"Important blood electrolyte.",infoUr:"خون کا اہم الیکٹرولائٹ۔"},
+
+{name:"Potassium",ur:"پوٹاشیم",full:"Serum Potassium",sample:"Serum",range:"3.5–5.0 mmol/L",info:"Important for muscle and heart function.",infoUr:"دل اور پٹھوں کے کام کے لیے ضروری۔"},
+
+{name:"Chloride",ur:"کلورائیڈ",full:"Serum Chloride",sample:"Serum",range:"98–106 mmol/L",info:"Helps maintain fluid and acid-base balance.",infoUr:"جسم میں پانی اور تیزابیت کا توازن۔"},
+
+{name:"Calcium",ur:"کیلشیم",full:"Total Serum Calcium",sample:"Serum",range:"Approximately 8.5–10.5 mg/dL",info:"Important for bones and muscles.",infoUr:"ہڈیوں اور پٹھوں کے لیے ضروری۔"},
+
+{name:"Phosphorus",ur:"فاسفورس",full:"Serum Phosphorus",sample:"Serum",range:"Adults approximately 2.5–4.5 mg/dL",info:"Important for bones and energy.",infoUr:"ہڈیوں اور توانائی کے لیے ضروری۔"},
+
+{name:"Magnesium",ur:"میگنیشیم",full:"Serum Magnesium",sample:"Serum",range:"Approximately 1.7–2.2 mg/dL",info:"Supports nerve and muscle function.",infoUr:"اعصاب اور پٹھوں کے کام میں مدد۔"},
+
+{name:"Total Cholesterol",ur:"ٹوٹل کولیسٹرول",full:"Total Cholesterol",sample:"Serum",range:"Desirable: Below 200 mg/dL",info:"Measures total blood cholesterol.",infoUr:"خون میں کل کولیسٹرول۔"},
+
+{name:"HDL Cholesterol",ur:"ایچ ڈی ایل کولیسٹرول",full:"High Density Lipoprotein",sample:"Serum",range:"Generally 40+ mg/dL in men; 50+ in women",info:"Known as good cholesterol.",infoUr:"اچھا کولیسٹرول کہلاتا ہے۔"},
+
+{name:"LDL Cholesterol",ur:"ایل ڈی ایل کولیسٹرول",full:"Low Density Lipoprotein",sample:"Serum",range:"Optimal: Below 100 mg/dL",info:"A cardiovascular risk marker.",infoUr:"دل کی بیماری کے خطرے کا ایک اشارہ۔"},
+
+{name:"Triglycerides",ur:"ٹرائی گلیسرائیڈز",full:"Serum Triglycerides",sample:"Serum",range:"Normal fasting: Below 150 mg/dL",info:"Measures blood fats.",infoUr:"خون میں چکنائی کی مقدار۔"},
+
+{name:"VLDL",ur:"وی ایل ڈی ایل",full:"Very Low Density Lipoprotein",sample:"Serum",range:"Often 5–40 mg/dL; calculated or measured",info:"Transports triglycerides in blood.",infoUr:"خون میں ٹرائی گلیسرائیڈز منتقل کرتا ہے۔"}
+
+);
+showTests();
 </script>
+
+
+<script>
+data.push(
+
+{name:"T3",ur:"ٹی تھری",full:"Triiodothyronine",sample:"Serum",range:"Approximately 80–200 ng/dL",info:"Thyroid hormone measurement.",infoUr:"تھائرائیڈ ہارمون کی مقدار۔"},
+
+{name:"T4",ur:"ٹی فور",full:"Thyroxine",sample:"Serum",range:"Approximately 5–12 µg/dL",info:"Measures total thyroxine.",infoUr:"تھائروکسین ہارمون کی جانچ۔"},
+
+{name:"Free T3",ur:"فری ٹی تھری",full:"Free Triiodothyronine",sample:"Serum",range:"Approximately 2.0–4.4 pg/mL",info:"Measures unbound T3 hormone.",infoUr:"آزاد ٹی تھری ہارمون کی مقدار۔"},
+
+{name:"Free T4",ur:"فری ٹی فور",full:"Free Thyroxine",sample:"Serum",range:"Approximately 0.8–1.8 ng/dL",info:"Measures unbound T4 hormone.",infoUr:"آزاد ٹی فور ہارمون کی مقدار۔"},
+
+{name:"Anti TPO",ur:"اینٹی ٹی پی او",full:"Anti Thyroid Peroxidase Antibodies",sample:"Serum",range:"Often below 35 IU/mL; assay dependent",info:"Helps assess autoimmune thyroid disease.",infoUr:"تھائرائیڈ کی خودکار مدافعتی بیماری کی جانچ۔"},
+
+{name:"Anti Thyroglobulin",ur:"اینٹی تھائروگلوبیولن",full:"Anti Thyroglobulin Antibodies",sample:"Serum",range:"Assay dependent",info:"Measures thyroid antibodies.",infoUr:"تھائرائیڈ کے خلاف اینٹی باڈیز کی جانچ۔"},
+
+{name:"Troponin I",ur:"ٹروپونن آئی",full:"Cardiac Troponin I",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Helps detect heart muscle injury.",infoUr:"دل کے پٹھوں کو نقصان پہنچنے کی جانچ۔"},
+
+{name:"Troponin T",ur:"ٹروپونن ٹی",full:"Cardiac Troponin T",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Marker of heart muscle injury.",infoUr:"دل کے پٹھوں کی چوٹ کا اشارہ۔"},
+
+{name:"CK-MB",ur:"سی کے ایم بی",full:"Creatine Kinase MB",sample:"Serum",range:"Method dependent",info:"Cardiac muscle injury marker.",infoUr:"دل کے پٹھوں کی چوٹ کی جانچ۔"},
+
+{name:"CPK",ur:"سی پی کے",full:"Creatine Phosphokinase",sample:"Serum",range:"Often 30–200 U/L; sex and method dependent",info:"Measures an enzyme found in muscles.",infoUr:"پٹھوں میں پائے جانے والے انزائم کی جانچ۔"},
+
+{name:"LDH",ur:"ایل ڈی ایچ",full:"Lactate Dehydrogenase",sample:"Serum",range:"Often 140–280 U/L; method dependent",info:"Enzyme released from damaged tissues.",infoUr:"خراب بافتوں سے خارج ہونے والا انزائم۔"},
+
+{name:"BNP",ur:"بی این پی",full:"B-type Natriuretic Peptide",sample:"EDTA Plasma",range:"Below 100 pg/mL often used in acute assessment",info:"Helps assess heart failure.",infoUr:"دل کی کمزوری کے جائزے میں مدد۔"},
+
+{name:"NT-proBNP",ur:"این ٹی پرو بی این پی",full:"N-terminal pro B-type Natriuretic Peptide",sample:"Serum/Plasma",range:"Age and clinical context dependent",info:"Helps assess heart failure.",infoUr:"دل کی کمزوری کی جانچ۔"},
+
+{name:"Serum Iron",ur:"سیرم آئرن",full:"Serum Iron",sample:"Serum",range:"Male approximately 65–175; Female 50–170 µg/dL",info:"Measures circulating iron.",infoUr:"خون میں گردش کرنے والے آئرن کی مقدار۔"},
+
+{name:"Ferritin",ur:"فیریٹن",full:"Serum Ferritin",sample:"Serum",range:"Male approximately 30–400; Female 15–150 ng/mL",info:"Reflects stored body iron.",infoUr:"جسم میں ذخیرہ شدہ آئرن کی مقدار۔"},
+
+{name:"TIBC",ur:"ٹی آئی بی سی",full:"Total Iron Binding Capacity",sample:"Serum",range:"Approximately 250–450 µg/dL",info:"Measures iron-binding capacity.",infoUr:"آئرن باندھنے کی صلاحیت کی جانچ۔"},
+
+{name:"Transferrin",ur:"ٹرانسفرین",full:"Serum Transferrin",sample:"Serum",range:"Approximately 200–360 mg/dL",info:"Transports iron in blood.",infoUr:"خون میں آئرن منتقل کرتا ہے۔"},
+
+{name:"Transferrin Saturation",ur:"ٹرانسفرین سیچوریشن",full:"Transferrin Saturation",sample:"Serum",range:"Approximately 20–50%",info:"Shows percentage of iron-binding sites occupied.",infoUr:"آئرن سے بھرے ٹرانسفرین کا تناسب۔"},
+
+{name:"PT",ur:"پی ٹی",full:"Prothrombin Time",sample:"Citrated Plasma",range:"Approximately 11–13.5 seconds",info:"Evaluates blood clotting pathway.",infoUr:"خون جمنے کے عمل کی جانچ۔"},
+
+{name:"INR",ur:"آئی این آر",full:"International Normalized Ratio",sample:"Citrated Plasma",range:"Usually 0.8–1.2 without anticoagulants",info:"Standardized clotting measurement.",infoUr:"خون جمنے کی معیاری پیمائش۔"},
+
+{name:"APTT",ur:"اے پی ٹی ٹی",full:"Activated Partial Thromboplastin Time",sample:"Citrated Plasma",range:"Approximately 25–35 seconds",info:"Evaluates intrinsic clotting pathway.",infoUr:"خون جمنے کے اندرونی راستے کی جانچ۔"},
+
+{name:"D-Dimer",ur:"ڈی ڈائمر",full:"D-Dimer",sample:"Citrated Plasma",range:"Often below 500 ng/mL FEU; assay dependent",info:"Used in assessment of possible blood clots.",infoUr:"خون کے لوتھڑوں کے جائزے میں مدد۔"},
+
+{name:"Fibrinogen",ur:"فائبرینوجن",full:"Plasma Fibrinogen",sample:"Citrated Plasma",range:"Approximately 200–400 mg/dL",info:"Protein involved in blood clotting.",infoUr:"خون جمانے میں اہم پروٹین۔"},
+
+{name:"Urine R/E",ur:"پیشاب کا مکمل معائنہ",full:"Urine Routine Examination",sample:"Fresh Midstream Urine",range:"Protein, glucose, ketones and blood: Negative; microscopy lab dependent",info:"Checks urine physical, chemical and microscopic features.",infoUr:"پیشاب کی ظاہری، کیمیائی اور خردبینی جانچ۔"},
+
+{name:"Urine Protein",ur:"پیشاب میں پروٹین",full:"Urine Protein",sample:"Urine",range:"Negative or trace on dipstick",info:"Screens for protein in urine.",infoUr:"پیشاب میں پروٹین کی جانچ۔"},
+
+{name:"Urine Glucose",ur:"پیشاب میں شوگر",full:"Urine Glucose",sample:"Urine",range:"Negative",info:"Detects glucose in urine.",infoUr:"پیشاب میں شوگر کی موجودگی۔"},
+
+{name:"Urine Ketones",ur:"پیشاب میں کیٹونز",full:"Urine Ketone Bodies",sample:"Urine",range:"Negative",info:"Detects ketone bodies.",infoUr:"پیشاب میں کیٹونز کی جانچ۔"},
+
+{name:"Urine Pregnancy Test",ur:"حمل کا ٹیسٹ",full:"Urine Human Chorionic Gonadotropin",sample:"Urine",range:"Negative when hCG is not detected",info:"Detects pregnancy hormone hCG.",infoUr:"حمل کے ہارمون ایچ سی جی کی جانچ۔"},
+
+{name:"Urine Culture",ur:"پیشاب کا کلچر",full:"Urine Culture and Sensitivity",sample:"Sterile Midstream Urine",range:"No significant bacterial growth",info:"Identifies urinary infection and antibiotic sensitivity.",infoUr:"پیشاب کے انفیکشن اور مؤثر اینٹی بایوٹک کی جانچ۔"},
+
+{name:"Stool R/E",ur:"پاخانے کا معائنہ",full:"Stool Routine Examination",sample:"Stool",range:"No blood or parasites; findings depend on examination",info:"Checks stool for parasites and abnormalities.",infoUr:"پاخانے میں پیراسائٹس اور غیر معمولی چیزوں کی جانچ۔"}
+
+);
+
+showTests();
+</script>
+
+
+<script>
+data.push(
+
+{name:"HBsAg",ur:"ہیپاٹائٹس بی سطحی اینٹیجن",full:"Hepatitis B Surface Antigen",sample:"Serum",range:"Non-reactive",info:"Screens for current hepatitis B infection.",infoUr:"ہیپاٹائٹس بی کے موجودہ انفیکشن کی اسکریننگ۔"},
+
+{name:"Anti-HCV",ur:"ہیپاٹائٹس سی اینٹی باڈی",full:"Hepatitis C Antibody",sample:"Serum",range:"Non-reactive",info:"Screens for exposure to hepatitis C.",infoUr:"ہیپاٹائٹس سی سے سابقہ واسطے کی جانچ۔"},
+
+{name:"HBeAg",ur:"ایچ بی ای اینٹیجن",full:"Hepatitis B e Antigen",sample:"Serum",range:"Non-reactive",info:"Helps assess hepatitis B viral replication.",infoUr:"ہیپاٹائٹس بی وائرس کی افزائش کا جائزہ۔"},
+
+{name:"Anti-HBs",ur:"ہیپاٹائٹس بی اینٹی باڈی",full:"Hepatitis B Surface Antibody",sample:"Serum",range:"Below 10 mIU/mL: generally not protective",info:"Assesses immunity to hepatitis B.",infoUr:"ہیپاٹائٹس بی کے خلاف مدافعت کی جانچ۔"},
+
+{name:"Anti-HBc IgM",ur:"اینٹی ایچ بی سی آئی جی ایم",full:"Hepatitis B Core IgM Antibody",sample:"Serum",range:"Non-reactive",info:"May indicate recent hepatitis B infection.",infoUr:"حالیہ ہیپاٹائٹس بی انفیکشن کا اشارہ ہو سکتا ہے۔"},
+
+{name:"HCV RNA PCR",ur:"ہیپاٹائٹس سی آر این اے پی سی آر",full:"Hepatitis C RNA Polymerase Chain Reaction",sample:"EDTA Plasma",range:"Not detected",info:"Detects hepatitis C viral RNA.",infoUr:"ہیپاٹائٹس سی وائرس کے آر این اے کی جانچ۔"},
+
+{name:"HBV DNA PCR",ur:"ہیپاٹائٹس بی ڈی این اے پی سی آر",full:"Hepatitis B Virus DNA PCR",sample:"EDTA Plasma",range:"Not detected",info:"Measures hepatitis B viral DNA.",infoUr:"ہیپاٹائٹس بی وائرس کے ڈی این اے کی جانچ۔"},
+
+{name:"HIV 1 & 2",ur:"ایچ آئی وی ٹیسٹ",full:"Human Immunodeficiency Virus Screening",sample:"Serum/Plasma",range:"Non-reactive",info:"Screens for HIV infection.",infoUr:"ایچ آئی وی انفیکشن کی اسکریننگ۔"},
+
+{name:"VDRL",ur:"وی ڈی آر ایل",full:"Venereal Disease Research Laboratory Test",sample:"Serum",range:"Non-reactive",info:"Screening test for syphilis.",infoUr:"آتشک کی اسکریننگ۔"},
+
+{name:"TPHA",ur:"ٹی پی ایچ اے",full:"Treponema Pallidum Hemagglutination Assay",sample:"Serum",range:"Non-reactive",info:"Detects antibodies associated with syphilis.",infoUr:"آتشک کے خلاف اینٹی باڈیز کی جانچ۔"},
+
+{name:"CRP",ur:"سی آر پی",full:"C-Reactive Protein",sample:"Serum",range:"Often below 5 mg/L",info:"Marker of inflammation.",infoUr:"جسم میں سوزش کا اشارہ۔"},
+
+{name:"hs-CRP",ur:"ہائی سینسٹیویٹی سی آر پی",full:"High Sensitivity C-Reactive Protein",sample:"Serum",range:"Cardiovascular interpretation is risk-category dependent",info:"Measures low levels of inflammation.",infoUr:"سوزش کی کم سطح کی پیمائش۔"},
+
+{name:"ASO Titre",ur:"اے ایس او ٹائٹر",full:"Antistreptolysin O Titre",sample:"Serum",range:"Often below 200 IU/mL in adults; lab dependent",info:"Assesses recent streptococcal exposure.",infoUr:"اسٹریپٹوکوکل انفیکشن سے سابقہ واسطے کا جائزہ۔"},
+
+{name:"Rheumatoid Factor",ur:"ریمیٹائڈ فیکٹر",full:"Rheumatoid Factor",sample:"Serum",range:"Often below 14 IU/mL",info:"Used in assessment of rheumatoid arthritis.",infoUr:"رمیٹائڈ آرتھرائٹس کے جائزے میں مدد۔"},
+
+{name:"Anti-CCP",ur:"اینٹی سی سی پی",full:"Anti-Cyclic Citrullinated Peptide Antibody",sample:"Serum",range:"Negative according to assay cutoff",info:"Helps assess rheumatoid arthritis.",infoUr:"رمیٹائڈ آرتھرائٹس کی جانچ میں مدد۔"},
+
+{name:"ANA",ur:"اے این اے",full:"Antinuclear Antibody",sample:"Serum",range:"Negative",info:"Screens for certain autoimmune disorders.",infoUr:"بعض خودکار مدافعتی بیماریوں کی اسکریننگ۔"},
+
+{name:"Anti-dsDNA",ur:"اینٹی ڈی ایس ڈی این اے",full:"Double Stranded DNA Antibody",sample:"Serum",range:"Negative or below assay cutoff",info:"Used in assessment of lupus.",infoUr:"لوپس بیماری کے جائزے میں مدد۔"},
+
+{name:"C3 Complement",ur:"سی تھری کمپلیمنٹ",full:"Complement Component 3",sample:"Serum",range:"Approximately 90–180 mg/dL",info:"Assesses part of immune complement system.",infoUr:"مدافعتی نظام کے ایک حصے کی جانچ۔"},
+
+{name:"C4 Complement",ur:"سی فور کمپلیمنٹ",full:"Complement Component 4",sample:"Serum",range:"Approximately 10–40 mg/dL",info:"Supports assessment of immune disorders.",infoUr:"مدافعتی بیماریوں کے جائزے میں مدد۔"},
+
+{name:"IgG",ur:"آئی جی جی",full:"Immunoglobulin G",sample:"Serum",range:"Approximately 700–1600 mg/dL in adults",info:"Measures a major antibody class.",infoUr:"اینٹی باڈی کی ایک اہم قسم کی مقدار۔"},
+
+{name:"IgM",ur:"آئی جی ایم",full:"Immunoglobulin M",sample:"Serum",range:"Approximately 40–230 mg/dL in adults",info:"Measures an antibody involved in early immune response.",infoUr:"ابتدائی مدافعتی ردعمل سے متعلق اینٹی باڈی۔"},
+
+{name:"IgA",ur:"آئی جی اے",full:"Immunoglobulin A",sample:"Serum",range:"Approximately 70–400 mg/dL in adults",info:"Measures antibody important for mucosal immunity.",infoUr:"جسم کی اندرونی جھلیوں کی مدافعت سے متعلق اینٹی باڈی۔"},
+
+{name:"Prolactin",ur:"پرولیکٹن",full:"Serum Prolactin",sample:"Serum",range:"Male often 4–15; Female 5–25 ng/mL",info:"Assesses prolactin hormone levels.",infoUr:"پرولیکٹن ہارمون کی مقدار۔"},
+
+{name:"FSH",ur:"ایف ایس ایچ",full:"Follicle Stimulating Hormone",sample:"Serum",range:"Sex, age and menstrual-cycle dependent",info:"Assesses reproductive hormone function.",infoUr:"تولیدی ہارمون کی کارکردگی کا جائزہ۔"},
+
+{name:"LH",ur:"ایل ایچ",full:"Luteinizing Hormone",sample:"Serum",range:"Sex, age and menstrual-cycle dependent",info:"Helps assess reproductive function.",infoUr:"تولیدی نظام کی جانچ میں مدد۔"},
+
+{name:"Testosterone",ur:"ٹیسٹوسٹیرون",full:"Total Testosterone",sample:"Serum",range:"Adult male approximately 300–1000 ng/dL",info:"Measures testosterone hormone.",infoUr:"ٹیسٹوسٹیرون ہارمون کی مقدار۔"},
+
+{name:"Estradiol",ur:"ایسٹراڈیول",full:"17-Beta Estradiol",sample:"Serum",range:"Sex, age and menstrual-cycle dependent",info:"Measures an important estrogen hormone.",infoUr:"ایسٹروجن ہارمون کی اہم قسم کی مقدار۔"},
+
+{name:"Progesterone",ur:"پروجیسٹرون",full:"Serum Progesterone",sample:"Serum",range:"Depends on menstrual-cycle phase and pregnancy",info:"Assesses reproductive hormone levels.",infoUr:"تولیدی ہارمون کی جانچ۔"},
+
+{name:"Beta-hCG",ur:"بیٹا ایچ سی جی",full:"Beta Human Chorionic Gonadotropin",sample:"Serum",range:"Usually below 5 mIU/mL in non-pregnant adults",info:"Used to detect and monitor pregnancy.",infoUr:"حمل کی تشخیص اور نگرانی میں مدد۔"},
+
+{name:"PSA",ur:"پی ایس اے",full:"Prostate Specific Antigen",sample:"Serum",range:"Age dependent; commonly below 4 ng/mL in many adult references",info:"Used in prostate assessment.",infoUr:"پروسٹیٹ غدود کے جائزے میں مدد۔"},
+
+{name:"AFP",ur:"اے ایف پی",full:"Alpha Fetoprotein",sample:"Serum",range:"Often below 10 ng/mL in non-pregnant adults",info:"Tumor marker used in selected clinical assessments.",infoUr:"بعض طبی حالات میں ٹیومر مارکر کے طور پر استعمال۔"},
+
+{name:"CEA",ur:"سی ای اے",full:"Carcinoembryonic Antigen",sample:"Serum",range:"Often below 3 ng/mL in non-smokers; method dependent",info:"Used mainly to monitor selected cancers.",infoUr:"بعض کینسرز کی نگرانی میں مدد۔"},
+
+{name:"CA-125",ur:"سی اے 125",full:"Cancer Antigen 125",sample:"Serum",range:"Often below 35 U/mL",info:"Used in selected ovarian cancer assessments.",infoUr:"بعض حالات میں اووری کے کینسر کے جائزے میں مدد۔"},
+
+{name:"CA 19-9",ur:"سی اے 19-9",full:"Carbohydrate Antigen 19-9",sample:"Serum",range:"Often below 37 U/mL",info:"Tumor marker used in selected pancreatic and biliary assessments.",infoUr:"بعض لبلبے اور صفراوی بیماریوں کے جائزے میں مدد۔"},
+
+{name:"CA 15-3",ur:"سی اے 15-3",full:"Cancer Antigen 15-3",sample:"Serum",range:"Often below 30 U/mL; assay dependent",info:"May be used to monitor selected breast cancer cases.",infoUr:"بعض بریسٹ کینسر کیسز کی نگرانی میں استعمال۔"}
+
+);
+showTests();
+</script>
+
+
+<script>
+data.push(
+
+{name:"Stool Occult Blood",ur:"پاخانے میں خفیہ خون",full:"Fecal Occult Blood Test",sample:"Stool",range:"Negative",info:"Detects hidden blood in stool.",infoUr:"پاخانے میں چھپا ہوا خون معلوم کرتا ہے۔"},
+
+{name:"Stool Culture",ur:"پاخانے کا کلچر",full:"Stool Culture and Sensitivity",sample:"Fresh Stool",range:"No pathogenic bacterial growth",info:"Detects bacterial intestinal infections.",infoUr:"آنتوں کے بیکٹیریل انفیکشن کی جانچ۔"},
+
+{name:"Stool Ova and Parasites",ur:"پاخانے میں کیڑے اور انڈے",full:"Ova and Parasite Examination",sample:"Stool",range:"No ova or parasites detected",info:"Detects intestinal parasites.",infoUr:"آنتوں کے کیڑوں اور پیراسائٹس کی جانچ۔"},
+
+{name:"Stool Reducing Substances",ur:"پاخانے میں ریڈیوسنگ مادے",full:"Stool Reducing Substances",sample:"Fresh Stool",range:"Negative",info:"May help assess carbohydrate malabsorption.",infoUr:"کاربوہائیڈریٹ کے جذب کی خرابی کا جائزہ۔"},
+
+{name:"Stool Fat",ur:"پاخانے میں چکنائی",full:"Fecal Fat Test",sample:"Stool",range:"Depends on qualitative or quantitative method",info:"Assesses fat malabsorption.",infoUr:"چکنائی کے جذب کی جانچ۔"},
+
+{name:"Stool Calprotectin",ur:"اسٹول کیلپروٹیکٹن",full:"Fecal Calprotectin",sample:"Stool",range:"Often below 50 µg/g",info:"Helps assess intestinal inflammation.",infoUr:"آنتوں کی سوزش کا جائزہ۔"},
+
+{name:"Stool H. pylori Antigen",ur:"پاخانے میں ایچ پائلوری اینٹی جن",full:"Helicobacter pylori Stool Antigen",sample:"Stool",range:"Negative",info:"Detects active H. pylori infection.",infoUr:"معدے کے ایچ پائلوری انفیکشن کی جانچ۔"},
+
+{name:"Dengue NS1",ur:"ڈینگی این ایس ون",full:"Dengue NS1 Antigen",sample:"Serum/Plasma",range:"Negative",info:"Helps detect early dengue infection.",infoUr:"ڈینگی کے ابتدائی انفیکشن کی جانچ۔"},
+
+{name:"Dengue IgM",ur:"ڈینگی آئی جی ایم",full:"Dengue IgM Antibody",sample:"Serum",range:"Negative",info:"May indicate recent dengue infection.",infoUr:"حالیہ ڈینگی انفیکشن کا اشارہ۔"},
+
+{name:"Dengue IgG",ur:"ڈینگی آئی جی جی",full:"Dengue IgG Antibody",sample:"Serum",range:"Negative",info:"May indicate previous dengue exposure.",infoUr:"ڈینگی سے سابقہ واسطے کا اشارہ۔"},
+
+{name:"Malaria Parasite",ur:"ملیریا پیراسائٹ",full:"Malaria Parasite Examination",sample:"EDTA Blood",range:"No malaria parasites detected",info:"Detects malaria parasites in blood.",infoUr:"خون میں ملیریا کے پیراسائٹس کی جانچ۔"},
+
+{name:"Malaria Rapid Test",ur:"ملیریا ریپڈ ٹیسٹ",full:"Malaria Antigen Rapid Test",sample:"Whole Blood",range:"Negative",info:"Rapid screening for malaria antigens.",infoUr:"ملیریا اینٹی جن کی فوری جانچ۔"},
+
+{name:"MP ICT",ur:"ملیریا آئی سی ٹی",full:"Malaria Immunochromatographic Test",sample:"Whole Blood",range:"Negative",info:"Rapid malaria screening.",infoUr:"ملیریا کی فوری اسکریننگ۔"},
+
+{name:"Blood Culture",ur:"بلڈ کلچر",full:"Blood Culture and Sensitivity",sample:"Blood in Culture Bottle",range:"No growth",info:"Detects bacteria or fungi in blood.",infoUr:"خون میں بیکٹیریا یا فنگس کی جانچ۔"},
+
+{name:"Sputum Culture",ur:"بلغم کا کلچر",full:"Sputum Culture and Sensitivity",sample:"Sputum",range:"No significant pathogenic growth",info:"Identifies respiratory pathogens.",infoUr:"سانس کی نالی کے جراثیم کی جانچ۔"},
+
+{name:"Throat Swab Culture",ur:"گلے کا کلچر",full:"Throat Swab Culture",sample:"Throat Swab",range:"No significant pathogenic growth",info:"Detects bacterial throat infections.",infoUr:"گلے کے بیکٹیریل انفیکشن کی جانچ۔"},
+
+{name:"Wound Swab Culture",ur:"زخم کا کلچر",full:"Wound Swab Culture",sample:"Wound Swab",range:"No significant pathogenic growth",info:"Identifies organisms causing wound infection.",infoUr:"زخم میں انفیکشن پیدا کرنے والے جراثیم کی جانچ۔"},
+
+{name:"Pus Culture",ur:"پیپ کا کلچر",full:"Pus Culture and Sensitivity",sample:"Pus",range:"No significant pathogenic growth",info:"Identifies bacteria in pus.",infoUr:"پیپ میں موجود بیکٹیریا کی جانچ۔"},
+
+{name:"AFB Smear",ur:"اے ایف بی سمئیر",full:"Acid Fast Bacilli Smear",sample:"Sputum",range:"No AFB seen",info:"Screens for acid-fast bacilli including tuberculosis organisms.",infoUr:"ٹی بی سمیت مخصوص جراثیم کی ابتدائی جانچ۔"},
+
+{name:"GeneXpert MTB/RIF",ur:"جین ایکسپرٹ ٹی بی",full:"Mycobacterium Tuberculosis and Rifampicin Resistance Test",sample:"Sputum or validated specimen",range:"MTB not detected; rifampicin resistance not detected",info:"Detects TB genetic material and rifampicin resistance.",infoUr:"ٹی بی کے جراثیمی مواد اور رِفیمپیسن مزاحمت کی جانچ۔"},
+
+{name:"Blood Group ABO",ur:"اے بی او بلڈ گروپ",full:"ABO Blood Grouping",sample:"EDTA Blood",range:"A, B, AB or O",info:"Identifies ABO blood group.",infoUr:"اے بی او بلڈ گروپ معلوم کرتا ہے۔"},
+
+{name:"Rh Factor",ur:"آر ایچ فیکٹر",full:"Rhesus Blood Group",sample:"EDTA Blood",range:"Positive or Negative",info:"Identifies RhD status.",infoUr:"آر ایچ مثبت یا منفی ہونے کی جانچ۔"},
+
+{name:"Cross Matching",ur:"کراس میچنگ",full:"Blood Compatibility Testing",sample:"Donor and Recipient Blood",range:"Compatible / No incompatibility detected",info:"Checks compatibility before transfusion.",infoUr:"خون لگانے سے پہلے مطابقت کی جانچ۔"},
+
+{name:"Reticulocyte Count",ur:"ریٹیکیولوسائٹ کاؤنٹ",full:"Reticulocyte Count",sample:"EDTA Blood",range:"Approximately 0.5–2.5% in adults",info:"Measures immature red blood cells.",infoUr:"نئے بننے والے سرخ خلیات کی مقدار۔"},
+
+{name:"Peripheral Blood Film",ur:"پیری فیرل بلڈ فلم",full:"Peripheral Blood Smear",sample:"EDTA Blood",range:"Normal blood cell morphology",info:"Examines blood cell shape and appearance.",infoUr:"خون کے خلیات کی شکل اور ساخت کا معائنہ۔"},
+
+{name:"G6PD",ur:"جی سکس پی ڈی",full:"Glucose-6-Phosphate Dehydrogenase",sample:"EDTA Blood",range:"Method and laboratory dependent",info:"Detects G6PD enzyme deficiency.",infoUr:"جی سکس پی ڈی انزائم کی کمی کی جانچ۔"},
+
+{name:"Sickle Cell Screening",ur:"سکل سیل اسکریننگ",full:"Sickle Cell Screening Test",sample:"EDTA Blood",range:"Negative",info:"Screens for sickle hemoglobin.",infoUr:"سکل ہیموگلوبن کی ابتدائی جانچ۔"},
+
+{name:"Hemoglobin Electrophoresis",ur:"ہیموگلوبن الیکٹروفوریسس",full:"Hemoglobin Electrophoresis",sample:"EDTA Blood",range:"HbA, HbA2 and HbF fractions are age dependent",info:"Identifies different hemoglobin types.",infoUr:"ہیموگلوبن کی مختلف اقسام کی شناخت۔"},
+
+{name:"Blood Gas Analysis",ur:"بلڈ گیس اینالیسس",full:"Arterial Blood Gas",sample:"Heparinized Arterial Blood",range:"pH 7.35–7.45",info:"Assesses oxygenation and acid-base balance.",infoUr:"آکسیجن اور تیزابیت کے توازن کی جانچ۔"},
+
+{name:"Arterial pCO2",ur:"آرٹیریل پی سی او ٹو",full:"Partial Pressure of Carbon Dioxide",sample:"Arterial Blood",range:"35–45 mmHg",info:"Measures carbon dioxide pressure.",infoUr:"خون میں کاربن ڈائی آکسائیڈ کا دباؤ۔"},
+
+{name:"Arterial pO2",ur:"آرٹیریل پی او ٹو",full:"Partial Pressure of Oxygen",sample:"Arterial Blood",range:"Approximately 80–100 mmHg at sea level",info:"Measures oxygen pressure in arterial blood.",infoUr:"آرٹیریل خون میں آکسیجن کا دباؤ۔"},
+
+{name:"Serum Amylase",ur:"سیرم ایمائلیز",full:"Serum Amylase",sample:"Serum",range:"Approximately 30–110 U/L",info:"Enzyme used in pancreatic assessment.",infoUr:"لبلبے کی جانچ میں استعمال ہونے والا انزائم۔"},
+
+{name:"Serum Lipase",ur:"سیرم لائپیز",full:"Serum Lipase",sample:"Serum",range:"Approximately 13–60 U/L; method dependent",info:"Helps assess pancreatic inflammation.",infoUr:"لبلبے کی سوزش کے جائزے میں مدد۔"},
+
+{name:"Lactate",ur:"لیکٹیٹ",full:"Blood Lactate",sample:"Heparinized Blood or Plasma",range:"Approximately 0.5–2.2 mmol/L",info:"Assesses lactate accumulation and tissue perfusion.",infoUr:"لیکٹیٹ اور جسمانی بافتوں تک خون کی فراہمی کا جائزہ۔"},
+
+{name:"Osmolality",ur:"اوسمولیلٹی",full:"Serum Osmolality",sample:"Serum",range:"Approximately 275–295 mOsm/kg",info:"Measures concentration of dissolved particles.",infoUr:"خون میں حل شدہ ذرات کی مقدار کا جائزہ۔"},
+
+{name:"Urine Microalbumin",ur:"یورین مائیکرو البیومن",full:"Urine Albumin",sample:"Spot Urine",range:"Urine ACR below 30 mg/g",info:"Screens for early kidney damage.",infoUr:"گردوں کو ابتدائی نقصان کی اسکریننگ۔"},
+
+{name:"Urine ACR",ur:"یورین البیومن کریٹینین ریشو",full:"Urine Albumin Creatinine Ratio",sample:"Spot Urine",range:"Below 30 mg/g",info:"Assesses albumin loss through kidneys.",infoUr:"گردوں سے البیومن کے اخراج کی جانچ۔"},
+
+{name:"Urine PCR",ur:"یورین پروٹین کریٹینین ریشو",full:"Urine Protein Creatinine Ratio",sample:"Spot Urine",range:"Generally below 0.2 mg/mg in adults",info:"Quantifies urine protein loss.",infoUr:"پیشاب میں پروٹین کے اخراج کی مقدار۔"},
+
+{name:"Urine Calcium",ur:"یورین کیلشیم",full:"Urine Calcium",sample:"24-hour Urine",range:"Approximately 100–300 mg/24 hours",info:"Evaluates urinary calcium excretion.",infoUr:"پیشاب کے ذریعے کیلشیم کے اخراج کی جانچ۔"},
+
+{name:"Urine Creatinine",ur:"یورین کریٹینین",full:"Urine Creatinine",sample:"24-hour Urine",range:"Depends on age, sex, muscle mass and collection",info:"Used in kidney assessment and urine ratios.",infoUr:"گردوں اور پیشاب کے تناسب کی جانچ میں استعمال۔"}
+
+);
+
+showTests();
+</script>
+
+
+
 
 </body>
 </html>
