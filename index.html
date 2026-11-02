@@ -102,7 +102,7 @@ const data = [
 {name:"WBC Count",department:"Hematology",full:"White Blood Cell Count",sample:"EDTA Blood",purpose:"Measures the number of white blood cells to help assess infection, inflammation and immune disorders.",method:"Automated hematology analyzer; abnormal results may be reviewed using a peripheral blood smear.",range:"Adults: approximately 4,000–11,000 cells/µL. Age-specific ranges apply to children.",info:"Helps investigate infections, inflammation and blood disorders.",infoUr:"انفیکشن، سوزش اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
 {name:"Platelet Count",department:"Hematology",full:"Platelet Count",sample:"EDTA Blood",purpose:"Measures platelet numbers to help assess bleeding and clotting disorders.",method:"Automated hematology analyzer; abnormal counts may require peripheral blood smear review.",range:"Adults: approximately 150,000–450,000/µL. Lab-specific ranges apply.",info:"Helps investigate low or high platelet counts and bleeding or clotting problems.",infoUr:"پلیٹلیٹس کی کمی یا زیادتی اور خون بہنے یا جمنے کے مسائل کی جانچ میں مدد دیتا ہے۔"},
 
-{name:"ESR",ur:"ای ایس آر",full:"Erythrocyte Sedimentation Rate",sample:"EDTA/Citrate Blood",purpose:"Measures how quickly red blood cells settle in a tube; used to help assess inflammation.",method:"Westergren method or an automated ESR analyzer.",range:"Method- and laboratory-specific. Typical Westergren adult values: men 0–15 mm/hr; women 0–20 mm/hr. Age can affect results.",info:"A nonspecific marker that may rise with inflammation, infection and some other conditions. It cannot diagnose a disease alone.",infoUr:"یہ سوزش کا عمومی اشارہ ہے۔ انفیکشن اور بعض دیگر بیماریوں میں بڑھ سکتا ہے، مگر اکیلے کسی بیماری کی تشخیص نہیں کرتا۔"},
+{name:"ESR",department:"Hematology",ur:"ای ایس آر",full:"Erythrocyte Sedimentation Rate",sample:"EDTA/Citrate Blood",purpose:"Measures how quickly red blood cells settle in a tube; used to help assess inflammation.",method:"Westergren method or an automated ESR analyzer.",range:"Method- and laboratory-specific. Typical Westergren adult values: men 0–15 mm/hr; women 0–20 mm/hr. Age can affect results.",info:"A nonspecific marker that may rise with inflammation, infection and some other conditions. It cannot diagnose a disease alone.",infoUr:"یہ سوزش کا عمومی اشارہ ہے۔ انفیکشن اور بعض دیگر بیماریوں میں بڑھ سکتا ہے، مگر اکیلے کسی بیماری کی تشخیص نہیں کرتا۔"},
 
 {name:"RBS",
 ur:"رینڈم بلڈ شوگر",
@@ -286,13 +286,13 @@ data.push(
 
 {name:"Transferrin Saturation",ur:"ٹرانسفرین سیچوریشن",full:"Transferrin Saturation",sample:"Serum",range:"Approximately 20–50%",info:"Shows percentage of iron-binding sites occupied.",infoUr:"آئرن سے بھرے ٹرانسفرین کا تناسب۔"},
 
-{name:"PT",ur:"پی ٹی",full:"Prothrombin Time",sample:"Citrated Plasma",range:"Approximately 11–13.5 seconds",info:"Evaluates blood clotting pathway.",infoUr:"خون جمنے کے عمل کی جانچ۔"},
+{name:"PT",department:"Hematology", ur:"پی ٹی",full:"Prothrombin Time",sample:"Citrated Plasma",range:"Approximately 11–13.5 seconds",info:"Evaluates blood clotting pathway.",infoUr:"خون جمنے کے عمل کی جانچ۔"},
 
 {name:"INR",ur:"آئی این آر",full:"International Normalized Ratio",sample:"Citrated Plasma",range:"Usually 0.8–1.2 without anticoagulants",info:"Standardized clotting measurement.",infoUr:"خون جمنے کی معیاری پیمائش۔"},
 
-{name:"APTT",ur:"اے پی ٹی ٹی",full:"Activated Partial Thromboplastin Time",sample:"Citrated Plasma",range:"Approximately 25–35 seconds",info:"Evaluates intrinsic clotting pathway.",infoUr:"خون جمنے کے اندرونی راستے کی جانچ۔"},
+{name:"APTT",department:"Hematology", ur:"اے پی ٹی ٹی",full:"Activated Partial Thromboplastin Time",sample:"Citrated Plasma",range:"Approximately 25–35 seconds",info:"Evaluates intrinsic clotting pathway.",infoUr:"خون جمنے کے اندرونی راستے کی جانچ۔"},
 
-{name:"D-Dimer",ur:"ڈی ڈائمر",full:"D-Dimer",sample:"Citrated Plasma",range:"Often below 500 ng/mL FEU; assay dependent",info:"Used in assessment of possible blood clots.",infoUr:"خون کے لوتھڑوں کے جائزے میں مدد۔"},
+{name:"D-Dimer",department:"Hematology", ur:"ڈی ڈائمر",full:"D-Dimer",sample:"Citrated Plasma",range:"Often below 500 ng/mL FEU; assay dependent",info:"Used in assessment of possible blood clots.",infoUr:"خون کے لوتھڑوں کے جائزے میں مدد۔"},
 
 {name:"Fibrinogen",ur:"فائبرینوجن",full:"Plasma Fibrinogen",sample:"Citrated Plasma",range:"Approximately 200–400 mg/dL",info:"Protein involved in blood clotting.",infoUr:"خون جمانے میں اہم پروٹین۔"},
 
@@ -437,7 +437,13 @@ data.push(
 
 {name:"GeneXpert MTB/RIF",ur:"جین ایکسپرٹ ٹی بی",full:"Mycobacterium Tuberculosis and Rifampicin Resistance Test",sample:"Sputum or validated specimen",range:"MTB not detected; rifampicin resistance not detected",info:"Detects TB genetic material and rifampicin resistance.",infoUr:"ٹی بی کے جراثیمی مواد اور رِفیمپیسن مزاحمت کی جانچ۔"},
 
-{name:"Blood Group ABO",ur:"اے بی او بلڈ گروپ",full:"ABO Blood Grouping",sample:"EDTA Blood",range:"A, B, AB or O",info:"Identifies ABO blood group.",infoUr:"اے بی او بلڈ گروپ معلوم کرتا ہے۔"},
+{name:"Reticulocyte Count",department:"Hematology",ur:"نوجوان سرخ خلیات کی گنتی",full:"Reticulocyte Count",sample:"EDTA Blood",purpose:"Measures immature red blood cells to assess bone marrow response.",method:"Automated reticulocyte analyzer or supravital staining.",range:"Adults: approximately 0.5–2.5% (laboratory dependent).",info:"Helps evaluate anemia and bone marrow activity.",infoUr:"خون کی کمی اور بون میرو کی کارکردگی جانچنے میں مدد دیتا ہے۔"},
+
+{name:"Peripheral Blood Smear (PBS)",department:"Hematology",ur:"خون کی خوردبینی جانچ",full:"Peripheral Blood Smear",sample:"EDTA Blood",purpose:"Examines blood cell size, shape and appearance.",method:"Wright-Giemsa stained blood film microscopy.",range:"Morphology is assessed against normal blood cell appearance.",info:"Helps investigate anemia, infections and blood disorders.",infoUr:"خون کی کمی، انفیکشن اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
+
+{name:"Absolute Eosinophil Count (AEC)",department:"Hematology",ur:"ایوزینوفل خلیات کی تعداد",full:"Absolute Eosinophil Count",sample:"EDTA Blood",purpose:"Measures the absolute number of eosinophils.",method:"Automated differential count or manual calculation.",range:"Approximately 0–500 cells/µL (laboratory dependent).",info:"Helps investigate allergies, parasitic infections and eosinophilic disorders.",infoUr:"الرجی اور پیراسائٹک انفیکشن کی جانچ میں مدد دیتا ہے۔"},
+
+{name:"Blood Group ABO",department:"Hematology", ur:"اے بی او بلڈ گروپ",full:"ABO Blood Grouping",sample:"EDTA Blood",range:"A, B, AB or O",info:"Identifies ABO blood group.",infoUr:"اے بی او بلڈ گروپ معلوم کرتا ہے۔"},
 
 {name:"Rh Factor",ur:"آر ایچ فیکٹر",full:"Rhesus Blood Group",sample:"EDTA Blood",range:"Positive or Negative",info:"Identifies RhD status.",infoUr:"آر ایچ مثبت یا منفی ہونے کی جانچ۔"},
 
