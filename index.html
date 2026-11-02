@@ -208,7 +208,7 @@ data.push(
 
 {name:"ALP",department:"Clinical Chemistry", ur:"اے ایل پی",full:"Alkaline Phosphatase",sample:"Serum",range:"Often 44–147 U/L in adults",info:"Helps assess liver and bone conditions.",infoUr:"جگر اور ہڈیوں کی جانچ۔"},
 
-{name:"GGT",ur:"جی جی ٹی",full:"Gamma Glutamyl Transferase",sample:"Serum",range:"Method and sex dependent; often 5–55 U/L",info:"Enzyme used in liver and bile duct assessment.",infoUr:"جگر اور صفراوی نالیوں کی جانچ۔"},
+{name:"GGT",department:"Clinical Chemistry", ur:"جی جی ٹی",full:"Gamma Glutamyl Transferase",sample:"Serum",range:"Method and sex dependent; often 5–55 U/L",info:"Enzyme used in liver and bile duct assessment.",infoUr:"جگر اور صفراوی نالیوں کی جانچ۔"},
 
 {name:"Total Protein",department:"Clinical Chemistry", ur:"ٹوٹل پروٹین",full:"Total Serum Protein",sample:"Serum",range:"Approximately 6.0–8.3 g/dL",info:"Measures major blood proteins.",infoUr:"خون کے اہم پروٹین کی مقدار۔"},
 
@@ -230,7 +230,7 @@ data.push(
 
 {name:"Phosphorus",department:"Clinical Chemistry", ur:"فاسفورس",full:"Serum Phosphorus",sample:"Serum",range:"Adults approximately 2.5–4.5 mg/dL",info:"Important for bones and energy.",infoUr:"ہڈیوں اور توانائی کے لیے ضروری۔"},
 
-{name:"Magnesium",ur:"میگنیشیم",full:"Serum Magnesium",sample:"Serum",range:"Approximately 1.7–2.2 mg/dL",info:"Supports nerve and muscle function.",infoUr:"اعصاب اور پٹھوں کے کام میں مدد۔"},
+{name:"Magnesium",department:"Clinical Chemistry", ur:"میگنیشیم",full:"Serum Magnesium",sample:"Serum",range:"Approximately 1.7–2.2 mg/dL",info:"Supports nerve and muscle function.",infoUr:"اعصاب اور پٹھوں کے کام میں مدد۔"},
 
 {name:"Total Cholesterol",department:"Clinical Chemistry", ur:"ٹوٹل کولیسٹرول",full:"Total Cholesterol",sample:"Serum",range:"Desirable: Below 200 mg/dL",info:"Measures total blood cholesterol.",infoUr:"خون میں کل کولیسٹرول۔"},
 
@@ -262,15 +262,18 @@ data.push(
 
 {name:"Anti Thyroglobulin",ur:"اینٹی تھائروگلوبیولن",full:"Anti Thyroglobulin Antibodies",sample:"Serum",range:"Assay dependent",info:"Measures thyroid antibodies.",infoUr:"تھائرائیڈ کے خلاف اینٹی باڈیز کی جانچ۔"},
 
-{name:"Troponin I",ur:"ٹروپونن آئی",full:"Cardiac Troponin I",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Helps detect heart muscle injury.",infoUr:"دل کے پٹھوں کو نقصان پہنچنے کی جانچ۔"},
+{name:"Troponin I",department:"Clinical Chemistry", ur:"ٹروپونن آئی",full:"Cardiac Troponin I",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Helps detect heart muscle injury.",infoUr:"دل کے پٹھوں کو نقصان پہنچنے کی جانچ۔"},
 
 {name:"Troponin T",ur:"ٹروپونن ٹی",full:"Cardiac Troponin T",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Marker of heart muscle injury.",infoUr:"دل کے پٹھوں کی چوٹ کا اشارہ۔"},
 
-{name:"CK-MB",ur:"سی کے ایم بی",full:"Creatine Kinase MB",sample:"Serum",range:"Method dependent",info:"Cardiac muscle injury marker.",infoUr:"دل کے پٹھوں کی چوٹ کی جانچ۔"},
+{name:"CK-MB",department:"Clinical Chemistry", ur:"سی کے ایم بی",full:"Creatine Kinase MB",sample:"Serum",range:"Method dependent",info:"Cardiac muscle injury marker.",infoUr:"دل کے پٹھوں کی چوٹ کی جانچ۔"},
 
-{name:"CPK",ur:"سی پی کے",full:"Creatine Phosphokinase",sample:"Serum",range:"Often 30–200 U/L; sex and method dependent",info:"Measures an enzyme found in muscles.",infoUr:"پٹھوں میں پائے جانے والے انزائم کی جانچ۔"},
+{name:"CPK", ur:"سی پی کے",full:"Creatine Phosphokinase",sample:"Serum",range:"Often 30–200 U/L; sex and method dependent",info:"Measures an enzyme found in muscles.",infoUr:"پٹھوں میں پائے جانے والے انزائم کی جانچ۔"},
 
-{name:"LDH",ur:"ایل ڈی ایچ",full:"Lactate Dehydrogenase",sample:"Serum",range:"Often 140–280 U/L; method dependent",info:"Enzyme released from damaged tissues.",infoUr:"خراب بافتوں سے خارج ہونے والا انزائم۔"},
+{name:"LDH",department:"Clinical Chemistry", ur:"ایل ڈی ایچ",full:"Lactate Dehydrogenase",sample:"Serum",range:"Often 140–280 U/L; method dependent",info:"Enzyme released from damaged tissues.",infoUr:"خراب بافتوں سے خارج ہونے والا انزائم۔"},
+
+{name:"CK (CPK)",department:"Clinical Chemistry",ur:"کریٹائن کائنیز",full:"Creatine Kinase",sample:"Serum",purpose:"Measures an enzyme found mainly in skeletal muscle, heart and brain.",method:"Enzymatic kinetic assay.",range:"Laboratory-specific reference range; varies by sex and method.",info:"Helps investigate muscle injury and muscle disorders.",infoUr:"پٹھوں کی چوٹ اور بیماریوں کی جانچ میں مدد دیتا ہے۔"},
+{name:"Procalcitonin (PCT)",department:"Clinical Chemistry",ur:"پروکیلسیٹونن",full:"Procalcitonin Test",sample:"Serum or plasma",purpose:"Measures procalcitonin levels to support assessment of bacterial infection.",method:"Immunoassay.",range:"Usually below 0.05 ng/mL in healthy individuals; assay-specific.",info:"Supports assessment of systemic bacterial infection and sepsis.",infoUr:"بیکٹیریل انفیکشن اور سیپسس کی جانچ میں مدد دیتا ہے۔"},
 
 {name:"BNP",ur:"بی این پی",full:"B-type Natriuretic Peptide",sample:"EDTA Plasma",range:"Below 100 pg/mL often used in acute assessment",info:"Helps assess heart failure.",infoUr:"دل کی کمزوری کے جائزے میں مدد۔"},
 
@@ -341,7 +344,7 @@ data.push(
 
 {name:"CRP",ur:"سی آر پی",full:"C-Reactive Protein",sample:"Serum",range:"Often below 5 mg/L",info:"Marker of inflammation.",infoUr:"جسم میں سوزش کا اشارہ۔"},
 
-{name:"hs-CRP",ur:"ہائی سینسٹیویٹی سی آر پی",full:"High Sensitivity C-Reactive Protein",sample:"Serum",range:"Cardiovascular interpretation is risk-category dependent",info:"Measures low levels of inflammation.",infoUr:"سوزش کی کم سطح کی پیمائش۔"},
+{name:"hs-CRP",department:"Clinical Chemistry", ur:"ہائی سینسٹیویٹی سی آر پی",full:"High Sensitivity C-Reactive Protein",sample:"Serum",range:"Cardiovascular interpretation is risk-category dependent",info:"Measures low levels of inflammation.",infoUr:"سوزش کی کم سطح کی پیمائش۔"},
 
 {name:"ASO Titre",ur:"اے ایس او ٹائٹر",full:"Antistreptolysin O Titre",sample:"Serum",range:"Often below 200 IU/mL in adults; lab dependent",info:"Assesses recent streptococcal exposure.",infoUr:"اسٹریپٹوکوکل انفیکشن سے سابقہ واسطے کا جائزہ۔"},
 
@@ -359,7 +362,7 @@ data.push(
 
 {name:"IgG",ur:"آئی جی جی",full:"Immunoglobulin G",sample:"Serum",range:"Approximately 700–1600 mg/dL in adults",info:"Measures a major antibody class.",infoUr:"اینٹی باڈی کی ایک اہم قسم کی مقدار۔"},
 
-{name:"IgM",ur:"آئی جی ایم",full:"Immunoglobulin M",sample:"Serum",range:"Approximately 40–230 mg/dL in adults",info:"Measures an antibody involved in early immune response.",infoUr:"ابتدائی مدافعتی ردعمل سے متعلق اینٹی باڈی۔"},
+{name:"IgM",ur:"آئی جی ایم",full:"Immunoglobulin M",sample:"Serum",range:"Approximately 40– 230 mg/dL in adults",info:"Measures an antibody involved in early immune response.",infoUr:"ابتدائی مدافعتی ردعمل سے متعلق اینٹی باڈی۔"},
 
 {name:"IgA",ur:"آئی جی اے",full:"Immunoglobulin A",sample:"Serum",range:"Approximately 70–400 mg/dL in adults",info:"Measures antibody important for mucosal immunity.",infoUr:"جسم کی اندرونی جھلیوں کی مدافعت سے متعلق اینٹی باڈی۔"},
 
@@ -465,9 +468,9 @@ data.push(
 
 {name:"Arterial pO2",ur:"آرٹیریل پی او ٹو",full:"Partial Pressure of Oxygen",sample:"Arterial Blood",range:"Approximately 80–100 mmHg at sea level",info:"Measures oxygen pressure in arterial blood.",infoUr:"آرٹیریل خون میں آکسیجن کا دباؤ۔"},
 
-{name:"Serum Amylase",ur:"سیرم ایمائلیز",full:"Serum Amylase",sample:"Serum",range:"Approximately 30–110 U/L",info:"Enzyme used in pancreatic assessment.",infoUr:"لبلبے کی جانچ میں استعمال ہونے والا انزائم۔"},
+{name:"Serum Amylase",department:"Clinical Chemistry", ur:"سیرم ایمائلیز",full:"Serum Amylase",sample:"Serum",range:"Approximately 30–110 U/L",info:"Enzyme used in pancreatic assessment.",infoUr:"لبلبے کی جانچ میں استعمال ہونے والا انزائم۔"},
 
-{name:"Serum Lipase",ur:"سیرم لائپیز",full:"Serum Lipase",sample:"Serum",range:"Approximately 13–60 U/L; method dependent",info:"Helps assess pancreatic inflammation.",infoUr:"لبلبے کی سوزش کے جائزے میں مدد۔"},
+{name:"Serum Lipase",department:"Clinical Chemistry", ur:"سیرم لائپیز",full:"Serum Lipase",sample:"Serum",range:"Approximately 13–60 U/L; method dependent",info:"Helps assess pancreatic inflammation.",infoUr:"لبلبے کی سوزش کے جائزے میں مدد۔"},
 
 {name:"Lactate",ur:"لیکٹیٹ",full:"Blood Lactate",sample:"Heparinized Blood or Plasma",range:"Approximately 0.5–2.2 mmol/L",info:"Assesses lactate accumulation and tissue perfusion.",infoUr:"لیکٹیٹ اور جسمانی بافتوں تک خون کی فراہمی کا جائزہ۔"},
 
