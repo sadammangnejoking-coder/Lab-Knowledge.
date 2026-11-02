@@ -499,6 +499,78 @@ showTests();
 
 
 
+<script>
+// Automatically assign laboratory tests to departments
+function assignDepartments() {
+  const groups = {
+    "Hematology": /cbc|hemoglobin|wbc|platelet|rbc count|hematocrit|hct|mcv|mch|mchc|rdw|neutrophil|lymphocyte|eosinophil|basophil|monocyte|esr|reticulocyte|peripheral blood|blood smear|blood film|aec|blood group|rh factor|cross matching|g6pd|sickle cell|hemoglobin electrophoresis|prothrombin|^pt$|^inr$|aptt|d-dimer|fibrinogen/i,
+
+    "Clinical Chemistry": /glucose|rbs|fbs|hba1c|creatinine|urea|bun|uric acid|alt|ast|alp|bilirubin|albumin|globulin|protein|calcium|phosphorus|sodium|potassium|chloride|magnesium|cholesterol|hdl|ldl|triglyceride|vldl|amylase|lipase|ggt|ldh|troponin|ck|cpk|procalcitonin|bnp|nt-probnp|serum iron|ferritin|tibc|transferrin|egfr|electrolyte|ammonia|lactate|osmolality|vitamin|thyroid|t3|t4|tsh|prolactin|fsh|^lh$|testosterone|estradiol|progesterone/i,
+
+    "Serology": /hbsag|anti-hcv|hbeag|anti-hbs|anti-hbc|hcv rna|hbv dna|hiv|vdrl|tpha|dengue|malaria rapid|mp ict|beta-hcg/i,
+
+    "Microbiology": /culture|afb smear|genexpert|malaria parasite|sputum|throat swab|wound swab|pus culture/i,
+
+    "Immunology": /crp|hs-crp|aso|rheumatoid|anti-ccp|ana|anti-dsdna|complement|^c3|^c4|^igg|^igm|^iga|anti tpo|anti thyroglobulin/i,
+
+    "Histopathology": /histopathology|biopsy|tissue examination|surgical pathology/i,
+
+    "Cytology": /cytology|pap smear|fine needle aspiration|fnac|body fluid cytology/i,
+
+    "Urine Examination": /urine/i,
+
+    "Stool Examination": /stool|fecal|faecal/i,
+
+    "Special Investigations": /blood gas|arterial pco2|arterial po2|pcr|psa|afp|cea|ca-125|ca 19-9|ca 15-3/i
+  };
+
+  data.forEach(test => {
+    if (test.department) return;
+
+    const text = test.name + " " + (test.full || "");
+
+    for (const [department, pattern] of Object.entries(groups)) {
+      if (pattern.test(text)) {
+        test.department = department;
+        break;
+      }
+    }
+
+    if (!test.department) {
+      test.department = "Special Investigations";
+    }
+  });
+}
+
+assignDepartments();
+
+// Show department on every test card
+const originalShowTests = showTests;
+showTests = function() {
+  originalShowTests();
+
+  document.querySelectorAll("#tests .card").forEach(card => {
+    const heading = card.querySelector("h3");
+    if (!heading) return;
+
+    const test = data.find(t =>
+      t.name === heading.textContent.split(" / ")[0]
+    );
+
+    if (test && !card.querySelector(".department-label")) {
+      const label = document.createElement("p");
+      label.className = "department-label";
+      label.innerHTML = "<b>Department:</b> " + test.department;
+      card.insertBefore(label, card.children[1]);
+    }
+  });
+};
+
+showTests();
+</script>
+
+
+
 <section class="important-note">
   <h2>⚠️ Important Note</h2>
 
