@@ -152,6 +152,7 @@ document.getElementById("tests").innerHTML=filtered.map(t=>`
 <p><b>Methodology / طریقہ کار:</b> ${t.method || "Not added yet"}</p>
 <p><b>Reference Range / نارمل حد:</b> ${t.range}</p>
 <p><b>${lang==="ur"?"طبی اہمیت":"Clinical Significance"}:</b> ${lang==="ur"?t.infoUr:t.info}</p>
+<p><b>Important Note / اہم نوٹ:</b> ${t.note || "—"}</p>
 </div>
 
 `).join("")||"<p>No test found.</p>";
