@@ -97,7 +97,7 @@ oninput="showTests()">
 
 <script>
 const data = [
-{name:"CBC",ur:"خون کی مکمل جانچ",full:"Complete Blood Count",sample:"EDTA Blood",range:"Male Hb 13.5–17.5; Female Hb 12–15.5 g/dL",info:"Evaluates blood cells.",infoUr:"خون کے خلیات کی جانچ۔"},
+{name:"CBC",ur:"خون کی مکمل جانچ",full:"Complete Blood Count",sample:"EDTA Blood",purpose:"Evaluates hemoglobin, red cells, white cells and platelets.",method:"Automated hematology analyzer; abnormal findings may be reviewed by peripheral blood smear.",range:"Male Hb 13.5–17.5; Female Hb 12–15.5 g/dL",info:"Helps assess anemia, infections and blood disorders.",infoUr:"خون کی کمی، انفیکشن اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
 {name:"Hemoglobin",ur:"ہیموگلوبن",full:"Hemoglobin Test",sample:"EDTA Blood",range:"Male 13.5–17.5; Female 12–15.5 g/dL",info:"Measures oxygen-carrying protein.",infoUr:"آکسیجن لے جانے والے پروٹین کی مقدار۔"},
 {name:"RBC Count",ur:"سرخ خون کے خلیات",full:"Red Blood Cell Count",sample:"EDTA Blood",range:"Male 4.5–5.9; Female 4.1–5.1 million/µL",info:"Measures red blood cells.",infoUr:"سرخ خلیات کی تعداد۔"},
 {name:"WBC Count",ur:"سفید خون کے خلیات",full:"White Blood Cell Count",sample:"EDTA Blood",range:"4,000–11,000 cells/µL",info:"Measures white blood cells.",infoUr:"سفید خلیات کی تعداد۔"},
@@ -143,13 +143,17 @@ document.getElementById("total").textContent=
 document.getElementById("testCount").innerText =
 "Total Tests: " + uniqueData.length;
 document.getElementById("tests").innerHTML=filtered.map(t=>`
+
 <div class="card">
 <h3>${t.name} / ${t.ur}</h3>
 <p><b>Full Form:</b> ${t.full}</p>
 <p><b>Specimen / نمونہ:</b> ${t.sample}</p>
+<p><b>Purpose / مقصد:</b> ${t.purpose || "Not added yet"}</p>
+<p><b>Methodology / طریقہ کار:</b> ${t.method || "Not added yet"}</p>
 <p><b>Reference Range / نارمل حد:</b> ${t.range}</p>
 <p><b>${lang==="ur"?"طبی اہمیت":"Clinical Significance"}:</b> ${lang==="ur"?t.infoUr:t.info}</p>
 </div>
+
 `).join("")||"<p>No test found.</p>";
 }
 showTests();
