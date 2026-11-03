@@ -93,7 +93,13 @@ oninput="showTests()">
 <p>Email: Sadam_mangnejo@yahoo.com</p>
 <small>Educational purpose only. Verify ranges with your laboratory.</small>
 </footer>
+<footer style="text-align:center; padding:15px; background:#075985; color:white; margin-top:20px;">
+  Copyright © <span id="year"></span> Lab Knowledge. All Rights Reserved.
+</footer>
 
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 <script>
 const data = [
 {name:"CBC",department:"Hematology",ur:"خون کی مکمل جانچ",full:"Complete Blood Count",sample:"EDTA Blood",purpose:"Evaluates hemoglobin, red cells, white cells and platelets.",method:"Automated hematology analyzer; abnormal findings may be reviewed by peripheral blood smear.",range:"Male Hb 13.5–17.5; Female Hb 12–15.5 g/dL",info:"Helps assess anemia, infections and blood disorders.",infoUr:"خون کی کمی، انفیکشن اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
