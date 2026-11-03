@@ -555,18 +555,46 @@ function assignDepartments() {
 
 assignDepartments();
 
-// Show department on every test card
+// Save all tests
+const allLabTests = [...data];
+
+// Fill department dropdown
+const departmentSelect = document.getElementById("departmentFilter");
+
+if (departmentSelect) {
+  const departments = [...new Set(
+    allLabTests.map(test => test.department)
+  )].sort();
+
+  departments.forEach(department => {
+    const option = document.createElement("option");
+    option.value = department;
+    option.textContent = department;
+    departmentSelect.appendChild(option);
+  });
+}
+
+// Department filter and test display
 const originalShowTests = showTests;
+
 showTests = function() {
+  const selected = departmentSelect ? departmentSelect.value : "";
+
+  const visibleTests = selected
+    ? allLabTests.filter(test => test.department === selected)
+    : allLabTests;
+
+  data.splice(0, data.length, ...visibleTests);
+
   originalShowTests();
 
   document.querySelectorAll("#tests .card").forEach(card => {
     const heading = card.querySelector("h3");
     if (!heading) return;
 
-    const test = data.find(t =>
-      t.name === heading.textContent.split(" / ")[0]
-    );
+    const testName = heading.textContent.split(" / ")[0].trim();
+
+    const test = data.find(t => t.name === testName);
 
     if (test && !card.querySelector(".department-label")) {
       const label = document.createElement("p");
@@ -575,11 +603,13 @@ showTests = function() {
       card.insertBefore(label, card.children[1]);
     }
   });
+
+  // Restore complete test list
+  data.splice(0, data.length, ...allLabTests);
 };
 
 showTests();
 </script>
-
 
 
 <section class="important-note">
