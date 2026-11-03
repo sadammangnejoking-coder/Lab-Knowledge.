@@ -157,7 +157,7 @@ const filtered = uniqueData.filter(t =>
 (t.name+" "+t.ur+" "+t.full).toLowerCase().includes(q)
 );
 document.getElementById("total").textContent=
-"Showing "+filtered.length+" of "+data.length+" tests";
+"Showing "+filtered.length+" of "+uniqueData.length+" tests";
 document.getElementById("testCount").innerText =
 "Total Tests: " + uniqueData.length;
 document.getElementById("tests").innerHTML=filtered.map(t=>`
