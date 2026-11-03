@@ -96,13 +96,8 @@ input{
  border-radius:12px;
  box-shadow:0 2px 8px #0001;
  width:100%;
-box-sizing:border-box;
-}
-
-.card{
- width:100%;
- max-width:600px;
- margin:13px auto;
+ max-width:100%;
+ box-sizing:border-box;
 }
 .card h3{
  color:#075985;
@@ -142,19 +137,16 @@ footer{
   padding:15px 10px;
 }
 
-.search-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.search-row input {
+  flex:1;
+  width:0;
+  min-width:0;
 }
 
-.search-row input {
-  width: 50%;
-  min-width: 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
+.search-row select {
+  flex:1;
+  width:0;
+  min-width:0;
 }
 
 .search-row select {
@@ -323,7 +315,7 @@ main {
 
 </main>
 
-<<footer style="text-align:center; padding:6px; background:#075985; color:white; font-size:12px; margin-top:12px;">
+<footer style="text-align:center; padding:6px; background:#075985; color:white; font-size:12px; margin-top:12px;">
   <p style="margin:3px;">Developer: Sadam Hussain</p>
   <small>Educational purpose only. Verify ranges with your laboratory.</small>
 </footer>
