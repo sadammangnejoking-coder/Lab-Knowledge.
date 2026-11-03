@@ -82,6 +82,12 @@ footer{
 <input id="search" placeholder="Search test name..."
 oninput="showTests()">
 
+<select id="departmentFilter"
+  onchange="showTests()"
+  style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc;">
+  <option value="">All Departments</option>
+</select>
+
 <p id="total">Loading tests...</p>
 <p id="testCount">Total Tests: 0</p>
 <div id="tests"></div>
