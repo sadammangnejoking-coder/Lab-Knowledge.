@@ -125,6 +125,55 @@ footer{
 }
 
 
+
+.popup-overlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.popup-box {
+  background: white;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+
+.popup-box .important-note h2 {
+  color: #075985;
+  margin-top: 0;
+}
+
+.popup-box .important-note p,
+.popup-box .important-note li {
+  color: #333;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.popup-box button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 15px;
+  background: #075985;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
 </style>
 </head>
 
@@ -279,6 +328,12 @@ window.addEventListener("scroll", function() {
     btn.style.display = "none";
   }
 });
+
+
+
+function closeImportantPopup() {
+  document.getElementById("importantPopup").style.display = "none";
+}
 
 
 </script>
@@ -823,40 +878,34 @@ showTests();
 </script>
 
 
-<section class="important-note">
-  <h2>⚠️ Important Note</h2>
 
-  <p>
-    This website is designed for educational and
-    informational purposes only. It provides general
-    knowledge about laboratory investigations.
-  </p>
+<div id="importantPopup" class="popup-overlay">
+  <div class="popup-box">
 
-  <ul>
-    <li>
-      Laboratory test results must always be interpreted
-      by a qualified healthcare professional.
-    </li>
-    <li>
-      Reference ranges may vary depending on laboratory,
-      testing method, age and gender.
-    </li>
-    <li>
-      Do not use this information for self-diagnosis
-      or self-medication.
-    </li>
-    <li>
-      Always follow proper sample collection,
-      handling and laboratory safety procedures.
-    </li>
-    <li>
-      Abnormal test results should be correlated with
-      clinical findings and patient history.
-    </li>
-  </ul>
+    <section class="important-note">
+      <h2>⚠️ Important Note</h2>
 
- 
-</section>
+      <p>
+        This website is designed for educational and
+        informational purposes only. It provides general
+        knowledge about laboratory investigations.
+      </p>
+
+      <ul>
+        <li>Laboratory test results must always be interpreted by a qualified healthcare professional.</li>
+        <li>Reference ranges may vary depending on laboratory, testing method, age and gender.</li>
+        <li>Do not use this information for self-diagnosis or self-medication.</li>
+        <li>Always follow proper sample collection, handling and laboratory safety procedures.</li>
+        <li>Abnormal test results should be correlated with clinical findings and patient history.</li>
+      </ul>
+    </section>
+
+    <button onclick="closeImportantPopup()">
+      I Understand – Continue
+    </button>
+
+  </div>
+</div>
 
 <style>
 .important-note {
