@@ -562,9 +562,18 @@ const allLabTests = [...data];
 const departmentSelect = document.getElementById("departmentFilter");
 
 if (departmentSelect) {
-  const departments = [...new Set(
-    allLabTests.map(test => test.department)
-  )].sort();
+  const departments = [
+  "Hematology",
+  "Clinical Chemistry",
+  "Serology",
+  "Microbiology",
+  "Immunology",
+  "Histopathology",
+  "Cytology",
+  "Urine Examination",
+  "Stool Examination",
+  "Special Investigations"
+];
 
   departments.forEach(department => {
     const option = document.createElement("option");
