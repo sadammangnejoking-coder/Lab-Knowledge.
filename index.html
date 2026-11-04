@@ -396,12 +396,12 @@ main {
 @media print {
 
   body.print-single * {
-    visibility: hidden;
+    display: none !important;
   }
 
   body.print-single .print-target,
   body.print-single .print-target * {
-    visibility: visible;
+    display: block !important;
   }
 
   body.print-single .print-target {
@@ -409,16 +409,17 @@ main {
     left: 0;
     top: 0;
     width: 100%;
-    box-shadow: none;
+    box-shadow: none !important;
     border: 1px solid #ccc;
+    background: white;
   }
 
   body.print-single .print-test-btn {
-    display: none;
+    display: none !important;
   }
 
   body {
-    background: white;
+    background: white !important;
   }
 }
 </style>
