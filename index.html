@@ -1093,7 +1093,7 @@ showTests = function() {
       <p><b>Reference Range:</b> ${test.range || "Not added yet"}</p>
       <p><b>Important Note:</b> ${test.info || "Not added yet"}</p>
       <p><b>Clinical Significance:</b>
-        ${lang === "ur"
+    ${document.documentElement.lang === "ur"
           ? (test.infoUr || test.info || "معلومات دستیاب نہیں")
           : (test.info || "Not added yet")}
       </p>
@@ -1105,7 +1105,7 @@ showTests();
 </script>
   
 
-  <section>
+ 
 <div id="importantPopup" class="popup-overlay">
   <div class="popup-box">
 
