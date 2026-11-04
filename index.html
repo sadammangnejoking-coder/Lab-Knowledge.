@@ -1280,13 +1280,13 @@ document.getElementById("tests").addEventListener("click", function(event) {
   });
 
   card.classList.add("print-target");
-  document.body.classList.add("print-single");
+  document.body.classList.add("print-target");
 
   window.print();
 });
 
 window.addEventListener("afterprint", function() {
-  document.body.classList.remove("print-single");
+  document.body.classList.remove("print-target");
 
   document.querySelectorAll(".card").forEach(item => {
     item.classList.remove("print-target");
