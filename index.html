@@ -1068,7 +1068,7 @@ if (countContainer) {
       .map(([department, count]) => `
         <button type="button"
           class="department-count-item"
-          onclick="selectDepartmentFromCount(${JSON.stringify(department)})">
+          onclick=onclick="selectDepartmentFromCount('${department}')">
           ${department}<br>
           ${count} Tests
         </button>
