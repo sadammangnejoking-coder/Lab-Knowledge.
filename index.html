@@ -395,31 +395,25 @@ main {
 
 @media print {
 
-  body.print-single * {
+  body.print-single > *:not(.print-area) {
     display: none !important;
   }
 
-  body.print-single .print-target,
-  body.print-single .print-target * {
+  body.print-single .print-area {
     display: block !important;
-  }
-
-  body.print-single .print-target {
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
-    box-shadow: none !important;
-    border: 1px solid #ccc;
     background: white;
   }
 
-  body.print-single .print-test-btn {
+  .print-area .print-test-btn {
     display: none !important;
   }
 
-  body {
-    background: white !important;
+  @page {
+    margin: 12mm;
   }
 }
 </style>
@@ -1276,24 +1270,26 @@ document.getElementById("tests").addEventListener("click", function(event) {
   const card = button.closest(".card");
   if (!card) return;
 
-  document.querySelectorAll(".card").forEach(item => {
-    item.classList.remove("print-target");
-  });
+  const oldArea = document.querySelector(".print-area");
+  if (oldArea) oldArea.remove();
 
-  card.classList.add("print-target");
+  const printArea = document.createElement("div");
+  printArea.className = "print-area";
+
+  const cardCopy = card.cloneNode(true);
+  printArea.appendChild(cardCopy);
+
+  document.body.appendChild(printArea);
   document.body.classList.add("print-single");
 
   window.print();
 });
 
 window.addEventListener("afterprint", function() {
-
   document.body.classList.remove("print-single");
 
-  document.querySelectorAll(".card").forEach(item => {
-    item.classList.remove("print-target");
-  });
-
+  const printArea = document.querySelector(".print-area");
+  if (printArea) printArea.remove();
 });
 </script>
   
