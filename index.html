@@ -1077,6 +1077,11 @@ if (countContainer) {
 
 function selectDepartmentFromCount(department) {
   document.getElementById("departmentFilter").value = department;
+
+document.getElementById("departmentFilter").dispatchEvent(
+  new Event("change")
+);
+
   document.getElementById("search").value = "";
 
   showTests();
