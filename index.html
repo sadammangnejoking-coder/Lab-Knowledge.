@@ -1329,6 +1329,22 @@ document.getElementById("tests").addEventListener("click", function(event) {
 
   // Computer generated line
   const note = document.createElement("p");
+// Current Date and Time
+const dateTime = document.createElement("p");
+
+dateTime.textContent = "Print Date & Time: " +
+  new Date().toLocaleString("en-PK", {
+    dateStyle: "long",
+    timeStyle: "medium",
+    hour12: true
+  });
+
+dateTime.style.textAlign = "center";
+dateTime.style.fontSize = "11px";
+dateTime.style.margin = "10px 0";
+
+printArea.appendChild(dateTime);
+
   note.textContent =
     "This is a computer-generated document. No signature is required.";
   note.style.textAlign = "center";
