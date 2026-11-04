@@ -378,7 +378,19 @@ main {
   text-align: center;
 }
 
+.no-results {
+  text-align: center;
+  padding: 35px 15px;
+  color: #64748b;
+  border: 1px dashed #0891b2;
+  background: #f8fcff;
+}
 
+.no-results h3 {
+  color: #075985;
+  font-size: 21px;
+  margin-bottom: 10px;
+}
 
 </style>
 </head>
@@ -1176,6 +1188,16 @@ showTests = function() {
   }
 
   if (!testsElement) return;
+
+if (filtered.length === 0) {
+  testsElement.innerHTML = `
+    <div class="card no-results">
+      <h3>🔍 No Tests Found</h3>
+      <p>Try another test name or select a different department.</p>
+    </div>
+  `;
+  return;
+}
 
   testsElement.innerHTML = filtered.map(test => `
     <div class="card">
