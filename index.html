@@ -1066,13 +1066,20 @@ if (countContainer) {
     Object.entries(departmentTotals)
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([department, count]) => `
-        <button type="button"
-          class="department-count-item"
-          onclick=onclick="selectDepartmentFromCount('${department}')">
+        <button type="button" class="department-count-item">
           ${department}<br>
           ${count} Tests
         </button>
       `).join("");
+
+  countContainer.querySelectorAll("button").forEach((button, index) => {
+    const department = Object.keys(departmentTotals)
+      .sort((a, b) => a.localeCompare(b))[index];
+
+    button.addEventListener("click", function() {
+      selectDepartmentFromCount(department);
+    });
+  });
 }
 
 function selectDepartmentFromCount(department) {
