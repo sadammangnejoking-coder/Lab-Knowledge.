@@ -1076,18 +1076,22 @@ if (countContainer) {
 }
 
 function selectDepartmentFromCount(department) {
-  document.getElementById("departmentFilter").value = department;
 
-document.getElementById("departmentFilter").dispatchEvent(
-  new Event("change")
-);
+  const filter = document.getElementById("departmentFilter");
 
-  document.getElementById("search").value = "";
+  const search = document.getElementById("search");
+
+  filter.value = department;
+
+  search.value = "";
 
   showTests();
 
   document.querySelector(".sticky-search")
-    .scrollIntoView({ behavior: "smooth", block: "start" });
+    .scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
 }
 
 // Department dropdown
