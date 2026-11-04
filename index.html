@@ -1066,11 +1066,24 @@ if (countContainer) {
     Object.entries(departmentTotals)
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([department, count]) => `
-        <div class="department-count-item">
+        <button type="button"
+          class="department-count-item"
+          onclick="selectDepartmentFromCount(${JSON.stringify(department)})">
           ${department}<br>
           ${count} Tests
-        </div>
+        </button>
       `).join("");
+}
+
+function selectDepartmentFromCount(department) {
+  departmentSelect.value = department;
+
+  document.getElementById("search").value = "";
+
+  showTests();
+
+  document.querySelector(".sticky-search")
+    .scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // Department dropdown
