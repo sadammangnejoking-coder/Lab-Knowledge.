@@ -1269,28 +1269,31 @@ if (filtered.length === 0) {
 showTests();
 
 document.getElementById("tests").addEventListener("click", function(event) {
-  const button = event.target.closest(".print-test-btn");
 
+  const button = event.target.closest(".print-test-btn");
   if (!button) return;
 
   const card = button.closest(".card");
+  if (!card) return;
 
   document.querySelectorAll(".card").forEach(item => {
     item.classList.remove("print-target");
   });
 
   card.classList.add("print-target");
-  document.body.classList.add("print-target");
+  document.body.classList.add("print-single");
 
   window.print();
 });
 
 window.addEventListener("afterprint", function() {
-  document.body.classList.remove("print-target");
+
+  document.body.classList.remove("print-single");
 
   document.querySelectorAll(".card").forEach(item => {
     item.classList.remove("print-target");
   });
+
 });
 </script>
   
