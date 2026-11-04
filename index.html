@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,1015 +8,893 @@
 <title>Lab Knowledge - Laboratory Investigations Theory</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f0f5fa;
+ color:#172b40;
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f0f5fa;
-  color: #172b40;
+.main-header{
+ background:linear-gradient(135deg,#082f49,#075985,#0891b2);
+ color:white;
+ text-align:center;
+ padding:30px 15px;
 }
-
-.main-header {
-  background: linear-gradient(135deg,#082f49,#075985,#0891b2);
-  color: white;
-  text-align: center;
-  padding: 35px 15px 30px;
-  border-bottom: 4px solid #22d3ee;
-  box-shadow: 0 3px 12px #0002;
+.lab-icon{font-size:38px}
+.main-header h1{margin:5px 0;font-size:30px}
+.main-header p{margin:8px 0}
+.header-tagline{font-size:13px;letter-spacing:1px}
+.container{
+ width:95%;
+ max-width:1100px;
+ margin:auto;
 }
-
-.header-content {
-  max-width: 1100px;
-  margin: auto;
+.top-tools{
+ text-align:center;
+ padding:12px;
 }
-
-.lab-icon {
-  font-size: 42px;
-  margin-bottom: 8px;
+.lang-btn{
+ padding:9px 18px;
+ border:1px solid #075985;
+ border-radius:8px;
+ background:white;
+ color:#075985;
+ cursor:pointer;
+ margin:3px;
+ font-weight:bold;
 }
-
-.main-header h1 {
-  margin: 0;
-  font-size: 32px;
+.lang-btn.active{background:#075985;color:white}
+.panel{
+ background:white;
+ padding:16px;
+ margin:12px 0;
+ border-radius:12px;
+ box-shadow:0 2px 8px #0001;
 }
-
-.main-header p {
-  margin: 10px 0;
-  font-size: 16px;
+.panel h2{margin-top:0;color:#075985;font-size:19px}
+.counts{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
 }
-
-.header-tagline {
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: #cffafe;
+.count-btn{
+ border:1px solid #bae6fd;
+ background:#e0f2fe;
+ color:#075985;
+ border-radius:20px;
+ padding:8px 12px;
+ cursor:pointer;
+ font-size:13px;
 }
-
-.language-buttons {
-  text-align: center;
-  padding: 15px 10px;
+.count-btn.selected,.count-btn:hover{
+ background:#075985;
+ color:white;
 }
-
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 7px;
-  padding: 10px 16px;
-  background: #075985;
-  color: white;
-  font-size: 14px;
+.sticky-search{
+ position:sticky;
+ top:0;
+ z-index:50;
+ background:#f0f5fa;
+ padding:8px 0;
 }
-
-button:hover {
-  background: #0891b2;
+.search-row{
+ display:grid;
+ grid-template-columns:1fr 260px;
+ gap:10px;
 }
-
-.language-buttons button {
-  margin: 3px;
+.search-row input,.search-row select{
+ width:100%;
+ padding:12px;
+ border:1px solid #cbd5e1;
+ border-radius:9px;
+ background:white;
+ font-size:14px;
 }
-
-.search-section {
-  max-width: 1100px;
-  margin: 15px auto;
-  padding: 0 12px;
+.summary{
+ display:flex;
+ justify-content:space-between;
+ flex-wrap:wrap;
+ padding:10px 2px;
+ color:#52677b;
+ font-size:14px;
 }
-
-.search-row {
-  display: flex;
-  gap: 10px;
-  width: 100%;
+.test-card{
+ background:white;
+ padding:17px;
+ margin:13px 0;
+ border-radius:12px;
+ border-left:5px solid #0891b2;
+ box-shadow:0 2px 8px #0001;
 }
-
-.search-row input,
-.search-row select {
-  min-width: 0;
-  padding: 13px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 15px;
-  background: white;
+.test-card h3{
+ margin:5px 0 12px;
+ color:#075985;
+ font-size:19px;
 }
-
-.search-row input {
-  flex: 2;
+.dept-tag{
+ display:inline-block;
+ background:#e0f2fe;
+ color:#075985;
+ border-radius:20px;
+ padding:5px 10px;
+ font-size:12px;
+ font-weight:bold;
 }
-
-.search-row select {
-  flex: 1;
+.detail{
+ display:grid;
+ grid-template-columns:155px 1fr;
+ gap:8px;
+ padding:7px 0;
+ border-top:1px solid #edf2f7;
+ font-size:14px;
+ line-height:1.5;
 }
-
-.summary {
-  max-width: 1100px;
-  margin: 15px auto;
-  padding: 0 12px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-weight: bold;
-  color: #075985;
+.detail strong{color:#34536d}
+.note{
+ background:#fff8e7;
+ border-left:3px solid #e5a000;
+ padding:10px;
+ margin-top:10px;
+ border-radius:5px;
+ font-size:13px;
+ line-height:1.5;
 }
-
-#departmentCounts {
-  max-width: 1100px;
-  margin: 15px auto;
-  padding: 0 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.action-btn{
+ background:#075985;
+ color:white;
+ border:0;
+ padding:10px 15px;
+ border-radius:8px;
+ cursor:pointer;
+ font-weight:bold;
 }
-
-.department-btn {
-  background: #e0f2fe;
-  color: #075985;
-  border: 1px solid #bae6fd;
+.card-actions{
+ text-align:right;
+ margin-top:12px;
 }
-
-.department-btn.active {
-  background: #075985;
-  color: white;
+.empty{
+ background:white;
+ padding:30px;
+ text-align:center;
+ border-radius:12px;
+ color:#60758a;
 }
-
-#tests {
-  max-width: 1100px;
-  margin: auto;
-  padding: 0 10px 25px;
+footer{
+ background:#075985;
+ color:white;
+ text-align:center;
+ padding:12px;
+ margin-top:20px;
+ font-size:12px;
 }
-
-.card {
-  background: white;
-  padding: 18px;
-  margin: 13px 0;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
-  width: auto;
-  border-left: 4px solid #0891b2;
+#backToTop{
+ display:none;
+ position:fixed;
+ right:18px;
+ bottom:18px;
+ width:48px;
+ height:48px;
+ border:0;
+ border-radius:50%;
+ background:#075985;
+ color:white;
+ font-size:24px;
+ cursor:pointer;
+ z-index:100;
+ box-shadow:0 3px 10px #0003;
 }
-
-.card h3 {
-  margin-top: 0;
-  color: #075985;
-  font-size: 20px;
+.popup-overlay{
+ position:fixed;
+ inset:0;
+ background:#0009;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:15px;
+ z-index:5000;
 }
-
-.detail {
-  margin: 9px 0;
-  line-height: 1.6;
-  font-size: 14px;
+.popup-box{
+ background:white;
+ padding:22px;
+ border-radius:14px;
+ max-width:470px;
+ width:100%;
 }
-
-.detail b {
-  color: #0c4a6e;
+.popup-box h2{color:#075985}
+.popup-box p{line-height:1.6;font-size:14px}
+.popup-box button{display:block;margin-left:auto}
+.print-area{display:none}
+body[dir="rtl"]{direction:rtl}
+body[dir="rtl"] .test-card{
+ border-left:0;
+ border-right:5px solid #0891b2;
 }
-
-.print-test-btn {
-  margin-top: 10px;
-  background: #0f766e;
+body[dir="rtl"] .detail strong{text-align:right}
+body[dir="rtl"] .note{
+ border-left:0;
+ border-right:3px solid #e5a000;
 }
-
-footer {
-  text-align: center;
-  padding: 14px 8px;
-  background: #075985;
-  color: white;
-  font-size: 13px;
-  margin-top: 15px;
+@media(max-width:620px){
+ .main-header{padding:24px 12px}
+ .main-header h1{font-size:25px}
+ .search-row{grid-template-columns:1fr}
+ .detail{grid-template-columns:1fr;gap:2px}
+ .detail strong{font-size:13px}
+ .test-card{padding:13px}
+ .test-card h3{font-size:17px}
 }
-
-.back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 18px;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  font-size: 22px;
-  display: none;
-  z-index: 1000;
-  box-shadow: 0 3px 10px #0003;
-}
-
-.important-popup {
-  position: fixed;
-  inset: 0;
-  background: #0009;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  z-index: 2000;
-}
-
-.popup-content {
-  background: white;
-  max-width: 450px;
-  width: 100%;
-  padding: 25px;
-  border-radius: 12px;
-  text-align: center;
-  line-height: 1.6;
-}
-
-.popup-content h2 {
-  color: #075985;
-}
-
-.popup-content button {
-  margin-top: 12px;
-}
-
-.no-results {
-  text-align: center;
-  padding: 30px;
-  color: #64748b;
-}
-
-@media(max-width:600px) {
-  .main-header {
-    padding: 28px 10px;
-  }
-
-  .main-header h1 {
-    font-size: 27px;
-  }
-
-  .search-row {
-    flex-direction: column;
-  }
-
-  .search-row input,
-  .search-row select {
-    width: 100%;
-  }
-
-  .card {
-    padding: 15px;
-  }
-}
-
-@media print {
-  body.print-single > * {
-    display: none !important;
-  }
-
-  body.print-single .print-area {
-    display: block !important;
-    background: white;
-    color: black;
-    padding: 15px;
-  }
-
-  .print-area .print-test-btn {
-    display: none !important;
-  }
+@media print{
+ body.print-single>*:not(.print-area){display:none!important}
+ .print-area{display:block!important}
+ .print-area .main-header{
+  background:white!important;
+  color:black!important;
+  border-bottom:2px solid #075985;
+ }
+ .print-area .test-card{
+  box-shadow:none;
+  border:1px solid #999;
+  break-inside:avoid;
+ }
+ .print-area footer{
+  background:white!important;
+  color:black!important;
+  border-top:1px solid #999;
+ }
 }
 </style>
 </head>
 
-principle:"munoassay detects 25-hydroxy vitamin D in serum.",
-method:"Chemiluminescent immunoassay.",
-procedure:"Serum is analyzed using a validated immunoassay method.",
-range:"Interpret according to the laboratory's assay-specific reference interval.",
-info:"Used to assess vitamin D status and support evaluation of bone health.",
-note:"Vitamin D interpretation depends on clinical context."
-},
+<body>
 
-{
-name:"Vitamin B12",
-ur:"وٹامن بی 12",
-full:"Cobalamin",
-department:"Immunology",
-sample:"Serum",
-purpose:"Evaluates vitamin B12 status.",
-principle:"An immunoassay measures vitamin B12 concentration.",
-method:"Chemiluminescent immunoassay.",
-procedure:"Serum is analyzed using a validated immunoassay analyzer.",
-range:"Approximately 200–900 pg/mL; assay dependent.",
-info:"Low levels may be associated with megaloblastic anemia and neurological symptoms.",
-note:"Interpret with CBC and clinical findings."
-},
+<header class="main-header">
+ <div class="lab-icon">🔬</div>
+ <h1>Lab Knowledge</h1>
+ <p id="subtitle">Laboratory Investigations Theory</p>
+ <div class="header-tagline">Learn • Understand • Explore</div>
+</header>
 
-{
-name:"Ferritin",
-ur:"فیریٹن",
-full:"Serum Ferritin",
-department:"Clinical Chemistry",
-sample:"Serum",
-purpose:"Assesses the body's stored iron.",
-principle:"Antibody-based immunoassay measures ferritin.",
-method:"Chemiluminescent immunoassay.",
-procedure:"Serum is analyzed using an immunoassay analyzer.",
-range:"Age- and sex-dependent; consult local laboratory interval.",
-info:"Low ferritin commonly indicates depleted iron stores.",
-note:"Ferritin can increase during inflammation."
-},
+<div class="top-tools">
+ <button class="lang-btn active" id="englishBtn" onclick="setLanguage('en')">English</button>
+ <button class="lang-btn" id="urduBtn" onclick="setLanguage('ur')">اردو</button>
+</div>
 
-{
-name:"Serum Iron",
-ur:"سیرم آئرن",
-full:"Serum Iron",
-department:"Clinical Chemistry",
-sample:"Serum",
-purpose:"Measures circulating iron.",
-principle:"Iron is released from transferrin and forms a colored complex.",
-method:"Colorimetric method.",
-procedure:"Serum is processed on a chemistry analyzer.",
-range:"Laboratory and sex dependent.",
-info:"Used in the investigation of iron deficiency and iron overload.",
-note:"Interpret with ferritin, TIBC and transferrin saturation."
-},
+<main class="container">
 
-{
-name:"TIBC",
-ur:"آئرن بائنڈنگ کی صلاحیت",
-full:"Total Iron Binding Capacity",
-department:"Clinical Chemistry",
-sample:"Serum",
-purpose:"Estimates the blood's capacity to bind iron.",
-principle:"Measures transferrin binding capacity using an iron-binding assay.",
-method:"Colorimetric method.",
-procedure:"Serum is analyzed using a validated chemistry method.",
-range:"Approximately 250–450 µg/dL; method dependent.",
-info:"Often increased in iron deficiency.",
-note:"Interpret with serum iron and ferritin."
-},
+ <section class="panel">
+  <h2 id="countHeading">📊 Department-wise Test Count</h2>
+  <div class="counts" id="departmentCounts"></div>
+ </section>
 
-{
-name:"PT",
-ur:"پروتھرومبن ٹائم",
-full:"Prothrombin Time",
-department:"Hematology",
-sample:"Citrate Plasma",
-purpose:"Evaluates the extrinsic and common coagulation pathways.",
-principle:"Tissue thromboplastin and calcium initiate clot formation.",
-method:"Coagulometer clot detection.",
-procedure:"Citrate plasma is tested using a validated coagulation analyzer.",
-range:"Often approximately 11–13.5 seconds; reagent dependent.",
-info:"Used to assess coagulation and monitor warfarin therapy through INR.",
-note:"Correct citrate tube filling is essential."
-},
+ <section class="sticky-search">
+  <div class="search-row">
+   <input id="search" type="search" placeholder="Search Laboratory Tests...">
+   <select id="departmentFilter">
+    <option value="all">All Departments</option>
+   </select>
+  </div>
 
-{
-name:"INR",
-ur:"انٹرنیشنل نارملائزڈ ریشو",
-full:"International Normalized Ratio",
-department:"Hematology",
-sample:"Citrate Plasma",
-purpose:"Standardizes PT results between laboratories.",
-principle:"Calculated from PT using the reagent's International Sensitivity Index.",
-method:"Calculated coagulation parameter.",
-procedure:"Reported from a validated PT result.",
-range:"Approximately 0.8–1.2 in people not receiving anticoagulants.",
-info:"Used particularly for monitoring vitamin K antagonist therapy.",
-note:"Therapeutic targets depend on the clinical indication."
-},
+  <div class="summary">
+   <span id="totalLabel">Total Unique Tests: <b id="total">0</b></span>
+   <span id="shownLabel">Showing: <b id="testCount">0</b></span>
+  </div>
+ </section>
 
-{
-name:"APTT",
-ur:"ایکٹیویٹڈ پارشل تھرومبوپلاسٹن ٹائم",
-full:"Activated Partial Thromboplastin Time",
-department:"Hematology",
-sample:"Citrate Plasma",
-purpose:"Evaluates intrinsic and common coagulation pathways.",
-principle:"An activator, phospholipid and calcium initiate clot formation.",
-method:"Coagulometer.",
-procedure:"Citrate plasma is tested using a validated coagulation analyzer.",
-range:"Often approximately 25–35 seconds; reagent dependent.",
-info:"May be used to investigate bleeding disorders and monitor unfractionated heparin.",
-note:"Interpret according to reagent-specific reference intervals."
-},
+ <section id="tests"></section>
 
-{
-name:"D-Dimer",
-ur:"ڈی ڈائمر",
-full:"D-Dimer",
-department:"Hematology",
-sample:"Citrate Plasma",
-purpose:"Detects fibrin breakdown products.",
-principle:"Antibodies detect cross-linked fibrin degradation products.",
-method:"Immunoturbidimetric or immunoassay method.",
-procedure:"Plasma is analyzed using the laboratory's validated method.",
-range:"Commonly below 500 ng/mL FEU; assay dependent.",
-info:"Can support assessment of suspected thrombosis in appropriate clinical pathways.",
-note:"An elevated result is nonspecific."
-},
+</main>
 
-{
-name:"CRP",
-ur:"سی ری ایکٹو پروٹین",
-full:"C-Reactive Protein",
-department:"Immunology",
-sample:"Serum",
-purpose:"Measures a protein that increases during inflammation.",
-principle:"Antibody binding produces measurable turbidity.",
-method:"Immunoturbidimetric method.",
-procedure:"Serum is analyzed using a chemistry or immunology analyzer.",
-range:"Often below 5 mg/L; laboratory dependent.",
-info:"May increase in infection and inflammatory conditions.",
-note:"CRP does not identify the cause of inflammation."
-},
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-{
-name:"ASO Titre",
-ur:"اے ایس او ٹائٹر",
-full:"Antistreptolysin O",
-department:"Serology",
-sample:"Serum",
-purpose:"Detects antibodies produced against streptolysin O.",
-principle:"Antibody reaction with streptolysin O antigen is measured.",
-method:"Latex agglutination or quantitative immunoassay.",
-procedure:"Serum is tested using the laboratory's validated kit.",
-range:"Method and age dependent.",
-info:"May support evidence of a recent streptococcal infection.",
-note:"A single result must be interpreted with symptoms and history."
-},
+<footer>
+ <div>This is a computer-generated educational reference. No signature is required.</div>
+ <div>© <span id="year"></span> Lab Knowledge</div>
+</footer>
 
-{
-name:"Rheumatoid Factor",
-ur:"رمیٹائڈ فیکٹر",
-full:"Rheumatoid Factor",
-department:"Immunology",
-sample:"Serum",
-purpose:"Detects autoantibodies associated with rheumatoid arthritis.",
-principle:"RF antibodies react with immunoglobulin components.",
-method:"Latex agglutination or immunoturbidimetry.",
-procedure:"Serum is tested using a validated method.",
-range:"Often below 14 IU/mL; assay dependent.",
-info:"May be positive in rheumatoid arthritis and other conditions.",
-note:"A negative result does not exclude rheumatoid arthritis."
-},
+<div class="popup-overlay" id="importantPopup">
+ <div class="popup-box">
+  <h2 id="popupTitle">Important Note</h2>
+  <p id="popupText">
+   This website is for educational purposes only. Reference ranges and testing methods may vary between laboratories, instruments, age groups and clinical conditions. Always consult the official laboratory report and a qualified healthcare professional for interpretation.
+  </p>
+  <button class="action-btn" onclick="closeImportantPopup()" id="popupClose">I Understand</button>
+ </div>
+</div>
 
-{
-name:"Anti-CCP",
-ur:"اینٹی سی سی پی",
-full:"Anti-Cyclic Citrullinated Peptide Antibody",
-department:"Immunology",
-sample:"Serum",
-purpose:"Detects antibodies associated with rheumatoid arthritis.",
-principle:"Specific citrullinated peptide antigens bind patient antibodies.",
-method:"ELISA or chemiluminescent immunoassay.",
-procedure:"Serum is processed using a validated antibody assay.",
-range:"Assay-specific.",
-info:"Can support diagnosis and risk assessment of rheumatoid arthritis.",
-note:"Interpret with clinical examination and other findings."
-},
-
-{
-name:"HBsAg",
-ur:"ہیپاٹائٹس بی سطحی اینٹی جن",
-full:"Hepatitis B Surface Antigen",
-department:"Serology",
-sample:"Serum",
-purpose:"Screens for current hepatitis B infection.",
-principle:"Antibodies capture hepatitis B surface antigen.",
-method:"Chemiluminescent immunoassay or rapid immunochromatography.",
-procedure:"Serum is tested using an approved screening assay.",
-range:"Non-reactive.",
-info:"A reactive screening result requires appropriate confirmatory and clinical evaluation.",
-note:"Interpret with the complete hepatitis B marker profile."
-},
-
-{
-name:"Anti-HCV",
-ur:"ہیپاٹائٹس سی اینٹی باڈی",
-full:"Hepatitis C Antibody",
-department:"Serology",
-sample:"Serum",
-purpose:"Screens for antibodies against hepatitis C virus.",
-principle:"Viral antigens detect patient antibodies.",
-method:"Immunoassay or rapid test.",
-procedure:"Serum is tested using a validated screening method.",
-range:"Non-reactive.",
-info:"A reactive result indicates exposure and requires HCV RNA testing to assess current infection.",
-note:"Antibody positivity alone does not prove active infection."
-},
-
-{
-name:"HIV 1&2",
-ur:"ایچ آئی وی ون اور ٹو",
-full:"Human Immunodeficiency Virus Type 1 and 2",
-department:"Serology",
-sample:"Serum or plasma",
-purpose:"Screens for HIV infection.",
-principle:"Assay detects HIV antibodies and, in fourth-generation tests, p24 antigen.",
-method:"Fourth-generation immunoassay or approved rapid test.",
-procedure:"Testing follows the validated screening and confirmatory algorithm.",
-range:"Non-reactive.",
-info:"Reactive screening results require further testing according to national guidelines.",
-note:"Consider the window period and appropriate follow-up."
-},
-
-{
-name:"Urine R/E",
-ur:"پیشاب کا مکمل معائنہ",
-full:"Urine Routine Examination",
-department:"Urine Examination",
-sample:"Fresh midstream urine",
-purpose:"Evaluates physical, chemical and microscopic urine characteristics.",
-principle:"Dipstick chemistry and microscopic examination identify urine components.",
-method:"Physical, chemical and microscopic examination.",
-procedure:"A fresh specimen is examined according to the laboratory's validated SOP.",
-range:"Depends on parameter; normally negative chemical findings and limited cells.",
-info:"May support evaluation of urinary infection, kidney disorders and metabolic conditions.",
-note:"Proper collection helps prevent contamination."
-},
-
-{
-name:"Urine Culture",
-ur:"پیشاب کلچر",
-full:"Urine Culture and Sensitivity",
-department:"Microbiology",
-sample:"Fresh midstream urine",
-purpose:"Detects bacterial growth and helps guide antibiotic selection.",
-principle:"Microorganisms grow on suitable culture media and are identified.",
-method:"Culture and antimicrobial susceptibility testing.",
-procedure:"The specimen is processed by trained microbiology staff using validated procedures.",
-range:"No significant bacterial growth.",
-info:"Used in investigation of suspected urinary tract infection.",
-note:"Collection before antibiotics may improve diagnostic yield."
-},
-
-{
-name:"Stool R/E",
-ur:"پاخانے کا مکمل معائنہ",
-full:"Stool Routine Examination",
-department:"Stool Examination",
-sample:"Fresh stool",
-purpose:"Examines stool for parasites, blood, mucus and other abnormalities.",
-principle:"Macroscopic and microscopic examination identifies visible and microscopic findings.",
-method:"Macroscopic and microscopic examination.",
-procedure:"The specimen is examined in accordance with laboratory SOP.",
-range:"No parasites or abnormal findings expected.",
-info:"May help investigate diarrhea, intestinal parasites and gastrointestinal symptoms.",
-note:"A single negative specimen may not exclude parasitic infection."
-},
-
-{
-name:"Dengue NS1",
-ur:"ڈینگی این ایس ون",
-full:"Dengue Non-Structural Protein 1 Antigen",
-department:"Serology",
-sample:"Serum or plasma",
-purpose:"Detects dengue NS1 antigen, especially early in infection.",
-principle:"Antigen binds specific antibodies in an immunoassay.",
-method:"Rapid immunochromatographic test or ELISA.",
-procedure:"The specimen is tested according to the kit manufacturer's validated instructions.",
-range:"Non-reactive.",
-info:"A positive result supports acute dengue infection.",
-note:"Test selection depends on the day of illness."
-},
-
-{
-name:"Malaria Parasite",
-ur:"ملیریا پیراسائٹ",
-full:"Malaria Parasite Examination",
-department:"Hematology",
-sample:"EDTA Whole Blood",
-purpose:"Detects malaria parasites in blood.",
-principle:"Parasites are visualized in stained blood films.",
-method:"Thick and thin blood film microscopy.",
-procedure:"Prepared blood films are stained and examined by trained microscopy staff.",
-range:"No malaria parasites seen.",
-info:"Helps diagnose malaria and may assist species identification.",
-note:"Repeat testing may be needed if suspicion remains high."
-},
-
-{
-name:"Blood Culture",
-ur:"بلڈ کلچر",
-full:"Blood Culture",
-department:"Microbiology",
-sample:"Blood collected into culture bottles",
-purpose:"Detects microorganisms in the bloodstream.",
-principle:"Microorganisms grow in specialized culture systems.",
-method:"Automated culture followed by identification and susceptibility testing.",
-procedure:"Collection and processing must follow strict aseptic procedures and laboratory SOPs.",
-range:"No growth.",
-info:"Important in investigation of suspected bloodstream infection.",
-note:"Interpret possible contaminants carefully."
-},
-
-{
-name:"Troponin I",
-ur:"ٹروپونن آئی",
-full:"Cardiac Troponin I",
-department:"Clinical Chemistry",
-sample:"Serum or plasma",
-purpose:"Detects heart muscle injury.",
-principle:"Specific antibodies measure cardiac troponin I.",
-method:"High-sensitivity immunoassay.",
-procedure:"Serum or plasma is tested using a validated cardiac marker analyzer.",
-range:"Assay-specific 99th percentile upper reference limit.",
-info:"Used in evaluation of suspected myocardial injury.",
-note:"Serial measurements and clinical assessment are important."
-},
-
-{
-name:"PSA",
-ur:"پروسٹیٹ مخصوص اینٹی جن",
-full:"Prostate Specific Antigen",
-department:"Immunology",
-sample:"Serum",
-purpose:"Measures prostate-specific antigen.",
-principle:"Antibody-based immunoassay detects PSA.",
-method:"Chemiluminescent immunoassay.",
-procedure:"Serum is analyzed using a validated immunoassay analyzer.",
-range:"Age and clinical context dependent.",
-info:"May be used in prostate disease assessment and monitoring.",
-note:"PSA is not specific for cancer."
-},
-
-{
-name:"Beta-hCG",
-ur:"بیٹا ایچ سی جی",
-full:"Beta Human Chorionic Gonadotropin",
-department:"Immunology",
-sample:"Serum",
-purpose:"Detects and measures pregnancy-associated hormone.",
-principle:"Antibodies detect beta-hCG.",
-method:"Quantitative immunoassay.",
-procedure:"Serum is analyzed using a validated immunoassay.",
-range:"Non-pregnant individuals usually have levels below the assay's negative threshold.",
-info:"Used in pregnancy assessment and selected medical evaluations.",
-note:"Interpret with pregnancy timing and clinical findings."
-}
-
-];
-
-</script>
-
+<div class="print-area" id="printArea"></div>
 
 <script>
+/* LABORATORY TEST DATABASE */
 
-// Department list
-const departments = [
-  "Hematology",
-  "Clinical Chemistry",
-  "Serology",
-  "Microbiology",
-  "Immunology",
-  "Histopathology",
-  "Cytology",
-  "Urine Examination",
-  "Stool Examination",
-  "Special Investigations"
+const rawTests = [
+
+/* HEMATOLOGY */
+["Complete Blood Count (CBC)","Hematology","EDTA Blood","Automated Cell Counter"],
+["Hemoglobin (Hb)","Hematology","EDTA Blood","Photometric Method"],
+["Hematocrit (HCT / PCV)","Hematology","EDTA Blood","Automated Method"],
+["Red Blood Cell Count (RBC)","Hematology","EDTA Blood","Automated Method"],
+["White Blood Cell Count (WBC)","Hematology","EDTA Blood","Automated Method"],
+["Platelet Count","Hematology","EDTA Blood","Automated Method"],
+["Differential Leukocyte Count (DLC)","Hematology","EDTA Blood","Microscopy / Automated"],
+["Peripheral Blood Film (PBF)","Hematology","EDTA Blood","Microscopy"],
+["Erythrocyte Sedimentation Rate (ESR)","Hematology","Blood","Westergren Method"],
+["Reticulocyte Count","Hematology","EDTA Blood","Supravital Staining"],
+["Absolute Neutrophil Count (ANC)","Hematology","EDTA Blood","Calculated"],
+["Mean Corpuscular Volume (MCV)","Hematology","EDTA Blood","Calculated"],
+["Mean Corpuscular Hemoglobin (MCH)","Hematology","EDTA Blood","Calculated"],
+["Mean Corpuscular Hemoglobin Concentration (MCHC)","Hematology","EDTA Blood","Calculated"],
+["Red Cell Distribution Width (RDW)","Hematology","EDTA Blood","Automated Method"],
+["Mean Platelet Volume (MPV)","Hematology","EDTA Blood","Automated Method"],
+["Malaria Parasite Film","Hematology","EDTA / Capillary Blood","Microscopy"],
+["Sickling Test","Hematology","EDTA Blood","Solubility Test"],
+["Hemoglobin Electrophoresis","Hematology","EDTA Blood","Electrophoresis / HPLC"],
+["G6PD Screening","Hematology","EDTA Blood","Enzyme Assay"],
+["ABO Blood Group","Hematology","EDTA Blood","Agglutination"],
+["Rh Factor","Hematology","EDTA Blood","Agglutination"],
+["Direct Coombs Test (DAT)","Hematology","EDTA Blood","Antiglobulin Test"],
+["Indirect Coombs Test (IAT)","Hematology","Serum","Antiglobulin Test"],
+["Prothrombin Time (PT)","Hematology","Citrated Plasma","Coagulation Analyzer"],
+["International Normalized Ratio (INR)","Hematology","Citrated Plasma","Calculated"],
+["Activated Partial Thromboplastin Time (APTT)","Hematology","Citrated Plasma","Coagulation Analyzer"],
+["Thrombin Time (TT)","Hematology","Citrated Plasma","Coagulation Analyzer"],
+["Fibrinogen","Hematology","Citrated Plasma","Clauss Method"],
+["D-Dimer","Hematology","Citrated Plasma","Immunoassay"],
+["Factor VIII Activity","Hematology","Citrated Plasma","Coagulation Assay"],
+["Factor IX Activity","Hematology","Citrated Plasma","Coagulation Assay"],
+["Antithrombin III","Hematology","Citrated Plasma","Chromogenic Assay"],
+["Protein C Activity","Hematology","Citrated Plasma","Functional Assay"],
+["Protein S Activity","Hematology","Citrated Plasma","Functional Assay"],
+["Lupus Anticoagulant","Hematology","Citrated Plasma","Coagulation Assay"],
+["Erythropoietin (EPO)","Hematology","Serum","Immunoassay"],
+["JAK2 Mutation","Hematology","EDTA Blood","Molecular Testing"],
+["BCR-ABL1","Hematology","EDTA Blood","RT-PCR"],
+["Flow Cytometry","Hematology","EDTA Blood","Flow Cytometric Analysis"],
+
+/* CLINICAL CHEMISTRY */
+["Glucose Fasting (FBS)","Clinical Chemistry","Serum / Plasma","Hexokinase Method"],
+["Random Blood Glucose (RBS)","Clinical Chemistry","Serum / Plasma","Enzymatic Method"],
+["2-Hour Postprandial Glucose","Clinical Chemistry","Serum / Plasma","Enzymatic Method"],
+["Oral Glucose Tolerance Test (OGTT)","Clinical Chemistry","Fluoride Plasma","Enzymatic Method"],
+["Glycated Hemoglobin (HbA1c)","Clinical Chemistry","EDTA Blood","HPLC / Immunoassay"],
+["Urea","Clinical Chemistry","Serum","Urease Method"],
+["Blood Urea Nitrogen (BUN)","Clinical Chemistry","Serum","Enzymatic Method"],
+["Creatinine","Clinical Chemistry","Serum","Jaffe / Enzymatic"],
+["Estimated GFR (eGFR)","Clinical Chemistry","Serum","Calculated"],
+["Uric Acid","Clinical Chemistry","Serum","Uricase Method"],
+["Sodium (Na)","Clinical Chemistry","Serum","Ion Selective Electrode"],
+["Potassium (K)","Clinical Chemistry","Serum","Ion Selective Electrode"],
+["Chloride (Cl)","Clinical Chemistry","Serum","Ion Selective Electrode"],
+["Bicarbonate (HCO3)","Clinical Chemistry","Serum","Enzymatic Method"],
+["Calcium Total","Clinical Chemistry","Serum","Colorimetric"],
+["Calcium Ionized","Clinical Chemistry","Heparinized Blood","Ion Selective Electrode"],
+["Phosphorus","Clinical Chemistry","Serum","Colorimetric"],
+["Magnesium","Clinical Chemistry","Serum","Colorimetric"],
+["Liver Function Tests (LFT)","Clinical Chemistry","Serum","Biochemical Panel"],
+["Alanine Aminotransferase (ALT / SGPT)","Clinical Chemistry","Serum","IFCC Method"],
+["Aspartate Aminotransferase (AST / SGOT)","Clinical Chemistry","Serum","IFCC Method"],
+["Alkaline Phosphatase (ALP)","Clinical Chemistry","Serum","Enzymatic Method"],
+["Gamma Glutamyl Transferase (GGT)","Clinical Chemistry","Serum","Enzymatic Method"],
+["Bilirubin Total","Clinical Chemistry","Serum","Diazo Method"],
+["Bilirubin Direct","Clinical Chemistry","Serum","Diazo Method"],
+["Bilirubin Indirect","Clinical Chemistry","Serum","Calculated"],
+["Total Protein","Clinical Chemistry","Serum","Biuret Method"],
+["Albumin","Clinical Chemistry","Serum","BCG / BCP Method"],
+["Globulin","Clinical Chemistry","Serum","Calculated"],
+["Albumin Globulin Ratio","Clinical Chemistry","Serum","Calculated"],
+["Lipid Profile","Clinical Chemistry","Serum","Enzymatic Panel"],
+["Total Cholesterol","Clinical Chemistry","Serum","Enzymatic Method"],
+["HDL Cholesterol","Clinical Chemistry","Serum","Direct Enzymatic"],
+["LDL Cholesterol","Clinical Chemistry","Serum","Calculated / Direct"],
+["Triglycerides","Clinical Chemistry","Serum","Enzymatic Method"],
+["Amylase","Clinical Chemistry","Serum","Enzymatic Method"],
+["Lipase","Clinical Chemistry","Serum","Enzymatic Method"],
+["Creatine Kinase (CK / CPK)","Clinical Chemistry","Serum","Enzymatic Method"],
+["CK-MB","Clinical Chemistry","Serum","Immunoassay"],
+["Lactate Dehydrogenase (LDH)","Clinical Chemistry","Serum","Enzymatic Method"],
+["Troponin I","Clinical Chemistry","Serum","Immunoassay"],
+["Troponin T","Clinical Chemistry","Serum","Immunoassay"],
+["C-Reactive Protein (CRP)","Clinical Chemistry","Serum","Immunoturbidimetry"],
+["High Sensitivity CRP (hs-CRP)","Clinical Chemistry","Serum","Immunoassay"],
+["Procalcitonin","Clinical Chemistry","Serum","Immunoassay"],
+["Ferritin","Clinical Chemistry","Serum","Immunoassay"],
+["Serum Iron","Clinical Chemistry","Serum","Colorimetric"],
+["Total Iron Binding Capacity (TIBC)","Clinical Chemistry","Serum","Colorimetric"],
+["Transferrin Saturation","Clinical Chemistry","Serum","Calculated"],
+["Vitamin B12","Clinical Chemistry","Serum","Immunoassay"],
+["Folate","Clinical Chemistry","Serum","Immunoassay"],
+["Vitamin D (25-OH)","Clinical Chemistry","Serum","Immunoassay"],
+["Zinc","Clinical Chemistry","Serum","Colorimetric / ICP-MS"],
+["Copper","Clinical Chemistry","Serum","Colorimetric / ICP-MS"],
+["Serum Osmolality","Clinical Chemistry","Serum","Osmometry"],
+["Lactate","Clinical Chemistry","Plasma","Enzymatic Method"],
+["Ammonia","Clinical Chemistry","EDTA Plasma","Enzymatic Method"],
+["Blood Gas Analysis (ABG)","Clinical Chemistry","Arterial Blood","Blood Gas Analyzer"],
+["Cystatin C","Clinical Chemistry","Serum","Immunoassay"],
+["Apolipoprotein A1","Clinical Chemistry","Serum","Immunoturbidimetry"],
+["Apolipoprotein B","Clinical Chemistry","Serum","Immunoturbidimetry"],
+["Lipoprotein(a)","Clinical Chemistry","Serum","Immunoassay"],
+["NT-proBNP","Clinical Chemistry","Serum / Plasma","Immunoassay"],
+["BNP","Clinical Chemistry","Plasma","Immunoassay"],
+["Myoglobin","Clinical Chemistry","Serum","Immunoassay"],
+["Beta-Hydroxybutyrate","Clinical Chemistry","Serum","Enzymatic Method"],
+["Carboxyhemoglobin","Clinical Chemistry","Whole Blood","Co-oximetry"],
+["Methemoglobin","Clinical Chemistry","Whole Blood","Co-oximetry"],
+["Urine Drug Screen","Clinical Chemistry","Urine","Immunoassay Screening"],
+["Lead Level","Clinical Chemistry","Whole Blood","ICP-MS"],
+["Heavy Metals Screen","Clinical Chemistry","Blood / Urine","ICP-MS"],
+["Creatinine Clearance","Clinical Chemistry","24-Hour Urine + Serum","Calculated"],
+["Urine Electrolytes","Clinical Chemistry","Urine","Ion Selective Electrode"],
+["Urine Calcium 24-Hour","Clinical Chemistry","24-Hour Urine","Colorimetric"],
+
+/* ENDOCRINOLOGY */
+["Thyroid Stimulating Hormone (TSH)","Endocrinology","Serum","Immunoassay"],
+["Free T4 (FT4)","Endocrinology","Serum","Immunoassay"],
+["Free T3 (FT3)","Endocrinology","Serum","Immunoassay"],
+["Total T4","Endocrinology","Serum","Immunoassay"],
+["Total T3","Endocrinology","Serum","Immunoassay"],
+["Anti-TPO Antibody","Endocrinology","Serum","Immunoassay"],
+["Anti-Thyroglobulin Antibody","Endocrinology","Serum","Immunoassay"],
+["Thyroglobulin","Endocrinology","Serum","Immunoassay"],
+["Parathyroid Hormone (PTH)","Endocrinology","EDTA Plasma","Immunoassay"],
+["Cortisol","Endocrinology","Serum / Plasma","Immunoassay"],
+["ACTH","Endocrinology","EDTA Plasma","Immunoassay"],
+["Insulin","Endocrinology","Serum","Immunoassay"],
+["C-Peptide","Endocrinology","Serum","Immunoassay"],
+["Prolactin","Endocrinology","Serum","Immunoassay"],
+["Follicle Stimulating Hormone (FSH)","Endocrinology","Serum","Immunoassay"],
+["Luteinizing Hormone (LH)","Endocrinology","Serum","Immunoassay"],
+["Estradiol (E2)","Endocrinology","Serum","Immunoassay"],
+["Progesterone","Endocrinology","Serum","Immunoassay"],
+["Testosterone Total","Endocrinology","Serum","Immunoassay"],
+["Free Testosterone","Endocrinology","Serum","Immunoassay"],
+["DHEA-S","Endocrinology","Serum","Immunoassay"],
+["Anti-Mullerian Hormone (AMH)","Endocrinology","Serum","Immunoassay"],
+["Beta-hCG","Endocrinology","Serum / Urine","Immunoassay"],
+["Growth Hormone (GH)","Endocrinology","Serum","Immunoassay"],
+["IGF-1","Endocrinology","Serum","Immunoassay"],
+["Aldosterone","Endocrinology","Serum / Plasma","Immunoassay"],
+["Renin","Endocrinology","EDTA Plasma","Immunoassay"],
+["17-OH Progesterone","Endocrinology","Serum","Immunoassay"],
+["Inhibin B","Endocrinology","Serum","Immunoassay"],
+["Plasma Metanephrines","Endocrinology","EDTA Plasma","LC-MS/MS"],
+
+/* SEROLOGY */
+["HBsAg","Serology","Serum","Immunoassay"],
+["Anti-HBs","Serology","Serum","Immunoassay"],
+["Anti-HBc Total","Serology","Serum","Immunoassay"],
+["Anti-HBc IgM","Serology","Serum","Immunoassay"],
+["HBeAg","Serology","Serum","Immunoassay"],
+["Anti-HBe","Serology","Serum","Immunoassay"],
+["Anti-HCV","Serology","Serum","Immunoassay"],
+["HIV 1 & 2 Antigen / Antibody","Serology","Serum","Fourth Generation Assay"],
+["VDRL","Serology","Serum","Flocculation"],
+["TPHA","Serology","Serum","Agglutination"],
+["Rheumatoid Factor (RF)","Serology","Serum","Latex / Immunoturbidimetry"],
+["Anti-CCP","Serology","Serum","Immunoassay"],
+["ASO Titre","Serology","Serum","Latex Agglutination"],
+["Dengue NS1 Antigen","Serology","Serum","Immunoassay"],
+["Dengue IgM","Serology","Serum","Immunoassay"],
+["Dengue IgG","Serology","Serum","Immunoassay"],
+["Widal Test","Serology","Serum","Agglutination"],
+["Weil-Felix Test","Serology","Serum","Agglutination"],
+["Brucella Antibodies","Serology","Serum","Agglutination / Immunoassay"],
+["Leptospira IgM","Serology","Serum","Immunoassay"],
+["Scrub Typhus IgM","Serology","Serum","Immunoassay"],
+["Toxoplasma IgG","Serology","Serum","Immunoassay"],
+["Toxoplasma IgM","Serology","Serum","Immunoassay"],
+["Rubella IgG","Serology","Serum","Immunoassay"],
+["Rubella IgM","Serology","Serum","Immunoassay"],
+["CMV IgG","Serology","Serum","Immunoassay"],
+["CMV IgM","Serology","Serum","Immunoassay"],
+["EBV VCA IgG","Serology","Serum","Immunoassay"],
+["EBV VCA IgM","Serology","Serum","Immunoassay"],
+["HSV 1 & 2 IgG","Serology","Serum","Immunoassay"],
+["HSV 1 & 2 IgM","Serology","Serum","Immunoassay"],
+["H. pylori IgG","Serology","Serum","Immunoassay"],
+
+/* IMMUNOLOGY */
+["ANA Screen","Immunology","Serum","IIF / Immunoassay"],
+["Anti-dsDNA","Immunology","Serum","Immunoassay"],
+["ANCA","Immunology","Serum","IIF / Immunoassay"],
+["C3 Complement","Immunology","Serum","Immunoturbidimetry"],
+["C4 Complement","Immunology","Serum","Immunoturbidimetry"],
+["Immunoglobulin G (IgG)","Immunology","Serum","Immunoturbidimetry"],
+["Immunoglobulin A (IgA)","Immunology","Serum","Immunoturbidimetry"],
+["Immunoglobulin M (IgM)","Immunology","Serum","Immunoturbidimetry"],
+["Total IgE","Immunology","Serum","Immunoassay"],
+["Anti-GBM Antibody","Immunology","Serum","Immunoassay"],
+["Coeliac Screen (tTG-IgA)","Immunology","Serum","Immunoassay"],
+["HLA-B27","Immunology","EDTA Blood","Flow Cytometry / Molecular"],
+["HLA Typing","Immunology","EDTA Blood","Molecular Testing"],
+["Anti-Mitochondrial Antibody (AMA)","Immunology","Serum","Immunoassay"],
+["Anti-Smooth Muscle Antibody (ASMA)","Immunology","Serum","Immunoassay"],
+["Anti-LKM Antibody","Immunology","Serum","Immunoassay"],
+["Cryoglobulins","Immunology","Serum","Precipitation Test"],
+["Tissue Transglutaminase IgG","Immunology","Serum","Immunoassay"],
+["Anti-GAD Antibody","Immunology","Serum","Immunoassay"],
+["Islet Cell Antibody","Immunology","Serum","Immunoassay"],
+
+/* URINE */
+["Urine Complete Examination (Urine D/R)","Urine Examination","Fresh Urine","Dipstick and Microscopy"],
+["Urine Albumin","Urine Examination","Spot Urine","Immunoassay"],
+["Urine Protein","Urine Examination","Spot Urine","Dipstick / Colorimetric"],
+["Urine Protein Creatinine Ratio (UPCR)","Urine Examination","Spot Urine","Calculated"],
+["Urine Albumin Creatinine Ratio (ACR)","Urine Examination","Spot Urine","Calculated"],
+["Urine Pregnancy Test","Urine Examination","Urine","Lateral Flow Immunoassay"],
+["Urine Ketones","Urine Examination","Urine","Dipstick"],
+["Urine 24-Hour Protein","Urine Examination","24-Hour Urine","Colorimetric"],
+["Urine Microscopy","Urine Examination","Fresh Urine","Microscopy"],
+["Urine Specific Gravity","Urine Examination","Urine","Refractometry / Dipstick"],
+
+/* STOOL */
+["Stool Complete Examination","Stool Examination","Fresh Stool","Macroscopy and Microscopy"],
+["Stool Occult Blood","Stool Examination","Stool","Immunochemical Test"],
+["Stool Reducing Substances","Stool Examination","Fresh Stool","Chemical Test"],
+["Stool H. pylori Antigen","Stool Examination","Stool","Immunoassay"],
+["Stool Calprotectin","Stool Examination","Stool","Immunoassay"],
+["Fecal Elastase","Stool Examination","Stool","Immunoassay"],
+["Stool Giardia Antigen","Stool Examination","Stool","Immunoassay"],
+
+/* MICROBIOLOGY */
+["Blood Culture","Microbiology","Blood","Automated Culture"],
+["Urine Culture and Sensitivity","Microbiology","Urine","Culture and Sensitivity"],
+["Sputum Culture and Sensitivity","Microbiology","Sputum","Culture and Sensitivity"],
+["Throat Swab Culture","Microbiology","Throat Swab","Culture"],
+["Wound Swab Culture","Microbiology","Wound Swab","Culture"],
+["CSF Analysis","Microbiology","CSF","Cell Count and Chemistry"],
+["CSF Culture","Microbiology","CSF","Culture"],
+["AFB Smear","Microbiology","Sputum / Specimen","Ziehl-Neelsen Stain"],
+["GeneXpert MTB/RIF","Microbiology","Sputum","Real Time PCR"],
+["Fungal Culture","Microbiology","Tissue / Swab","Fungal Culture"],
+["KOH Mount","Microbiology","Skin / Nail / Hair","Microscopy"],
+["Gram Stain","Microbiology","Clinical Specimen","Microscopy"],
+["Malaria Rapid Antigen","Microbiology","Whole Blood","Rapid Immunoassay"],
+["COVID-19 PCR","Microbiology","Nasopharyngeal Swab","RT-PCR"],
+["Influenza A/B PCR","Microbiology","Nasopharyngeal Swab","RT-PCR"],
+["Chlamydia trachomatis NAAT","Microbiology","Urine / Swab","NAAT / PCR"],
+["Neisseria gonorrhoeae NAAT","Microbiology","Urine / Swab","NAAT / PCR"],
+["Semen Culture","Microbiology","Semen","Culture"],
+["H. pylori Urea Breath Test","Microbiology","Breath Sample","Urea Breath Test"],
+
+/* TUMOR MARKERS */
+["PSA Total","Tumor Markers","Serum","Immunoassay"],
+["PSA Free","Tumor Markers","Serum","Immunoassay"],
+["CEA","Tumor Markers","Serum","Immunoassay"],
+["CA 125","Tumor Markers","Serum","Immunoassay"],
+["CA 19-9","Tumor Markers","Serum","Immunoassay"],
+["CA 15-3","Tumor Markers","Serum","Immunoassay"],
+["Alpha-Fetoprotein (AFP)","Tumor Markers","Serum","Immunoassay"],
+["Calcitonin","Tumor Markers","Serum","Immunoassay"],
+["Beta-2 Microglobulin","Tumor Markers","Serum / Urine","Immunoassay"],
+["Chromogranin A","Tumor Markers","Serum","Immunoassay"],
+["CA 72-4","Tumor Markers","Serum","Immunoassay"],
+["HE4","Tumor Markers","Serum","Immunoassay"],
+
+/* CYTOLOGY AND HISTOPATHOLOGY */
+["Urine Cytology","Cytology","Urine","Cytological Examination"],
+["Fine Needle Aspiration Cytology (FNAC)","Cytology","Aspirated Cells","Cytology"],
+["Pap Smear","Cytology","Cervical Sample","Cytology"],
+["Histopathology Biopsy","Histopathology","Tissue Biopsy","Histological Examination"],
+["Bone Marrow Examination","Histopathology","Bone Marrow","Morphology / Histology"],
+["Tissue Gram Stain","Histopathology","Tissue","Special Stain"],
+["Tissue AFB Stain","Histopathology","Tissue","Ziehl-Neelsen Stain"],
+["Tissue PAS Stain","Histopathology","Tissue","PAS Stain"],
+["Tissue GMS Stain","Histopathology","Tissue","GMS Stain"],
+
+/* OTHER INVESTIGATIONS */
+["Pleural Fluid Analysis","Clinical Chemistry","Pleural Fluid","Cell Count and Chemistry"],
+["Ascitic Fluid Analysis","Clinical Chemistry","Ascitic Fluid","Cell Count and Chemistry"],
+["Synovial Fluid Analysis","Clinical Chemistry","Synovial Fluid","Microscopy and Chemistry"],
+["Semen Analysis","Andrology","Semen","Macroscopy and Microscopy"],
+["Vitamin B1 (Thiamine)","Clinical Chemistry","Whole Blood","HPLC / LC-MS"],
+["Vitamin B6","Clinical Chemistry","Plasma","HPLC / LC-MS"],
+["Vitamin A","Clinical Chemistry","Serum","HPLC"],
+["Vitamin E","Clinical Chemistry","Serum","HPLC"],
+["Coenzyme Q10","Clinical Chemistry","Serum","HPLC"],
+["Urine Metanephrines 24-Hour","Endocrinology","24-Hour Urine","LC-MS/MS"],
+["Anti-Insulin Antibody","Immunology","Serum","Immunoassay"],
+["H. pylori Stool Antigen Test","Stool Examination","Stool","Immunoassay"],
+["Vitamin D Binding Protein","Clinical Chemistry","Serum","Immunoassay"],
+["Urine Microalbumin","Urine Examination","Spot Urine","Immunoassay"],
+["Blood Ketone Test","Clinical Chemistry","Blood","Enzymatic Method"],
+["Serum Acetone","Clinical Chemistry","Serum","Chemical Method"],
+["Cortisol 24-Hour Urine","Endocrinology","24-Hour Urine","Immunoassay"],
+["Free T4 Index","Endocrinology","Serum","Calculated"],
+["Free T3 Index","Endocrinology","Serum","Calculated"],
+["Urine Osmolality","Clinical Chemistry","Urine","Osmometry"]
+
 ];
 
-let currentLanguage = "en";
+/* REMOVE DUPLICATE TEST NAMES */
+const seen = new Set();
 
-const departmentSelect =
-  document.getElementById("departmentFilter");
+const data = rawTests.filter(test=>{
+ const key=test[0].toLowerCase().replace(/[^a-z0-9]/g,"");
+ if(seen.has(key)) return false;
+ seen.add(key);
+ return true;
+}).map(test=>({
+ name:test[0],
+ department:test[1],
+ specimen:test[2],
+ method:test[3],
+ purpose:getPurpose(test[1]),
+ range:"Reference interval depends on laboratory method, age, sex and clinical condition. Check the official laboratory report.",
+ note:"Confirm collection instructions, fasting requirements, specimen type and sample stability with the performing laboratory.",
+ significance:"Interpret results with clinical findings and other investigations. This test alone does not establish a diagnosis."
+}));
 
-const searchBox =
-  document.getElementById("search");
-
-const testsContainer =
-  document.getElementById("tests");
-
-const countContainer =
-  document.getElementById("departmentCounts");
-
-// HTML safety
-function safeText(value) {
-  return String(value || "").replace(/[&<>"']/g, function(char) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    }[char];
-  });
+function getPurpose(dept){
+ const purposes={
+  "Hematology":"Evaluates blood cells, blood cell morphology and coagulation.",
+  "Clinical Chemistry":"Measures chemical substances and enzymes to help assess organ and metabolic function.",
+  "Endocrinology":"Evaluates hormones and endocrine gland function.",
+  "Serology":"Detects selected antigens or antibodies.",
+  "Immunology":"Evaluates immune responses, autoantibodies and immune proteins.",
+  "Urine Examination":"Evaluates physical, chemical and microscopic characteristics of urine.",
+  "Stool Examination":"Evaluates stool characteristics and gastrointestinal conditions.",
+  "Microbiology":"Detects microorganisms and may assess antimicrobial susceptibility.",
+  "Tumor Markers":"Measures markers used in selected clinical assessment and monitoring.",
+  "Cytology":"Examines individual cells under a microscope.",
+  "Histopathology":"Examines tissue structure and cellular changes.",
+  "Andrology":"Evaluates semen characteristics."
+ };
+ return purposes[dept]||"Supports laboratory assessment as part of the overall clinical evaluation.";
 }
 
-// Department dropdown
-departments.forEach(department => {
-  const option = document.createElement("option");
-  option.value = department;
-  option.textContent = department;
-  departmentSelect.appendChild(option);
+/* LANGUAGE LABELS */
+const labels={
+ en:{
+  count:"📊 Department-wise Test Count",
+  all:"All Departments",
+  search:"Search Laboratory Tests...",
+  total:"Total Unique Tests:",
+  showing:"Showing:",
+  dept:"Department",
+  name:"Test Name",
+  specimen:"Specimen",
+  purpose:"Purpose",
+  method:"Methodology",
+  range:"Reference Range",
+  note:"Important Note",
+  significance:"Clinical Significance",
+  print:"Print This Test",
+  empty:"No matching laboratory tests found.",
+  subtitle:"Laboratory Investigations Theory",
+  popup:"Important Note",
+  close:"I Understand"
+ },
+ ur:{
+  count:"📊 شعبہ وار ٹیسٹ کی تعداد",
+  all:"تمام شعبے",
+  search:"لیبارٹری ٹیسٹ تلاش کریں...",
+  total:"کل منفرد ٹیسٹ:",
+  showing:"دکھائے جا رہے ہیں:",
+  dept:"شعبہ",
+  name:"ٹیسٹ کا نام",
+  specimen:"نمونہ",
+  purpose:"مقصد",
+  method:"طریقۂ کار",
+  range:"حوالہ جاتی حد",
+  note:"اہم نوٹ",
+  significance:"طبی اہمیت",
+  print:"یہ ٹیسٹ پرنٹ کریں",
+  empty:"کوئی ٹیسٹ نہیں ملا۔",
+  subtitle:"لیبارٹری ٹیسٹس کی معلومات",
+  popup:"اہم نوٹ",
+  close:"سمجھ گیا"
+ }
+};
+
+let currentLang="en";
+const $=id=>document.getElementById(id);
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,ch=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[ch]));
+}
+
+function setLanguage(lang){
+ currentLang=lang;
+ document.body.dir=lang==="ur"?"rtl":"ltr";
+ document.documentElement.lang=lang;
+
+ const L=labels[lang];
+
+ $("countHeading").textContent=L.count;
+ $("search").placeholder=L.search;
+ $("subtitle").textContent=L.subtitle;
+ $("popupTitle").textContent=L.popup;
+ $("popupClose").textContent=L.close;
+
+ $("englishBtn").classList.toggle("active",lang==="en");
+ $("urduBtn").classList.toggle("active",lang==="ur");
+
+ fillDepartments();
+ renderCounts();
+ showTests();
+}
+
+function fillDepartments(){
+ const select=$("departmentFilter");
+ const old=select.value||"all";
+ const departments=[...new Set(data.map(t=>t.department))].sort();
+
+ select.innerHTML=
+ `<option value="all">${labels[currentLang].all}</option>`+
+ departments.map(d=>
+  `<option value="${escapeHTML(d)}">${escapeHTML(d)}</option>`
+ ).join("");
+
+ select.value=departments.includes(old)?old:"all";
+}
+
+function renderCounts(){
+ const counts={};
+
+ data.forEach(t=>{
+  counts[t.department]=(counts[t.department]||0)+1;
+ });
+
+ $("departmentCounts").innerHTML=
+ Object.entries(counts).sort((a,b)=>a[0].localeCompare(b[0]))
+ .map(([dept,count])=>
+  `<button class="count-btn" data-dept="${escapeHTML(dept)}">
+   ${escapeHTML(dept)} (${count})
+  </button>`
+ ).join("");
+
+ document.querySelectorAll(".count-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+   $("departmentFilter").value=btn.dataset.dept;
+   $("search").value="";
+   showTests();
+
+   document.querySelectorAll(".count-btn").forEach(b=>{
+    b.classList.toggle("selected",b===btn);
+   });
+   $("search").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+ });
+}
+
+function detail(label,value){
+ return `<div class="detail">
+  <strong>${escapeHTML(label)}:</strong>
+  <span>${escapeHTML(value)}</span>
+ </div>`;
+}
+
+function showTests(){
+ const q=$("search").value.trim().toLowerCase();
+ const dept=$("departmentFilter").value;
+
+ const filtered=data.filter(t=>
+  (dept==="all"||t.department===dept) &&
+  [t.name,t.department,t.specimen,t.method,t.purpose]
+  .join(" ").toLowerCase().includes(q)
+ );
+
+ $("total").textContent=data.length;
+ $("testCount").textContent=filtered.length;
+
+ if(!filtered.length){
+  $("tests").innerHTML=`<div class="empty">${labels[currentLang].empty}</div>`;
+  return;
+ }
+
+ const L=labels[currentLang];
+
+ $("tests").innerHTML=filtered.map((t,i)=>`
+  <article class="test-card">
+   <span class="dept-tag">${escapeHTML(t.department)}</span>
+   <h3>${i+1}. ${escapeHTML(t.name)}</h3>
+   ${detail(L.name,t.name)}
+   ${detail(L.dept,t.department)}
+   ${detail(L.specimen,t.specimen)}
+   ${detail(L.purpose,t.purpose)}
+   ${detail(L.method,t.method)}
+   ${detail(L.range,t.range)}
+   ${detail(L.significance,t.significance)}
+   <div class="note">
+    <strong>${L.note}:</strong>
+    ${escapeHTML(t.note)}
+   </div>
+   <div class="card-actions">
+    <button class="action-btn" onclick="printSingleTest('${encodeURIComponent(t.name)}')">
+     ${L.print}
+    </button>
+   </div>
+  </article>
+ `).join("");
+}
+
+function printSingleTest(encodedName){
+ const name=decodeURIComponent(encodedName);
+ const t=data.find(x=>x.name===name);
+ if(!t)return;
+
+ const L=labels[currentLang];
+ const dateTime=new Date().toLocaleString("en-PK",{
+  dateStyle:"full",
+  timeStyle:"medium"
+ });
+
+ $("printArea").innerHTML=`
+  <header class="main-header">
+   <div class="lab-icon">🔬</div>
+   <h1>Lab Knowledge</h1>
+   <p>Laboratory Investigations Theory</p>
+  </header>
+
+  <div style="padding:12px;font-size:13px">
+   Printed Date & Time: ${escapeHTML(dateTime)}
+  </div>
+
+  <article class="test-card">
+   <span class="dept-tag">${escapeHTML(t.department)}</span>
+   <h3>${escapeHTML(t.name)}</h3>
+   ${detail(L.name,t.name)}
+   ${detail(L.dept,t.department)}
+   ${detail(L.specimen,t.specimen)}
+   ${detail(L.purpose,t.purpose)}
+   ${detail(L.method,t.method)}
+   ${detail(L.range,t.range)}
+   ${detail(L.significance,t.significance)}
+   <div class="note">
+    <strong>${L.note}:</strong> ${escapeHTML(t.note)}
+   </div>
+  </article>
+
+  <footer>
+   <div>This is a computer-generated educational reference. No signature is required.</div>
+   <div>© ${new Date().getFullYear()} Lab Knowledge</div>
+  </footer>
+ `;
+
+ document.body.classList.add("print-single");
+ window.print();
+}
+
+function closeImportantPopup(){
+ $("importantPopup").style.display="none";
+}
+
+$("search").addEventListener("input",()=>{
+ document.querySelectorAll(".count-btn").forEach(b=>b.classList.remove("selected"));
+ showTests();
 });
 
-// Department counts
-function showDepartmentCounts() {
-
-  countContainer.innerHTML = "";
-
-  const counts = {};
-
-  data.forEach(test => {
-    counts[test.department] =
-      (counts[test.department] || 0) + 1;
-  });
-
-  const allButton = document.createElement("button");
-  allButton.className = "department-btn active";
-  allButton.textContent = "All Departments (" + data.length + ")";
-
-  allButton.onclick = function() {
-    departmentSelect.value = "";
-    showTests();
-  };
-
-  countContainer.appendChild(allButton);
-
-  departments.forEach(department => {
-
-    const count = counts[department] || 0;
-
-    if (count === 0) return;
-
-    const button = document.createElement("button");
-
-    button.className = "department-btn";
-    button.textContent = department + " (" + count + ")";
-
-    button.onclick = function() {
-      departmentSelect.value = department;
-      showTests();
-    };
-
-    countContainer.appendChild(button);
-  });
-}
-
-// Display tests
-function showTests() {
-
-  const query = searchBox.value.trim().toLowerCase();
-  const selected = departmentSelect.value;
-
-  const uniqueData = [
-    ...new Map(
-      data.map(test => [
-        test.name.trim().toLowerCase(),
-        test
-      ])
-    ).values()
-  ];
-
-  const filtered = uniqueData.filter(test => {
-
-    const matchesDepartment =
-      !selected || test.department === selected;
-
-    const searchText = [
-      test.name,
-      test.ur,
-      test.full,
-      test.department,
-      test.sample,
-      test.purpose
-    ].join(" ").toLowerCase();
-
-    const matchesSearch = searchText.includes(query);
-
-    return matchesDepartment && matchesSearch;
-  });
-
-  document.getElementById("total").textContent =
-    "Showing " + filtered.length + " of " + uniqueData.length + " tests";
-
-  document.getElementById("testCount").textContent =
-    "Total Tests: " + uniqueData.length;
-
-  // Highlight active department
-  document.querySelectorAll(".department-btn").forEach(button => {
-    button.classList.remove("active");
-
-    if (
-      (!selected && button.textContent.startsWith("All Departments")) ||
-      (selected && button.textContent.startsWith(selected + " ("))
-    ) {
-      button.classList.add("active");
-    }
-  });
-
-  if (filtered.length === 0) {
-    testsContainer.innerHTML =
-      '<div class="no-results">No laboratory tests found.</div>';
-    return;
-  }
-
-  testsContainer.innerHTML = filtered.map((test, index) => {
-
-    const testName = currentLanguage === "ur"
-      ? test.ur || test.name
-      : test.name;
-
-    const labels = currentLanguage === "ur"
-      ? {
-          department: "شعبہ",
-          full: "مکمل نام",
-          sample: "نمونہ",
-          purpose: "مقصد",
-          principle: "اصول",
-          method: "طریقہ",
-          procedure: "طریقہ کار",
-          range: "نارمل رینج",
-          info: "طبی اہمیت",
-          note: "اہم نوٹ",
-          print: "ٹیسٹ پرنٹ کریں"
-        }
-      : {
-          department: "Department",
-          full: "Full Form",
-          sample: "Specimen",
-          purpose: "Purpose",
-          principle: "Principle",
-          method: "Methodology",
-          procedure: "Procedure",
-          range: "Reference Range",
-          info: "Clinical Significance",
-          note: "Important Note",
-          print: "Print This Test"
-        };
-
-    return `
-      <div class="card">
-
-        <h3>${safeText(testName)}</h3>
-
-        <div class="detail">
-          <b>${labels.department}:</b>
-          ${safeText(test.department)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.full}:</b>
-          ${safeText(test.full)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.sample}:</b>
-          ${safeText(test.sample)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.purpose}:</b>
-          ${safeText(test.purpose)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.principle}:</b>
-          ${safeText(test.principle)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.method}:</b>
-          ${safeText(test.method)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.procedure}:</b>
-          ${safeText(test.procedure)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.range}:</b>
-          ${safeText(test.range)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.info}:</b>
-          ${safeText(test.info)}
-        </div>
-
-        <div class="detail">
-          <b>${labels.note}:</b>
-          ${safeText(test.note)}
-        </div>
-
-        <button class="print-test-btn"
-          data-index="${index}">
-          ${labels.print}
-        </button>
-
-      </div>
-    `;
-
-  }).join("");
-
-  // Keep filtered tests for printing
-  window.currentFilteredTests = filtered;
-}
-
-// Language setting
-function setLanguage(language) {
-
-  currentLanguage = language;
-
-  document.documentElement.lang = language;
-  document.documentElement.dir =
-    language === "ur" ? "rtl" : "ltr";
-
-  document.getElementById("subtitle").textContent =
-    language === "ur"
-      ? "لیبارٹری ٹیسٹ کی معلومات"
-      : "Laboratory Investigations Theory";
-
-  searchBox.placeholder =
-    language === "ur"
-      ? "لیبارٹری ٹیسٹ تلاش کریں..."
-      : "Search Laboratory Tests...";
-
-  showTests();
-}
-
-// Popup close
-function closeImportantPopup() {
-  document.getElementById("importantPopup").style.display = "none";
-}
-
-// Copyright year
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
-// Back to top
-window.addEventListener("scroll", function() {
-
-  const button = document.getElementById("backToTop");
-
-  button.style.display =
-    window.scrollY > 300 ? "block" : "none";
-
+$("departmentFilter").addEventListener("change",()=>{
+ document.querySelectorAll(".count-btn").forEach(b=>{
+  b.classList.toggle("selected",b.dataset.dept===$("departmentFilter").value);
+ });
+ showTests();
 });
 
-// Print selected test
-testsContainer.addEventListener("click", function(event) {
-
-  const button = event.target.closest(".print-test-btn");
-
-  if (!button) return;
-
-  const index = Number(button.dataset.index);
-
-  const test = window.currentFilteredTests[index];
-
-  if (!test) return;
-
-  const card = button.closest(".card").cloneNode(true);
-
-  const printButton = card.querySelector(".print-test-btn");
-
-  if (printButton) {
-    printButton.remove();
-  }
-
-  const printArea = document.createElement("div");
-
-  printArea.className = "print-area";
-
-  const header = document.querySelector(".main-header").cloneNode(true);
-
-  printArea.appendChild(header);
-  printArea.appendChild(card);
-
-  const printDate = document.createElement("p");
-
-  printDate.style.textAlign = "center";
-  printDate.style.marginTop = "20px";
-
-  printDate.textContent =
-    "Print Date & Time: " +
-    new Date().toLocaleString("en-PK", {
-      dateStyle: "long",
-      timeStyle: "medium",
-      hour12: true
-    });
-
-  printArea.appendChild(printDate);
-
-  const generated = document.createElement("p");
-
-  generated.style.textAlign = "center";
-  generated.style.fontSize = "12px";
-
-  generated.textContent =
-    "This is a computer-generated document. No signature is required.";
-
-  printArea.appendChild(generated);
-
-  document.body.appendChild(printArea);
-
-  document.body.classList.add("print-single");
-
-  window.onafterprint = function() {
-    printArea.remove();
-    document.body.classList.remove("print-single");
-  };
-
-  window.print();
-
+window.addEventListener("afterprint",()=>{
+ document.body.classList.remove("print-single");
+ $("printArea").innerHTML="";
 });
 
-// Start website
-showDepartmentCounts();
+window.addEventListener("scroll",()=>{
+ $("backToTop").style.display=window.scrollY>300?"block":"none";
+});
+
+$("year").textContent=new Date().getFullYear();
+
+/* INITIAL LOAD */
+fillDepartments();
+renderCounts();
 showTests();
 
 </script>
-
 </body>
 </html>
