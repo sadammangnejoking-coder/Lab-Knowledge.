@@ -399,41 +399,61 @@ main {
 
 @media print {
 
+  @page {
+    margin: 10mm;
+  }
+
   body.print-single > * {
     display: none !important;
   }
 
   body.print-single > .print-area {
     display: block !important;
-    position: static !important;
     width: 100% !important;
     background: white !important;
     color: black !important;
   }
 
+  .print-area .main-header {
+    display: block !important;
+    background: #075985 !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 18px 10px !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   .print-area .card {
     display: block !important;
-    visibility: visible !important;
     width: 100% !important;
-    margin: 0 !important;
-    padding: 17px !important;
+    color: black !important;
     box-shadow: none !important;
     border: 1px solid #ccc !important;
-    color: black !important;
+    margin: 12px 0 !important;
+    page-break-inside: avoid;
   }
 
   .print-area .card * {
-    display: block;
     visibility: visible !important;
     color: black !important;
+  }
+
+  .print-area footer {
+    display: block !important;
+    background: #075985 !important;
+    color: white !important;
+    text-align: center !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-area footer * {
+    color: white !important;
   }
 
   .print-area .print-test-btn {
     display: none !important;
-  }
-
-  @page {
-    margin: 12mm;
   }
 }
 </style>
@@ -505,7 +525,7 @@ main {
 </main>
 
 <footer style="text-align:center; padding:6px; background:#075985; color:white; font-size:12px; margin-top:12px;">
-  <p style="margin:3px;">Developer: Sadam Hussain</p>
+  <p style="margin:3px;">Developer by: Sadam H Mangnejo</p>
   <small>Educational purpose only. Verify ranges with your laboratory.</small>
 </footer>
 
@@ -1293,22 +1313,46 @@ document.getElementById("tests").addEventListener("click", function(event) {
   const printArea = document.createElement("div");
   printArea.className = "print-area";
 
+  // Website header
+  const header = document.querySelector(".main-header");
+  if (header) {
+    printArea.appendChild(header.cloneNode(true));
+  }
+
+  // Selected test card
   const copy = card.cloneNode(true);
 
   const printButton = copy.querySelector(".print-test-btn");
-  if (printButton) {
-    printButton.parentElement.remove();
-  }
+  if (printButton) printButton.remove();
 
   printArea.appendChild(copy);
-  document.body.appendChild(printArea);
 
+  // Computer generated line
+  const note = document.createElement("p");
+  note.textContent =
+    "This is a computer-generated document. No signature is required.";
+  note.style.textAlign = "center";
+  note.style.fontSize = "11px";
+  note.style.margin = "15px 0";
+
+  printArea.appendChild(note);
+
+  // Both website footers
+  document.querySelectorAll("footer").forEach(function(footer) {
+    printArea.appendChild(footer.cloneNode(true));
+  });
+
+  document.body.appendChild(printArea);
   document.body.classList.add("print-single");
 
   window.print();
+});
 
+window.addEventListener("afterprint", function() {
   document.body.classList.remove("print-single");
-  printArea.remove();
+
+  const printArea = document.querySelector(".print-area");
+  if (printArea) printArea.remove();
 });
 </script>
   
