@@ -392,6 +392,35 @@ main {
   margin-bottom: 10px;
 }
 
+
+@media print {
+
+  body.print-single * {
+    visibility: hidden;
+  }
+
+  body.print-single .print-target,
+  body.print-single .print-target * {
+    visibility: visible;
+  }
+
+  body.print-single .print-target {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  body.print-single .print-test-btn {
+    display: none;
+  }
+
+  body {
+    background: white;
+  }
+}
 </style>
 </head>
 
@@ -1083,6 +1112,29 @@ if (countContainer) {
           ${count} Tests
         </button>
       `).join("");
+
+testsElement.querySelectorAll(".print-test-btn").forEach(button => {
+  button.addEventListener("click", function() {
+    const card = this.closest(".card");
+
+    document.querySelectorAll(".card").forEach(item => {
+      item.classList.remove("print-target");
+    });
+
+    card.classList.add("print-target");
+    document.body.classList.add("print-single");
+
+    window.print();
+  });
+});
+
+window.onafterprint = function() {
+  document.body.classList.remove("print-single");
+
+  document.querySelectorAll(".card").forEach(item => {
+    item.classList.remove("print-target");
+  });
+};
 
   countContainer.querySelectorAll("button").forEach((button, index) => {
     const department = Object.keys(departmentTotals)
