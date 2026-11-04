@@ -1,35 +1,35 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#075985">
-<title>Lab Knowledge - Sadam Hussain</title>
+<title>Lab Knowledge - Laboratory Investigations Theory</title>
 
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f0f5fa;
- color:#172b40;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f5fa;
+  color: #172b40;
 }
 
 .main-header {
-  background: linear-gradient(135deg, #082f49, #075985, #0891b2);
+  background: linear-gradient(135deg,#082f49,#075985,#0891b2);
   color: white;
   text-align: center;
   padding: 35px 15px 30px;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 4px solid #38bdf8;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.2);
+  border-bottom: 4px solid #22d3ee;
+  box-shadow: 0 3px 12px #0002;
 }
 
 .header-content {
-  position: relative;
-  z-index: 1;
+  max-width: 1100px;
+  margin: auto;
 }
 
 .lab-icon {
@@ -40,302 +40,207 @@ body{
 .main-header h1 {
   margin: 0;
   font-size: 32px;
-  font-weight: 800;
-  letter-spacing: 1px;
 }
 
 .main-header p {
   margin: 10px 0;
-  font-size: 15px;
-  color: #e0f2fe;
+  font-size: 16px;
 }
 
 .header-tagline {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 7px 16px;
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 30px;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 1px;
-  color: #ffffff;
+  color: #cffafe;
 }
 
-@media (max-width: 480px) {
+.language-buttons {
+  text-align: center;
+  padding: 15px 10px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 16px;
+  background: #075985;
+  color: white;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #0891b2;
+}
+
+.language-buttons button {
+  margin: 3px;
+}
+
+.search-section {
+  max-width: 1100px;
+  margin: 15px auto;
+  padding: 0 12px;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.search-row input,
+.search-row select {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  background: white;
+}
+
+.search-row input {
+  flex: 2;
+}
+
+.search-row select {
+  flex: 1;
+}
+
+.summary {
+  max-width: 1100px;
+  margin: 15px auto;
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-weight: bold;
+  color: #075985;
+}
+
+#departmentCounts {
+  max-width: 1100px;
+  margin: 15px auto;
+  padding: 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.department-btn {
+  background: #e0f2fe;
+  color: #075985;
+  border: 1px solid #bae6fd;
+}
+
+.department-btn.active {
+  background: #075985;
+  color: white;
+}
+
+#tests {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 10px 25px;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  margin: 13px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  width: auto;
+  border-left: 4px solid #0891b2;
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #075985;
+  font-size: 20px;
+}
+
+.detail {
+  margin: 9px 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.detail b {
+  color: #0c4a6e;
+}
+
+.print-test-btn {
+  margin-top: 10px;
+  background: #0f766e;
+}
+
+footer {
+  text-align: center;
+  padding: 14px 8px;
+  background: #075985;
+  color: white;
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 18px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 22px;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 3px 10px #0003;
+}
+
+.important-popup {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 2000;
+}
+
+.popup-content {
+  background: white;
+  max-width: 450px;
+  width: 100%;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.popup-content h2 {
+  color: #075985;
+}
+
+.popup-content button {
+  margin-top: 12px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
+}
+
+@media(max-width:600px) {
   .main-header {
-    padding: 28px 12px;
+    padding: 28px 10px;
   }
 
   .main-header h1 {
     font-size: 27px;
   }
-}
 
-
-button{
- background:#0284c7;
- color:white;
- border:0;
- padding:12px 16px;
- border-radius:9px;
- cursor:pointer;
-}
-input{
- width:100%;
- padding:14px;
- border:1px solid #bbb;
- border-radius:10px;
- font-size:16px;
-}
-
-
-.card{
- background:white;
- padding:17px;
- margin:10px 20px;
- border-radius:12px;
- box-shadow:0 2px 8px #0001;
- width:auto;
-}
-.card h3{
- color:#075985;
- font-size:17px;
- margin:0 0 10px;
- line-height:1.4;
-}
-
-.detail{
- margin:9px 0;
- line-height:1.6;
-}
-
-
-.detail{
- margin:9px 0;
- line-height:1.6;
- font-size:14px;
-}
-
-footer{
- background:#075985;
- color:white;
- text-align:center;
- padding:20px;
- margin-top:25px;
-}
-
-[dir="rtl"]{text-align:right}
-[dir="rtl"] .controls{flex-direction:row-reverse}
-
-.sticky-search{
-  width:100%;
-  max-width:100%;
-  margin:50;
-  box-sizing:border-box;
-  padding:15px 10px;
-}
-
-.search-row {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-  align-items: center;
-}
-
-.search-row input,
-.search-row select {
-  flex: 1;
-  width: 50%;
-  min-width: 0;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-  background: white;
-  font-size: 15px;
-}
-
-.search-row select {
-  width: 50%;
-  min-width: 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-  background: white;
-}
-
-.test-summary {
-  text-align: center;
-  font-weight: bold;
-}
-
-.test-summary p {
-  margin: 5px 0;
-}
-
-#backToTop {
-  display: none;
-  position: fixed;
-  bottom: 25px;
-  right: 20px;
-  z-index: 2000;
-  width: 48px;
-  height: 48px;
-  border: none;
-  border-radius: 50%;
-  background: #075985;
-  color: white;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-}
-
-
-
-.popup-overlay {
-  display: flex;
-  position: fixed;
-  inset: 0;
-  z-index: 5000;
-  background: rgba(0,0,0,0.75);
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-}
-
-.popup-box {
-  background: white;
-  width: 100%;
-  max-width: 550px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 22px;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-}
-
-.popup-box .important-note h2 {
-  color: #075985;
-  margin-top: 0;
-}
-
-.popup-box .important-note p,
-.popup-box .important-note li {
-  color: #333;
-  line-height: 1.6;
-  font-size: 14px;
-}
-
-.popup-box button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 15px;
-  background: #075985;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-main {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.sticky-search {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 15px 6px;
-  box-sizing: border-box;
-}
-
-#tests {
-  padding: 0 6px;
-  box-sizing: border-box;
-}
-
-
-
-
-/* Responsive Website Improvements */
-
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px;
-  flex-wrap: wrap;
-}
-
-.controls button {
-  min-width: 100px;
-}
-
-.search-row {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.search-row input,
-.search-row select {
-  flex: 1;
-  width: 0;
-  min-width: 0;
-}
-
-.card {
-  width: auto;
-  margin: 12px 10px;
-  overflow-wrap: break-word;
-}
-
-@media (max-width: 600px) {
-  .main-header {
-    padding: 25px 12px;
-  }
-
-  .main-header h1 {
-    font-size: 25px;
-  }
-
-  .sticky-search {
-    padding: 12px 10px;
-  }
-
-  .search-row {
-    gap: 7px;
-  }
-
-  .search-row input,
-  .search-row select {
-    font-size: 13px;
-    padding: 11px 7px;
-  }
-
-  .card {
-    margin: 10px 4px;
-    padding: 14px;
-  }
-
-  .card h3 {
-    font-size: 16px;
-  }
-
-  .detail {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 350px) {
   .search-row {
     flex-direction: column;
   }
@@ -344,112 +249,22 @@ main {
   .search-row select {
     width: 100%;
   }
-}
 
-
-.department-counts {
-  background: white;
-  margin: 15px 10px;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
-}
-
-.department-counts h2 {
-  text-align: center;
-  font-size: 19px;
-  color: #075985;
-  margin: 5px 0 15px;
-}
-
-#departmentCounts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.department-count-item {
-  background: #e0f2fe;
-  color: #075985;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.no-results {
-  text-align: center;
-  padding: 35px 15px;
-  color: #64748b;
-  border: 1px dashed #0891b2;
-  background: #f8fcff;
-}
-
-.no-results h3 {
-  color: #075985;
-  font-size: 21px;
-  margin-bottom: 10px;
-}
-
-
-.print-area {
-  display: none;
+  .card {
+    padding: 15px;
+  }
 }
 
 @media print {
-
-  @page {
-    margin: 10mm;
-  }
-
   body.print-single > * {
     display: none !important;
   }
 
-  body.print-single > .print-area {
+  body.print-single .print-area {
     display: block !important;
-    width: 100% !important;
-    background: white !important;
-    color: black !important;
-  }
-
-  .print-area .main-header {
-    display: block !important;
-    background: #075985 !important;
-    color: white !important;
-    text-align: center !important;
-    padding: 18px 10px !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .print-area .card {
-    display: block !important;
-    width: 100% !important;
-    color: black !important;
-    box-shadow: none !important;
-    border: 1px solid #ccc !important;
-    margin: 12px 0 !important;
-    page-break-inside: avoid;
-  }
-
-  .print-area .card * {
-    visibility: visible !important;
-    color: black !important;
-  }
-
-  .print-area footer {
-    display: block !important;
-    background: #075985 !important;
-    color: white !important;
-    text-align: center !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .print-area footer * {
-    color: white !important;
+    background: white;
+    color: black;
+    padding: 15px;
   }
 
   .print-area .print-test-btn {
@@ -459,777 +274,490 @@ main {
 </style>
 </head>
 
-<body>
-<header class="main-header">
-  <div class="header-content">
-
-    <div class="lab-icon">🔬</div>
-
-    <h1>Lab Knowledge</h1>
-
-    <p id="subtitle">
-      Laboratory Investigations Theory
-    </p>
-
-    <div class="header-tagline">
-      Learn • Understand • Explore
-    </div>
-
-  </div>
-</header>
-
-
-<main>
-<div class="controls">
-<button onclick="setLanguage('en')">English</button>
-<button onclick="setLanguage('ur')">اردو</button>
-</div>
-
-<div class="department-counts">
-  <h2>📊 Department-wise Test Count</h2>
-  <div id="departmentCounts"></div>
-</div>
-
-<div class="sticky-search">
-
-  <h2 id="heading" style="text-align:center;">
-    Search Laboratory Tests
-  </h2>
-
-  <div class="search-row">
-
-    <input id="search"
-      placeholder="Search test..."
-      oninput="showTests()">
-
-    <select id="departmentFilter"
-      onchange="showTests()">
-      <option value="">All Departments</option>
-    </select>
-
-  </div>
-
-  <div class="test-summary">
-    <p id="total">Loading tests...</p>
-    <p id="testCount">Total Tests: 0</p>
-  </div>
-
-</div>
-
-<div id="tests"></div>
-
-<button id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-  ↑
-</button>
-
-</main>
-
-<footer style="text-align:center; padding:6px; background:#075985; color:white; font-size:12px; margin-top:12px;">
-  <p style="margin:3px;">Developer by: Sadam H Mangnejo</p>
-  <small>Educational purpose only. Verify ranges with your laboratory.</small>
-</footer>
-
-<footer style="text-align:center; padding:5px; background:#075985; color:white; font-size:11px; margin-top:5px;">
-  Copyright © <span id="year"></span> Lab Knowledge. All Rights Reserved.
-</footer>
-
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-<script>
-const data = [
-{name:"CBC",department:"Hematology",ur:"خون کی مکمل جانچ",full:"Complete Blood Count",sample:"EDTA Blood",purpose:"Evaluates hemoglobin, red cells, white cells and platelets.",method:"Automated hematology analyzer; abnormal findings may be reviewed by peripheral blood smear.",range:"Male Hb 13.5–17.5; Female Hb 12–15.5 g/dL",info:"Helps assess anemia, infections and blood disorders.",infoUr:"خون کی کمی، انفیکشن اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
-{name:"Hemoglobin",department:"Hematology",full:"Hemoglobin Test",sample:"EDTA Blood",purpose:"Measures the oxygen-carrying protein in red blood cells.",method:"Automated hematology analyzer; cyanmethemoglobin method may also be used.",range:"Adult male: approximately 13.5–17.5; female: 12.0–15.5 g/dL",info:"Helps identify anemia and other blood disorders.",infoUr:"خون کی کمی اور خون کی دیگر بیماریوں کی شناخت میں مدد دیتا ہے۔"},
-{name:"WBC Count",department:"Hematology",full:"White Blood Cell Count",sample:"EDTA Blood",purpose:"Measures the number of white blood cells to help assess infection, inflammation and immune disorders.",method:"Automated hematology analyzer; abnormal results may be reviewed using a peripheral blood smear.",range:"Adults: approximately 4,000–11,000 cells/µL. Age-specific ranges apply to children.",info:"Helps investigate infections, inflammation and blood disorders.",infoUr:"انفیکشن، سوزش اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
-{name:"Platelet Count",department:"Hematology",full:"Platelet Count",sample:"EDTA Blood",purpose:"Measures platelet numbers to help assess bleeding and clotting disorders.",method:"Automated hematology analyzer; abnormal counts may require peripheral blood smear review.",range:"Adults: approximately 150,000–450,000/µL. Lab-specific ranges apply.",info:"Helps investigate low or high platelet counts and bleeding or clotting problems.",infoUr:"پلیٹلیٹس کی کمی یا زیادتی اور خون بہنے یا جمنے کے مسائل کی جانچ میں مدد دیتا ہے۔"},
-
-{name:"ESR",department:"Hematology",ur:"ای ایس آر",full:"Erythrocyte Sedimentation Rate",sample:"EDTA/Citrate Blood",purpose:"Measures how quickly red blood cells settle in a tube; used to help assess inflammation.",method:"Westergren method or an automated ESR analyzer.",range:"Method- and laboratory-specific. Typical Westergren adult values: men 0–15 mm/hr; women 0–20 mm/hr. Age can affect results.",info:"A nonspecific marker that may rise with inflammation, infection and some other conditions. It cannot diagnose a disease alone.",infoUr:"یہ سوزش کا عمومی اشارہ ہے۔ انفیکشن اور بعض دیگر بیماریوں میں بڑھ سکتا ہے، مگر اکیلے کسی بیماری کی تشخیص نہیں کرتا۔"},
-
-{name:"Random Blood Glucose (RBS)",department:"Clinical Chemistry",
-ur:"رینڈم بلڈ شوگر",
-full:"Random Blood Glucose",
-sample:"Fluoride Plasma",
-purpose:"Measures blood glucose at any time of the day, regardless of the last meal.",
-method:"Hexokinase or glucose oxidase enzymatic method.",
-range:"No single universal reference range. A random plasma glucose of ≥200 mg/dL with classic symptoms of hyperglycemia can meet diagnostic criteria for diabetes.",
-info:"Used to assess blood glucose and help investigate suspected diabetes or hyperglycemia.",
-infoUr:"دن کے کسی بھی وقت خون میں شوگر کی مقدار جانچنے کے لیے استعمال ہوتا ہے۔",
-note:"RBS ke liye fasting zaroori nahi. Sample din ke kisi bhi waqt liya ja sakta hai. Result ko symptoms aur clinical assessment ke sath interpret kiya jata hai."
+principle:"munoassay detects 25-hydroxy vitamin D in serum.",
+method:"Chemiluminescent immunoassay.",
+procedure:"Serum is analyzed using a validated immunoassay method.",
+range:"Interpret according to the laboratory's assay-specific reference interval.",
+info:"Used to assess vitamin D status and support evaluation of bone health.",
+note:"Vitamin D interpretation depends on clinical context."
 },
 
-{name:"Fasting Blood Glucose (FBS)",department:"Clinical Chemistry", ur:"خالی پیٹ شوگر",full:"Fasting Blood Glucose",sample:"Fluoride Plasma",purpose:"Measures blood glucose after at least 8 hours of fasting to screen for and monitor diabetes.",method:"Hexokinase or glucose oxidase enzymatic method.",range:"Normal: 70–99 mg/dL; Prediabetes: 100–125 mg/dL; Diabetes: ≥126 mg/dL (confirmation may be required).",info:"Helps screen for and monitor diabetes.",infoUr:"ذیابیطس کی جانچ اور نگرانی میں مدد دیتا ہے۔",note:"Fasting sample ke liye kam az kam 8 ghante fasting zaroori hai. Pani pi sakte hain. Diagnosis ke liye confirmatory testing zaroori ho sakti hai."},
+{
+name:"Vitamin B12",
+ur:"وٹامن بی 12",
+full:"Cobalamin",
+department:"Immunology",
+sample:"Serum",
+purpose:"Evaluates vitamin B12 status.",
+principle:"An immunoassay measures vitamin B12 concentration.",
+method:"Chemiluminescent immunoassay.",
+procedure:"Serum is analyzed using a validated immunoassay analyzer.",
+range:"Approximately 200–900 pg/mL; assay dependent.",
+info:"Low levels may be associated with megaloblastic anemia and neurological symptoms.",
+note:"Interpret with CBC and clinical findings."
+},
 
-{name:"HbA1c",department:"Clinical Chemistry", ur:"تین ماہ کی شوگر",full:"Glycated Hemoglobin",sample:"EDTA Blood",purpose:"Estimates average blood glucose over approximately the previous 2–3 months.",method:"High-performance liquid chromatography (HPLC), immunoassay or enzymatic method.",range:"Normal: Below 5.7%; Prediabetes: 5.7–6.4%; Diabetes: 6.5% or higher (diagnostic confirmation may be required).",info:"Used to screen for and monitor diabetes and long-term glucose control.",infoUr:"ذیابیطس کی جانچ اور گزشتہ دو سے تین ماہ کی اوسط شوگر کی نگرانی کے لیے استعمال ہوتا ہے۔",note:"Usually fasting is not required. Certain types of anemia and hemoglobin variants can affect results."},
+{
+name:"Ferritin",
+ur:"فیریٹن",
+full:"Serum Ferritin",
+department:"Clinical Chemistry",
+sample:"Serum",
+purpose:"Assesses the body's stored iron.",
+principle:"Antibody-based immunoassay measures ferritin.",
+method:"Chemiluminescent immunoassay.",
+procedure:"Serum is analyzed using an immunoassay analyzer.",
+range:"Age- and sex-dependent; consult local laboratory interval.",
+info:"Low ferritin commonly indicates depleted iron stores.",
+note:"Ferritin can increase during inflammation."
+},
 
-{name:"RBC Count",department:"Hematology",ur:"سرخ خون کے خلیات",full:"Red Blood Cell Count",sample:"EDTA Blood",purpose:"Measures the number of red blood cells in blood.",method:"Automated hematology analyzer.",range:"Adult male: approximately 4.5–5.9 million/µL; female: 4.1–5.1 million/µL.",info:"Helps evaluate anemia and other blood disorders.",infoUr:"خون کی کمی اور خون کی دیگر بیماریوں کی جانچ میں مدد دیتا ہے۔"},
+{
+name:"Serum Iron",
+ur:"سیرم آئرن",
+full:"Serum Iron",
+department:"Clinical Chemistry",
+sample:"Serum",
+purpose:"Measures circulating iron.",
+principle:"Iron is released from transferrin and forms a colored complex.",
+method:"Colorimetric method.",
+procedure:"Serum is processed on a chemistry analyzer.",
+range:"Laboratory and sex dependent.",
+info:"Used in the investigation of iron deficiency and iron overload.",
+note:"Interpret with ferritin, TIBC and transferrin saturation."
+},
 
-{name:"Hematocrit (HCT)",department:"Hematology",ur:"خون میں سرخ خلیات کا تناسب",full:"Hematocrit / Packed Cell Volume",sample:"EDTA Blood",purpose:"Measures the percentage of blood volume occupied by red blood cells.",method:"Automated hematology analyzer or microhematocrit method.",range:"Adult male: approximately 41–53%; female: 36–46%.",info:"Helps evaluate anemia and dehydration.",infoUr:"خون کی کمی اور پانی کی کمی کی جانچ میں مدد دیتا ہے۔"},
+{
+name:"TIBC",
+ur:"آئرن بائنڈنگ کی صلاحیت",
+full:"Total Iron Binding Capacity",
+department:"Clinical Chemistry",
+sample:"Serum",
+purpose:"Estimates the blood's capacity to bind iron.",
+principle:"Measures transferrin binding capacity using an iron-binding assay.",
+method:"Colorimetric method.",
+procedure:"Serum is analyzed using a validated chemistry method.",
+range:"Approximately 250–450 µg/dL; method dependent.",
+info:"Often increased in iron deficiency.",
+note:"Interpret with serum iron and ferritin."
+},
 
-{name:"Serum Creatinine",department:"Clinical Chemistry", ur:"سیرم کریٹینین",full:"Serum Creatinine",sample:"Serum",range:"Approximately 0.6–1.3 mg/dL",info:"Assesses kidney function.",infoUr:"گردوں کی کارکردگی کا جائزہ۔"},
-{name:"Blood Urea",department:"Clinical Chemistry", ur:"خون میں یوریا",full:"Blood Urea",sample:"Serum",range:"Approximately 15–40 mg/dL",info:"Measures blood urea.",infoUr:"خون میں یوریا کی مقدار۔"},
-{name:"BUN",ur:"بلڈ یوریا نائٹروجن",full:"Blood Urea Nitrogen",sample:"Serum",range:"Approximately 7–20 mg/dL",info:"Assesses kidney function.",infoUr:"گردوں کی جانچ۔"},
-{name:"ALT",department:"Clinical Chemistry", ur:"ایل اے ٹی",full:"Alanine Aminotransferase",sample:"Serum",range:"Often 7–56 U/L",info:"Liver enzyme assessment.",infoUr:"جگر کے انزائم کی جانچ۔"},
-{name:"AST",department:"Clinical Chemistry", ur:"اے ایس ٹی",full:"Aspartate Aminotransferase",sample:"Serum",range:"Often 10–40 U/L",info:"Liver and tissue enzyme.",infoUr:"جگر اور بافتوں کے انزائم کی جانچ۔"},
-{name:"TSH",ur:"تھائرائیڈ ہارمون",full:"Thyroid Stimulating Hormone",sample:"Serum",range:"Approximately 0.4–4.0 mIU/L",info:"Evaluates thyroid function.",infoUr:"تھائرائیڈ کی کارکردگی۔"},
-{name:"Vitamin D",ur:"وٹامن ڈی",full:"25-Hydroxy Vitamin D",sample:"Serum",range:"Lab and clinical context dependent",info:"Measures vitamin D status.",infoUr:"وٹامن ڈی کی سطح۔"},
-{name:"Vitamin B12",ur:"وٹامن بی 12",full:"Cobalamin",sample:"Serum",range:"Approximately 200–900 pg/mL",info:"Checks vitamin B12 status.",infoUr:"وٹامن بی 12 کی سطح۔"}
+{
+name:"PT",
+ur:"پروتھرومبن ٹائم",
+full:"Prothrombin Time",
+department:"Hematology",
+sample:"Citrate Plasma",
+purpose:"Evaluates the extrinsic and common coagulation pathways.",
+principle:"Tissue thromboplastin and calcium initiate clot formation.",
+method:"Coagulometer clot detection.",
+procedure:"Citrate plasma is tested using a validated coagulation analyzer.",
+range:"Often approximately 11–13.5 seconds; reagent dependent.",
+info:"Used to assess coagulation and monitor warfarin therapy through INR.",
+note:"Correct citrate tube filling is essential."
+},
+
+{
+name:"INR",
+ur:"انٹرنیشنل نارملائزڈ ریشو",
+full:"International Normalized Ratio",
+department:"Hematology",
+sample:"Citrate Plasma",
+purpose:"Standardizes PT results between laboratories.",
+principle:"Calculated from PT using the reagent's International Sensitivity Index.",
+method:"Calculated coagulation parameter.",
+procedure:"Reported from a validated PT result.",
+range:"Approximately 0.8–1.2 in people not receiving anticoagulants.",
+info:"Used particularly for monitoring vitamin K antagonist therapy.",
+note:"Therapeutic targets depend on the clinical indication."
+},
+
+{
+name:"APTT",
+ur:"ایکٹیویٹڈ پارشل تھرومبوپلاسٹن ٹائم",
+full:"Activated Partial Thromboplastin Time",
+department:"Hematology",
+sample:"Citrate Plasma",
+purpose:"Evaluates intrinsic and common coagulation pathways.",
+principle:"An activator, phospholipid and calcium initiate clot formation.",
+method:"Coagulometer.",
+procedure:"Citrate plasma is tested using a validated coagulation analyzer.",
+range:"Often approximately 25–35 seconds; reagent dependent.",
+info:"May be used to investigate bleeding disorders and monitor unfractionated heparin.",
+note:"Interpret according to reagent-specific reference intervals."
+},
+
+{
+name:"D-Dimer",
+ur:"ڈی ڈائمر",
+full:"D-Dimer",
+department:"Hematology",
+sample:"Citrate Plasma",
+purpose:"Detects fibrin breakdown products.",
+principle:"Antibodies detect cross-linked fibrin degradation products.",
+method:"Immunoturbidimetric or immunoassay method.",
+procedure:"Plasma is analyzed using the laboratory's validated method.",
+range:"Commonly below 500 ng/mL FEU; assay dependent.",
+info:"Can support assessment of suspected thrombosis in appropriate clinical pathways.",
+note:"An elevated result is nonspecific."
+},
+
+{
+name:"CRP",
+ur:"سی ری ایکٹو پروٹین",
+full:"C-Reactive Protein",
+department:"Immunology",
+sample:"Serum",
+purpose:"Measures a protein that increases during inflammation.",
+principle:"Antibody binding produces measurable turbidity.",
+method:"Immunoturbidimetric method.",
+procedure:"Serum is analyzed using a chemistry or immunology analyzer.",
+range:"Often below 5 mg/L; laboratory dependent.",
+info:"May increase in infection and inflammatory conditions.",
+note:"CRP does not identify the cause of inflammation."
+},
+
+{
+name:"ASO Titre",
+ur:"اے ایس او ٹائٹر",
+full:"Antistreptolysin O",
+department:"Serology",
+sample:"Serum",
+purpose:"Detects antibodies produced against streptolysin O.",
+principle:"Antibody reaction with streptolysin O antigen is measured.",
+method:"Latex agglutination or quantitative immunoassay.",
+procedure:"Serum is tested using the laboratory's validated kit.",
+range:"Method and age dependent.",
+info:"May support evidence of a recent streptococcal infection.",
+note:"A single result must be interpreted with symptoms and history."
+},
+
+{
+name:"Rheumatoid Factor",
+ur:"رمیٹائڈ فیکٹر",
+full:"Rheumatoid Factor",
+department:"Immunology",
+sample:"Serum",
+purpose:"Detects autoantibodies associated with rheumatoid arthritis.",
+principle:"RF antibodies react with immunoglobulin components.",
+method:"Latex agglutination or immunoturbidimetry.",
+procedure:"Serum is tested using a validated method.",
+range:"Often below 14 IU/mL; assay dependent.",
+info:"May be positive in rheumatoid arthritis and other conditions.",
+note:"A negative result does not exclude rheumatoid arthritis."
+},
+
+{
+name:"Anti-CCP",
+ur:"اینٹی سی سی پی",
+full:"Anti-Cyclic Citrullinated Peptide Antibody",
+department:"Immunology",
+sample:"Serum",
+purpose:"Detects antibodies associated with rheumatoid arthritis.",
+principle:"Specific citrullinated peptide antigens bind patient antibodies.",
+method:"ELISA or chemiluminescent immunoassay.",
+procedure:"Serum is processed using a validated antibody assay.",
+range:"Assay-specific.",
+info:"Can support diagnosis and risk assessment of rheumatoid arthritis.",
+note:"Interpret with clinical examination and other findings."
+},
+
+{
+name:"HBsAg",
+ur:"ہیپاٹائٹس بی سطحی اینٹی جن",
+full:"Hepatitis B Surface Antigen",
+department:"Serology",
+sample:"Serum",
+purpose:"Screens for current hepatitis B infection.",
+principle:"Antibodies capture hepatitis B surface antigen.",
+method:"Chemiluminescent immunoassay or rapid immunochromatography.",
+procedure:"Serum is tested using an approved screening assay.",
+range:"Non-reactive.",
+info:"A reactive screening result requires appropriate confirmatory and clinical evaluation.",
+note:"Interpret with the complete hepatitis B marker profile."
+},
+
+{
+name:"Anti-HCV",
+ur:"ہیپاٹائٹس سی اینٹی باڈی",
+full:"Hepatitis C Antibody",
+department:"Serology",
+sample:"Serum",
+purpose:"Screens for antibodies against hepatitis C virus.",
+principle:"Viral antigens detect patient antibodies.",
+method:"Immunoassay or rapid test.",
+procedure:"Serum is tested using a validated screening method.",
+range:"Non-reactive.",
+info:"A reactive result indicates exposure and requires HCV RNA testing to assess current infection.",
+note:"Antibody positivity alone does not prove active infection."
+},
+
+{
+name:"HIV 1&2",
+ur:"ایچ آئی وی ون اور ٹو",
+full:"Human Immunodeficiency Virus Type 1 and 2",
+department:"Serology",
+sample:"Serum or plasma",
+purpose:"Screens for HIV infection.",
+principle:"Assay detects HIV antibodies and, in fourth-generation tests, p24 antigen.",
+method:"Fourth-generation immunoassay or approved rapid test.",
+procedure:"Testing follows the validated screening and confirmatory algorithm.",
+range:"Non-reactive.",
+info:"Reactive screening results require further testing according to national guidelines.",
+note:"Consider the window period and appropriate follow-up."
+},
+
+{
+name:"Urine R/E",
+ur:"پیشاب کا مکمل معائنہ",
+full:"Urine Routine Examination",
+department:"Urine Examination",
+sample:"Fresh midstream urine",
+purpose:"Evaluates physical, chemical and microscopic urine characteristics.",
+principle:"Dipstick chemistry and microscopic examination identify urine components.",
+method:"Physical, chemical and microscopic examination.",
+procedure:"A fresh specimen is examined according to the laboratory's validated SOP.",
+range:"Depends on parameter; normally negative chemical findings and limited cells.",
+info:"May support evaluation of urinary infection, kidney disorders and metabolic conditions.",
+note:"Proper collection helps prevent contamination."
+},
+
+{
+name:"Urine Culture",
+ur:"پیشاب کلچر",
+full:"Urine Culture and Sensitivity",
+department:"Microbiology",
+sample:"Fresh midstream urine",
+purpose:"Detects bacterial growth and helps guide antibiotic selection.",
+principle:"Microorganisms grow on suitable culture media and are identified.",
+method:"Culture and antimicrobial susceptibility testing.",
+procedure:"The specimen is processed by trained microbiology staff using validated procedures.",
+range:"No significant bacterial growth.",
+info:"Used in investigation of suspected urinary tract infection.",
+note:"Collection before antibiotics may improve diagnostic yield."
+},
+
+{
+name:"Stool R/E",
+ur:"پاخانے کا مکمل معائنہ",
+full:"Stool Routine Examination",
+department:"Stool Examination",
+sample:"Fresh stool",
+purpose:"Examines stool for parasites, blood, mucus and other abnormalities.",
+principle:"Macroscopic and microscopic examination identifies visible and microscopic findings.",
+method:"Macroscopic and microscopic examination.",
+procedure:"The specimen is examined in accordance with laboratory SOP.",
+range:"No parasites or abnormal findings expected.",
+info:"May help investigate diarrhea, intestinal parasites and gastrointestinal symptoms.",
+note:"A single negative specimen may not exclude parasitic infection."
+},
+
+{
+name:"Dengue NS1",
+ur:"ڈینگی این ایس ون",
+full:"Dengue Non-Structural Protein 1 Antigen",
+department:"Serology",
+sample:"Serum or plasma",
+purpose:"Detects dengue NS1 antigen, especially early in infection.",
+principle:"Antigen binds specific antibodies in an immunoassay.",
+method:"Rapid immunochromatographic test or ELISA.",
+procedure:"The specimen is tested according to the kit manufacturer's validated instructions.",
+range:"Non-reactive.",
+info:"A positive result supports acute dengue infection.",
+note:"Test selection depends on the day of illness."
+},
+
+{
+name:"Malaria Parasite",
+ur:"ملیریا پیراسائٹ",
+full:"Malaria Parasite Examination",
+department:"Hematology",
+sample:"EDTA Whole Blood",
+purpose:"Detects malaria parasites in blood.",
+principle:"Parasites are visualized in stained blood films.",
+method:"Thick and thin blood film microscopy.",
+procedure:"Prepared blood films are stained and examined by trained microscopy staff.",
+range:"No malaria parasites seen.",
+info:"Helps diagnose malaria and may assist species identification.",
+note:"Repeat testing may be needed if suspicion remains high."
+},
+
+{
+name:"Blood Culture",
+ur:"بلڈ کلچر",
+full:"Blood Culture",
+department:"Microbiology",
+sample:"Blood collected into culture bottles",
+purpose:"Detects microorganisms in the bloodstream.",
+principle:"Microorganisms grow in specialized culture systems.",
+method:"Automated culture followed by identification and susceptibility testing.",
+procedure:"Collection and processing must follow strict aseptic procedures and laboratory SOPs.",
+range:"No growth.",
+info:"Important in investigation of suspected bloodstream infection.",
+note:"Interpret possible contaminants carefully."
+},
+
+{
+name:"Troponin I",
+ur:"ٹروپونن آئی",
+full:"Cardiac Troponin I",
+department:"Clinical Chemistry",
+sample:"Serum or plasma",
+purpose:"Detects heart muscle injury.",
+principle:"Specific antibodies measure cardiac troponin I.",
+method:"High-sensitivity immunoassay.",
+procedure:"Serum or plasma is tested using a validated cardiac marker analyzer.",
+range:"Assay-specific 99th percentile upper reference limit.",
+info:"Used in evaluation of suspected myocardial injury.",
+note:"Serial measurements and clinical assessment are important."
+},
+
+{
+name:"PSA",
+ur:"پروسٹیٹ مخصوص اینٹی جن",
+full:"Prostate Specific Antigen",
+department:"Immunology",
+sample:"Serum",
+purpose:"Measures prostate-specific antigen.",
+principle:"Antibody-based immunoassay detects PSA.",
+method:"Chemiluminescent immunoassay.",
+procedure:"Serum is analyzed using a validated immunoassay analyzer.",
+range:"Age and clinical context dependent.",
+info:"May be used in prostate disease assessment and monitoring.",
+note:"PSA is not specific for cancer."
+},
+
+{
+name:"Beta-hCG",
+ur:"بیٹا ایچ سی جی",
+full:"Beta Human Chorionic Gonadotropin",
+department:"Immunology",
+sample:"Serum",
+purpose:"Detects and measures pregnancy-associated hormone.",
+principle:"Antibodies detect beta-hCG.",
+method:"Quantitative immunoassay.",
+procedure:"Serum is analyzed using a validated immunoassay.",
+range:"Non-pregnant individuals usually have levels below the assay's negative threshold.",
+info:"Used in pregnancy assessment and selected medical evaluations.",
+note:"Interpret with pregnancy timing and clinical findings."
+}
+
 ];
 
-function setLanguage(lang){
-document.documentElement.lang=lang;
-document.documentElement.dir=lang==="ur"?"rtl":"ltr";
-document.getElementById("subtitle").textContent=
-lang==="ur"?"لیبارٹری ٹیسٹ کی معلومات":"Laboratory Investigations Theory";
-document.getElementById("heading").textContent=
-lang==="ur"?"لیبارٹری ٹیسٹ تلاش کریں":"Search Laboratory Tests";
-document.getElementById("search").placeholder=
-lang==="ur"?"ٹیسٹ تلاش کریں":"Search test name...";
-showTests();
-}
-
-function showTests(){
-const q=document.getElementById("search").value.toLowerCase();
-const lang=document.documentElement.lang;
-const uniqueData = [...new Map(
-data.map(t => [t.name.toLowerCase().trim(), t])
-).values()];
-
-const filtered = uniqueData.filter(t =>
-(t.name+" "+t.ur+" "+t.full).toLowerCase().includes(q)
-);
-document.getElementById("total").textContent=
-"Showing "+filtered.length+" of "+uniqueData.length+" tests";
-document.getElementById("testCount").innerText =
-"Total Tests: " + uniqueData.length;
-document.getElementById("tests").innerHTML=filtered.map(t=>`
-
-<div class="card">
-<h3>${t.name} / ${t.ur}</h3>
-<p><b>Full Form:</b> ${t.full}</p>
-<p><b>Specimen / نمونہ:</b> ${t.sample}</p>
-<p><b>Purpose / مقصد:</b> ${t.purpose || "Not added yet"}</p>
-<p><b>Methodology / طریقہ کار:</b> ${t.method || "Not added yet"}</p>
-<p><b>Reference Range / نارمل حد:</b> ${t.range}</p>
-<p><b>Important Note / اہم نوٹ:</b> ${t.note || "Please consult a qualified healthcare professional."}</p>
-<p><b>${lang==="ur"?"طبی اہمیت":"Clinical Significance"}:</b> ${lang==="ur"?t.infoUr:t.info}</p>
-</div>
-
-`).join("")||"<p>No test found.</p>";
-}
-showTests();
-
-
-window.addEventListener("scroll", function() {
-  const btn = document.getElementById("backToTop");
-
-  if (window.scrollY > 300) {
-    btn.style.display = "block";
-  } else {
-    btn.style.display = "none";
-  }
-});
-
-
-
-function closeImportantPopup() {
-  document.getElementById("importantPopup").style.display = "none";
-}
-
-
 </script>
 
 
 <script>
-data.push(
 
-{name:"MCV",ur:"ایم سی وی",full:"Mean Corpuscular Volume",sample:"EDTA Blood",range:"80–100 fL",info:"Measures average red cell size.",infoUr:"سرخ خلیات کا اوسط سائز۔"},
-
-{name:"MCH",ur:"ایم سی ایچ",full:"Mean Corpuscular Hemoglobin",sample:"EDTA Blood",range:"27–33 pg",info:"Measures average hemoglobin per red cell.",infoUr:"ہر سرخ خلیے میں ہیموگلوبن کی مقدار۔"},
-
-{name:"MCHC",ur:"ایم سی ایچ سی",full:"Mean Corpuscular Hemoglobin Concentration",sample:"EDTA Blood",range:"32–36 g/dL",info:"Measures hemoglobin concentration in red cells.",infoUr:"سرخ خلیات میں ہیموگلوبن کا ارتکاز۔"},
-
-{name:"RDW",ur:"آر ڈی ڈبلیو",full:"Red Cell Distribution Width",sample:"EDTA Blood",range:"Approximately 11.5–14.5%",info:"Measures variation in red cell size.",infoUr:"سرخ خلیات کے سائز میں فرق۔"},
-
-{name:"Neutrophils",ur:"نیوٹروفِلز",full:"Neutrophil Count",sample:"EDTA Blood",range:"Approximately 40–70% of WBCs",info:"A type of white blood cell.",infoUr:"سفید خون کے خلیات کی ایک قسم۔"},
-
-{name:"Lymphocytes",ur:"لمفوسائٹس",full:"Lymphocyte Count",sample:"EDTA Blood",range:"Approximately 20–40% of WBCs",info:"Important immune system cells.",infoUr:"مدافعتی نظام کے اہم خلیات۔"},
-
-{name:"Eosinophils",ur:"ایوزینوفِلز",full:"Eosinophil Count",sample:"EDTA Blood",range:"Approximately 1–4% of WBCs",info:"May increase in allergies and some infections.",infoUr:"الرجی اور بعض انفیکشن میں بڑھ سکتے ہیں۔"},
-
-{name:"Basophils",ur:"بیسوفِلز",full:"Basophil Count",sample:"EDTA Blood",range:"Approximately 0–1% of WBCs",info:"Participate in allergic responses.",infoUr:"الرجی کے ردعمل میں حصہ لیتے ہیں۔"},
-
-{name:"Monocytes",ur:"مونوسائٹس",full:"Monocyte Count",sample:"EDTA Blood",range:"Approximately 2–8% of WBCs",info:"Help remove germs and damaged cells.",infoUr:"جراثیم اور خراب خلیات کو ختم کرنے میں مدد۔"},
-
-{name:"Total Bilirubin",department:"Clinical Chemistry", ur:"ٹوٹل بلیروبن",full:"Total Bilirubin",sample:"Serum",range:"Approximately 0.1–1.2 mg/dL",info:"Helps assess jaundice and liver function.",infoUr:"یرقان اور جگر کی جانچ۔"},
-
-{name:"Direct Bilirubin",department:"Clinical Chemistry", ur:"ڈائریکٹ بلیروبن",full:"Conjugated Bilirubin",sample:"Serum",range:"Approximately 0–0.3 mg/dL",info:"Measures conjugated bilirubin.",infoUr:"ڈائریکٹ بلیروبن کی مقدار۔"},
-
-{name:"Indirect Bilirubin", ur:"ان ڈائریکٹ بلیروبن",full:"Unconjugated Bilirubin",sample:"Serum",range:"Calculated value; lab dependent",info:"Calculated from total and direct bilirubin.",infoUr:"ٹوٹل اور ڈائریکٹ بلیروبن سے حساب کیا جاتا ہے۔"},
-
-{name:"ALP",department:"Clinical Chemistry", ur:"اے ایل پی",full:"Alkaline Phosphatase",sample:"Serum",range:"Often 44–147 U/L in adults",info:"Helps assess liver and bone conditions.",infoUr:"جگر اور ہڈیوں کی جانچ۔"},
-
-{name:"GGT",department:"Clinical Chemistry", ur:"جی جی ٹی",full:"Gamma Glutamyl Transferase",sample:"Serum",range:"Method and sex dependent; often 5–55 U/L",info:"Enzyme used in liver and bile duct assessment.",infoUr:"جگر اور صفراوی نالیوں کی جانچ۔"},
-
-{name:"Total Protein",department:"Clinical Chemistry", ur:"ٹوٹل پروٹین",full:"Total Serum Protein",sample:"Serum",range:"Approximately 6.0–8.3 g/dL",info:"Measures major blood proteins.",infoUr:"خون کے اہم پروٹین کی مقدار۔"},
-
-{name:"Albumin",department:"Clinical Chemistry", ur:"البیومن",full:"Serum Albumin",sample:"Serum",range:"Approximately 3.5–5.0 g/dL",info:"Helps assess liver, kidney and nutritional status.",infoUr:"جگر، گردوں اور غذائیت کا جائزہ۔"},
-
-{name:"Globulin",ur:"گلوبیولن",full:"Serum Globulin",sample:"Serum",range:"Approximately 2.0–3.5 g/dL",info:"Includes several blood proteins.",infoUr:"خون کے مختلف پروٹین کا مجموعہ۔"},
-
-{name:"A/G Ratio",ur:"البیومن گلوبیولن تناسب",full:"Albumin Globulin Ratio",sample:"Serum",range:"Approximately 1.0–2.2",info:"Compares albumin and globulin levels.",infoUr:"البیومن اور گلوبیولن کا تناسب۔"},
-
-{name:"Uric Acid",department:"Clinical Chemistry", ur:"یورک ایسڈ",full:"Serum Uric Acid",sample:"Serum",range:"Male 3.4–7.0; Female 2.4–6.0 mg/dL",info:"Used in gout assessment.",infoUr:"گاؤٹ اور یورک ایسڈ کی جانچ۔"},
-
-{name:"Sodium",department:"Clinical Chemistry", ur:"سوڈیم",full:"Serum Sodium",sample:"Serum",range:"135–145 mmol/L",info:"Important blood electrolyte.",infoUr:"خون کا اہم الیکٹرولائٹ۔"},
-
-{name:"Potassium",department:"Clinical Chemistry", ur:"پوٹاشیم",full:"Serum Potassium",sample:"Serum",range:"3.5–5.0 mmol/L",info:"Important for muscle and heart function.",infoUr:"دل اور پٹھوں کے کام کے لیے ضروری۔"},
-
-{name:"Chloride",department:"Clinical Chemistry", ur:"کلورائیڈ",full:"Serum Chloride",sample:"Serum",range:"98–106 mmol/L",info:"Helps maintain fluid and acid-base balance.",infoUr:"جسم میں پانی اور تیزابیت کا توازن۔"},
-
-{name:"Calcium",department:"Clinical Chemistry", ur:"کیلشیم",full:"Total Serum Calcium",sample:"Serum",range:"Approximately 8.5–10.5 mg/dL",info:"Important for bones and muscles.",infoUr:"ہڈیوں اور پٹھوں کے لیے ضروری۔"},
-
-{name:"Phosphorus",department:"Clinical Chemistry", ur:"فاسفورس",full:"Serum Phosphorus",sample:"Serum",range:"Adults approximately 2.5–4.5 mg/dL",info:"Important for bones and energy.",infoUr:"ہڈیوں اور توانائی کے لیے ضروری۔"},
-
-{name:"Magnesium",department:"Clinical Chemistry", ur:"میگنیشیم",full:"Serum Magnesium",sample:"Serum",range:"Approximately 1.7–2.2 mg/dL",info:"Supports nerve and muscle function.",infoUr:"اعصاب اور پٹھوں کے کام میں مدد۔"},
-
-{name:"Total Cholesterol",department:"Clinical Chemistry", ur:"ٹوٹل کولیسٹرول",full:"Total Cholesterol",sample:"Serum",range:"Desirable: Below 200 mg/dL",info:"Measures total blood cholesterol.",infoUr:"خون میں کل کولیسٹرول۔"},
-
-{name:"HDL Cholesterol",ur:"ایچ ڈی ایل کولیسٹرول",full:"High Density Lipoprotein",sample:"Serum",range:"Generally 40+ mg/dL in men; 50+ in women",info:"Known as good cholesterol.",infoUr:"اچھا کولیسٹرول کہلاتا ہے۔"},
-
-{name:"LDL Cholesterol",ur:"ایل ڈی ایل کولیسٹرول",full:"Low Density Lipoprotein",sample:"Serum",range:"Optimal: Below 100 mg/dL",info:"A cardiovascular risk marker.",infoUr:"دل کی بیماری کے خطرے کا ایک اشارہ۔"},
-
-{name:"Triglycerides",department:"Clinical Chemistry", ur:"ٹرائی گلیسرائیڈز",full:"Serum Triglycerides",sample:"Serum",range:"Normal fasting: Below 150 mg/dL",info:"Measures blood fats.",infoUr:"خون میں چکنائی کی مقدار۔"},
-
-{name:"VLDL",ur:"وی ایل ڈی ایل",full:"Very Low Density Lipoprotein",sample:"Serum",range:"Often 5–40 mg/dL; calculated or measured",info:"Transports triglycerides in blood.",infoUr:"خون میں ٹرائی گلیسرائیڈز منتقل کرتا ہے۔"}
-
-);
-showTests();
-</script>
-
-
-<script>
-data.push(
-
-{name:"T3",ur:"ٹی تھری",full:"Triiodothyronine",sample:"Serum",range:"Approximately 80–200 ng/dL",info:"Thyroid hormone measurement.",infoUr:"تھائرائیڈ ہارمون کی مقدار۔"},
-
-{name:"T4",ur:"ٹی فور",full:"Thyroxine",sample:"Serum",range:"Approximately 5–12 µg/dL",info:"Measures total thyroxine.",infoUr:"تھائروکسین ہارمون کی جانچ۔"},
-
-{name:"Free T3",ur:"فری ٹی تھری",full:"Free Triiodothyronine",sample:"Serum",range:"Approximately 2.0–4.4 pg/mL",info:"Measures unbound T3 hormone.",infoUr:"آزاد ٹی تھری ہارمون کی مقدار۔"},
-
-{name:"Free T4",ur:"فری ٹی فور",full:"Free Thyroxine",sample:"Serum",range:"Approximately 0.8–1.8 ng/dL",info:"Measures unbound T4 hormone.",infoUr:"آزاد ٹی فور ہارمون کی مقدار۔"},
-
-{name:"Anti TPO",ur:"اینٹی ٹی پی او",full:"Anti Thyroid Peroxidase Antibodies",sample:"Serum",range:"Often below 35 IU/mL; assay dependent",info:"Helps assess autoimmune thyroid disease.",infoUr:"تھائرائیڈ کی خودکار مدافعتی بیماری کی جانچ۔"},
-
-{name:"Anti Thyroglobulin",ur:"اینٹی تھائروگلوبیولن",full:"Anti Thyroglobulin Antibodies",sample:"Serum",range:"Assay dependent",info:"Measures thyroid antibodies.",infoUr:"تھائرائیڈ کے خلاف اینٹی باڈیز کی جانچ۔"},
-
-{name:"Troponin I",department:"Clinical Chemistry", ur:"ٹروپونن آئی",full:"Cardiac Troponin I",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Helps detect heart muscle injury.",infoUr:"دل کے پٹھوں کو نقصان پہنچنے کی جانچ۔"},
-
-{name:"Troponin T",ur:"ٹروپونن ٹی",full:"Cardiac Troponin T",sample:"Serum/Plasma",range:"Assay-specific; use laboratory 99th percentile",info:"Marker of heart muscle injury.",infoUr:"دل کے پٹھوں کی چوٹ کا اشارہ۔"},
-
-{name:"CK-MB",department:"Clinical Chemistry", ur:"سی کے ایم بی",full:"Creatine Kinase MB",sample:"Serum",range:"Method dependent",info:"Cardiac muscle injury marker.",infoUr:"دل کے پٹھوں کی چوٹ کی جانچ۔"},
-
-{name:"CPK", ur:"سی پی کے",full:"Creatine Phosphokinase",sample:"Serum",range:"Often 30–200 U/L; sex and method dependent",info:"Measures an enzyme found in muscles.",infoUr:"پٹھوں میں پائے جانے والے انزائم کی جانچ۔"},
-
-{name:"LDH",department:"Clinical Chemistry", ur:"ایل ڈی ایچ",full:"Lactate Dehydrogenase",sample:"Serum",range:"Often 140–280 U/L; method dependent",info:"Enzyme released from damaged tissues.",infoUr:"خراب بافتوں سے خارج ہونے والا انزائم۔"},
-
-{name:"CK (CPK)",department:"Clinical Chemistry",ur:"کریٹائن کائنیز",full:"Creatine Kinase",sample:"Serum",purpose:"Measures an enzyme found mainly in skeletal muscle, heart and brain.",method:"Enzymatic kinetic assay.",range:"Laboratory-specific reference range; varies by sex and method.",info:"Helps investigate muscle injury and muscle disorders.",infoUr:"پٹھوں کی چوٹ اور بیماریوں کی جانچ میں مدد دیتا ہے۔"},
-{name:"Procalcitonin (PCT)",department:"Clinical Chemistry",ur:"پروکیلسیٹونن",full:"Procalcitonin Test",sample:"Serum or plasma",purpose:"Measures procalcitonin levels to support assessment of bacterial infection.",method:"Immunoassay.",range:"Usually below 0.05 ng/mL in healthy individuals; assay-specific.",info:"Supports assessment of systemic bacterial infection and sepsis.",infoUr:"بیکٹیریل انفیکشن اور سیپسس کی جانچ میں مدد دیتا ہے۔"},
-
-{name:"BNP",ur:"بی این پی",full:"B-type Natriuretic Peptide",sample:"EDTA Plasma",range:"Below 100 pg/mL often used in acute assessment",info:"Helps assess heart failure.",infoUr:"دل کی کمزوری کے جائزے میں مدد۔"},
-
-{name:"NT-proBNP",ur:"این ٹی پرو بی این پی",full:"N-terminal pro B-type Natriuretic Peptide",sample:"Serum/Plasma",range:"Age and clinical context dependent",info:"Helps assess heart failure.",infoUr:"دل کی کمزوری کی جانچ۔"},
-
-{name:"Serum Iron",ur:"سیرم آئرن",full:"Serum Iron",sample:"Serum",range:"Male approximately 65–175; Female 50–170 µg/dL",info:"Measures circulating iron.",infoUr:"خون میں گردش کرنے والے آئرن کی مقدار۔"},
-
-{name:"Ferritin",ur:"فیریٹن",full:"Serum Ferritin",sample:"Serum",range:"Male approximately 30–400; Female 15–150 ng/mL",info:"Reflects stored body iron.",infoUr:"جسم میں ذخیرہ شدہ آئرن کی مقدار۔"},
-
-{name:"TIBC",ur:"ٹی آئی بی سی",full:"Total Iron Binding Capacity",sample:"Serum",range:"Approximately 250–450 µg/dL",info:"Measures iron-binding capacity.",infoUr:"آئرن باندھنے کی صلاحیت کی جانچ۔"},
-
-{name:"Transferrin",ur:"ٹرانسفرین",full:"Serum Transferrin",sample:"Serum",range:"Approximately 200–360 mg/dL",info:"Transports iron in blood.",infoUr:"خون میں آئرن منتقل کرتا ہے۔"},
-
-{name:"Transferrin Saturation",ur:"ٹرانسفرین سیچوریشن",full:"Transferrin Saturation",sample:"Serum",range:"Approximately 20–50%",info:"Shows percentage of iron-binding sites occupied.",infoUr:"آئرن سے بھرے ٹرانسفرین کا تناسب۔"},
-
-{name:"PT",department:"Hematology", ur:"پی ٹی",full:"Prothrombin Time",sample:"Citrated Plasma",range:"Approximately 11–13.5 seconds",info:"Evaluates blood clotting pathway.",infoUr:"خون جمنے کے عمل کی جانچ۔"},
-
-{name:"INR",ur:"آئی این آر",full:"International Normalized Ratio",sample:"Citrated Plasma",range:"Usually 0.8–1.2 without anticoagulants",info:"Standardized clotting measurement.",infoUr:"خون جمنے کی معیاری پیمائش۔"},
-
-{name:"APTT",department:"Hematology", ur:"اے پی ٹی ٹی",full:"Activated Partial Thromboplastin Time",sample:"Citrated Plasma",range:"Approximately 25–35 seconds",info:"Evaluates intrinsic clotting pathway.",infoUr:"خون جمنے کے اندرونی راستے کی جانچ۔"},
-
-{name:"D-Dimer",department:"Hematology", ur:"ڈی ڈائمر",full:"D-Dimer",sample:"Citrated Plasma",range:"Often below 500 ng/mL FEU; assay dependent",info:"Used in assessment of possible blood clots.",infoUr:"خون کے لوتھڑوں کے جائزے میں مدد۔"},
-
-{name:"Fibrinogen",ur:"فائبرینوجن",full:"Plasma Fibrinogen",sample:"Citrated Plasma",range:"Approximately 200–400 mg/dL",info:"Protein involved in blood clotting.",infoUr:"خون جمانے میں اہم پروٹین۔"},
-
-{name:"Urine R/E",ur:"پیشاب کا مکمل معائنہ",full:"Urine Routine Examination",sample:"Fresh Midstream Urine",range:"Protein, glucose, ketones and blood: Negative; microscopy lab dependent",info:"Checks urine physical, chemical and microscopic features.",infoUr:"پیشاب کی ظاہری، کیمیائی اور خردبینی جانچ۔"},
-
-{name:"Urine Protein",ur:"پیشاب میں پروٹین",full:"Urine Protein",sample:"Urine",range:"Negative or trace on dipstick",info:"Screens for protein in urine.",infoUr:"پیشاب میں پروٹین کی جانچ۔"},
-
-{name:"Urine Glucose",ur:"پیشاب میں شوگر",full:"Urine Glucose",sample:"Urine",range:"Negative",info:"Detects glucose in urine.",infoUr:"پیشاب میں شوگر کی موجودگی۔"},
-
-{name:"Urine Ketones",ur:"پیشاب میں کیٹونز",full:"Urine Ketone Bodies",sample:"Urine",range:"Negative",info:"Detects ketone bodies.",infoUr:"پیشاب میں کیٹونز کی جانچ۔"},
-
-{name:"Urine Pregnancy Test",ur:"حمل کا ٹیسٹ",full:"Urine Human Chorionic Gonadotropin",sample:"Urine",range:"Negative when hCG is not detected",info:"Detects pregnancy hormone hCG.",infoUr:"حمل کے ہارمون ایچ سی جی کی جانچ۔"},
-
-{name:"Urine Culture",ur:"پیشاب کا کلچر",full:"Urine Culture and Sensitivity",sample:"Sterile Midstream Urine",range:"No significant bacterial growth",info:"Identifies urinary infection and antibiotic sensitivity.",infoUr:"پیشاب کے انفیکشن اور مؤثر اینٹی بایوٹک کی جانچ۔"},
-
-{name:"eGFR",department:"Clinical Chemistry",ur:"گردوں کی فلٹریشن کی شرح",full:"Estimated Glomerular Filtration Rate",sample:"Serum",purpose:"Estimates kidney filtration function.",method:"Calculated using serum creatinine, age and sex with an appropriate validated equation.",range:"Usually ≥90 mL/min/1.73 m² in healthy young adults; age and clinical context matter.",info:"Helps assess and monitor kidney function.",infoUr:"گردوں کی کارکردگی جانچنے میں مدد دیتا ہے۔"},
-
-{name:"Electrolytes Profile",department:"Clinical Chemistry",ur:"الیکٹرولائٹس کی جانچ",full:"Serum Electrolytes Profile",sample:"Serum or plasma",purpose:"Measures sodium, potassium and chloride levels.",method:"Ion-selective electrode (ISE).",range:"Na: 135–145, K: 3.5–5.0, Cl: 98–106 mmol/L (lab dependent).",info:"Helps assess fluid balance and electrolyte disturbances.",infoUr:"جسم میں پانی اور نمکیات کا توازن جانچنے میں مدد دیتا ہے۔"},
-
-{name:"Ammonia",department:"Clinical Chemistry",ur:"امونیا ٹیسٹ",full:"Plasma Ammonia Test",sample:"EDTA plasma (special collection and rapid processing required)",purpose:"Measures ammonia concentration in blood.",method:"Enzymatic assay.",range:"Laboratory-specific; commonly approximately 15–45 µmol/L in adults.",info:"Helps investigate certain liver disorders and urea-cycle disorders.",infoUr:"جگر اور یوریا سائیکل کی بعض بیماریوں کی جانچ میں مدد دیتا ہے۔"},
-
-{name:"Stool R/E",ur:"پاخانے کا معائنہ",full:"Stool Routine Examination",sample:"Stool",range:"No blood or parasites; findings depend on examination",info:"Checks stool for parasites and abnormalities.",infoUr:"پاخانے میں پیراسائٹس اور غیر معمولی چیزوں کی جانچ۔"}
-
-);
-
-showTests();
-</script>
-
-
-<script>
-data.push(
-
-{name:"HBsAg",ur:"ہیپاٹائٹس بی سطحی اینٹیجن",full:"Hepatitis B Surface Antigen",sample:"Serum",range:"Non-reactive",info:"Screens for current hepatitis B infection.",infoUr:"ہیپاٹائٹس بی کے موجودہ انفیکشن کی اسکریننگ۔"},
-
-{name:"Anti-HCV",ur:"ہیپاٹائٹس سی اینٹی باڈی",full:"Hepatitis C Antibody",sample:"Serum",range:"Non-reactive",info:"Screens for exposure to hepatitis C.",infoUr:"ہیپاٹائٹس سی سے سابقہ واسطے کی جانچ۔"},
-
-{name:"HBeAg",ur:"ایچ بی ای اینٹیجن",full:"Hepatitis B e Antigen",sample:"Serum",range:"Non-reactive",info:"Helps assess hepatitis B viral replication.",infoUr:"ہیپاٹائٹس بی وائرس کی افزائش کا جائزہ۔"},
-
-{name:"Anti-HBs",ur:"ہیپاٹائٹس بی اینٹی باڈی",full:"Hepatitis B Surface Antibody",sample:"Serum",range:"Below 10 mIU/mL: generally not protective",info:"Assesses immunity to hepatitis B.",infoUr:"ہیپاٹائٹس بی کے خلاف مدافعت کی جانچ۔"},
-
-{name:"Anti-HBc IgM",ur:"اینٹی ایچ بی سی آئی جی ایم",full:"Hepatitis B Core IgM Antibody",sample:"Serum",range:"Non-reactive",info:"May indicate recent hepatitis B infection.",infoUr:"حالیہ ہیپاٹائٹس بی انفیکشن کا اشارہ ہو سکتا ہے۔"},
-
-{name:"HCV RNA PCR",ur:"ہیپاٹائٹس سی آر این اے پی سی آر",full:"Hepatitis C RNA Polymerase Chain Reaction",sample:"EDTA Plasma",range:"Not detected",info:"Detects hepatitis C viral RNA.",infoUr:"ہیپاٹائٹس سی وائرس کے آر این اے کی جانچ۔"},
-
-{name:"HBV DNA PCR",ur:"ہیپاٹائٹس بی ڈی این اے پی سی آر",full:"Hepatitis B Virus DNA PCR",sample:"EDTA Plasma",range:"Not detected",info:"Measures hepatitis B viral DNA.",infoUr:"ہیپاٹائٹس بی وائرس کے ڈی این اے کی جانچ۔"},
-
-{name:"HIV 1 & 2",ur:"ایچ آئی وی ٹیسٹ",full:"Human Immunodeficiency Virus Screening",sample:"Serum/Plasma",range:"Non-reactive",info:"Screens for HIV infection.",infoUr:"ایچ آئی وی انفیکشن کی اسکریننگ۔"},
-
-{name:"VDRL",ur:"وی ڈی آر ایل",full:"Venereal Disease Research Laboratory Test",sample:"Serum",range:"Non-reactive",info:"Screening test for syphilis.",infoUr:"آتشک کی اسکریننگ۔"},
-
-{name:"TPHA",ur:"ٹی پی ایچ اے",full:"Treponema Pallidum Hemagglutination Assay",sample:"Serum",range:"Non-reactive",info:"Detects antibodies associated with syphilis.",infoUr:"آتشک کے خلاف اینٹی باڈیز کی جانچ۔"},
-
-{name:"CRP",ur:"سی آر پی",full:"C-Reactive Protein",sample:"Serum",range:"Often below 5 mg/L",info:"Marker of inflammation.",infoUr:"جسم میں سوزش کا اشارہ۔"},
-
-{name:"hs-CRP",department:"Clinical Chemistry", ur:"ہائی سینسٹیویٹی سی آر پی",full:"High Sensitivity C-Reactive Protein",sample:"Serum",range:"Cardiovascular interpretation is risk-category dependent",info:"Measures low levels of inflammation.",infoUr:"سوزش کی کم سطح کی پیمائش۔"},
-
-{name:"ASO Titre",ur:"اے ایس او ٹائٹر",full:"Antistreptolysin O Titre",sample:"Serum",range:"Often below 200 IU/mL in adults; lab dependent",info:"Assesses recent streptococcal exposure.",infoUr:"اسٹریپٹوکوکل انفیکشن سے سابقہ واسطے کا جائزہ۔"},
-
-{name:"Rheumatoid Factor",ur:"ریمیٹائڈ فیکٹر",full:"Rheumatoid Factor",sample:"Serum",range:"Often below 14 IU/mL",info:"Used in assessment of rheumatoid arthritis.",infoUr:"رمیٹائڈ آرتھرائٹس کے جائزے میں مدد۔"},
-
-{name:"Anti-CCP",ur:"اینٹی سی سی پی",full:"Anti-Cyclic Citrullinated Peptide Antibody",sample:"Serum",range:"Negative according to assay cutoff",info:"Helps assess rheumatoid arthritis.",infoUr:"رمیٹائڈ آرتھرائٹس کی جانچ میں مدد۔"},
-
-{name:"ANA",ur:"اے این اے",full:"Antinuclear Antibody",sample:"Serum",range:"Negative",info:"Screens for certain autoimmune disorders.",infoUr:"بعض خودکار مدافعتی بیماریوں کی اسکریننگ۔"},
-
-{name:"Anti-dsDNA",ur:"اینٹی ڈی ایس ڈی این اے",full:"Double Stranded DNA Antibody",sample:"Serum",range:"Negative or below assay cutoff",info:"Used in assessment of lupus.",infoUr:"لوپس بیماری کے جائزے میں مدد۔"},
-
-{name:"C3 Complement",ur:"سی تھری کمپلیمنٹ",full:"Complement Component 3",sample:"Serum",range:"Approximately 90–180 mg/dL",info:"Assesses part of immune complement system.",infoUr:"مدافعتی نظام کے ایک حصے کی جانچ۔"},
-
-{name:"C4 Complement",ur:"سی فور کمپلیمنٹ",full:"Complement Component 4",sample:"Serum",range:"Approximately 10–40 mg/dL",info:"Supports assessment of immune disorders.",infoUr:"مدافعتی بیماریوں کے جائزے میں مدد۔"},
-
-{name:"IgG",ur:"آئی جی جی",full:"Immunoglobulin G",sample:"Serum",range:"Approximately 700–1600 mg/dL in adults",info:"Measures a major antibody class.",infoUr:"اینٹی باڈی کی ایک اہم قسم کی مقدار۔"},
-
-{name:"IgM",ur:"آئی جی ایم",full:"Immunoglobulin M",sample:"Serum",range:"Approximately 40– 230 mg/dL in adults",info:"Measures an antibody involved in early immune response.",infoUr:"ابتدائی مدافعتی ردعمل سے متعلق اینٹی باڈی۔"},
-
-{name:"IgA",ur:"آئی جی اے",full:"Immunoglobulin A",sample:"Serum",range:"Approximately 70–400 mg/dL in adults",info:"Measures antibody important for mucosal immunity.",infoUr:"جسم کی اندرونی جھلیوں کی مدافعت سے متعلق اینٹی باڈی۔"},
-
-{name:"Prolactin",ur:"پرولیکٹن",full:"Serum Prolactin",sample:"Serum",range:"Male often 4–15; Female 5–25 ng/mL",info:"Assesses prolactin hormone levels.",infoUr:"پرولیکٹن ہارمون کی مقدار۔"},
-
-{name:"FSH",ur:"ایف ایس ایچ",full:"Follicle Stimulating Hormone",sample:"Serum",range:"Sex, age and menstrual-cycle dependent",info:"Assesses reproductive hormone function.",infoUr:"تولیدی ہارمون کی کارکردگی کا جائزہ۔"},
-
-{name:"LH",ur:"ایل ایچ",full:"Luteinizing Hormone",sample:"Serum",range:"Sex, age and menstrual-cycle dependent",info:"Helps assess reproductive function.",infoUr:"تولیدی نظام کی جانچ میں مدد۔"},
-
-{name:"Testosterone",ur:"ٹیسٹوسٹیرون",full:"Total Testosterone",sample:"Serum",range:"Adult male approximately 300–1000 ng/dL",info:"Measures testosterone hormone.",infoUr:"ٹیسٹوسٹیرون ہارمون کی مقدار۔"},
-
-{name:"Estradiol",ur:"ایسٹراڈیول",full:"17-Beta Estradiol",sample:"Serum",range:"Sex, age and menstrual-cycle dependent",info:"Measures an important estrogen hormone.",infoUr:"ایسٹروجن ہارمون کی اہم قسم کی مقدار۔"},
-
-{name:"Progesterone",ur:"پروجیسٹرون",full:"Serum Progesterone",sample:"Serum",range:"Depends on menstrual-cycle phase and pregnancy",info:"Assesses reproductive hormone levels.",infoUr:"تولیدی ہارمون کی جانچ۔"},
-
-{name:"Beta-hCG",ur:"بیٹا ایچ سی جی",full:"Beta Human Chorionic Gonadotropin",sample:"Serum",range:"Usually below 5 mIU/mL in non-pregnant adults",info:"Used to detect and monitor pregnancy.",infoUr:"حمل کی تشخیص اور نگرانی میں مدد۔"},
-
-{name:"PSA",ur:"پی ایس اے",full:"Prostate Specific Antigen",sample:"Serum",range:"Age dependent; commonly below 4 ng/mL in many adult references",info:"Used in prostate assessment.",infoUr:"پروسٹیٹ غدود کے جائزے میں مدد۔"},
-
-{name:"AFP",ur:"اے ایف پی",full:"Alpha Fetoprotein",sample:"Serum",range:"Often below 10 ng/mL in non-pregnant adults",info:"Tumor marker used in selected clinical assessments.",infoUr:"بعض طبی حالات میں ٹیومر مارکر کے طور پر استعمال۔"},
-
-{name:"CEA",ur:"سی ای اے",full:"Carcinoembryonic Antigen",sample:"Serum",range:"Often below 3 ng/mL in non-smokers; method dependent",info:"Used mainly to monitor selected cancers.",infoUr:"بعض کینسرز کی نگرانی میں مدد۔"},
-
-{name:"CA-125",ur:"سی اے 125",full:"Cancer Antigen 125",sample:"Serum",range:"Often below 35 U/mL",info:"Used in selected ovarian cancer assessments.",infoUr:"بعض حالات میں اووری کے کینسر کے جائزے میں مدد۔"},
-
-{name:"CA 19-9",ur:"سی اے 19-9",full:"Carbohydrate Antigen 19-9",sample:"Serum",range:"Often below 37 U/mL",info:"Tumor marker used in selected pancreatic and biliary assessments.",infoUr:"بعض لبلبے اور صفراوی بیماریوں کے جائزے میں مدد۔"},
-
-{name:"CA 15-3",ur:"سی اے 15-3",full:"Cancer Antigen 15-3",sample:"Serum",range:"Often below 30 U/mL; assay dependent",info:"May be used to monitor selected breast cancer cases.",infoUr:"بعض بریسٹ کینسر کیسز کی نگرانی میں استعمال۔"}
-
-);
-showTests();
-</script>
-
-
-<script>
-data.push(
-
-{name:"Stool Occult Blood",ur:"پاخانے میں خفیہ خون",full:"Fecal Occult Blood Test",sample:"Stool",range:"Negative",info:"Detects hidden blood in stool.",infoUr:"پاخانے میں چھپا ہوا خون معلوم کرتا ہے۔"},
-
-{name:"Stool Culture",ur:"پاخانے کا کلچر",full:"Stool Culture and Sensitivity",sample:"Fresh Stool",range:"No pathogenic bacterial growth",info:"Detects bacterial intestinal infections.",infoUr:"آنتوں کے بیکٹیریل انفیکشن کی جانچ۔"},
-
-{name:"Stool Ova and Parasites",ur:"پاخانے میں کیڑے اور انڈے",full:"Ova and Parasite Examination",sample:"Stool",range:"No ova or parasites detected",info:"Detects intestinal parasites.",infoUr:"آنتوں کے کیڑوں اور پیراسائٹس کی جانچ۔"},
-
-{name:"Stool Reducing Substances",ur:"پاخانے میں ریڈیوسنگ مادے",full:"Stool Reducing Substances",sample:"Fresh Stool",range:"Negative",info:"May help assess carbohydrate malabsorption.",infoUr:"کاربوہائیڈریٹ کے جذب کی خرابی کا جائزہ۔"},
-
-{name:"Stool Fat",ur:"پاخانے میں چکنائی",full:"Fecal Fat Test",sample:"Stool",range:"Depends on qualitative or quantitative method",info:"Assesses fat malabsorption.",infoUr:"چکنائی کے جذب کی جانچ۔"},
-
-{name:"Stool Calprotectin",ur:"اسٹول کیلپروٹیکٹن",full:"Fecal Calprotectin",sample:"Stool",range:"Often below 50 µg/g",info:"Helps assess intestinal inflammation.",infoUr:"آنتوں کی سوزش کا جائزہ۔"},
-
-{name:"Stool H. pylori Antigen",ur:"پاخانے میں ایچ پائلوری اینٹی جن",full:"Helicobacter pylori Stool Antigen",sample:"Stool",range:"Negative",info:"Detects active H. pylori infection.",infoUr:"معدے کے ایچ پائلوری انفیکشن کی جانچ۔"},
-
-{name:"Dengue NS1",ur:"ڈینگی این ایس ون",full:"Dengue NS1 Antigen",sample:"Serum/Plasma",range:"Negative",info:"Helps detect early dengue infection.",infoUr:"ڈینگی کے ابتدائی انفیکشن کی جانچ۔"},
-
-{name:"Dengue IgM",ur:"ڈینگی آئی جی ایم",full:"Dengue IgM Antibody",sample:"Serum",range:"Negative",info:"May indicate recent dengue infection.",infoUr:"حالیہ ڈینگی انفیکشن کا اشارہ۔"},
-
-{name:"Dengue IgG",ur:"ڈینگی آئی جی جی",full:"Dengue IgG Antibody",sample:"Serum",range:"Negative",info:"May indicate previous dengue exposure.",infoUr:"ڈینگی سے سابقہ واسطے کا اشارہ۔"},
-
-{name:"Malaria Parasite",ur:"ملیریا پیراسائٹ",full:"Malaria Parasite Examination",sample:"EDTA Blood",range:"No malaria parasites detected",info:"Detects malaria parasites in blood.",infoUr:"خون میں ملیریا کے پیراسائٹس کی جانچ۔"},
-
-{name:"Malaria Rapid Test",ur:"ملیریا ریپڈ ٹیسٹ",full:"Malaria Antigen Rapid Test",sample:"Whole Blood",range:"Negative",info:"Rapid screening for malaria antigens.",infoUr:"ملیریا اینٹی جن کی فوری جانچ۔"},
-
-{name:"MP ICT",ur:"ملیریا آئی سی ٹی",full:"Malaria Immunochromatographic Test",sample:"Whole Blood",range:"Negative",info:"Rapid malaria screening.",infoUr:"ملیریا کی فوری اسکریننگ۔"},
-
-{name:"Blood Culture",ur:"بلڈ کلچر",full:"Blood Culture and Sensitivity",sample:"Blood in Culture Bottle",range:"No growth",info:"Detects bacteria or fungi in blood.",infoUr:"خون میں بیکٹیریا یا فنگس کی جانچ۔"},
-
-{name:"Sputum Culture",ur:"بلغم کا کلچر",full:"Sputum Culture and Sensitivity",sample:"Sputum",range:"No significant pathogenic growth",info:"Identifies respiratory pathogens.",infoUr:"سانس کی نالی کے جراثیم کی جانچ۔"},
-
-{name:"Throat Swab Culture",ur:"گلے کا کلچر",full:"Throat Swab Culture",sample:"Throat Swab",range:"No significant pathogenic growth",info:"Detects bacterial throat infections.",infoUr:"گلے کے بیکٹیریل انفیکشن کی جانچ۔"},
-
-{name:"Wound Swab Culture",ur:"زخم کا کلچر",full:"Wound Swab Culture",sample:"Wound Swab",range:"No significant pathogenic growth",info:"Identifies organisms causing wound infection.",infoUr:"زخم میں انفیکشن پیدا کرنے والے جراثیم کی جانچ۔"},
-
-{name:"Pus Culture",ur:"پیپ کا کلچر",full:"Pus Culture and Sensitivity",sample:"Pus",range:"No significant pathogenic growth",info:"Identifies bacteria in pus.",infoUr:"پیپ میں موجود بیکٹیریا کی جانچ۔"},
-
-{name:"AFB Smear",ur:"اے ایف بی سمئیر",full:"Acid Fast Bacilli Smear",sample:"Sputum",range:"No AFB seen",info:"Screens for acid-fast bacilli including tuberculosis organisms.",infoUr:"ٹی بی سمیت مخصوص جراثیم کی ابتدائی جانچ۔"},
-
-{name:"GeneXpert MTB/RIF",ur:"جین ایکسپرٹ ٹی بی",full:"Mycobacterium Tuberculosis and Rifampicin Resistance Test",sample:"Sputum or validated specimen",range:"MTB not detected; rifampicin resistance not detected",info:"Detects TB genetic material and rifampicin resistance.",infoUr:"ٹی بی کے جراثیمی مواد اور رِفیمپیسن مزاحمت کی جانچ۔"},
-
-{name:"Reticulocyte Count",department:"Hematology",ur:"نوجوان سرخ خلیات کی گنتی",full:"Reticulocyte Count",sample:"EDTA Blood",purpose:"Measures immature red blood cells to assess bone marrow response.",method:"Automated reticulocyte analyzer or supravital staining.",range:"Adults: approximately 0.5–2.5% (laboratory dependent).",info:"Helps evaluate anemia and bone marrow activity.",infoUr:"خون کی کمی اور بون میرو کی کارکردگی جانچنے میں مدد دیتا ہے۔"},
-
-{name:"Peripheral Blood Smear (PBS)",department:"Hematology",ur:"خون کی خوردبینی جانچ",full:"Peripheral Blood Smear",sample:"EDTA Blood",purpose:"Examines blood cell size, shape and appearance.",method:"Wright-Giemsa stained blood film microscopy.",range:"Morphology is assessed against normal blood cell appearance.",info:"Helps investigate anemia, infections and blood disorders.",infoUr:"خون کی کمی، انفیکشن اور خون کی بیماریوں کی جانچ میں مدد دیتا ہے۔"},
-
-{name:"Absolute Eosinophil Count (AEC)",department:"Hematology",ur:"ایوزینوفل خلیات کی تعداد",full:"Absolute Eosinophil Count",sample:"EDTA Blood",purpose:"Measures the absolute number of eosinophils.",method:"Automated differential count or manual calculation.",range:"Approximately 0–500 cells/µL (laboratory dependent).",info:"Helps investigate allergies, parasitic infections and eosinophilic disorders.",infoUr:"الرجی اور پیراسائٹک انفیکشن کی جانچ میں مدد دیتا ہے۔"},
-
-{name:"Blood Group ABO",department:"Hematology", ur:"اے بی او بلڈ گروپ",full:"ABO Blood Grouping",sample:"EDTA Blood",range:"A, B, AB or O",info:"Identifies ABO blood group.",infoUr:"اے بی او بلڈ گروپ معلوم کرتا ہے۔"},
-
-{name:"Rh Factor",ur:"آر ایچ فیکٹر",full:"Rhesus Blood Group",sample:"EDTA Blood",range:"Positive or Negative",info:"Identifies RhD status.",infoUr:"آر ایچ مثبت یا منفی ہونے کی جانچ۔"},
-
-{name:"Cross Matching",ur:"کراس میچنگ",full:"Blood Compatibility Testing",sample:"Donor and Recipient Blood",range:"Compatible / No incompatibility detected",info:"Checks compatibility before transfusion.",infoUr:"خون لگانے سے پہلے مطابقت کی جانچ۔"},
-
-
-{name:"Peripheral Blood Film",ur:"پیری فیرل بلڈ فلم",full:"Peripheral Blood Smear",sample:"EDTA Blood",range:"Normal blood cell morphology",info:"Examines blood cell shape and appearance.",infoUr:"خون کے خلیات کی شکل اور ساخت کا معائنہ۔"},
-
-{name:"G6PD",ur:"جی سکس پی ڈی",full:"Glucose-6-Phosphate Dehydrogenase",sample:"EDTA Blood",range:"Method and laboratory dependent",info:"Detects G6PD enzyme deficiency.",infoUr:"جی سکس پی ڈی انزائم کی کمی کی جانچ۔"},
-
-{name:"Sickle Cell Screening",ur:"سکل سیل اسکریننگ",full:"Sickle Cell Screening Test",sample:"EDTA Blood",range:"Negative",info:"Screens for sickle hemoglobin.",infoUr:"سکل ہیموگلوبن کی ابتدائی جانچ۔"},
-
-{name:"Hemoglobin Electrophoresis",ur:"ہیموگلوبن الیکٹروفوریسس",full:"Hemoglobin Electrophoresis",sample:"EDTA Blood",range:"HbA, HbA2 and HbF fractions are age dependent",info:"Identifies different hemoglobin types.",infoUr:"ہیموگلوبن کی مختلف اقسام کی شناخت۔"},
-
-{name:"Blood Gas Analysis",ur:"بلڈ گیس اینالیسس",full:"Arterial Blood Gas",sample:"Heparinized Arterial Blood",range:"pH 7.35–7.45",info:"Assesses oxygenation and acid-base balance.",infoUr:"آکسیجن اور تیزابیت کے توازن کی جانچ۔"},
-
-{name:"Arterial pCO2",ur:"آرٹیریل پی سی او ٹو",full:"Partial Pressure of Carbon Dioxide",sample:"Arterial Blood",range:"35–45 mmHg",info:"Measures carbon dioxide pressure.",infoUr:"خون میں کاربن ڈائی آکسائیڈ کا دباؤ۔"},
-
-{name:"Arterial pO2",ur:"آرٹیریل پی او ٹو",full:"Partial Pressure of Oxygen",sample:"Arterial Blood",range:"Approximately 80–100 mmHg at sea level",info:"Measures oxygen pressure in arterial blood.",infoUr:"آرٹیریل خون میں آکسیجن کا دباؤ۔"},
-
-{name:"Serum Amylase",department:"Clinical Chemistry", ur:"سیرم ایمائلیز",full:"Serum Amylase",sample:"Serum",range:"Approximately 30–110 U/L",info:"Enzyme used in pancreatic assessment.",infoUr:"لبلبے کی جانچ میں استعمال ہونے والا انزائم۔"},
-
-{name:"Serum Lipase",department:"Clinical Chemistry", ur:"سیرم لائپیز",full:"Serum Lipase",sample:"Serum",range:"Approximately 13–60 U/L; method dependent",info:"Helps assess pancreatic inflammation.",infoUr:"لبلبے کی سوزش کے جائزے میں مدد۔"},
-
-{name:"Lactate",ur:"لیکٹیٹ",full:"Blood Lactate",sample:"Heparinized Blood or Plasma",range:"Approximately 0.5–2.2 mmol/L",info:"Assesses lactate accumulation and tissue perfusion.",infoUr:"لیکٹیٹ اور جسمانی بافتوں تک خون کی فراہمی کا جائزہ۔"},
-
-{name:"Osmolality",ur:"اوسمولیلٹی",full:"Serum Osmolality",sample:"Serum",range:"Approximately 275–295 mOsm/kg",info:"Measures concentration of dissolved particles.",infoUr:"خون میں حل شدہ ذرات کی مقدار کا جائزہ۔"},
-
-{name:"Urine Microalbumin",ur:"یورین مائیکرو البیومن",full:"Urine Albumin",sample:"Spot Urine",range:"Urine ACR below 30 mg/g",info:"Screens for early kidney damage.",infoUr:"گردوں کو ابتدائی نقصان کی اسکریننگ۔"},
-
-{name:"Urine ACR",ur:"یورین البیومن کریٹینین ریشو",full:"Urine Albumin Creatinine Ratio",sample:"Spot Urine",range:"Below 30 mg/g",info:"Assesses albumin loss through kidneys.",infoUr:"گردوں سے البیومن کے اخراج کی جانچ۔"},
-
-{name:"Urine PCR",ur:"یورین پروٹین کریٹینین ریشو",full:"Urine Protein Creatinine Ratio",sample:"Spot Urine",range:"Generally below 0.2 mg/mg in adults",info:"Quantifies urine protein loss.",infoUr:"پیشاب میں پروٹین کے اخراج کی مقدار۔"},
-
-{name:"Urine Calcium",ur:"یورین کیلشیم",full:"Urine Calcium",sample:"24-hour Urine",range:"Approximately 100–300 mg/24 hours",info:"Evaluates urinary calcium excretion.",infoUr:"پیشاب کے ذریعے کیلشیم کے اخراج کی جانچ۔"},
-
-{name:"Urine Creatinine",ur:"یورین کریٹینین",full:"Urine Creatinine",sample:"24-hour Urine",range:"Depends on age, sex, muscle mass and collection",info:"Used in kidney assessment and urine ratios.",infoUr:"گردوں اور پیشاب کے تناسب کی جانچ میں استعمال۔"}
-
-);
-
-showTests();
-</script>
-
-<script>
-data.push(
-{
-name:"Skin Biopsy",
-ur:"جلد کی بایوپسی",
-full:"Skin Tissue Biopsy",
-sample:"Skin tissue",
-purpose:"Evaluates skin lesions, inflammation and suspected tumors.",
-method:"Histological examination using tissue processing, H&E staining and microscopy.",
-range:"No standard reference range.",
-info:"Helps diagnose various skin disorders and tumors."
-},
-{
-name:"Breast Biopsy",
-ur:"چھاتی کی بایوپسی",
-full:"Breast Tissue Biopsy",
-sample:"Breast tissue",
-purpose:"Evaluates suspicious breast lumps and lesions.",
-method:"Tissue processing, H&E staining and microscopic examination.",
-range:"No standard reference range.",
-info:"Helps identify benign and malignant breast conditions."
-},
-{
-name:"Gastric Biopsy",
-ur:"معدے کی بایوپسی",
-full:"Gastric Tissue Biopsy",
-sample:"Gastric tissue",
-purpose:"Evaluates gastritis, ulcers and suspicious gastric lesions.",
-method:"Histopathological examination of processed tissue.",
-range:"No standard reference range.",
-info:"May help identify inflammation, infection and malignancy."
-},
-{
-name:"Colon Biopsy",
-ur:"آنت کی بایوپسی",
-full:"Colonic Tissue Biopsy",
-sample:"Colon tissue",
-purpose:"Evaluates inflammation, polyps and suspicious lesions.",
-method:"Tissue processing, staining and microscopic examination.",
-range:"No standard reference range.",
-info:"Helps diagnose inflammatory and neoplastic conditions."
-},
-{
-name:"Liver Biopsy",
-ur:"جگر کی بایوپسی",
-full:"Liver Tissue Biopsy",
-sample:"Liver tissue",
-purpose:"Evaluates liver tissue abnormalities.",
-method:"Histological examination of processed liver tissue.",
-range:"No standard reference range.",
-info:"May help assess inflammation, fibrosis and other liver disorders."
-}
-);
-</script>
-
-<script>
-data.push(
-{
-name:"Pap Smear",
-ur:"سروائیکل سمئیر",
-full:"Papanicolaou Smear",
-sample:"Cervical cells",
-purpose:"Screens for abnormal cervical cells and cervical cancer.",
-method:"Cytological staining and microscopic examination.",
-range:"No standard reference range.",
-info:"Helps detect precancerous and cancerous cervical cell changes."
-},
-{
-name:"FNAC",
-ur:"باریک سوئی سے خلیات کا نمونہ",
-full:"Fine Needle Aspiration Cytology",
-sample:"Cells aspirated from a lump or mass",
-purpose:"Evaluates lumps and masses for inflammatory or neoplastic changes.",
-method:"Smear preparation, staining and microscopic examination.",
-range:"No standard reference range.",
-info:"Helps assess thyroid, breast, lymph node and other masses."
-},
-{
-name:"Pleural Fluid Cytology",
-ur:"پھیپھڑوں کے گرد سیال کی جانچ",
-full:"Pleural Fluid Cytological Examination",
-sample:"Pleural fluid",
-purpose:"Evaluates abnormal cells in fluid around the lungs.",
-method:"Centrifugation, smear preparation, staining and microscopy.",
-range:"No malignant cells identified.",
-info:"May help detect malignant or inflammatory conditions."
-},
-{
-name:"Ascitic Fluid Cytology",
-ur:"پیٹ کے سیال کی خلیاتی جانچ",
-full:"Ascitic Fluid Cytological Examination",
-sample:"Ascitic fluid",
-purpose:"Examines cells in abdominal fluid.",
-method:"Centrifugation, staining and microscopic examination.",
-range:"No malignant cells identified.",
-info:"May help investigate suspected malignancy."
-},
-{
-name:"Urine Cytology",
-ur:"پیشاب کی خلیاتی جانچ",
-full:"Urinary Cytological Examination",
-sample:"Urine",
-purpose:"Evaluates abnormal cells in urine.",
-method:"Cytological staining and microscopic examination.",
-range:"No high-grade malignant cells identified.",
-info:"May help investigate suspected urinary tract malignancy."
-}
-);
-</script>
-
-
-
-<script>
-// Automatically assign laboratory tests to departments
-function assignDepartments() {
-  const groups = {
-    "Hematology": /cbc|hemoglobin|wbc|platelet|rbc count|hematocrit|hct|mcv|mch|mchc|rdw|neutrophil|lymphocyte|eosinophil|basophil|monocyte|esr|reticulocyte|peripheral blood|blood smear|blood film|aec|blood group|rh factor|cross matching|g6pd|sickle cell|hemoglobin electrophoresis|prothrombin|^pt$|^inr$|aptt|d-dimer|fibrinogen/i,
-
-    "Clinical Chemistry": /glucose|rbs|fbs|hba1c|creatinine|urea|bun|uric acid|alt|ast|alp|bilirubin|albumin|globulin|protein|calcium|phosphorus|sodium|potassium|chloride|magnesium|cholesterol|hdl|ldl|triglyceride|vldl|amylase|lipase|ggt|ldh|troponin|ck|cpk|procalcitonin|bnp|nt-probnp|serum iron|ferritin|tibc|transferrin|egfr|electrolyte|ammonia|lactate|osmolality|vitamin|thyroid|t3|t4|tsh|prolactin|fsh|^lh$|testosterone|estradiol|progesterone/i,
-
-    "Serology": /hbsag|anti-hcv|hbeag|anti-hbs|anti-hbc|hcv rna|hbv dna|hiv|vdrl|tpha|dengue|malaria rapid|mp ict|beta-hcg/i,
-
-    "Microbiology": /culture|afb smear|genexpert|malaria parasite|sputum|throat swab|wound swab|pus culture/i,
-
-    "Immunology": /crp|hs-crp|aso|rheumatoid|anti-ccp|ana|anti-dsdna|complement|^c3|^c4|^igg|^igm|^iga|anti tpo|anti thyroglobulin/i,
-
-    "Histopathology": /histopathology|biopsy|tissue examination|surgical pathology/i,
-
-    "Cytology": /cytology|pap smear|fine needle aspiration|fnac|body fluid cytology/i,
-
-    "Urine Examination": /urine/i,
-
-    "Stool Examination": /stool|fecal|faecal/i,
-
-    "Special Investigations": /blood gas|arterial pco2|arterial po2|pcr|psa|afp|cea|ca-125|ca 19-9|ca 15-3/i
-  };
-
-  data.forEach(test => {
-    if (test.department) return;
-
-    const testText = (test.name || "") + " " + (test.full || "");
-
-    for (const [department, pattern] of Object.entries(groups)) {
-      if (pattern.test(testText)) {
-        test.department = department;
-        break;
-      }
-    }
-
-    if (!test.department) {
-      test.department = "Special Investigations";
-    }
-  });
-}
-
-assignDepartments();
-
-// Keep the complete test list unchanged
-const allLabTests = [...data];
-
-const departmentCountTests = [
-  ...new Map(
-    allLabTests.map(test => [
-      (test.name || "").trim().toLowerCase(),
-      test
-    ])
-  ).values()
+// Department list
+const departments = [
+  "Hematology",
+  "Clinical Chemistry",
+  "Serology",
+  "Microbiology",
+  "Immunology",
+  "Histopathology",
+  "Cytology",
+  "Urine Examination",
+  "Stool Examination",
+  "Special Investigations"
 ];
 
-const departmentTotals = {};
+let currentLanguage = "en";
 
-departmentCountTests.forEach(test => {
-  const department = test.department || "Other";
+const departmentSelect =
+  document.getElementById("departmentFilter");
 
-  departmentTotals[department] =
-    (departmentTotals[department] || 0) + 1;
-});
+const searchBox =
+  document.getElementById("search");
+
+const testsContainer =
+  document.getElementById("tests");
 
 const countContainer =
   document.getElementById("departmentCounts");
 
-if (countContainer) {
-  countContainer.innerHTML =
-    Object.entries(departmentTotals)
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([department, count]) => `
-        <button type="button" class="department-count-item">
-          ${department}<br>
-          ${count} Tests
-        </button>
-      `).join("");
-
-
-window.onafterprint = function() {
-  document.body.classList.remove("print-single");
-
-  document.querySelectorAll(".card").forEach(item => {
-    item.classList.remove("print-target");
+// HTML safety
+function safeText(value) {
+  return String(value || "").replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
   });
-};
-
-  countContainer.querySelectorAll("button").forEach((button, index) => {
-    const department = Object.keys(departmentTotals)
-      .sort((a, b) => a.localeCompare(b))[index];
-
-    button.addEventListener("click", function() {
-      selectDepartmentFromCount(department);
-    });
-  });
-}
-
-function selectDepartmentFromCount(department) {
-
-  const filter = document.getElementById("departmentFilter");
-
-  const search = document.getElementById("search");
-
-  filter.value = department;
-
-  search.value = "";
-
-  showTests();
-
-  document.querySelector(".sticky-search")
-    .scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
 }
 
 // Department dropdown
-const departmentSelect = document.getElementById("departmentFilter");
+departments.forEach(department => {
+  const option = document.createElement("option");
+  option.value = department;
+  option.textContent = department;
+  departmentSelect.appendChild(option);
+});
 
-if (departmentSelect) {
-  const departments = [
-    "Hematology",
-    "Clinical Chemistry",
-    "Serology",
-    "Microbiology",
-    "Immunology",
-    "Histopathology",
-    "Cytology",
-    "Urine Examination",
-    "Stool Examination",
-    "Special Investigations"
-  ];
+// Department counts
+function showDepartmentCounts() {
 
-  departmentSelect.innerHTML =
-    '<option value="">All Departments</option>';
+  countContainer.innerHTML = "";
+
+  const counts = {};
+
+  data.forEach(test => {
+    counts[test.department] =
+      (counts[test.department] || 0) + 1;
+  });
+
+  const allButton = document.createElement("button");
+  allButton.className = "department-btn active";
+  allButton.textContent = "All Departments (" + data.length + ")";
+
+  allButton.onclick = function() {
+    departmentSelect.value = "";
+    showTests();
+  };
+
+  countContainer.appendChild(allButton);
 
   departments.forEach(department => {
-    const option = document.createElement("option");
-    option.value = department;
-    option.textContent = department;
-    departmentSelect.appendChild(option);
+
+    const count = counts[department] || 0;
+
+    if (count === 0) return;
+
+    const button = document.createElement("button");
+
+    button.className = "department-btn";
+    button.textContent = department + " (" + count + ")";
+
+    button.onclick = function() {
+      departmentSelect.value = department;
+      showTests();
+    };
+
+    countContainer.appendChild(button);
   });
 }
 
-// Combined search and department filter
-showTests = function() {
-  const searchBox = document.getElementById("search");
-  const query = searchBox ? searchBox.value.trim().toLowerCase() : "";
-  const selected = departmentSelect ? departmentSelect.value : "";
+// Display tests
+function showTests() {
+
+  const query = searchBox.value.trim().toLowerCase();
+  const selected = departmentSelect.value;
 
   const uniqueData = [
     ...new Map(
-      allLabTests.map(test => [
-        (test.name || "").trim().toLowerCase(),
+      data.map(test => [
+        test.name.trim().toLowerCase(),
         test
       ])
     ).values()
   ];
 
   const filtered = uniqueData.filter(test => {
+
     const matchesDepartment =
       !selected || test.department === selected;
 
@@ -1237,203 +765,257 @@ showTests = function() {
       test.name,
       test.ur,
       test.full,
-      test.department
-    ].filter(Boolean).join(" ").toLowerCase();
+      test.department,
+      test.sample,
+      test.purpose
+    ].join(" ").toLowerCase();
 
     const matchesSearch = searchText.includes(query);
 
     return matchesDepartment && matchesSearch;
   });
 
-  const totalElement = document.getElementById("total");
-  const countElement = document.getElementById("testCount");
-  const testsElement = document.getElementById("tests");
+  document.getElementById("total").textContent =
+    "Showing " + filtered.length + " of " + uniqueData.length + " tests";
 
-  if (totalElement) {
-    totalElement.textContent =
-      "Showing " + filtered.length + " of " +
-      uniqueData.length + " tests";
+  document.getElementById("testCount").textContent =
+    "Total Tests: " + uniqueData.length;
+
+  // Highlight active department
+  document.querySelectorAll(".department-btn").forEach(button => {
+    button.classList.remove("active");
+
+    if (
+      (!selected && button.textContent.startsWith("All Departments")) ||
+      (selected && button.textContent.startsWith(selected + " ("))
+    ) {
+      button.classList.add("active");
+    }
+  });
+
+  if (filtered.length === 0) {
+    testsContainer.innerHTML =
+      '<div class="no-results">No laboratory tests found.</div>';
+    return;
   }
 
-  if (countElement) {
-    countElement.textContent =
-      "Total Tests: " + uniqueData.length;
-  }
+  testsContainer.innerHTML = filtered.map((test, index) => {
 
-  if (!testsElement) return;
+    const testName = currentLanguage === "ur"
+      ? test.ur || test.name
+      : test.name;
 
-if (filtered.length === 0) {
-  testsElement.innerHTML = `
-    <div class="card no-results">
-      <h3>🔍 No Tests Found</h3>
-      <p>Try another test name or select a different department.</p>
-    </div>
-  `;
-  return;
+    const labels = currentLanguage === "ur"
+      ? {
+          department: "شعبہ",
+          full: "مکمل نام",
+          sample: "نمونہ",
+          purpose: "مقصد",
+          principle: "اصول",
+          method: "طریقہ",
+          procedure: "طریقہ کار",
+          range: "نارمل رینج",
+          info: "طبی اہمیت",
+          note: "اہم نوٹ",
+          print: "ٹیسٹ پرنٹ کریں"
+        }
+      : {
+          department: "Department",
+          full: "Full Form",
+          sample: "Specimen",
+          purpose: "Purpose",
+          principle: "Principle",
+          method: "Methodology",
+          procedure: "Procedure",
+          range: "Reference Range",
+          info: "Clinical Significance",
+          note: "Important Note",
+          print: "Print This Test"
+        };
+
+    return `
+      <div class="card">
+
+        <h3>${safeText(testName)}</h3>
+
+        <div class="detail">
+          <b>${labels.department}:</b>
+          ${safeText(test.department)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.full}:</b>
+          ${safeText(test.full)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.sample}:</b>
+          ${safeText(test.sample)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.purpose}:</b>
+          ${safeText(test.purpose)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.principle}:</b>
+          ${safeText(test.principle)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.method}:</b>
+          ${safeText(test.method)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.procedure}:</b>
+          ${safeText(test.procedure)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.range}:</b>
+          ${safeText(test.range)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.info}:</b>
+          ${safeText(test.info)}
+        </div>
+
+        <div class="detail">
+          <b>${labels.note}:</b>
+          ${safeText(test.note)}
+        </div>
+
+        <button class="print-test-btn"
+          data-index="${index}">
+          ${labels.print}
+        </button>
+
+      </div>
+    `;
+
+  }).join("");
+
+  // Keep filtered tests for printing
+  window.currentFilteredTests = filtered;
 }
 
-  testsElement.innerHTML = filtered.map(test => `
-    <div class="card">
-      <h3>${test.name || ""} / ${test.ur || ""}</h3>
-      <p class="department-label">
-        <b>Department:</b> ${test.department || "Not assigned"}
-      </p>
-      <p><b>Full Form:</b> ${test.full || "Not added yet"}</p>
-      <p><b>Specimen:</b> ${test.sample || "Not added yet"}</p>
-      <p><b>Purpose:</b> ${test.purpose || "Not added yet"}</p>
-      <p><b>Methodology:</b> ${test.method || "Not added yet"}</p>
-      <p><b>Reference Range:</b> ${test.range || "Not added yet"}</p>
-      <p><b>Important Note:</b> ${test.info || "Not added yet"}</p>
-      <p><b>Clinical Significance:</b>
-    ${document.documentElement.lang === "ur"
-          ? (test.infoUr || test.info || "معلومات دستیاب نہیں")
-          : (test.info || "Not added yet")}
-      </p>
+// Language setting
+function setLanguage(language) {
 
-<p>
-  <button type="button" class="print-test-btn">
-    🖨️ Print This Test
-  </button>
-</p>
+  currentLanguage = language;
 
-    </div>
-  `).join("");
-};
+  document.documentElement.lang = language;
+  document.documentElement.dir =
+    language === "ur" ? "rtl" : "ltr";
 
-showTests();
+  document.getElementById("subtitle").textContent =
+    language === "ur"
+      ? "لیبارٹری ٹیسٹ کی معلومات"
+      : "Laboratory Investigations Theory";
 
-document.getElementById("tests").addEventListener("click", function(event) {
+  searchBox.placeholder =
+    language === "ur"
+      ? "لیبارٹری ٹیسٹ تلاش کریں..."
+      : "Search Laboratory Tests...";
+
+  showTests();
+}
+
+// Popup close
+function closeImportantPopup() {
+  document.getElementById("importantPopup").style.display = "none";
+}
+
+// Copyright year
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+// Back to top
+window.addEventListener("scroll", function() {
+
+  const button = document.getElementById("backToTop");
+
+  button.style.display =
+    window.scrollY > 300 ? "block" : "none";
+
+});
+
+// Print selected test
+testsContainer.addEventListener("click", function(event) {
 
   const button = event.target.closest(".print-test-btn");
+
   if (!button) return;
 
-  const card = button.closest(".card");
-  if (!card) return;
+  const index = Number(button.dataset.index);
 
-  const printArea = document.createElement("div");
-  printArea.className = "print-area";
+  const test = window.currentFilteredTests[index];
 
-  // Website header
-  const header = document.querySelector(".main-header");
-  if (header) {
-    printArea.appendChild(header.cloneNode(true));
+  if (!test) return;
+
+  const card = button.closest(".card").cloneNode(true);
+
+  const printButton = card.querySelector(".print-test-btn");
+
+  if (printButton) {
+    printButton.remove();
   }
 
-  // Selected test card
-  const copy = card.cloneNode(true);
+  const printArea = document.createElement("div");
 
-  const printButton = copy.querySelector(".print-test-btn");
-  if (printButton) printButton.remove();
+  printArea.className = "print-area";
 
-  printArea.appendChild(copy);
+  const header = document.querySelector(".main-header").cloneNode(true);
 
-  // Computer generated line
-  const note = document.createElement("p");
-// Current Date and Time
-const dateTime = document.createElement("p");
+  printArea.appendChild(header);
+  printArea.appendChild(card);
 
-dateTime.textContent = "Print Date & Time: " +
-  new Date().toLocaleString("en-PK", {
-    dateStyle: "long",
-    timeStyle: "medium",
-    hour12: true
-  });
+  const printDate = document.createElement("p");
 
-dateTime.style.textAlign = "center";
-dateTime.style.fontSize = "11px";
-dateTime.style.margin = "10px 0";
+  printDate.style.textAlign = "center";
+  printDate.style.marginTop = "20px";
 
-printArea.appendChild(dateTime);
+  printDate.textContent =
+    "Print Date & Time: " +
+    new Date().toLocaleString("en-PK", {
+      dateStyle: "long",
+      timeStyle: "medium",
+      hour12: true
+    });
 
-  note.textContent =
+  printArea.appendChild(printDate);
+
+  const generated = document.createElement("p");
+
+  generated.style.textAlign = "center";
+  generated.style.fontSize = "12px";
+
+  generated.textContent =
     "This is a computer-generated document. No signature is required.";
-  note.style.textAlign = "center";
-  note.style.fontSize = "11px";
-  note.style.margin = "15px 0";
 
-  printArea.appendChild(note);
-
-  // Both website footers
-  document.querySelectorAll("footer").forEach(function(footer) {
-    printArea.appendChild(footer.cloneNode(true));
-  });
+  printArea.appendChild(generated);
 
   document.body.appendChild(printArea);
+
   document.body.classList.add("print-single");
 
+  window.onafterprint = function() {
+    printArea.remove();
+    document.body.classList.remove("print-single");
+  };
+
   window.print();
+
 });
 
-window.addEventListener("afterprint", function() {
-  document.body.classList.remove("print-single");
+// Start website
+showDepartmentCounts();
+showTests();
 
-  const printArea = document.querySelector(".print-area");
-  if (printArea) printArea.remove();
-});
 </script>
-  
-
- 
-<div id="importantPopup" class="popup-overlay">
-  <div class="popup-box">
-
-    <section class="important-note">
-      <h2>⚠️ Important Note</h2>
-
-      <p>
-        This website is designed for educational and
-        informational purposes only. It provides general
-        knowledge about laboratory investigations.
-      </p>
-
-      <ul>
-        <li>Laboratory test results must always be interpreted by a qualified healthcare professional.</li>
-        <li>Reference ranges may vary depending on laboratory, testing method, age and gender.</li>
-        <li>Do not use this information for self-diagnosis or self-medication.</li>
-        <li>Always follow proper sample collection, handling and laboratory safety procedures.</li>
-        <li>Abnormal test results should be correlated with clinical findings and patient history.</li>
-      </ul>
-    </section>
-
-    <button onclick="closeImportantPopup()">
-      I Understand – Continue
-    </button>
-
-  </div>
-</div>
-
-<style>
-.important-note {
-  background: #fff8e6;
-  border-left: 5px solid #e69b00;
-  padding: 18px;
-  margin: 20px 0;
-  border-radius: 10px;
-  color: #333;
-  font-family: Arial, sans-serif;
-  line-height: 1.7;
-}
-
-.important-note h2 {
-  color: #b36b00;
-  margin-top: 0;
-}
-
-.important-note ul {
-  padding-left: 22px;
-}
-
-.important-note li {
-  margin-bottom: 8px;
-}
-
-.developer-note {
-  border-top: 1px solid #e5d5a8;
-  padding-top: 12px;
-  margin-bottom: 0;
-}
-</style>
-
 
 </body>
 </html>
