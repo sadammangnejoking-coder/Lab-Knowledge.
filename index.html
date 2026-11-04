@@ -955,6 +955,7 @@ info:"May help investigate suspected urinary tract malignancy."
 </script>
 
 
+
 <script>
 // Automatically assign laboratory tests to departments
 function assignDepartments() {
@@ -983,10 +984,10 @@ function assignDepartments() {
   data.forEach(test => {
     if (test.department) return;
 
-    const text = test.name + " " + (test.full || "");
+    const testText = (test.name || "") + " " + (test.full || "");
 
     for (const [department, pattern] of Object.entries(groups)) {
-      if (pattern.test(text)) {
+      if (pattern.test(testText)) {
         test.department = department;
         break;
       }
@@ -1000,25 +1001,28 @@ function assignDepartments() {
 
 assignDepartments();
 
-// Save all tests
+// Keep the complete test list unchanged
 const allLabTests = [...data];
 
-// Fill department dropdown
+// Department dropdown
 const departmentSelect = document.getElementById("departmentFilter");
 
 if (departmentSelect) {
   const departments = [
-  "Hematology",
-  "Clinical Chemistry",
-  "Serology",
-  "Microbiology",
-  "Immunology",
-  "Histopathology",
-  "Cytology",
-  "Urine Examination",
-  "Stool Examination",
-  "Special Investigations"
-];
+    "Hematology",
+    "Clinical Chemistry",
+    "Serology",
+    "Microbiology",
+    "Immunology",
+    "Histopathology",
+    "Cytology",
+    "Urine Examination",
+    "Stool Examination",
+    "Special Investigations"
+  ];
+
+  departmentSelect.innerHTML =
+    '<option value="">All Departments</option>';
 
   departments.forEach(department => {
     const option = document.createElement("option");
@@ -1028,38 +1032,73 @@ if (departmentSelect) {
   });
 }
 
-// Department filter and test display
-const originalShowTests = showTests;
-
+// Combined search and department filter
 showTests = function() {
+  const searchBox = document.getElementById("search");
+  const query = searchBox ? searchBox.value.trim().toLowerCase() : "";
   const selected = departmentSelect ? departmentSelect.value : "";
 
-  const visibleTests = selected
-    ? allLabTests.filter(test => test.department === selected)
-    : allLabTests;
+  const uniqueData = [
+    ...new Map(
+      allLabTests.map(test => [
+        (test.name || "").trim().toLowerCase(),
+        test
+      ])
+    ).values()
+  ];
 
-  data.splice(0, data.length, ...visibleTests);
+  const filtered = uniqueData.filter(test => {
+    const matchesDepartment =
+      !selected || test.department === selected;
 
-  originalShowTests();
+    const searchText = [
+      test.name,
+      test.ur,
+      test.full,
+      test.department
+    ].filter(Boolean).join(" ").toLowerCase();
 
-  document.querySelectorAll("#tests .card").forEach(card => {
-    const heading = card.querySelector("h3");
-    if (!heading) return;
+    const matchesSearch = searchText.includes(query);
 
-    const testName = heading.textContent.split(" / ")[0].trim();
-
-    const test = data.find(t => t.name === testName);
-
-    if (test && !card.querySelector(".department-label")) {
-      const label = document.createElement("p");
-      label.className = "department-label";
-      label.innerHTML = "<b>Department:</b> " + test.department;
-      card.insertBefore(label, card.children[1]);
-    }
+    return matchesDepartment && matchesSearch;
   });
 
-  // Restore complete test list
-  data.splice(0, data.length, ...allLabTests);
+  const totalElement = document.getElementById("total");
+  const countElement = document.getElementById("testCount");
+  const testsElement = document.getElementById("tests");
+
+  if (totalElement) {
+    totalElement.textContent =
+      "Showing " + filtered.length + " of " +
+      uniqueData.length + " tests";
+  }
+
+  if (countElement) {
+    countElement.textContent =
+      "Total Tests: " + uniqueData.length;
+  }
+
+  if (!testsElement) return;
+
+  testsElement.innerHTML = filtered.map(test => `
+    <div class="card">
+      <h3>${test.name || ""} / ${test.ur || ""}</h3>
+      <p class="department-label">
+        <b>Department:</b> ${test.department || "Not assigned"}
+      </p>
+      <p><b>Full Form:</b> ${test.full || "Not added yet"}</p>
+      <p><b>Specimen:</b> ${test.sample || "Not added yet"}</p>
+      <p><b>Purpose:</b> ${test.purpose || "Not added yet"}</p>
+      <p><b>Methodology:</b> ${test.method || "Not added yet"}</p>
+      <p><b>Reference Range:</b> ${test.range || "Not added yet"}</p>
+      <p><b>Important Note:</b> ${test.info || "Not added yet"}</p>
+      <p><b>Clinical Significance:</b>
+        ${lang === "ur"
+          ? (test.infoUr || test.info || "معلومات دستیاب نہیں")
+          : (test.info || "Not added yet")}
+      </p>
+    </div>
+  `).join("");
 };
 
 showTests();
