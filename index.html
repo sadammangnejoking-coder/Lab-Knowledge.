@@ -244,10 +244,55 @@ body[dir="rtl"] .note{
   border-top:1px solid #999;
  }
 }
+
+
+/* Navigation Menu */
+.main-nav {
+ background: #082f49;
+ padding: 0;
+ box-shadow: 0 3px 8px #0002;
+}
+
+.nav-container {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-wrap: wrap;
+ gap: 5px;
+ max-width: 1200px;
+ margin: auto;
+}
+
+.nav-container a {
+ color: white;
+ text-decoration: none;
+ padding: 15px 18px;
+ font-size: 14px;
+ font-weight: 600;
+ transition: 0.3s;
+}
+
+.nav-container a:hover {
+ background: #0891b2;
+ border-radius: 5px;
+}
+
+@media(max-width:600px) {
+ .nav-container {
+  justify-content: center;
+ }
+
+ .nav-container a {
+  padding: 12px 10px;
+  font-size: 12px;
+ }
+}
+
 </style>
 </head>
 
 <body>
+
 
 <header class="main-header">
  <div class="lab-icon">🔬</div>
@@ -255,6 +300,18 @@ body[dir="rtl"] .note{
  <p id="subtitle">Laboratory Investigations Theory</p>
  <div class="header-tagline">Learn • Understand • Explore</div>
 </header>
+
+<nav class="main-nav">
+ <div class="nav-container">
+  <a href="#home">Home</a>
+  <a href="#bmi">BMI Calculator</a>
+  <a href="#morning">Early Morning Signs</a>
+  <a href="#abbreviations">Medical Abbreviations</a>
+  <a href="#about">About Us</a>
+  <a href="#contact">Contact Us</a>
+ </div>
+</nav>
+
 
 <div class="top-tools">
  <button class="lang-btn active" id="englishBtn" onclick="setLanguage('en')">English</button>
