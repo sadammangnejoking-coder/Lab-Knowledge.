@@ -473,31 +473,39 @@ body[dir="rtl"] .note{
 
  <label id="heightLabel" for="bmiHeight">
   Height (cm)
-</abel>
+</label>
 
-<!-- INCHES TO CM CONVERTER -->
+<input
+  type="number"
+  id="bmiHeight"
+  placeholder="Example: 170"
+  min="1"
+>
+
+<!-- HEIGHT CONVERTER -->
 <div class="height-converter">
 
- <label for="heightInches">
-  Height Converter (Inches to CM)
+  <label for="heightInches">
+    Height (Inches)
+  </label>
 
- <input
-  type="number"
-  id="heightInches"
-  placeholder="Enter height in inches"
-  min="1"
-  step="any"
- >
+  <input
+    type="number"
+    id="heightInches"
+    placeholder="Enter height in inches"
+    min="1"
+    step="any"
+  >
 
- <button
-  type="button"
-  class="action-btn"
-  onclick="convertInchesToCM()"
- >
-  Convert to CM
- </button>
+  <button
+    type="button"
+    class="action-btn"
+    onclick="convertInchesToCM()"
+  >
+    Convert to CM
+  </button>
 
- <p id="cmConversionResult"></p>
+  <p id="cmConversionResult"></p>
 
 </div>
 
