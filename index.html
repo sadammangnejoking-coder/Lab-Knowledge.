@@ -374,6 +374,18 @@ body[dir="rtl"] .note{
  .nav-links a{padding:12px;text-align:center}
 }
 
+.nav-links a.active{
+ background:#0891b2;
+ border-radius:5px;
+ color:white;
+}
+
+.menu-toggle:focus-visible,
+.nav-links a:focus-visible{
+ outline:3px solid #fbbf24;
+ outline-offset:3px;
+}
+
 </style>
 </head>
 
@@ -1359,46 +1371,149 @@ function searchAbbreviations(){
 showEWS();
 searchAbbreviations();
 
-/* SINGLE SECTION NAVIGATION */
+/* IMPROVED SINGLE SECTION NAVIGATION */
 
-function showSection(sectionId){
+const websiteSections = [
+ "home",
+ "bmi",
+ "morning",
+ "abbreviations",
+ "about",
+ "contact"
+];
 
- const sections = [
-  "home",
-  "bmi",
-  "morning",
-  "abbreviations",
-  "about",
-  "contact"
- ];
+function showSection(sectionId, options = {}) {
 
- sections.forEach(id=>{
-  const section=document.getElementById(id);
+ if(!websiteSections.includes(sectionId)){
+  sectionId = "home";
+ }
+
+ // Show selected section and hide others
+ websiteSections.forEach(id => {
+
+  const section = document.getElementById(id);
 
   if(section){
    section.style.display =
-    id===sectionId ? "block" : "none";
+    id === sectionId ? "block" : "none";
   }
+
  });
 
- document.querySelectorAll("#navLinks a").forEach(link=>{
-  link.classList.toggle(
-   "active",
-   link.getAttribute("href")==="#"+sectionId
-  );
+ // Update active menu item
+ document.querySelectorAll("#navLinks a").forEach(link => {
+
+  const active =
+   link.getAttribute("href") === "#" + sectionId;
+
+  link.classList.toggle("active", active);
+
+  if(active){
+   link.setAttribute("aria-current","page");
+  }else{
+   link.removeAttribute("aria-current");
+  }
+
  });
 
+ // Close mobile menu
  $("navLinks").classList.remove("open");
 
- window.scrollTo({top:0,behavior:"smooth"});
+ const menuButton = document.querySelector(".menu-toggle");
+
+ if(menuButton){
+  menuButton.setAttribute("aria-expanded","false");
+ }
+
+ // Update browser URL
+ if(options.updateURL){
+
+  const newURL =
+   window.location.pathname +
+   window.location.search +
+   "#" + sectionId;
+
+  history.pushState(
+   {section:sectionId},
+   "",
+   newURL
+  );
+
+ }
+
+ // Scroll to top
+ if(options.scroll !== false){
+
+  window.scrollTo({
+   top:0,
+   behavior:options.smooth ? "smooth" : "instant"
+  });
+
+ }
+
 }
 
-/* MENU CLICK */
-document.querySelectorAll("#navLinks a").forEach(link=>{
+// Navigation menu clicks
+document.querySelectorAll("#navLinks a").forEach(link => {
+
  link.addEventListener("click",function(e){
+
   e.preventDefault();
-  showSection(this.getAttribute("href").substring(1));
+
+  const sectionId =
+   this.getAttribute("href").substring(1);
+
+  showSection(sectionId,{
+   updateURL:true,
+   smooth:true
+  });
+
  });
+
+});
+
+// Browser Back and Forward buttons
+window.addEventListener("popstate",function(){
+
+ const sectionId =
+  window.location.hash.substring(1) || "home";
+
+ showSection(sectionId,{
+  scroll:true
+ });
+
+});
+
+// Direct section links and page refresh
+window.addEventListener("hashchange",function(){
+
+ const sectionId =
+  window.location.hash.substring(1) || "home";
+
+ showSection(sectionId);
+
+});
+
+// Mobile menu accessibility
+function toggleMenu(){
+
+ const menu = $("navLinks");
+
+ menu.classList.toggle("open");
+
+ const isOpen = menu.classList.contains("open");
+
+ document.querySelector(".menu-toggle")
+  .setAttribute("aria-expanded",String(isOpen));
+
+}
+
+// Open the correct section on initial page load
+const initialSection =
+ window.location.hash.substring(1) || "home";
+
+showSection(initialSection,{
+ scroll:false
 });
 
 /* DEFAULT SECTION */
