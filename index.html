@@ -452,25 +452,58 @@ body[dir="rtl"] .note{
 
 
 </section>
+
 <!-- BMI CALCULATOR -->
 <section class="content-section" id="bmi">
- <h2>⚖️ BMI Calculator</h2>
- <p>Calculate Body Mass Index using height and weight.</p>
 
- <label>Height (cm)</label>
- <input type="number" id="bmiHeight" placeholder="Example: 170" min="1">
+ <h2 id="bmiTitle">⚖️ BMI Calculator</h2>
 
- <label>Weight (kg)</label>
- <input type="number" id="bmiWeight" placeholder="Example: 65" min="1">
-
- <button class="action-btn" onclick="calculateBMI()">Calculate BMI</button>
-
- <div id="bmiResult" class="result-box" style="display:none"></div>
-
- <p class="warning-note">
- BMI is a screening measure, not a diagnosis. Adult BMI categories are not intended for children, pregnancy or every clinical situation.
+ <p id="bmiDescription">
+  Calculate Body Mass Index using height and weight.
  </p>
+
+ <label id="heightLabel" for="bmiHeight">
+  Height (cm)
+ </label>
+
+ <input
+  type="number"
+  id="bmiHeight"
+  placeholder="Example: 170"
+  min="1"
+ >
+
+ <label id="weightLabel" for="bmiWeight">
+  Weight (kg)
+ </label>
+
+ <input
+  type="number"
+  id="bmiWeight"
+  placeholder="Example: 65"
+  min="1"
+ >
+
+ <button
+  class="action-btn"
+  id="calculateBMI"
+  onclick="calculateBMI()"
+ >
+  Calculate BMI
+ </button>
+
+ <div
+  id="bmiResult"
+  class="result-box"
+  style="display:none"
+ ></div>
+
+ <p class="warning-note" id="bmiWarning">
+  BMI is a screening measure, not a diagnosis. Adult BMI categories are not intended for children, pregnancy or every clinical situation.
+ </p>
+
 </section>
+
 
 <!-- EARLY WARNING SIGNS -->
 <section class="content-section" id="morning">
@@ -974,6 +1007,8 @@ const labels = {
 
   backTop:"Back to Top",
   noResults:"No results found."
+
+bmiWarning:"BMI is a screening measure, not a diagnosis. Adult BMI categories are not intended for children, pregnancy or every clinical situation."
  },
 
  ur: {
@@ -1032,6 +1067,8 @@ const labels = {
 
   backTop:"اوپر جائیں",
   noResults:"کوئی نتیجہ نہیں ملا۔"
+
+bmiWarning:"BMI صرف ابتدائی جانچ کا ایک پیمانہ ہے، حتمی تشخیص نہیں۔ بالغ افراد کے BMI معیار بچوں، حاملہ خواتین یا ہر طبی صورتحال کے لیے موزوں نہیں ہیں۔"
  }
 };
 
@@ -1073,6 +1110,8 @@ function setLanguage(lang){
 
   if(navLabels[section]){
    link.textContent = navLabels[section];
+
+setText("bmiWarning",L.bmiWarning);
   }
  });
 
