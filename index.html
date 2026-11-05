@@ -1030,10 +1030,30 @@ function detail(label,value){
  </div>`;
 }
 
+
 function showTests(){
+
  const q=$("search").value.trim().toLowerCase();
  const dept=$("departmentFilter").value;
 
+ const L=labels[currentLang];
+
+ // HOME PAGE: Hide all tests initially
+ if(!q && dept==="all"){
+  $("total").textContent=data.length;
+  $("testCount").textContent="0";
+
+  $("tests").innerHTML=`
+   <div class="empty">
+    ${currentLang==="ur"
+     ?"ٹیسٹ دیکھنے کے لیے کوئی شعبہ منتخب کریں یا ٹیسٹ تلاش کریں۔"
+     :"Select a department or search for a laboratory test to view results."}
+   </div>
+  `;
+  return;
+ }
+
+ // FILTER TESTS
  const filtered=data.filter(t=>
   (dept==="all"||t.department===dept) &&
   [t.name,t.department,t.specimen,t.method,t.purpose]
@@ -1044,11 +1064,10 @@ function showTests(){
  $("testCount").textContent=filtered.length;
 
  if(!filtered.length){
-  $("tests").innerHTML=`<div class="empty">${labels[currentLang].empty}</div>`;
+  $("tests").innerHTML=
+   `<div class="empty">${L.empty}</div>`;
   return;
  }
-
- const L=labels[currentLang];
 
  $("tests").innerHTML=filtered.map((t,i)=>`
   <article class="test-card">
@@ -1073,6 +1092,7 @@ function showTests(){
   </article>
  `).join("");
 }
+
 
 function printSingleTest(encodedName){
  const name=decodeURIComponent(encodedName);
