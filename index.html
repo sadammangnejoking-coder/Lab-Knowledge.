@@ -486,7 +486,7 @@ body[dir="rtl"] .note{
 
  <button
   class="action-btn"
-  id="calculateBMI"
+  id="calculateBMIBtn"
   onclick="calculateBMI()"
  >
   Calculate BMI
@@ -609,6 +609,27 @@ body[dir="rtl"] .note{
 <div class="print-area" id="printArea"></div>
 
 <script>
+/* BASIC JAVASCRIPT HELPERS */
+
+let currentLang = "en";
+
+function $(id){
+ return document.getElementById(id);
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,function(char){
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[char];
+ });
+}
+
+
 /* LABORATORY TEST DATABASE */
 
 const rawTests = [
@@ -1006,8 +1027,7 @@ const labels = {
   footer:"Laboratory Knowledge and Education",
 
   backTop:"Back to Top",
-  noResults:"No results found."
-
+noResults:"No results found.",
 bmiWarning:"BMI is a screening measure, not a diagnosis. Adult BMI categories are not intended for children, pregnancy or every clinical situation."
  },
 
@@ -1066,10 +1086,9 @@ bmiWarning:"BMI is a screening measure, not a diagnosis. Adult BMI categories ar
   footer:"لیبارٹری معلومات اور تعلیم",
 
   backTop:"اوپر جائیں",
-  noResults:"کوئی نتیجہ نہیں ملا۔"
-
+noResults:"کوئی نتیجہ نہیں ملا۔",
 bmiWarning:"BMI صرف ابتدائی جانچ کا ایک پیمانہ ہے، حتمی تشخیص نہیں۔ بالغ افراد کے BMI معیار بچوں، حاملہ خواتین یا ہر طبی صورتحال کے لیے موزوں نہیں ہیں۔"
- }
+}
 };
 
 
@@ -1112,6 +1131,7 @@ function setLanguage(lang){
    link.textContent = navLabels[section];
 
 setText("bmiWarning",L.bmiWarning);
+setText("calculateBMIBtn",L.calculate);
   }
  });
 
