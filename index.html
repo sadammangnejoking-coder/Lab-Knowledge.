@@ -1339,6 +1339,52 @@ function searchAbbreviations(){
 showEWS();
 searchAbbreviations();
 
+/* SINGLE SECTION NAVIGATION */
+
+function showSection(sectionId){
+
+ const sections = [
+  "home",
+  "bmi",
+  "morning",
+  "abbreviations",
+  "about",
+  "contact"
+ ];
+
+ sections.forEach(id=>{
+  const section=document.getElementById(id);
+
+  if(section){
+   section.style.display =
+    id===sectionId ? "block" : "none";
+  }
+ });
+
+ document.querySelectorAll("#navLinks a").forEach(link=>{
+  link.classList.toggle(
+   "active",
+   link.getAttribute("href")==="#"+sectionId
+  );
+ });
+
+ $("navLinks").classList.remove("open");
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* MENU CLICK */
+document.querySelectorAll("#navLinks a").forEach(link=>{
+ link.addEventListener("click",function(e){
+  e.preventDefault();
+  showSection(this.getAttribute("href").substring(1));
+ });
+});
+
+/* DEFAULT SECTION */
+showSection("home");
+
+
 </script>
 </body>
 </html>
