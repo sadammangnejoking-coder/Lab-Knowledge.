@@ -386,6 +386,15 @@ body[dir="rtl"] .note{
  outline-offset:3px;
 }
 
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+  }
+}
 </style>
 </head>
 
@@ -592,7 +601,15 @@ body[dir="rtl"] .note{
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <footer>
- <div>This is a computer-generated educational reference. No signature is required.</div>
+ <div>This is a computer-generated educational reference. No signature is required.
+
+<p class="print-only">
+  This is a computer-generated document.
+</p>
+
+</div>
+
+
  <div> Copyright © <span id="year"></span> Lab Knowledge</div>
 </footer>
 
