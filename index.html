@@ -288,6 +288,92 @@ body[dir="rtl"] .note{
  }
 }
 
+/* MOBILE NAVIGATION */
+.menu-toggle{
+ display:none;
+ background:#0891b2;
+ color:white;
+ border:0;
+ padding:12px 16px;
+ border-radius:7px;
+ font-weight:bold;
+ cursor:pointer;
+}
+.nav-links{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+}
+.nav-links a{
+ color:white;
+ text-decoration:none;
+ padding:14px 15px;
+ font-size:14px;
+ font-weight:bold;
+}
+.nav-links a:hover{background:#0891b2}
+
+.content-section{
+ background:white;
+ padding:20px;
+ margin:18px 0;
+ border-radius:12px;
+ box-shadow:0 2px 8px #0001;
+ scroll-margin-top:15px;
+}
+.content-section h2{color:#075985}
+.content-section input,
+.content-section select{
+ width:100%;
+ padding:11px;
+ margin:7px 0;
+ border:1px solid #cbd5e1;
+ border-radius:8px;
+ font-size:15px;
+}
+.result-box{
+ background:#e0f2fe;
+ padding:14px;
+ border-radius:9px;
+ margin-top:12px;
+ line-height:1.7;
+}
+.table-wrap{overflow-x:auto}
+.info-table{
+ width:100%;
+ border-collapse:collapse;
+ min-width:550px;
+ font-size:13px;
+}
+.info-table th,.info-table td{
+ border:1px solid #dbe4ec;
+ padding:9px;
+ text-align:left;
+}
+.info-table th{
+ background:#075985;
+ color:white;
+}
+.info-table tr:nth-child(even){background:#f0f7fb}
+.warning-note{
+ background:#fff8e7;
+ border-left:4px solid #e5a000;
+ padding:12px;
+ border-radius:6px;
+ line-height:1.6;
+ margin:12px 0;
+}
+@media(max-width:600px){
+ .nav-container{
+  display:block;
+  padding:8px;
+ }
+ .menu-toggle{display:block;margin:auto}
+ .nav-links{display:none;flex-direction:column}
+ .nav-links.open{display:flex}
+ .nav-links a{padding:12px;text-align:center}
+}
+
 </style>
 </head>
 
@@ -329,6 +415,7 @@ body[dir="rtl"] .note{
 </div>
 
 <main class="container">
+<section id="home">
 
  <section class="panel">
   <h2 id="countHeading">📊 Department-wise Test Count</h2>
@@ -351,6 +438,110 @@ body[dir="rtl"] .note{
 
  <section id="tests"></section>
 
+
+</section>
+<!-- BMI CALCULATOR -->
+<section class="content-section" id="bmi">
+ <h2>⚖️ BMI Calculator</h2>
+ <p>Calculate Body Mass Index using height and weight.</p>
+
+ <label>Height (cm)</label>
+ <input type="number" id="bmiHeight" placeholder="Example: 170" min="1">
+
+ <label>Weight (kg)</label>
+ <input type="number" id="bmiWeight" placeholder="Example: 65" min="1">
+
+ <button class="action-btn" onclick="calculateBMI()">Calculate BMI</button>
+
+ <div id="bmiResult" class="result-box" style="display:none"></div>
+
+ <p class="warning-note">
+ BMI is a screening measure, not a diagnosis. Adult BMI categories are not intended for children, pregnancy or every clinical situation.
+ </p>
+</section>
+
+<!-- EARLY WARNING SIGNS -->
+<section class="content-section" id="morning">
+ <h2>🚨 Early Warning Signs</h2>
+ <p>Vital-sign thresholds from the Excel policy document supplied for this website.</p>
+
+ <label>Select Patient Category</label>
+ <select id="ewsCategory" onchange="showEWS()">
+  <option value="neonate">Neonate (0–1 month)</option>
+  <option value="infant">Infant (under 1 year)</option>
+  <option value="1to2">Pediatrics (over 1–2 years)</option>
+  <option value="2to5">Pediatrics (over 2–5 years)</option>
+  <option value="5to12">Pediatrics (over 5–12 years)</option>
+  <option value="12to18">Pediatrics (over 12–18 years)</option>
+  <option value="adult">Adult (over 18 years)</option>
+  <option value="obstetric">Obstetric Patient</option>
+ </select>
+
+ <div class="table-wrap">
+  <table class="info-table">
+   <thead>
+    <tr>
+     <th>Parameter</th>
+     <th>Low Threshold</th>
+     <th>High Threshold</th>
+    </tr>
+   </thead>
+   <tbody id="ewsTable"></tbody>
+  </table>
+ </div>
+
+ <p class="warning-note">
+ <strong>Important clinical notice:</strong>
+ These thresholds are transcribed from the supplied workbook. They are an educational reference, not an automated alert or independent clinical decision tool. Always follow the latest approved institutional policy and consult the responsible clinical team. Assess the patient's overall condition.
+ </p>
+</section>
+
+<!-- MEDICAL ABBREVIATIONS -->
+<section class="content-section" id="abbreviations">
+ <h2>📚 Medical Abbreviations</h2>
+ <input type="search" id="abbrSearch" placeholder="Search abbreviation or meaning..." oninput="searchAbbreviations()">
+
+ <div class="table-wrap">
+  <table class="info-table">
+   <thead>
+    <tr><th>Abbreviation</th><th>Full Form</th></tr>
+   </thead>
+   <tbody id="abbrTable"></tbody>
+  </table>
+ </div>
+</section>
+
+<!-- ABOUT US -->
+<section class="content-section" id="about">
+ <h2>ℹ️ About Lab Knowledge</h2>
+ <p>
+ Lab Knowledge is an educational reference website designed to help users understand laboratory investigations, specimen types, testing methods and basic clinical significance.
+ </p>
+ <p>
+ The website provides general educational information about laboratory tests and medical terminology.
+ </p>
+ <p><strong>Our aim:</strong> Learn • Understand • Explore.</p>
+ <p class="warning-note">
+ This is an independent educational resource. It is not a substitute for official laboratory procedures, institutional policies or professional medical advice.
+ </p>
+</section>
+
+<!-- CONTACT US -->
+<section class="content-section" id="contact">
+ <h2>✉️ Contact Us</h2>
+ <p>
+ Have a correction, suggestion or educational content request?
+ </p>
+ <p>
+ You can contact the website maintainer through the project's GitHub repository.
+ </p>
+ <a class="action-btn"
+ href="https://github.com/sadammangnejoking-coder/Lab-Knowledge."
+ target="_blank" rel="noopener"
+ style="display:inline-block;text-decoration:none">
+ Visit GitHub Repository
+ </a>
+</section>
 </main>
 
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -961,6 +1152,192 @@ $("year").textContent=new Date().getFullYear();
 fillDepartments();
 renderCounts();
 showTests();
+
+/* MOBILE MENU */
+function toggleMenu(){
+ $("navLinks").classList.toggle("open");
+}
+
+document.querySelectorAll("#navLinks a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  $("navLinks").classList.remove("open");
+ });
+});
+
+/* BMI CALCULATOR */
+function calculateBMI(){
+ const height=Number($("bmiHeight").value);
+ const weight=Number($("bmiWeight").value);
+
+ if(!height || !weight || height<=0 || weight<=0){
+  $("bmiResult").style.display="block";
+  $("bmiResult").textContent="Please enter valid height and weight.";
+  return;
+ }
+
+ const bmi=weight/Math.pow(height/100,2);
+ let category="";
+
+ if(bmi<18.5) category="Underweight";
+ else if(bmi<25) category="Normal weight";
+ else if(bmi<30) category="Overweight";
+ else category="Obesity";
+
+ $("bmiResult").style.display="block";
+ $("bmiResult").innerHTML=
+  "<strong>BMI:</strong> "+bmi.toFixed(1)+
+  "<br><strong>Category:</strong> "+category;
+}
+
+/* EARLY WARNING SIGNS DATA */
+const ewsData={
+ neonate:[
+  ["Respiration","Below 30/min","Above 60/min"],
+  ["Oxygen saturation","Below 90%","Not specified"],
+  ["Temperature","Below 35.6°C","Above 38°C"],
+  ["Systolic BP","Below 70 mmHg","Above 90 mmHg"],
+  ["Pulse","Below 100/min","Above 205/min"],
+  ["GCS","Below 15","Not specified"]
+ ],
+ infant:[
+  ["Respiration","Below 30/min","Above 50/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Temperature","Below 36°C","Above 38.5°C"],
+  ["Systolic BP","Below 70 mmHg","Above 95 mmHg"],
+  ["Pulse","Below 110/min","Above 180/min"],
+  ["GCS","Below 15","Not specified"]
+ ],
+ "1to2":[
+  ["Respiration","Below 25/min","Above 40/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Temperature","Below 36°C","Above 38.5°C"],
+  ["Systolic BP","Below 75 mmHg","Above 100 mmHg"],
+  ["Pulse","Below 90/min","Above 150/min"],
+  ["GCS","Below 15","Not specified"]
+ ],
+ "2to5":[
+  ["Respiration","Below 25/min","Above 35/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Temperature","Below 36°C","Above 38.5°C"],
+  ["Systolic BP","Below 80 mmHg","Above 110 mmHg"],
+  ["Pulse","Below 85/min","Above 140/min"],
+  ["GCS","Below 15","Not specified"]
+ ],
+ "5to12":[
+  ["Respiration","Below 18/min","Above 30/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Temperature","Below 36°C","Above 38.5°C"],
+  ["Systolic BP","Below 90 mmHg","Above 120 mmHg"],
+  ["Pulse","Below 80/min","Above 130/min"],
+  ["GCS","Below 15","Not specified"]
+ ],
+ "12to18":[
+  ["Respiration","Below 10/min","Above 30/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Temperature","Below 36°C","Above 38.5°C"],
+  ["Systolic BP","Below 90 mmHg","Above 130 mmHg"],
+  ["Pulse","Below 60/min","Above 100/min"],
+  ["GCS","Below 15","Not specified"]
+ ],
+ adult:[
+  ["GCS","Below 15","Not specified"],
+  ["Temperature","Not specified","Above 39°C"],
+  ["Pulse","Below 60/min","Above 120/min"],
+  ["Respiration","Below 10/min","Above 30/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Blood pressure","Below 80/60 mmHg","Above 170/100 mmHg"]
+ ],
+ obstetric:[
+  ["Respiration","Below 10/min","Above 30/min"],
+  ["Oxygen saturation","Below 94%","Not specified"],
+  ["Temperature","Not specified","Above 39°C"],
+  ["Blood pressure","Below 80/60 mmHg","Above 160/100 mmHg"],
+  ["Pulse","Below 60/min","Above 120/min"],
+  ["GCS","Below 15","Not specified"]
+ ]
+};
+
+function showEWS(){
+ const category=$("ewsCategory").value;
+ $("ewsTable").innerHTML=ewsData[category].map(row=>
+  "<tr><td>"+escapeHTML(row[0])+"</td><td>"+
+  escapeHTML(row[1])+"</td><td>"+
+  escapeHTML(row[2])+"</td></tr>"
+ ).join("");
+}
+
+/* MEDICAL ABBREVIATIONS */
+const abbreviations=[
+ ["CBC","Complete Blood Count"],
+ ["Hb","Hemoglobin"],
+ ["RBC","Red Blood Cells"],
+ ["WBC","White Blood Cells"],
+ ["PLT","Platelets"],
+ ["HCT","Hematocrit"],
+ ["MCV","Mean Corpuscular Volume"],
+ ["MCH","Mean Corpuscular Hemoglobin"],
+ ["MCHC","Mean Corpuscular Hemoglobin Concentration"],
+ ["ESR","Erythrocyte Sedimentation Rate"],
+ ["PT","Prothrombin Time"],
+ ["INR","International Normalized Ratio"],
+ ["APTT","Activated Partial Thromboplastin Time"],
+ ["FBS","Fasting Blood Sugar"],
+ ["RBS","Random Blood Sugar"],
+ ["HbA1c","Glycated Hemoglobin"],
+ ["LFT","Liver Function Tests"],
+ ["RFT","Renal Function Tests"],
+ ["ALT","Alanine Aminotransferase"],
+ ["AST","Aspartate Aminotransferase"],
+ ["ALP","Alkaline Phosphatase"],
+ ["GGT","Gamma Glutamyl Transferase"],
+ ["TSH","Thyroid Stimulating Hormone"],
+ ["FT4","Free Thyroxine"],
+ ["FT3","Free Triiodothyronine"],
+ ["PTH","Parathyroid Hormone"],
+ ["CRP","C-Reactive Protein"],
+ ["ABG","Arterial Blood Gas"],
+ ["GFR","Glomerular Filtration Rate"],
+ ["CSF","Cerebrospinal Fluid"],
+ ["EDTA","Ethylenediaminetetraacetic Acid"],
+ ["PCR","Polymerase Chain Reaction"],
+ ["NAAT","Nucleic Acid Amplification Test"],
+ ["HIV","Human Immunodeficiency Virus"],
+ ["HBsAg","Hepatitis B Surface Antigen"],
+ ["HCV","Hepatitis C Virus"],
+ ["ANA","Antinuclear Antibody"],
+ ["RF","Rheumatoid Factor"],
+ ["ECG","Electrocardiogram"],
+ ["BP","Blood Pressure"],
+ ["HR","Heart Rate"],
+ ["RR","Respiratory Rate"],
+ ["SpO2","Peripheral Oxygen Saturation"],
+ ["GCS","Glasgow Coma Scale"],
+ ["BMI","Body Mass Index"],
+ ["DLC","Differential Leukocyte Count"],
+ ["PBF","Peripheral Blood Film"],
+ ["DAT","Direct Antiglobulin Test"],
+ ["IAT","Indirect Antiglobulin Test"]
+];
+
+function searchAbbreviations(){
+ const q=$("abbrSearch").value.toLowerCase().trim();
+ const filtered=abbreviations.filter(item=>
+  item.join(" ").toLowerCase().includes(q)
+ );
+
+ $("abbrTable").innerHTML=filtered.map(item=>
+  "<tr><td><strong>"+escapeHTML(item[0])+
+  "</strong></td><td>"+escapeHTML(item[1])+"</td></tr>"
+ ).join("");
+
+ if(!filtered.length){
+  $("abbrTable").innerHTML=
+   '<tr><td colspan="2">No matching abbreviation found.</td></tr>';
+ }
+}
+
+showEWS();
+searchAbbreviations();
 
 </script>
 </body>
