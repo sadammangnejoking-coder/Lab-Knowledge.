@@ -914,9 +914,11 @@ function getPurpose(dept){
  return purposes[dept]||"Supports laboratory assessment as part of the overall clinical evaluation.";
 }
 
-/* LANGUAGE LABELS */
-const labels={
- en:{
+
+/* LANGUAGE LABELS - ENGLISH & URDU */
+
+const labels = {
+ en: {
   count:"📊 Department-wise Test Count",
   all:"All Departments",
   search:"Search Laboratory Tests...",
@@ -934,9 +936,47 @@ const labels={
   empty:"No matching laboratory tests found.",
   subtitle:"Laboratory Investigations Theory",
   popup:"Important Note",
-  close:"I Understand"
+  close:"I Understand",
+
+  home:"Home",
+  bmi:"BMI Calculator",
+  morning:"Early Warning Signs",
+  abbreviations:"Medical Abbreviations",
+  about:"About Us",
+  contact:"Contact Us",
+
+  bmiTitle:"BMI Calculator",
+  bmiDescription:"Calculate your Body Mass Index (BMI).",
+  height:"Height (cm)",
+  weight:"Weight (kg)",
+  calculate:"Calculate BMI",
+  bmiResult:"Your BMI Result",
+  enterHeight:"Please enter a valid height.",
+  enterWeight:"Please enter a valid weight.",
+  underweight:"Underweight",
+  normal:"Normal Weight",
+  overweight:"Overweight",
+  obese:"Obese",
+
+  ewsTitle:"Early Warning Signs",
+  ewsDescription:"Recognize early warning signs and understand patient deterioration.",
+  ewsCategory:"Select Category",
+
+  abbrTitle:"Medical Abbreviations",
+  abbrSearch:"Search Medical Abbreviations...",
+
+  aboutTitle:"About Us",
+  contactTitle:"Contact Us",
+
+  importantNote:"This website is designed for educational purposes. Always follow approved hospital policies and consult qualified healthcare professionals.",
+
+  footer:"Laboratory Knowledge and Education",
+
+  backTop:"Back to Top",
+  noResults:"No results found."
  },
- ur:{
+
+ ur: {
   count:"📊 شعبہ وار ٹیسٹ کی تعداد",
   all:"تمام شعبے",
   search:"لیبارٹری ٹیسٹ تلاش کریں...",
@@ -954,43 +994,122 @@ const labels={
   empty:"کوئی ٹیسٹ نہیں ملا۔",
   subtitle:"لیبارٹری ٹیسٹس کی معلومات",
   popup:"اہم نوٹ",
-  close:"سمجھ گیا"
+  close:"سمجھ گیا",
+
+  home:"ہوم",
+  bmi:"باڈی ماس انڈیکس",
+  morning:"ابتدائی خطرے کی علامات",
+  abbreviations:"طبی اصطلاحات",
+  about:"ہمارے بارے میں",
+  contact:"رابطہ کریں",
+
+  bmiTitle:"باڈی ماس انڈیکس کیلکولیٹر",
+  bmiDescription:"اپنا باڈی ماس انڈیکس (BMI) معلوم کریں۔",
+  height:"قد (سینٹی میٹر)",
+  weight:"وزن (کلوگرام)",
+  calculate:"BMI معلوم کریں",
+  bmiResult:"آپ کا BMI نتیجہ",
+  enterHeight:"براہِ کرم درست قد درج کریں۔",
+  enterWeight:"براہِ کرم درست وزن درج کریں۔",
+  underweight:"کم وزن",
+  normal:"نارمل وزن",
+  overweight:"زیادہ وزن",
+  obese:"موٹاپا",
+
+  ewsTitle:"ابتدائی خطرے کی علامات",
+  ewsDescription:"مریض کی حالت میں بگاڑ کی ابتدائی علامات کو پہچانیں۔",
+  ewsCategory:"کیٹیگری منتخب کریں",
+
+  abbrTitle:"طبی اصطلاحات اور مخففات",
+  abbrSearch:"طبی اصطلاحات تلاش کریں...",
+
+  aboutTitle:"ہمارے بارے میں",
+  contactTitle:"رابطہ کریں",
+
+  importantNote:"یہ ویب سائٹ تعلیمی مقاصد کے لیے بنائی گئی ہے۔ ہمیشہ ہسپتال کی منظور شدہ پالیسیوں پر عمل کریں اور مستند طبی ماہرین سے رہنمائی حاصل کریں۔",
+
+  footer:"لیبارٹری معلومات اور تعلیم",
+
+  backTop:"اوپر جائیں",
+  noResults:"کوئی نتیجہ نہیں ملا۔"
  }
 };
 
-let currentLang="en";
-const $=id=>document.getElementById(id);
 
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,ch=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[ch]));
-}
+/* LANGUAGE SWITCHING */
 
 function setLanguage(lang){
- currentLang=lang;
- document.body.dir=lang==="ur"?"rtl":"ltr";
- document.documentElement.lang=lang;
 
- const L=labels[lang];
+ if(!labels[lang]) return;
 
- $("countHeading").textContent=L.count;
- $("search").placeholder=L.search;
- $("subtitle").textContent=L.subtitle;
- $("popupTitle").textContent=L.popup;
- $("popupClose").textContent=L.close;
+ currentLang = lang;
+
+ const L = labels[lang];
+
+ document.body.dir = lang === "ur" ? "rtl" : "ltr";
+ document.documentElement.lang = lang;
+
+ $("countHeading").textContent = L.count;
+ $("search").placeholder = L.search;
+ $("subtitle").textContent = L.subtitle;
+ $("popupTitle").textContent = L.popup;
+ $("popupClose").textContent = L.close;
 
  $("englishBtn").classList.toggle("active",lang==="en");
  $("urduBtn").classList.toggle("active",lang==="ur");
 
+ /* Navigation labels */
+ const navLabels = {
+  home:L.home,
+  bmi:L.bmi,
+  morning:L.morning,
+  abbreviations:L.abbreviations,
+  about:L.about,
+  contact:L.contact
+ };
+
+ document.querySelectorAll("#navLinks a").forEach(link=>{
+  const section = link.getAttribute("href").substring(1);
+
+  if(navLabels[section]){
+   link.textContent = navLabels[section];
+  }
+ });
+
+ /* Other sections */
+ const setText = (id,value)=>{
+  const element = $(id);
+  if(element && value){
+   element.textContent = value;
+  }
+ };
+
+ setText("bmiTitle",L.bmiTitle);
+ setText("bmiDescription",L.bmiDescription);
+ setText("calculateBMI",L.calculate);
+ setText("ewsTitle",L.ewsTitle);
+ setText("ewsDescription",L.ewsDescription);
+ setText("abbrTitle",L.abbrTitle);
+ setText("aboutTitle",L.aboutTitle);
+ setText("contactTitle",L.contactTitle);
+
+ const heightLabel = document.querySelector('label[for="bmiHeight"]');
+ const weightLabel = document.querySelector('label[for="bmiWeight"]');
+
+ if(heightLabel) heightLabel.textContent=L.height;
+ if(weightLabel) weightLabel.textContent=L.weight;
+
+ $("bmiHeight").placeholder=L.height;
+ $("bmiWeight").placeholder=L.weight;
+ $("abbrSearch").placeholder=L.abbrSearch;
+
+ /* Refresh test information */
  fillDepartments();
  renderCounts();
  showTests();
+
 }
+
 
 function fillDepartments(){
  const select=$("departmentFilter");
