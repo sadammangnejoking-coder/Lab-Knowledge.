@@ -387,7 +387,7 @@ body[dir="rtl"] .note{
 }
 
 .print-only {
-  display: none;
+  display: none !important;
 }
 
 @media print {
@@ -601,16 +601,13 @@ body[dir="rtl"] .note{
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <footer>
- <div>This is a computer-generated educational reference. No signature is required.
+  <div class="print-only">
+    This is a computer-generated educational reference. No signature is required.
+  </div>
 
-<p class="print-only">
-  This is a computer-generated document.
-</p>
-
-</div>
-
-
- <div> Copyright © <span id="year"></span> Lab Knowledge</div>
+  <div>
+    Copyright © <span id="year"></span> Lab Knowledge
+  </div>
 </footer>
 
 <div class="popup-overlay" id="importantPopup">
