@@ -785,33 +785,35 @@ const contactStatus = document.getElementById("contactStatus");
 const contactSubmit = document.getElementById("contactSubmit");
 
 contactForm.addEventListener("submit", async function(e) {
-
   e.preventDefault();
 
   if (!contactForm.reportValidity()) return;
 
   contactSubmit.disabled = true;
   contactSubmit.textContent = "Sending Message...";
-
   contactStatus.style.display = "none";
 
   try {
-    const formData = new FormData(contactForm);
+    const formData = Object.fromEntries(
+      new FormData(contactForm).entries()
+    );
 
     const response = await fetch(
       "https://formsubmit.co/ajax/lab.knowledge94@gmail.com",
       {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: formData
+        body: JSON.stringify(formData)
       }
     );
 
     const result = await response.json();
 
-    if (response.ok && result.success) {
+    if (response.ok &&
+        String(result.success).toLowerCase() === "true") {
 
       contactForm.reset();
 
@@ -826,17 +828,14 @@ contactForm.addEventListener("submit", async function(e) {
     }
 
   } catch (error) {
-
     contactStatus.style.display = "block";
     contactStatus.style.background = "#fee2e2";
     contactStatus.style.color = "#991b1b";
     contactStatus.textContent = "❌ " + error.message;
 
   } finally {
-
     contactSubmit.disabled = false;
     contactSubmit.textContent = "📩 Submit Message";
-
   }
 });
 </script>
