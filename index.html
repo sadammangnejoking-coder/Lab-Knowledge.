@@ -778,6 +778,26 @@ body[dir="rtl"] .note{
 </form>
 
 
+<!-- CONTACT FORM JAVASCRIPT -->
+<script>
+const contactForm = document.getElementById("contactForm");
+
+const contactSubmit = document.getElementById("contactSubmit");
+
+contactForm.addEventListener("submit", function(e) {
+
+  if (!contactForm.reportValidity()) {
+    e.preventDefault();
+    return;
+  }
+
+  contactSubmit.disabled = true;
+  contactSubmit.textContent = "Sending Message...";
+
+});
+
+</script>
+
 
 
 
