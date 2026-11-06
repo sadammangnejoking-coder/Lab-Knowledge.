@@ -762,9 +762,18 @@ body[dir="rtl"] .note{
       name="Comments" required maxlength="3000"></textarea>
   </div>
 
-  <button type="submit" class="contact-submit">
-    📩 Submit Message
-  </button>
+  <button
+  type="submit"
+  id="contactSubmit"
+  class="contact-submit"
+>
+  📩 Submit Message
+</button>
+
+<div
+  id="contactStatus"
+  style="display:none; padding:12px; margin-top:15px; border-radius:8px;"
+></div>
 
 </form>
 
@@ -787,7 +796,6 @@ contactForm.addEventListener("submit", async function(e) {
   contactStatus.style.display = "none";
 
   try {
-
     const formData = new FormData(contactForm);
 
     const response = await fetch(
@@ -795,37 +803,26 @@ contactForm.addEventListener("submit", async function(e) {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(
-          Object.fromEntries(formData.entries())
-        )
+        body: formData
       }
     );
 
     const result = await response.json();
 
-    if (
-      response.ok &&
-      (result.success === true || result.success === "true")
-    ) {
+    if (response.ok && result.success) {
 
       contactForm.reset();
 
       contactStatus.style.display = "block";
       contactStatus.style.background = "#dcfce7";
       contactStatus.style.color = "#166534";
-
       contactStatus.textContent =
-        "✅ Message Sent Successfully! Thank you for contacting Lab Knowledge. We will get back to you soon.";
+        "✅ Message Sent Successfully! Thank you for contacting Lab Knowledge.";
 
     } else {
-
-      throw new Error(
-        result.message || "Message could not be sent."
-      );
-
+      throw new Error(result.message || "Message could not be sent.");
     }
 
   } catch (error) {
@@ -833,9 +830,7 @@ contactForm.addEventListener("submit", async function(e) {
     contactStatus.style.display = "block";
     contactStatus.style.background = "#fee2e2";
     contactStatus.style.color = "#991b1b";
-
-    contactStatus.textContent =
-      "❌ " + (error.message || "Unable to submit form. Please try again.");
+    contactStatus.textContent = "❌ " + error.message;
 
   } finally {
 
@@ -843,7 +838,6 @@ contactForm.addEventListener("submit", async function(e) {
     contactSubmit.textContent = "📩 Submit Message";
 
   }
-
 });
 </script>
 
