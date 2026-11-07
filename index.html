@@ -459,6 +459,58 @@ body[dir="rtl"] .note{
 }
 
 
+
+/* CUSTOM SUCCESS POPUP */
+.success-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 47, 73, 0.65);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.success-popup.show {
+  display: flex;
+}
+
+.success-popup-box {
+  background: #ffffff;
+  width: 100%;
+  max-width: 360px;
+  padding: 30px 22px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+  border-top: 6px solid #0891b2;
+}
+
+.success-popup-box h3 {
+  color: #075985;
+  margin: 0 0 12px;
+  font-size: 22px;
+}
+
+.success-popup-box p {
+  color: #334155;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+.success-popup-box button {
+  background: linear-gradient(135deg,#075985,#0891b2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 35px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
 </style>
 </head>
 
@@ -781,6 +833,18 @@ value="d7440a2c-f6bd-40d5-a4e4-ab50b9b45673">
   style="display:none; padding:12px; margin-top:15px; border-radius:8px;"
 ></div>
 
+
+<!-- CUSTOM SUCCESS POPUP -->
+<div id="contactSuccess" class="success-popup">
+  <div class="success-popup-box">
+    <h3>✓ Message Sent!</h3>
+    <p>Your message has been sent successfully.</p>
+    <button type="button" onclick="closeContactSuccess()">
+      OK
+    </button>
+  </div>
+</div>
+
 </form>
 
 
@@ -814,8 +878,8 @@ if (contactForm) {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        alert("Success! Your message has been sent.");
         contactForm.reset();
+document.getElementById("contactSuccess").classList.add("show");
       } else {
         alert(data.message || "Message could not be sent.");
       }
@@ -829,6 +893,9 @@ if (contactForm) {
   });
 }
 
+function closeContactSuccess() {
+  document.getElementById("contactSuccess").classList.remove("show");
+}
 </script>
 
 
