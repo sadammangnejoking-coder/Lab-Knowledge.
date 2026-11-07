@@ -1880,10 +1880,18 @@ function showTests(){
     <strong>${L.note}:</strong>
     ${escapeHTML(t.note)}
    </div>
-   <div class="card-actions">
-    <button class="action-btn" onclick="printSingleTest('${encodeURIComponent(t.name)}')">
-     ${L.print}
+      <div class="card-actions">
+
+    <button class="action-btn"
+      onclick="printSingleTest('${encodeURIComponent(t.name)}')">
+      ${L.print}
     </button>
+
+    <button class="more-detail-btn"
+      onclick="openMoreDetail('${encodeURIComponent(t.name)}')">
+      ${currentLang === "ur" ? "مزید تفصیل" : "More Detail"}
+    </button>
+
    </div>
   </article>
  `).join("");
