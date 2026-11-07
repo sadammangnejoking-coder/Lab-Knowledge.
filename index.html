@@ -688,6 +688,7 @@ body[dir="rtl"] .note{
     id="bmiResult"
     class="result-box"
     style="display:none"
+    aria-live="polite"
   ></div>
 
   <p class="warning-note" id="bmiWarning">
@@ -702,6 +703,7 @@ body[dir="rtl"] .note{
 <script>
 
 // AUTOMATIC INCHES TO CM CONVERSION
+
 const heightInchesInput =
   document.getElementById("heightInches");
 
@@ -715,7 +717,9 @@ heightInchesInput.addEventListener("input", function() {
 
   const inches = parseFloat(this.value);
 
-  if (!inches || inches <= 0 || inches > 100) {
+  if (!this.value || !Number.isFinite(inches) ||
+      inches <= 0 || inches > 100) {
+
     bmiHeightInput.value = "";
     cmConversionResult.textContent = "";
     return;
@@ -730,6 +734,7 @@ heightInchesInput.addEventListener("input", function() {
 
 });
 
+
 // BMI CALCULATION
 
 function calculateBMI() {
@@ -742,39 +747,60 @@ function calculateBMI() {
     document.getElementById("bmiWeight").value
   );
 
-  const result = document.getElementById("bmiResult");
+  const result =
+    document.getElementById("bmiResult");
 
-  if (!height || !weight || height <= 0 || weight <= 0) {
+  if (
+    !Number.isFinite(height) ||
+    !Number.isFinite(weight) ||
+    height <= 0 ||
+    weight <= 0 ||
+    weight > 500
+  ) {
+
     result.style.display = "block";
-    result.innerHTML = "<h3>Please enter valid height and weight.</h3>";
+
+    result.innerHTML =
+      "<h3>Please enter valid height and weight.</h3>";
+
     return;
   }
 
   const heightMeters = height / 100;
-  const bmi = weight / (heightMeters * heightMeters);
+
+  const bmi =
+    weight / (heightMeters * heightMeters);
 
   let category = "";
   let categoryColor = "";
 
   if (bmi < 18.5) {
+
     category = "Underweight";
     categoryColor = "#0369a1";
-  } 
-  else if (bmi < 25) {
+
+  } else if (bmi < 25) {
+
     category = "Normal Weight";
     categoryColor = "#166534";
-  } 
-  else if (bmi < 30) {
+
+  } else if (bmi < 30) {
+
     category = "Overweight";
     categoryColor = "#b45309";
-  } 
-  else {
+
+  } else {
+
     category = "Obesity";
     categoryColor = "#b91c1c";
+
   }
 
-  const minWeight = 18.5 * heightMeters * heightMeters;
-  const maxWeight = 24.9 * heightMeters * heightMeters;
+  const minWeight =
+    18.5 * heightMeters * heightMeters;
+
+  const maxWeight =
+    24.9 * heightMeters * heightMeters;
 
   result.style.display = "block";
 
@@ -793,7 +819,8 @@ function calculateBMI() {
     <div class="healthy-range">
       <strong>Healthy Weight Range</strong>
       <br>
-      ${minWeight.toFixed(1)} - ${maxWeight.toFixed(1)} kg
+      ${minWeight.toFixed(1)} -
+      ${maxWeight.toFixed(1)} kg
     </div>
 
     <p style="margin-top:15px;font-size:13px;">
@@ -801,41 +828,6 @@ function calculateBMI() {
     </p>
   `;
 
-}
-
-  const heightInMeters = height / 100;
-
-  const bmi = weight / (heightInMeters * heightInMeters);
-
-  let category = "";
-
-  if (bmi < 18.5) {
-    category = "Underweight";
-  } else if (bmi < 25) {
-    category = "Normal Weight";
-  } else if (bmi < 30) {
-    category = "Overweight";
-  } else {
-    category = "Obesity";
-  }
-
-  const minWeight = 18.5 * heightInMeters * heightInMeters;
-  const maxWeight = 24.9 * heightInMeters * heightInMeters;
-
-  result.style.display = "block";
-
-  result.innerHTML = `
-    <h3>BMI Result</h3>
-
-    <h2>${bmi.toFixed(1)}</h2>
-
-    <p><strong>Category:</strong> ${category}</p>
-
-    <p>
-      <strong>Healthy weight range:</strong>
-      ${minWeight.toFixed(1)} - ${maxWeight.toFixed(1)} kg
-    </p>
-  `;
 }
 
 </script>
