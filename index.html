@@ -2961,6 +2961,45 @@ if(qrTestName){
 
  }
 
+
+/* QR CODE: OPEN EXACT LAB TEST */
+
+const qrParams = new URLSearchParams(window.location.search);
+const qrTestName = qrParams.get("test");
+
+if(qrTestName){
+
+  showSection("home", {scroll:false});
+
+  $("search").value = qrTestName;
+  $("departmentFilter").value = "all";
+
+  showTests();
+
+  const qrCards = document.querySelectorAll("#tests .test-card");
+
+  const matchedCard = [...qrCards].find(card => {
+    const heading = card.querySelector("h3");
+    if(!heading) return false;
+
+    const cardName = heading.textContent
+      .replace(/^\s*\d+\.\s*/, "")
+      .trim();
+
+    return cardName.toLowerCase() === qrTestName.toLowerCase();
+  });
+
+  if(matchedCard){
+    setTimeout(() => {
+      matchedCard.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }, 300);
+  }
+}
+
+
  // Show selected section and hide others
  websiteSections.forEach(id => {
 
