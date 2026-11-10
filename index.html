@@ -2912,156 +2912,72 @@ const websiteSections = [
 
 function showSection(sectionId, options = {}) {
 
- if(!websiteSections.includes(sectionId)){
-  sectionId = "home";
+  if(!websiteSections.includes(sectionId)){
+    sectionId = "home";
+  }
 
+  // Show selected section and hide others
+  websiteSections.forEach(id => {
 
-/* OPEN EXACT TEST FROM QR CODE */
+    const section = document.getElementById(id);
 
-const qrTestName =
-  new URLSearchParams(window.location.search).get("test");
+    if(section){
+      section.style.display =
+        id === sectionId ? "block" : "none";
+    }
 
-if(qrTestName){
+  });
 
-  const qrTest = data.find(
-    t => t.name.toLowerCase() === qrTestName.toLowerCase()
-  );
+  // Update active menu item
+  document.querySelectorAll("#navLinks a").forEach(link => {
 
-  if(qrTest){
+    const active =
+      link.getAttribute("href") === "#" + sectionId;
 
-    $("search").value = qrTest.name;
-    $("departmentFilter").value = "all";
+    link.classList.toggle("active", active);
 
-    showTests();
+    if(active){
+      link.setAttribute("aria-current","page");
+    }else{
+      link.removeAttribute("aria-current");
+    }
 
-    const cards = document.querySelectorAll("#tests .test-card");
+  });
 
-    cards.forEach(card => {
-      const heading = card.querySelector("h3");
+  // Close mobile menu
+  $("navLinks").classList.remove("open");
 
-      const cardName = heading.textContent
-        .replace(/^\d+\.\s*/, "")
-        .trim();
+  const menuButton = document.querySelector(".menu-toggle");
 
-      if(cardName !== qrTest.name){
-        card.style.display = "none";
-      }
-    });
+  if(menuButton){
+    menuButton.setAttribute("aria-expanded","false");
+  }
 
-    const exactCard = [...cards].find(card =>
-      card.querySelector("h3").textContent
-        .replace(/^\d+\.\s*/, "").trim() === qrTest.name
+  // Update browser URL
+  if(options.updateURL){
+
+    const newURL =
+      window.location.pathname +
+      window.location.search +
+      "#" + sectionId;
+
+    history.pushState(
+      {section:sectionId},
+      "",
+      newURL
     );
 
-    if(exactCard){
-      exactCard.scrollIntoView({block:"start"});
-    }
-  }
-}
-
- }
-
-
-/* QR CODE: OPEN EXACT LAB TEST */
-
-const qrParams = new URLSearchParams(window.location.search);
-const qrTestName = qrParams.get("test");
-
-if(qrTestName){
-
-  showSection("home", {scroll:false});
-
-  $("search").value = qrTestName;
-  $("departmentFilter").value = "all";
-
-  showTests();
-
-  const qrCards = document.querySelectorAll("#tests .test-card");
-
-  const matchedCard = [...qrCards].find(card => {
-    const heading = card.querySelector("h3");
-    if(!heading) return false;
-
-    const cardName = heading.textContent
-      .replace(/^\s*\d+\.\s*/, "")
-      .trim();
-
-    return cardName.toLowerCase() === qrTestName.toLowerCase();
-  });
-
-  if(matchedCard){
-    setTimeout(() => {
-      matchedCard.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
-    }, 300);
-  }
-}
-
-
- // Show selected section and hide others
- websiteSections.forEach(id => {
-
-  const section = document.getElementById(id);
-
-  if(section){
-   section.style.display =
-    id === sectionId ? "block" : "none";
   }
 
- });
+  // Scroll to top
+  if(options.scroll !== false){
 
- // Update active menu item
- document.querySelectorAll("#navLinks a").forEach(link => {
+    window.scrollTo({
+      top:0,
+      behavior:options.smooth ? "smooth" : "instant"
+    });
 
-  const active =
-   link.getAttribute("href") === "#" + sectionId;
-
-  link.classList.toggle("active", active);
-
-  if(active){
-   link.setAttribute("aria-current","page");
-  }else{
-   link.removeAttribute("aria-current");
   }
-
- });
-
- // Close mobile menu
- $("navLinks").classList.remove("open");
-
- const menuButton = document.querySelector(".menu-toggle");
-
- if(menuButton){
-  menuButton.setAttribute("aria-expanded","false");
- }
-
- // Update browser URL
- if(options.updateURL){
-
-  const newURL =
-   window.location.pathname +
-   window.location.search +
-   "#" + sectionId;
-
-  history.pushState(
-   {section:sectionId},
-   "",
-   newURL
-  );
-
- }
-
- // Scroll to top
- if(options.scroll !== false){
-
-  window.scrollTo({
-   top:0,
-   behavior:options.smooth ? "smooth" : "instant"
-  });
-
- }
 
 }
 
