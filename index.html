@@ -1827,6 +1827,319 @@ function detail(label,value){
 }
 
 
+/* COMPLETE BILINGUAL EDUCATIONAL DETAILS ENGINE */
+
+function buildTestEducation(test) {
+
+  const name = test.name;
+  const dept = test.department;
+  const specimen = test.specimen;
+  const method = test.method;
+
+  let purpose = test.purpose;
+  let measures = "The test measures or detects the laboratory parameter identified by its name.";
+  let clinicalUse = "It may support diagnosis, screening, monitoring or further investigation when clinically indicated.";
+  let high = "An increased or positive result may have several causes. Its meaning depends on the specific analyte, assay, patient condition and clinical context.";
+  let low = "A decreased or negative result may be normal or may have clinical significance depending on the test and reason for testing.";
+  let precautions = "Check patient preparation, collection requirements, sample handling and laboratory-specific instructions before testing.";
+
+  const n = name.toLowerCase();
+
+  /* HEMATOLOGY */
+  if (dept === "Hematology") {
+    measures = "This investigation evaluates a blood-cell parameter, blood-cell characteristic, coagulation factor or related hematological marker.";
+    clinicalUse = "It may help investigate anemia, abnormal blood-cell production, bleeding or clotting problems and selected hematological disorders.";
+    high = "An increased result may be associated with physiological variation, dehydration, inflammation, medication effects or a hematological condition, depending on the test.";
+    low = "A decreased result may be associated with nutritional deficiency, blood loss, increased cell destruction, reduced production or other clinical conditions, depending on the test.";
+    precautions = "Check the correct anticoagulant tube, fill volume, mixing, clotting, sample age and any need for a peripheral blood film.";
+
+    if (/coombs|antiglobulin|dat|iat/.test(n)) {
+      measures = "This test detects antibodies or complement associated with red blood cells, or antibodies present in serum/plasma that may react with red cells.";
+      clinicalUse = "It is used in selected investigations of immune-mediated hemolysis and compatibility testing.";
+      high = "A reactive result indicates antibody or complement activity under the test conditions; it does not independently establish the cause of hemolysis.";
+      low = "A non-reactive result means the target was not detected by the method used. It does not exclude every immune-related condition.";
+    } else if (/pt|inr|aptt|thrombin time|fibrinogen|d-dimer|factor|antithrombin|protein c|protein s|lupus anticoagulant/.test(n)) {
+      measures = "This investigation evaluates one or more components or functions of the blood coagulation and fibrinolytic systems.";
+      clinicalUse = "It may be used to investigate bleeding or thrombosis, assess coagulation pathways and monitor selected anticoagulant treatments.";
+      high = "A prolonged clotting time or increased marker may have multiple causes, including medication effects, factor deficiency, inhibitors or activation of coagulation.";
+      low = "A shortened time or decreased level may have different meanings depending on the specific assay and clinical situation.";
+      precautions = "Use correctly filled sodium-citrate tubes, maintain the required blood-to-anticoagulant ratio and follow the laboratory's processing requirements.";
+    } else if (/blood group|rh factor/.test(n)) {
+      measures = "This test identifies ABO and/or Rh(D) blood group antigens on red blood cells.";
+      clinicalUse = "It supports safe blood transfusion practice and selected pregnancy-related testing.";
+      high = "ABO and Rh typing are categorical results rather than high or low measurements.";
+      low = "ABO and Rh typing are categorical results rather than high or low measurements.";
+    } else if (/film|smear|morphology|malaria parasite/.test(n)) {
+      measures = "Microscopic examination is used to look for cell morphology, parasites or other visible features in the prepared specimen.";
+      clinicalUse = "It may help identify abnormal cell appearances, blood parasites and findings that require further laboratory assessment.";
+      high = "Findings are reported according to the cells, organisms or morphological changes observed.";
+      low = "A negative film means the target was not seen in the examined material; low numbers of cells or organisms may be missed.";
+    }
+  }
+
+  /* CLINICAL CHEMISTRY */
+  if (dept === "Clinical Chemistry") {
+    measures = "This test measures a chemical substance, enzyme, protein, metabolite or physiological marker in the submitted specimen.";
+    clinicalUse = "It may help assess metabolic status, organ function, nutritional status or a specific clinical condition.";
+    high = "An increased value may be associated with altered production, reduced clearance, tissue release, medication effects or other causes specific to the analyte.";
+    low = "A decreased value may reflect reduced production, increased loss, altered distribution, nutritional factors or other causes specific to the analyte.";
+    precautions = "Check fasting requirements where applicable, collection tube, hemolysis, sample stability, medication effects and the laboratory's specimen instructions.";
+
+    if (/glucose|blood sugar|ogtt|hba1c|ketone|acetone/.test(n)) {
+      measures = "This investigation evaluates glucose regulation or ketone production, depending on the specific test.";
+      clinicalUse = "It may be used in diabetes screening, diagnosis and monitoring, or assessment of altered carbohydrate metabolism.";
+      high = "Increased glucose or ketone results may occur in diabetes and other metabolic or physiological situations. Interpretation depends on the test, timing and clinical context.";
+      low = "Low glucose may occur with medication effects, fasting, hormonal or metabolic conditions and other causes. Symptoms and timing are important.";
+      precautions = "Fasting and timing requirements differ between fasting glucose, random glucose, post-meal glucose, OGTT and HbA1c. Follow the specific test instructions.";
+    } else if (/urea|bun|creatinine|egfr|cystatin|creatinine clearance|uric acid/.test(n)) {
+      measures = "This investigation evaluates substances used in the assessment of kidney filtration, waste-product handling or related metabolic processes.";
+      clinicalUse = "It supports assessment and monitoring of kidney function when interpreted with clinical findings and other renal investigations.";
+      high = "Increased values may occur with reduced kidney clearance, dehydration, altered production, medication effects or other conditions.";
+      low = "Decreased values may be associated with lower production, reduced muscle mass, pregnancy or other context-dependent factors.";
+      precautions = "Hydration, muscle mass, diet, medicines, age and the calculation method may affect interpretation. eGFR is an estimate, not a direct measurement.";
+    } else if (/sodium|potassium|chloride|bicarbonate|electrolyte|calcium|magnesium|phosphorus|phosphate/.test(n)) {
+      measures = "This test measures an electrolyte or mineral involved in fluid balance, nerve activity, muscle function and acid-base regulation.";
+      clinicalUse = "It may help assess fluid balance, kidney function, endocrine conditions and metabolic or acid-base disturbances.";
+      high = "Increased levels may result from altered intake, fluid balance, kidney handling, hormonal effects, medicines or specimen-related problems.";
+      low = "Decreased levels may result from losses, altered intake, fluid shifts, hormonal effects, medicines or other clinical conditions.";
+      precautions = "Hemolysis can falsely increase potassium. Collection and processing requirements are important, especially for ionized calcium and blood gas samples.";
+    } else if (/liver|alt|ast|sgpt|sgot|alp|ggt|bilirubin|albumin|globulin|protein/.test(n)) {
+      measures = "This investigation measures enzymes, bilirubin or proteins used in assessing liver-related processes and protein production.";
+      clinicalUse = "It may help assess hepatocellular injury, cholestasis, bilirubin handling and selected aspects of liver synthetic function.";
+      high = "Increased enzymes or bilirubin may occur with liver-cell injury, bile-flow problems, hemolysis or other conditions depending on the marker.";
+      low = "Low protein or albumin may be associated with reduced synthesis, nutritional factors, losses or altered distribution. Some enzyme values have limited meaning when low.";
+      precautions = "Interpret the complete liver profile rather than an isolated value. Medicines, alcohol exposure, muscle injury and clinical history may be relevant.";
+    } else if (/cholesterol|lipid|hdl|ldl|triglyceride|apolipoprotein|lipoprotein/.test(n)) {
+      measures = "This test evaluates blood lipids or lipoproteins involved in transporting fats through the circulation.";
+      clinicalUse = "It supports cardiovascular risk assessment and monitoring of lipid-lowering interventions.";
+      high = "Increased levels of selected lipids may be associated with increased cardiovascular risk, but interpretation depends on the specific lipid and overall risk profile.";
+      low = "Low levels may reflect biological, nutritional, medication-related or medical factors and must be interpreted in context.";
+      precautions = "Fasting requirements depend on the requested lipid test and local laboratory policy. Triglycerides can be affected by recent meals.";
+    } else if (/troponin|ck-mb|creatine kinase|cpk|ldh|myoglobin|nt-probnp|\\bbnp\\b/.test(n)) {
+      measures = "This test measures a cardiac-associated protein, enzyme or marker released or altered in certain heart and muscle conditions.";
+      clinicalUse = "It may support assessment of suspected cardiac injury, cardiac strain or muscle injury, depending on the specific marker.";
+      high = "An increased result may occur in cardiac or non-cardiac conditions. A single result should not be interpreted without symptoms, timing, serial measurements and other investigations.";
+      low = "A low or undetectable result may be expected for some markers. Interpretation depends on the assay and clinical question.";
+      precautions = "Timing of sample collection is important. Follow the institution's protocol for serial testing and urgent clinical communication.";
+    } else if (/crp|procalcitonin|lactate|ammonia|osmolality/.test(n)) {
+      measures = "This investigation measures a marker related to inflammation, infection response, metabolism or body-fluid regulation.";
+      clinicalUse = "It may support assessment of inflammation, selected infections, metabolic disturbance or physiological stress.";
+      high = "An increased result is not specific to one disease and must be interpreted with symptoms, examination and other investigations.";
+      low = "A low result may be reassuring for the measured marker but does not exclude every infection or inflammatory condition.";
+      precautions = "Some analytes require rapid processing, special tubes, temperature control or strict timing. Follow the laboratory's collection protocol.";
+    } else if (/iron|ferritin|tibc|transferrin/.test(n)) {
+      measures = "This test evaluates iron stores, circulating iron or iron-binding capacity.";
+      clinicalUse = "It may help investigate iron deficiency, iron overload and selected causes of anemia.";
+      high = "Increased results may occur with iron overload, inflammation, liver conditions or other causes depending on the marker.";
+      low = "Low ferritin or altered iron indices may support iron deficiency, but the full iron profile and clinical context are important.";
+      precautions = "Inflammation can affect ferritin. Interpret iron studies together rather than relying on one result.";
+    } else if (/vitamin|folate|b12|zinc|copper|coenzyme/.test(n)) {
+      measures = "This investigation evaluates a vitamin, trace element or nutritional biomarker.";
+      clinicalUse = "It may help investigate suspected nutritional deficiency, excess or selected metabolic conditions.";
+      high = "Increased levels may reflect supplementation, altered metabolism, exposure or other factors specific to the analyte.";
+      low = "Low levels may be associated with inadequate intake, malabsorption, increased requirements or other medical conditions.";
+      precautions = "Supplement use, recent intake, sample type, light protection and special collection requirements may affect results.";
+    }
+  }
+
+  /* ENDOCRINOLOGY */
+  if (dept === "Endocrinology") {
+    measures = "This investigation measures a hormone, hormone-related protein or metabolite involved in endocrine regulation.";
+    clinicalUse = "It may help assess endocrine gland function, hormonal imbalance, fertility-related questions or selected metabolic conditions.";
+    high = "Increased results may reflect altered gland activity, feedback regulation, medication effects, physiological variation or timing of collection.";
+    low = "Decreased results may reflect reduced hormone production, altered regulation, medication effects or timing-related variation.";
+    precautions = "Collection time, menstrual-cycle phase, pregnancy, medicines, posture and sample handling may affect some hormone results.";
+
+    if (/tsh|thyroid|t3|t4|thyroglobulin/.test(n)) {
+      measures = "This test evaluates thyroid hormones, thyroid-stimulating hormone or thyroid-associated antibodies/proteins.";
+      clinicalUse = "It supports assessment of thyroid function and selected thyroid disorders.";
+      high = "An increased result has different meanings for TSH, T3/T4 and thyroid antibodies. Results should be interpreted as a thyroid profile where appropriate.";
+      low = "A decreased result also has different meanings for TSH, T3/T4 and thyroid antibodies. It must be interpreted with the other thyroid tests.";
+      precautions = "Pregnancy, acute illness, medicines, supplements such as biotin and assay interference may affect thyroid results.";
+    } else if (/fsh|lh|estradiol|progesterone|testosterone|prolactin|amh|inhibin|hcg|dhea/.test(n)) {
+      measures = "This test evaluates a reproductive or sex-related hormone, or a marker associated with reproductive function.";
+      clinicalUse = "It may support assessment of menstrual function, fertility, gonadal function, pregnancy-related questions or selected endocrine conditions.";
+      high = "Increased levels may be normal at particular life stages or cycle phases, or may be associated with endocrine conditions.";
+      low = "Decreased levels may reflect cycle timing, altered pituitary or gonadal function, medication effects or other factors.";
+      precautions = "Interpretation may depend on age, sex, pregnancy status, menstrual-cycle day, time of collection and medication use.";
+    } else if (/cortisol|acth|aldosterone|renin|metanephrine|17-oh/.test(n)) {
+      measures = "This test evaluates hormones or metabolites involved in adrenal and pituitary regulation.";
+      clinicalUse = "It may support investigation of selected adrenal, pituitary, blood-pressure or steroid-related disorders.";
+      high = "Increased results may be affected by physiological stress, collection timing, posture, medicines or endocrine conditions.";
+      low = "Decreased results may reflect altered hormone production, feedback regulation, medicines or collection-related factors.";
+      precautions = "Follow specific instructions for collection time, posture, rest period, medication review and special specimen handling.";
+    }
+  }
+
+  /* SEROLOGY AND IMMUNOLOGY */
+  if (dept === "Serology" || dept === "Immunology") {
+    measures = "This test detects or measures a specific antigen, antibody, immune protein or immune response.";
+    clinicalUse = "It may support investigation of infection, previous exposure, immunity or autoimmune and immune-related conditions.";
+    high = "A reactive or increased result may indicate antibody or antigen detection, but its meaning depends on the specific marker, timing and assay.";
+    low = "A non-reactive or low result may mean the target was not detected. Early testing, immune status and assay limitations can affect results.";
+    precautions = "Check whether the test detects IgM, IgG, total antibody or antigen. Confirmatory testing may be required according to the assay and clinical protocol.";
+
+    if (/hiv|hbsag|anti-hbs|anti-hbc|hbeag|anti-hbe|hcv/.test(n)) {
+      clinicalUse = "It supports hepatitis or HIV screening and diagnostic pathways. Reactive screening results must be managed using the relevant confirmatory algorithm.";
+      precautions = "Use the approved testing algorithm, quality-control procedures, confidentiality requirements and confirmatory pathway. A screening result alone may not establish infection status.";
+    } else if (/dengue|widal|weil-felix|malaria|brucella|leptospira|scrub|toxoplasma|rubella|cmv|ebv|hsv|h\\. pylori|syphilis|vdrl|tpha/.test(n)) {
+      clinicalUse = "It may support investigation of a particular infectious disease or previous exposure. Timing of the sample in relation to symptoms is important.";
+      high = "A reactive result may reflect current infection, previous exposure, vaccination or cross-reactivity, depending on the specific assay.";
+      low = "A non-reactive result does not always exclude early infection. Repeat or alternative testing may be considered under clinical guidance.";
+    } else if (/ana|dsdna|anca|complement|igg|iga|igm|ige|gbm|coeliac|tissue transglutaminase|mitochondrial|smooth muscle|lkm|gad|islet|hla|cryoglobulin|ccp|rheumatoid/.test(n)) {
+      clinicalUse = "It may support investigation of autoimmune, inflammatory, allergic or immune-deficiency conditions.";
+      high = "A positive or increased result may be associated with an immune response, but some antibodies can occur in people without the suspected disease.";
+      low = "A negative result does not exclude every autoimmune or immune-related condition. Clinical findings and other tests remain important.";
+    }
+  }
+
+  /* URINE */
+  if (dept === "Urine Examination") {
+    measures = "This investigation evaluates urine appearance, chemical constituents, cells, particles or substances excreted by the kidneys.";
+    clinicalUse = "It may support assessment of urinary tract conditions, kidney function, metabolic disorders and selected pregnancy-related questions.";
+    high = "An abnormal or increased finding may be associated with urinary, renal or metabolic conditions, contamination or specimen-related factors.";
+    low = "A normal or low finding does not exclude every urinary or kidney condition. Interpretation depends on the parameter measured.";
+    precautions = "Use the correct collection method and a clean container. Fresh specimens are important for microscopy; timed collections require accurate start and finish times.";
+
+    if (/pregnancy/.test(n)) {
+      measures = "This test detects human chorionic gonadotropin (hCG) in urine.";
+      clinicalUse = "It is used as a screening test for pregnancy.";
+      high = "A positive result indicates hCG was detected; clinical confirmation and appropriate follow-up may be required.";
+      low = "A negative result may occur if testing is performed too early or urine is dilute.";
+      precautions = "Follow kit instructions and expiry dates. First-morning urine may improve detection when testing early.";
+    } else if (/albumin|protein|acr|upcr|microalbumin/.test(n)) {
+      measures = "This test detects or quantifies urinary protein or albumin excretion.";
+      clinicalUse = "It may support assessment of kidney damage and monitoring of selected renal conditions.";
+      high = "Increased excretion may occur with kidney disease, fever, exercise, infection or other transient factors.";
+      low = "Low or undetectable excretion is often expected, but interpretation depends on the test and clinical context.";
+    }
+  }
+
+  /* STOOL */
+  if (dept === "Stool Examination") {
+    measures = "This investigation evaluates stool characteristics or detects selected organisms, blood, inflammatory markers or digestive substances.";
+    clinicalUse = "It may support investigation of gastrointestinal symptoms, infection, inflammation, bleeding or malabsorption.";
+    high = "An abnormal or positive result may require further assessment and must be interpreted according to the specific test.";
+    low = "A negative result does not exclude every gastrointestinal condition; intermittent shedding or bleeding may affect detection.";
+    precautions = "Collect stool in a clean, dry container without urine or water contamination. Follow specific storage and transport instructions.";
+  }
+
+  /* MICROBIOLOGY */
+  if (dept === "Microbiology") {
+    measures = "This investigation looks for microorganisms, microbial genetic material or evidence of microbial growth in a clinical specimen.";
+    clinicalUse = "It may help investigate suspected infection and, where applicable, identify organisms and their antimicrobial susceptibility.";
+    high = "Detection or growth must be interpreted with specimen quality, organism identity, quantity, site and clinical findings. Contamination or colonization may occur.";
+    low = "No organism detected or no growth does not completely exclude infection. Prior antimicrobial use, sample quality and organism burden can affect detection.";
+    precautions = "Collect the correct specimen before antimicrobial treatment when clinically appropriate, use sterile containers where required and transport promptly under laboratory instructions.";
+
+    if (/culture|sensitivity/.test(n)) {
+      measures = "Culture attempts to grow microorganisms from the specimen; susceptibility testing may assess response to selected antimicrobial agents.";
+      clinicalUse = "It may help identify a causative organism and guide antimicrobial selection.";
+      high = "Growth may represent infection, colonization or contamination. The organism and specimen source are essential for interpretation.";
+      low = "No growth may occur after antimicrobial exposure, with low organism numbers or because the organism requires special culture conditions.";
+    } else if (/pcr|gene.?xpert|naat|molecular/.test(n)) {
+      measures = "This test detects specific microbial genetic material using a molecular method.";
+      clinicalUse = "It may support rapid detection of a targeted organism or genetic marker.";
+      high = "A detected result indicates target genetic material was found; it does not always prove viable organisms are present.";
+      low = "A not-detected result means the target was not detected in that specimen. Sampling and timing can affect sensitivity.";
+    } else if (/gram stain|afb|koh|smear|mount/.test(n)) {
+      measures = "Microscopy or staining is used to look for visible organisms or characteristic structures in the specimen.";
+      clinicalUse = "It may provide rapid preliminary information to guide further testing.";
+      high = "Visible organisms or structures should be interpreted with specimen quality and confirmatory results.";
+      low = "No organisms seen does not exclude infection, particularly when organism numbers are low.";
+    }
+  }
+
+  /* TUMOR MARKERS */
+  if (dept === "Tumor Markers") {
+    measures = "This test measures a substance that may be associated with certain tumors or other physiological and medical conditions.";
+    clinicalUse = "Tumor markers are generally used as part of selected clinical assessment or monitoring, not as stand-alone cancer screening or diagnosis.";
+    high = "An increased result may occur in some cancers but can also occur in benign conditions and other circumstances.";
+    low = "A low result does not exclude cancer. Not all tumors produce the marker being measured.";
+    precautions = "Interpret with clinical examination, imaging, pathology and trends over time. Use the same assay where possible for serial monitoring.";
+  }
+
+  /* CYTOLOGY AND HISTOPATHOLOGY */
+  if (dept === "Cytology" || dept === "Histopathology") {
+    measures = "This investigation examines cells or tissue architecture under a microscope, sometimes with special stains or additional laboratory techniques.";
+    clinicalUse = "It may help identify inflammatory, infectious, benign, pre-malignant or malignant changes, depending on the specimen and examination.";
+    high = "Findings are described using the relevant cytological or histopathological reporting system; there is no universal high/low numerical interpretation.";
+    low = "A negative or benign report applies to the material examined and does not always exclude disease if sampling is limited or clinical suspicion remains.";
+    precautions = "Correct specimen labeling, adequate sampling, fixation, clinical history and transport are essential. Additional stains or tests may be requested.";
+  }
+
+  /* ANDROLOGY */
+  if (dept === "Andrology" || /semen/.test(n)) {
+    measures = "This investigation evaluates semen volume, appearance, sperm concentration, motility, morphology and other parameters when included.";
+    clinicalUse = "It may support assessment of male reproductive function and investigation of fertility-related concerns.";
+    high = "An increased or decreased parameter must be interpreted individually; one measurement alone does not determine fertility.";
+    low = "Abnormal parameters may be influenced by collection conditions, abstinence period, illness and biological variation.";
+    precautions = "Follow the laboratory's abstinence period, complete collection instructions, container requirements and delivery time.";
+  }
+
+  const en = `
+    <h3>1. What is this test?</h3>
+    <p>${escapeHTML(name)} is a laboratory investigation in the ${escapeHTML(dept)} department. ${escapeHTML(measures)}</p>
+
+    <h3>2. Why is it performed?</h3>
+    <p>${escapeHTML(purpose)} ${escapeHTML(clinicalUse)}</p>
+
+    <h3>3. Specimen required</h3>
+    <p>${escapeHTML(specimen)}. The exact collection container and preparation instructions should be confirmed with the performing laboratory.</p>
+
+    <h3>4. Laboratory method</h3>
+    <p>${escapeHTML(method)}. The exact analytical platform and procedure may differ between laboratories.</p>
+
+    <h3>5. Increased or positive findings</h3>
+    <p>${escapeHTML(high)}</p>
+
+    <h3>6. Decreased or negative findings</h3>
+    <p>${escapeHTML(low)}</p>
+
+    <h3>7. Clinical interpretation</h3>
+    <p>Interpret the result using the laboratory's own reference interval or decision limits, the patient's age and relevant clinical information. Consider related investigations and previous results where appropriate.</p>
+
+    <h3>8. Important precautions</h3>
+    <p>${escapeHTML(precautions)}</p>
+
+    <h3>9. Important educational note</h3>
+    <p>This information is for education only. A laboratory result by itself does not confirm or exclude a diagnosis. Final interpretation should be made by an appropriately qualified healthcare professional.</p>
+  `;
+
+  const ur = `
+    <h3>1۔ یہ ٹیسٹ کیا ہے؟</h3>
+    <p><strong>${escapeHTML(name)}</strong>، ${escapeHTML(dept)} کے شعبے کا ایک لیبارٹری ٹیسٹ ہے۔ ${escapeHTML(measures)}</p>
+
+    <h3>2۔ یہ ٹیسٹ کیوں کیا جاتا ہے؟</h3>
+    <p>${escapeHTML(purpose)} یہ ٹیسٹ طبی ضرورت کے مطابق بیماری کی جانچ، اسکریننگ، نگرانی یا مزید تشخیص میں مدد دے سکتا ہے۔</p>
+
+    <h3>3۔ مطلوبہ نمونہ</h3>
+    <p>${escapeHTML(specimen)}۔ نمونہ جمع کرنے کے لیے درست ٹیوب، کنٹینر اور تیاری کی ہدایات متعلقہ لیبارٹری سے معلوم کریں۔</p>
+
+    <h3>4۔ لیبارٹری طریقہ</h3>
+    <p>${escapeHTML(method)}۔ مختلف لیبارٹریوں میں مشین، طریقۂ تجزیہ اور عملی طریقہ کار مختلف ہو سکتا ہے۔</p>
+
+    <h3>5۔ زیادہ یا مثبت نتیجہ</h3>
+    <p>${escapeHTML(high)}</p>
+
+    <h3>6۔ کم یا منفی نتیجہ</h3>
+    <p>${escapeHTML(low)}</p>
+
+    <h3>7۔ طبی تشریح</h3>
+    <p>نتیجے کو متعلقہ لیبارٹری کی ریفرنس رینج، مریض کی عمر، طبی علامات، سابقہ نتائج اور دیگر متعلقہ ٹیسٹوں کے ساتھ سمجھنا ضروری ہے۔</p>
+
+    <h3>8۔ اہم احتیاطیں</h3>
+    <p>${escapeHTML(precautions)}</p>
+
+    <h3>9۔ تعلیمی نوٹ</h3>
+    <p>یہ معلومات صرف تعلیمی مقصد کے لیے ہیں۔ کسی ایک لیبارٹری ٹیسٹ سے بیماری کی حتمی تشخیص یا مکمل طور پر تردید نہیں کی جا سکتی۔ حتمی تشریح مستند طبی ماہر سے کروائیں۔</p>
+  `;
+
+  return { en, ur };
+}
+
+
+
 function showTests(){
 
 
