@@ -1830,12 +1830,19 @@ function detail(label,value){
 function showTests(){
 
 
-// TEST-WISE DETAILS
+/* TEST-WISE DETAILS — ENGLISH & URDU */
+
 const testDetails = {
+
   "Complete Blood Count (CBC)": {
+
     en: `
       <h3>What is CBC?</h3>
-      <p>CBC is a common blood test that evaluates red blood cells, white blood cells, hemoglobin, hematocrit and platelets. It may also include red cell indices and a white cell differential.</p>
+      <p>
+        CBC is a common blood test that evaluates red blood cells,
+        white blood cells, hemoglobin, hematocrit and platelets.
+        It may also include red cell indices and a white cell differential.
+      </p>
 
       <h3>Why is CBC important?</h3>
       <ul>
@@ -1846,20 +1853,40 @@ const testDetails = {
       </ul>
 
       <h3>Specimen</h3>
-      <p>EDTA whole blood, usually collected in a lavender or purple-top tube.</p>
+      <p>
+        EDTA whole blood, usually collected in a lavender
+        or purple-top tube.
+      </p>
 
       <h3>Laboratory Method</h3>
-      <p>Usually performed using an automated hematology analyzer. A blood film may be reviewed when indicated.</p>
+      <p>
+        Usually performed using an automated hematology analyzer.
+        A blood film may be reviewed when indicated.
+      </p>
 
       <h3>What do the results show?</h3>
-      <p>Hemoglobin, hematocrit, RBC count and indices, WBC count (and differential when included), and platelet count.</p>
+      <p>
+        Hemoglobin, hematocrit, RBC count and indices,
+        WBC count (and differential when included),
+        and platelet count.
+      </p>
 
       <h3>Important Note</h3>
-      <p>CBC results must be interpreted with symptoms and clinical findings. Reference intervals vary with age, sex, pregnancy and laboratory methods. CBC alone does not confirm a diagnosis.</p>
+      <p>
+        CBC results must be interpreted with symptoms and clinical findings.
+        Reference intervals vary with age, sex, pregnancy and laboratory methods.
+        CBC alone does not confirm a diagnosis.
+      </p>
     `,
+
     ur: `
       <h3>CBC کیا ہے؟</h3>
-      <p>CBC خون کا ایک عام ٹیسٹ ہے جو سرخ خون کے خلیات، سفید خون کے خلیات، ہیموگلوبن، ہیمیٹوکرٹ اور پلیٹ لیٹس کا جائزہ لیتا ہے۔ اس میں خون کے خلیات کی مزید پیمائشیں بھی شامل ہو سکتی ہیں۔</p>
+      <p>
+        CBC خون کا ایک عام ٹیسٹ ہے جو سرخ خون کے خلیات،
+        سفید خون کے خلیات، ہیموگلوبن، ہیمیٹوکرٹ اور پلیٹ لیٹس
+        کا جائزہ لیتا ہے۔ اس میں خون کے خلیات کی مزید پیمائشیں
+        بھی شامل ہو سکتی ہیں۔
+      </p>
 
       <h3>CBC کیوں ضروری ہے؟</h3>
       <ul>
@@ -1870,19 +1897,102 @@ const testDetails = {
       </ul>
 
       <h3>نمونہ</h3>
-      <p>EDTA ملا ہوا خون، عموماً جامنی رنگ کی ٹیوب میں لیا جاتا ہے۔</p>
+      <p>
+        EDTA ملا ہوا خون، عموماً جامنی رنگ کی ٹیوب میں لیا جاتا ہے۔
+      </p>
 
       <h3>لیبارٹری طریقہ</h3>
-      <p>عام طور پر Automated Hematology Analyzer کے ذریعے ٹیسٹ کیا جاتا ہے۔ ضرورت پڑنے پر خون کی سلائیڈ بھی دیکھی جا سکتی ہے۔</p>
+      <p>
+        عام طور پر Automated Hematology Analyzer کے ذریعے
+        ٹیسٹ کیا جاتا ہے۔ ضرورت پڑنے پر خون کی سلائیڈ بھی دیکھی جا سکتی ہے۔
+      </p>
 
       <h3>نتائج میں کیا دیکھا جاتا ہے؟</h3>
-      <p>ہیموگلوبن، ہیمیٹوکرٹ، RBC، WBC، پلیٹ لیٹس اور دیگر متعلقہ پیمائشیں دیکھی جاتی ہیں۔</p>
+      <p>
+        ہیموگلوبن، ہیمیٹوکرٹ، RBC، WBC، پلیٹ لیٹس اور
+        دیگر متعلقہ پیمائشیں دیکھی جاتی ہیں۔
+      </p>
 
       <h3>اہم نوٹ</h3>
-      <p>CBC کے نتائج کو مریض کی علامات اور طبی صورتحال کے ساتھ سمجھنا ضروری ہے۔ نارمل حدود عمر، جنس، حمل اور لیبارٹری کے طریقہ کار کے مطابق مختلف ہو سکتی ہیں۔ صرف CBC سے کسی بیماری کی حتمی تشخیص نہیں ہوتی۔</p>
+      <p>
+        CBC کے نتائج کو مریض کی علامات اور طبی صورتحال کے ساتھ
+        سمجھنا ضروری ہے۔ نارمل حدود عمر، جنس، حمل اور لیبارٹری
+        کے طریقہ کار کے مطابق مختلف ہو سکتی ہیں۔ صرف CBC سے
+        کسی بیماری کی حتمی تشخیص نہیں ہوتی۔
+      </p>
     `
   }
+
 };
+
+
+/* OPEN MORE DETAIL POPUP */
+
+function openMoreDetail(encodedName) {
+
+  const testName = decodeURIComponent(encodedName);
+
+  const test = data.find(t => t.name === testName);
+
+  if (!test) return;
+
+  const modal = document.getElementById("detailModal");
+  const content = document.getElementById("detailModalContent");
+
+  const savedDetail = testDetails[testName];
+
+  if (savedDetail) {
+
+    content.innerHTML = `
+      <div class="detail-language">
+        <h2>English</h2>
+        ${savedDetail.en}
+      </div>
+
+      <div class="detail-language" dir="rtl" style="text-align:right">
+        <h2>اردو</h2>
+        ${savedDetail.ur}
+      </div>
+    `;
+
+  } else {
+
+    content.innerHTML = `
+      <div class="detail-language">
+        <h3>English</h3>
+        <p><strong>Specimen:</strong> ${escapeHTML(test.specimen)}</p>
+        <p><strong>Method:</strong> ${escapeHTML(test.method)}</p>
+        <p><strong>Purpose:</strong> ${escapeHTML(test.purpose)}</p>
+        <p><strong>Clinical Significance:</strong> ${escapeHTML(test.significance)}</p>
+        <p><strong>Note:</strong> ${escapeHTML(test.note)}</p>
+        <p>Expanded test-specific educational details are being prepared for this investigation.</p>
+      </div>
+
+      <div class="detail-language" dir="rtl" style="text-align:right">
+        <h3>اردو</h3>
+        <p><strong>نمونہ:</strong> ${escapeHTML(test.specimen)}</p>
+        <p><strong>طریقہ:</strong> ${escapeHTML(test.method)}</p>
+        <p><strong>مقصد:</strong> ${escapeHTML(test.purpose)}</p>
+        <p>اس ٹیسٹ کی مکمل تعلیمی وضاحت تیار کی جا رہی ہے۔</p>
+      </div>
+    `;
+
+  }
+
+  document.getElementById("detailModalTitle").textContent = testName;
+
+  modal.classList.add("show");
+
+}
+
+
+/* CLOSE MORE DETAIL POPUP */
+
+function closeMoreDetail() {
+
+  document.getElementById("detailModal").classList.remove("show");
+
+}
 
 function openMoreDetail(encodedName) {
   const testName = decodeURIComponent(encodedName);
