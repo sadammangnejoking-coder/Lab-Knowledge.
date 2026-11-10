@@ -2595,51 +2595,91 @@ window.closeMoreDetail = closeMoreDetail;
 
 
 function printSingleTest(encodedName){
- const name=decodeURIComponent(encodedName);
- const t=data.find(x=>x.name===name);
- if(!t)return;
 
- const L=labels[currentLang];
- const dateTime=new Date().toLocaleString("en-PK",{
-  dateStyle:"full",
-  timeStyle:"medium"
- });
+  const name = decodeURIComponent(encodedName);
+  const t = data.find(x => x.name === name);
+  if(!t) return;
 
- $("printArea").innerHTML=`
-  <header class="main-header">
-   <div class="lab-icon">🔬</div>
-   <h1>Lab Knowledge</h1>
-   <p>Laboratory Investigations Theory</p>
-  </header>
+  const L = labels[currentLang];
 
-  <div style="padding:12px;font-size:13px">
-   Printed Date & Time: ${escapeHTML(dateTime)}
-  </div>
+  const dateTime = new Date().toLocaleString("en-PK",{
+    dateStyle:"full",
+    timeStyle:"medium"
+  });
 
-  <article class="test-card">
-   <span class="dept-tag">${escapeHTML(t.department)}</span>
-   <h3>${escapeHTML(t.name)}</h3>
-   ${detail(L.name,t.name)}
-   ${detail(L.dept,t.department)}
-   ${detail(L.specimen,t.specimen)}
-   ${detail(L.purpose,t.purpose)}
-   ${detail(L.method,t.method)}
-   ${detail(L.range,t.range)}
-   ${detail(L.significance,t.significance)}
-   <div class="note">
-    <strong>${L.note}:</strong> ${escapeHTML(t.note)}
+  // Exact test website link
+  const websiteUrl =
+    "https://sadammangnejoking-coder.github.io/Lab-Knowledge./";
+
+  const testUrl =
+    websiteUrl + "?test=" + encodeURIComponent(t.name) + "#home";
+
+  const qrUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" +
+    encodeURIComponent(testUrl);
+
+  $("printArea").innerHTML = `
+
+   <header class="main-header"
+     style="display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px;">
+
+     <div style="flex:1;text-align:center;">
+       <div class="lab-icon">🔬</div>
+       <h1>Lab Knowledge</h1>
+       <p>Laboratory Investigations Theory</p>
+       <p style="font-size:12px;">Learn • Understand • Explore</p>
+     </div>
+
+     <div style="text-align:center;min-width:120px;">
+       <img class="print-qr"
+         src="${qrUrl}"
+         alt="Scan to open ${escapeHTML(t.name)}"
+         style="width:110px;height:110px;display:block;margin:auto;">
+       <p style="font-size:10px;margin:5px 0;">
+         Scan to Open Test
+       </p>
+     </div>
+
+   </header>
+
+   <div style="padding:12px;font-size:13px">
+     Printed Date & Time: ${escapeHTML(dateTime)}
    </div>
-  </article>
 
-  <footer>
-   <div>This is a computer-generated educational reference. No signature is required.</div>
-   <div>© ${new Date().getFullYear()} Lab Knowledge | Sadam H Mangnejo </div>
-  </footer>
- `;
+   <article class="test-card">
+    <span class="dept-tag">${escapeHTML(t.department)}</span>
+    <h3>${escapeHTML(t.name)}</h3>
+    ${detail(L.name,t.name)}
+    ${detail(L.dept,t.department)}
+    ${detail(L.specimen,t.specimen)}
+    ${detail(L.purpose,t.purpose)}
+    ${detail(L.method,t.method)}
+    ${detail(L.range,t.range)}
+    ${detail(L.significance,t.significance)}
+    <div class="note">
+     <strong>${L.note}:</strong> ${escapeHTML(t.note)}
+    </div>
+   </article>
 
- document.body.classList.add("print-single");
- window.print();
+   <footer>
+    <div>This is a computer-generated educational reference. No signature is required.</div>
+    <div>© ${new Date().getFullYear()} Lab Knowledge | Sadam H Mangnejo</div>
+   </footer>
+  `;
+
+  document.body.classList.add("print-single");
+
+  // Wait for QR image before printing
+  const qrImage = $("printArea").querySelector(".print-qr");
+
+  if(qrImage.complete){
+    window.print();
+  }else{
+    qrImage.onload = () => window.print();
+    qrImage.onerror = () => window.print();
+  }
 }
+
 
 function closeImportantPopup(){
  $("importantPopup").style.display="none";
@@ -2874,6 +2914,51 @@ function showSection(sectionId, options = {}) {
 
  if(!websiteSections.includes(sectionId)){
   sectionId = "home";
+
+
+/* OPEN EXACT TEST FROM QR CODE */
+
+const qrTestName =
+  new URLSearchParams(window.location.search).get("test");
+
+if(qrTestName){
+
+  const qrTest = data.find(
+    t => t.name.toLowerCase() === qrTestName.toLowerCase()
+  );
+
+  if(qrTest){
+
+    $("search").value = qrTest.name;
+    $("departmentFilter").value = "all";
+
+    showTests();
+
+    const cards = document.querySelectorAll("#tests .test-card");
+
+    cards.forEach(card => {
+      const heading = card.querySelector("h3");
+
+      const cardName = heading.textContent
+        .replace(/^\d+\.\s*/, "")
+        .trim();
+
+      if(cardName !== qrTest.name){
+        card.style.display = "none";
+      }
+    });
+
+    const exactCard = [...cards].find(card =>
+      card.querySelector("h3").textContent
+        .replace(/^\d+\.\s*/, "").trim() === qrTest.name
+    );
+
+    if(exactCard){
+      exactCard.scrollIntoView({block:"start"});
+    }
+  }
+}
+
  }
 
  // Show selected section and hide others
