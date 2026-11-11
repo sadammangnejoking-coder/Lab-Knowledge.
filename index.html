@@ -642,6 +642,55 @@ body[dir="rtl"] .note{
 
 
 
+/* LANGUAGE BUTTON DESIGN */
+.lang-btn{
+  padding:9px 18px;
+  border:1px solid #075985;
+  border-radius:8px;
+  background:white;
+  color:#075985;
+  cursor:pointer;
+  margin:3px;
+  font-weight:bold;
+  font-size:15px;
+}
+
+.lang-btn.active{
+  background:#075985;
+  color:white;
+}
+
+/* DEPARTMENT COUNT BUTTONS */
+#departmentCounts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:15px auto;
+  padding:0 12px;
+  max-width:1100px;
+}
+
+#departmentCounts .count-btn{
+  border:1px solid #bae6fd;
+  background:#e0f2fe;
+  color:#075985;
+  border-radius:20px;
+  padding:8px 12px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  margin:0;
+}
+
+#departmentCounts .count-btn.selected,
+#departmentCounts .count-btn:hover{
+  background:#075985;
+  color:white;
+  border-color:#075985;
+}
+
+
+
 </style>
 </head>
 
