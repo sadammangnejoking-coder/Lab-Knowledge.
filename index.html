@@ -2665,6 +2665,7 @@ window.closeMoreDetail = closeMoreDetail;
 }
 
 
+
 function printSingleTest(encodedName){
 
   const name = decodeURIComponent(encodedName);
@@ -2678,77 +2679,108 @@ function printSingleTest(encodedName){
     timeStyle:"medium"
   });
 
-  // Exact test website link
   const websiteUrl =
     "https://sadammangnejoking-coder.github.io/Lab-Knowledge./";
 
   const testUrl =
     websiteUrl + "?test=" + encodeURIComponent(t.name) + "#home";
 
-  const qrUrl =
-    "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" +
-    encodeURIComponent(testUrl);
-
   $("printArea").innerHTML = `
 
-   <header class="main-header"
-     style="display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px;">
+    <header style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      padding:18px;
+      color:white;
+      background:linear-gradient(135deg,#082f49,#075985,#0891b2);
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    ">
 
-     <div style="flex:1;text-align:center;">
-       <div class="lab-icon">🔬</div>
-       <h1>Lab Knowledge</h1>
-       <p>Laboratory Investigations Theory</p>
-       <p style="font-size:12px;">Learn • Understand • Explore</p>
-     </div>
+      <div style="display:flex;align-items:center;gap:12px;flex:1;">
 
-     <div style="text-align:center;min-width:120px;">
-       <img class="print-qr"
-         src="${qrUrl}"
-         alt="Scan to open ${escapeHTML(t.name)}"
-         style="width:110px;height:110px;display:block;margin:auto;">
-       <p style="font-size:10px;margin:5px 0;">
-         Scan to Open Test
-       </p>
-     </div>
+        <img src="./lab-knowledge-logo.png"
+          style="width:75px;height:75px;object-fit:contain;"
+          alt="Lab Knowledge Logo">
 
-   </header>
+        <div>
+          <h1 style="margin:0;font-size:25px;">
+            Lab Knowledge
+          </h1>
 
-   <div style="padding:12px;font-size:13px">
-     Printed Date & Time: ${escapeHTML(dateTime)}
-   </div>
+          <p style="margin:5px 0;">
+            Laboratory Investigations Theory
+          </p>
 
-   <article class="test-card">
-    <span class="dept-tag">${escapeHTML(t.department)}</span>
-    <h3>${escapeHTML(t.name)}</h3>
-    ${detail(L.name,t.name)}
-    ${detail(L.dept,t.department)}
-    ${detail(L.specimen,t.specimen)}
-    ${detail(L.purpose,t.purpose)}
-    ${detail(L.method,t.method)}
-    ${detail(L.range,t.range)}
-    ${detail(L.significance,t.significance)}
-    <div class="note">
-     <strong>${L.note}:</strong> ${escapeHTML(t.note)}
+          <p style="margin:0;font-size:12px;">
+            Learn • Understand • Explore
+          </p>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;min-width:110px;">
+        <div id="printQR"
+          style="background:white;padding:5px;width:110px;margin:auto;">
+        </div>
+
+        <p style="font-size:10px;margin:5px 0;">
+          Scan to Open Test
+        </p>
+      </div>
+
+    </header>
+
+    <div style="padding:12px;font-size:13px;">
+      Printed Date & Time: ${escapeHTML(dateTime)}
     </div>
-   </article>
 
-   <footer>
-    <div>This is a computer-generated educational reference. No signature is required.</div>
-    <div>© ${new Date().getFullYear()} Lab Knowledge | Sadam H Mangnejo</div>
-   </footer>
+    <article class="test-card">
+      <span class="dept-tag">${escapeHTML(t.department)}</span>
+      <h3>${escapeHTML(t.name)}</h3>
+      ${detail(L.name,t.name)}
+      ${detail(L.dept,t.department)}
+      ${detail(L.specimen,t.specimen)}
+      ${detail(L.purpose,t.purpose)}
+      ${detail(L.method,t.method)}
+      ${detail(L.range,t.range)}
+      ${detail(L.significance,t.significance)}
+
+      <div class="note">
+        <strong>${L.note}:</strong> ${escapeHTML(t.note)}
+      </div>
+    </article>
+
+    <footer>
+      <div>This is a computer-generated educational reference. No signature is required.</div>
+      <div>© ${new Date().getFullYear()} Lab Knowledge | Sadam H Mangnejo</div>
+    </footer>
   `;
 
   document.body.classList.add("print-single");
 
-  // Wait for QR image before printing
-  const qrImage = $("printArea").querySelector(".print-qr");
-
-  if(qrImage.complete){
-    window.print();
-  }else{
-    qrImage.onload = () => window.print();
-    qrImage.onerror = () => window.print();
+  if(typeof QRCode === "undefined"){
+    alert("Offline QR library not loaded!");
+    document.body.classList.remove("print-single");
+    return;
   }
+
+  const qrContainer = $("printQR");
+
+  new QRCode(qrContainer,{
+    text:testUrl,
+    width:100,
+    height:100,
+    correctLevel:QRCode.CorrectLevel.H
+  });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.print();
+    });
+  });
 }
 
 
@@ -3169,6 +3201,8 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+<script src="./qrcode.min.js"></script>
 
 </body>
 </html>
