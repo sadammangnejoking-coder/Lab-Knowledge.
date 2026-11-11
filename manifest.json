@@ -2,7 +2,7 @@
 {
   "name": "Lab Knowledge",
   "short_name": "Lab Knowledge",
-  "description": "Laboratory Investigations Theory by Sadam Hussain",
+  "description": "Laboratory Investigations Theory by Sadam H Mangnejo",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -11,14 +11,16 @@
   "theme_color": "#075985",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "lab-knowledge-logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "lab-knowledge-logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
