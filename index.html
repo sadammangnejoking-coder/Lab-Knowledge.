@@ -3153,5 +3153,20 @@ function convertInchesToCM() {
 
 
 </script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js")
+      .then(function (registration) {
+        console.log("Lab Knowledge Offline Mode Activated!");
+      })
+      .catch(function (error) {
+        console.log("Service Worker Error:", error);
+      });
+  });
+}
+</script>
+
 </body>
 </html>
