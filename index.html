@@ -4056,5 +4056,464 @@ window.labFirebase = {
 console.log("Lab Knowledge Firebase Connected!");
 </script>
 
+
+
+
+
+
+<!-- =====================================
+ LAB KNOWLEDGE - VISITOR RATING & REVIEWS
+ FIREBASE FIRESTORE INTEGRATION
+===================================== -->
+
+<style>
+.lk-review-section {
+  max-width: 850px;
+  margin: 35px auto;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 18px;
+  box-shadow: 0 5px 22px rgba(8,47,73,.09);
+  color: #082f49;
+}
+
+.lk-review-section h2 {
+  text-align: center;
+  color: #075985;
+  margin-bottom: 8px;
+}
+
+.lk-review-section .review-subtitle {
+  text-align: center;
+  color: #64748b;
+}
+
+.lk-rating-summary {
+  text-align: center;
+  padding: 18px;
+  background: #f0f9ff;
+  border-radius: 14px;
+  margin: 20px 0;
+}
+
+.lk-average {
+  font-size: 38px;
+  font-weight: 800;
+  color: #075985;
+}
+
+.lk-stars {
+  color: #f59e0b;
+  font-size: 28px;
+  letter-spacing: 3px;
+}
+
+.lk-review-section label {
+  display: block;
+  font-weight: 600;
+  margin: 14px 0 6px;
+}
+
+.lk-review-section input,
+.lk-review-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.lk-review-section textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.lk-star-picker {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.lk-star-picker button {
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.lk-star-picker button.active {
+  color: #f59e0b;
+}
+
+.lk-submit-review {
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  background: linear-gradient(90deg,#075985,#0891b2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lk-submit-review:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.lk-review-message {
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.lk-review-card {
+  padding: 16px;
+  margin-top: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.lk-review-card strong {
+  color: #075985;
+}
+
+.lk-review-date {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.lk-review-card p {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+}
+
+.lk-review-list {
+  margin-top: 20px;
+}
+
+</style>
+
+<section class="lk-review-section" id="visitorReviews">
+
+  <h2>⭐ Rate & Review Lab Knowledge</h2>
+
+  <p class="review-subtitle">
+    Your feedback helps us improve our educational platform.
+  </p>
+
+  <div class="lk-rating-summary">
+
+    <div class="lk-average" id="lkAverage">0.0 / 5</div>
+
+    <div class="lk-stars" id="lkAverageStars">
+      ☆☆☆☆☆
+    </div>
+
+    <p id="lkTotalReviews">0 Reviews</p>
+
+  </div>
+
+  <form id="lkReviewForm">
+
+    <label for="lkReviewerName">Your Name</label>
+
+    <input
+      type="text"
+      id="lkReviewerName"
+      maxlength="60"
+      placeholder="Enter your name"
+      required
+    >
+
+    <label>Your Rating</label>
+
+    <div class="lk-star-picker" id="lkStarPicker">
+
+      <button type="button" data-rating="1" aria-label="1 star">★</button>
+      <button type="button" data-rating="2" aria-label="2 stars">★</button>
+      <button type="button" data-rating="3" aria-label="3 stars">★</button>
+      <button type="button" data-rating="4" aria-label="4 stars">★</button>
+      <button type="button" data-rating="5" aria-label="5 stars">★</button>
+
+    </div>
+
+    <label for="lkReviewComment">Your Review</label>
+
+    <textarea
+      id="lkReviewComment"
+      maxlength="1000"
+      placeholder="Write your feedback here..."
+      required
+    ></textarea>
+
+    <button
+      type="submit"
+      class="lk-submit-review"
+      id="lkSubmitButton"
+    >
+      Submit Review
+    </button>
+
+    <div
+      class="lk-review-message"
+      id="lkReviewMessage"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+  </form>
+
+  <div class="lk-review-list">
+
+    <h3>💬 Visitor Reviews</h3>
+
+    <div id="lkReviewsContainer">
+      Loading reviews...
+    </div>
+
+  </div>
+
+</section>
+
+<script type="module">
+
+// =====================================
+// LAB KNOWLEDGE - FIREBASE REVIEWS
+// =====================================
+
+const firebase = window.labFirebase;
+
+if (!firebase) {
+  console.error("Firebase connection not available.");
+} else {
+
+  const {
+    db,
+    collection,
+    addDoc,
+    getDocs,
+    serverTimestamp
+  } = firebase;
+
+  const reviewsRef = collection(db, "reviews");
+
+  const form = document.getElementById("lkReviewForm");
+  const nameInput = document.getElementById("lkReviewerName");
+  const commentInput = document.getElementById("lkReviewComment");
+  const submitButton = document.getElementById("lkSubmitButton");
+  const message = document.getElementById("lkReviewMessage");
+  const container = document.getElementById("lkReviewsContainer");
+
+  let selectedRating = 0;
+
+  // STAR SELECTION
+
+  const starButtons = document.querySelectorAll(
+    "#lkStarPicker button"
+  );
+
+  function updateStars() {
+
+    starButtons.forEach(button => {
+
+      const rating = Number(button.dataset.rating);
+
+      button.classList.toggle(
+        "active",
+        rating <= selectedRating
+      );
+
+    });
+
+  }
+
+  starButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      selectedRating = Number(button.dataset.rating);
+
+      updateStars();
+
+    });
+
+  });
+
+  // DISPLAY REVIEWS
+
+  async function loadReviews() {
+
+    container.textContent = "Loading reviews...";
+
+    try {
+
+      const snapshot = await getDocs(reviewsRef);
+
+      const reviews = [];
+
+      snapshot.forEach(doc => {
+
+        reviews.push(doc.data());
+
+      });
+
+      reviews.sort((a, b) => {
+
+        const dateA = a.date?.toMillis?.() || 0;
+        const dateB = b.date?.toMillis?.() || 0;
+
+        return dateB - dateA;
+
+      });
+
+      const total = reviews.length;
+
+      const average = total
+        ? reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / total
+        : 0;
+
+      document.getElementById("lkAverage").textContent =
+        average.toFixed(1) + " / 5";
+
+      document.getElementById("lkAverageStars").textContent =
+        "★".repeat(Math.round(average)) +
+        "☆".repeat(5 - Math.round(average));
+
+      document.getElementById("lkTotalReviews").textContent =
+        total + (total === 1 ? " Review" : " Reviews");
+
+      container.replaceChildren();
+
+      if (!total) {
+
+        container.textContent = "No reviews yet. Be the first to review!";
+
+        return;
+
+      }
+
+      reviews.forEach(review => {
+
+        const card = document.createElement("div");
+        card.className = "lk-review-card";
+
+        const heading = document.createElement("strong");
+        heading.textContent = review.name || "Visitor";
+
+        const stars = document.createElement("div");
+        stars.className = "lk-stars";
+        stars.textContent =
+          "★".repeat(Number(review.rating || 0)) +
+          "☆".repeat(5 - Number(review.rating || 0));
+
+        const date = document.createElement("div");
+        date.className = "lk-review-date";
+
+        if (review.date?.toDate) {
+          date.textContent = review.date.toDate().toLocaleDateString();
+        } else {
+          date.textContent = "Recently submitted";
+        }
+
+        const comment = document.createElement("p");
+        comment.textContent = review.comment || "";
+
+        card.append(heading, stars, date, comment);
+
+        container.appendChild(card);
+
+      });
+
+    } catch (error) {
+
+      console.error("Review loading error:", error);
+
+      container.textContent =
+        "Unable to load reviews. Please try again later.";
+
+    }
+
+  }
+
+  // SUBMIT REVIEW
+
+  form.addEventListener("submit", async event => {
+
+    event.preventDefault();
+
+    const name = nameInput.value.trim();
+    const comment = commentInput.value.trim();
+
+    if (!name || !comment) {
+      message.textContent = "Please complete all fields.";
+      return;
+    }
+
+    if (selectedRating < 1 || selectedRating > 5) {
+      message.textContent = "Please select a star rating.";
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    message.textContent = "";
+
+    try {
+
+      await addDoc(reviewsRef, {
+
+        name: name,
+        rating: selectedRating,
+        comment: comment,
+        date: serverTimestamp()
+
+      });
+
+      message.style.color = "#15803d";
+      message.textContent =
+        "Thank you! Your review was submitted successfully.";
+
+      form.reset();
+
+      selectedRating = 0;
+      updateStars();
+
+      await loadReviews();
+
+    } catch (error) {
+
+      console.error("Review submission error:", error);
+
+      message.style.color = "#dc2626";
+      message.textContent =
+        "Unable to submit review. Please try again.";
+
+    } finally {
+
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit Review";
+
+    }
+
+  });
+
+  // INITIAL LOAD
+
+  loadReviews();
+
+}
+
+</script>
+
 </body>
 </html>
