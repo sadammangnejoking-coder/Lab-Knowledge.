@@ -926,9 +926,7 @@ body[dir="rtl"] .note{
   </p>
 
   <!-- HEIGHT IN INCHES -->
-  <label for="heightInches">
-    Height (Inches)
-  </label>
+  <label for="heightInches">Height (Inches)</label>
 
   <input
     type="number"
@@ -967,15 +965,37 @@ body[dir="rtl"] .note{
     step="any"
   >
 
-  <!-- CALCULATE BUTTON -->
-  <button
-    type="button"
-    class="action-btn"
-    id="calculateBMIBtn"
-    onclick="calculateBMI()"
-  >
-    Calculate BMI
-  </button>
+  <!-- BUTTONS -->
+  <div style="
+    display:flex;
+    gap:12px;
+    margin-top:15px;
+  ">
+
+    <button
+      type="button"
+      class="action-btn"
+      id="calculateBMIBtn"
+      onclick="calculateBMI()"
+      style="flex:1;"
+    >
+      Calculate BMI
+    </button>
+
+    <button
+      type="button"
+      class="action-btn"
+      id="clearBMIBtn"
+      onclick="clearBMI()"
+      style="
+        flex:1;
+        background:#64748b;
+      "
+    >
+      ↻ Clear
+    </button>
+
+  </div>
 
   <!-- RESULT -->
   <div
@@ -994,10 +1014,13 @@ body[dir="rtl"] .note{
 </section>
 
 
-<!-- BMI JAVASCRIPT -->
-<script>
 
-// AUTOMATIC INCHES TO CM CONVERSION
+
+// ======================================
+// LAB KNOWLEDGE - BMI CALCULATOR
+// INCHES TO CM + WEIGHT DIFFERENCE
+// + CLEAR BUTTON
+// ======================================
 
 const heightInchesInput =
   document.getElementById("heightInches");
@@ -1005,15 +1028,28 @@ const heightInchesInput =
 const bmiHeightInput =
   document.getElementById("bmiHeight");
 
+const bmiWeightInput =
+  document.getElementById("bmiWeight");
+
 const cmConversionResult =
   document.getElementById("cmConversionResult");
+
+const bmiResult =
+  document.getElementById("bmiResult");
+
+
+// AUTOMATIC INCHES TO CM CONVERSION
 
 heightInchesInput.addEventListener("input", function() {
 
   const inches = parseFloat(this.value);
 
-  if (!this.value || !Number.isFinite(inches) ||
-      inches <= 0 || inches > 100) {
+  if (
+    !this.value ||
+    !Number.isFinite(inches) ||
+    inches <= 0 ||
+    inches > 100
+  ) {
 
     bmiHeightInput.value = "";
     cmConversionResult.textContent = "";
@@ -1034,16 +1070,8 @@ heightInchesInput.addEventListener("input", function() {
 
 function calculateBMI() {
 
-  const height = parseFloat(
-    document.getElementById("bmiHeight").value
-  );
-
-  const weight = parseFloat(
-    document.getElementById("bmiWeight").value
-  );
-
-  const result =
-    document.getElementById("bmiResult");
+  const height = parseFloat(bmiHeightInput.value);
+  const weight = parseFloat(bmiWeightInput.value);
 
   if (
     !Number.isFinite(height) ||
@@ -1053,9 +1081,9 @@ function calculateBMI() {
     weight > 500
   ) {
 
-    result.style.display = "block";
+    bmiResult.style.display = "block";
 
-    result.innerHTML =
+    bmiResult.innerHTML =
       "<h3>Please enter valid height and weight.</h3>";
 
     return;
@@ -1068,28 +1096,9 @@ function calculateBMI() {
 
   let category = "";
   let categoryColor = "";
-
-  if (bmi < 18.5) {
-
-    category = "Underweight";
-    categoryColor = "#0369a1";
-
-  } else if (bmi < 25) {
-
-    category = "Normal Weight";
-    categoryColor = "#166534";
-
-  } else if (bmi < 30) {
-
-    category = "Overweight";
-    categoryColor = "#b45309";
-
-  } else {
-
-    category = "Obesity";
-    categoryColor = "#b91c1c";
-
-  }
+  let differenceText = "";
+  let differenceColor = "#64748b";
+  let differenceDescription = "";
 
   const minWeight =
     18.5 * heightMeters * heightMeters;
@@ -1097,13 +1106,88 @@ function calculateBMI() {
   const maxWeight =
     24.9 * heightMeters * heightMeters;
 
-  result.style.display = "block";
 
-  result.innerHTML = `
+  // UNDERWEIGHT
+
+  if (bmi < 18.5) {
+
+    category = "Underweight";
+    categoryColor = "#0369a1";
+
+    const difference = minWeight - weight;
+
+    differenceText =
+      "+" + difference.toFixed(1) + " kg";
+
+    differenceColor = "#0284c7";
+
+    differenceDescription =
+      "Weight needed to reach the healthy range";
+
+
+  // NORMAL WEIGHT
+
+  } else if (bmi < 25) {
+
+    category = "Normal Weight";
+    categoryColor = "#0f766e";
+
+    differenceText = "Healthy Range";
+
+    differenceColor = "#0f766e";
+
+    differenceDescription =
+      "Your weight is within the healthy BMI range";
+
+
+  // OVERWEIGHT
+
+  } else if (bmi < 30) {
+
+    category = "Overweight";
+    categoryColor = "#b45309";
+
+    const difference = weight - maxWeight;
+
+    differenceText =
+      "+" + difference.toFixed(1) + " kg";
+
+    differenceColor = "#d97777";
+
+    differenceDescription =
+      "Above the healthy weight range";
+
+
+  // OBESITY
+
+  } else {
+
+    category = "Obesity";
+    categoryColor = "#9f1239";
+
+    const difference = weight - maxWeight;
+
+    differenceText =
+      "+" + difference.toFixed(1) + " kg";
+
+    differenceColor = "#d97777";
+
+    differenceDescription =
+      "Above the healthy weight range";
+
+  }
+
+
+  // DISPLAY RESULT
+
+  bmiResult.style.display = "block";
+
+  bmiResult.innerHTML = `
+
     <h3>⚖️ Your BMI Result</h3>
 
     <div class="bmi-score">
-      ${bmi.toFixed(1)}
+      ${bmi.toFixed(2)}
     </div>
 
     <div class="bmi-category"
@@ -1111,21 +1195,71 @@ function calculateBMI() {
       ${category}
     </div>
 
-    <div class="healthy-range">
-      <strong>Healthy Weight Range</strong>
-      <br>
-      ${minWeight.toFixed(1)} -
-      ${maxWeight.toFixed(1)} kg
+    <div style="
+      text-align:center;
+      margin:8px 0 18px;
+    ">
+
+      <div style="
+        font-size:25px;
+        font-weight:700;
+        color:${differenceColor};
+      ">
+        ${differenceText}
+      </div>
+
+      <div style="
+        font-size:13px;
+        color:#64748b;
+        margin-top:4px;
+      ">
+        ${differenceDescription}
+      </div>
+
     </div>
 
-    <p style="margin-top:15px;font-size:13px;">
+    <div class="healthy-range">
+
+      <strong>Healthy Weight Range</strong>
+
+      <br>
+
+      ${minWeight.toFixed(1)} -
+      ${maxWeight.toFixed(1)} kg
+
+    </div>
+
+    <p style="
+      margin-top:15px;
+      font-size:13px;
+    ">
       BMI is a screening tool, not a medical diagnosis.
     </p>
+
   `;
 
 }
 
-</script>
+
+// CLEAR BMI CALCULATOR
+
+function clearBMI() {
+
+  heightInchesInput.value = "";
+
+  bmiHeightInput.value = "";
+
+  bmiWeightInput.value = "";
+
+  cmConversionResult.textContent = "";
+
+  bmiResult.innerHTML = "";
+
+  bmiResult.style.display = "none";
+
+}
+
+
 
 
 
