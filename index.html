@@ -4291,6 +4291,11 @@ console.log("Lab Knowledge Firebase Connected!");
 // =====================================
 
 const firebase = window.labFirebase;
+alert(
+  window.labFirebase
+  ? "Firebase object found"
+  : "Firebase object NOT found"
+);
 
 if (!firebase) {
   console.error("Firebase connection not available.");
