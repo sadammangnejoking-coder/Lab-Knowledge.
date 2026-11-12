@@ -4493,6 +4493,7 @@ if (!firebase) {
     } catch (error) {
 
       console.error("Review submission error:", error);
+alert(error.code + "\n" + error.message);
 
       message.style.color = "#dc2626";
       message.textContent =
