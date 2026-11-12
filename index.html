@@ -3742,12 +3742,80 @@ window.submitIQAnswers = function () {
       ? q.o[Number(selected.value)]
       : "Not answered";
 
+    
     explanationHTML += `
-      <div style="padding:12px;margin:10px 0;background:#f0f5fa;border-radius:8px">
-        <strong>Q${i + 1}. ${q.q}</strong>
-        <p>Your answer: ${selectedAnswer}</p>
-        <p>Correct answer: <strong>${correctAnswer}</strong></p>
-        <p>Explanation: ${q.e}</p>
+      <div style="
+        padding:18px;
+        margin:14px 0;
+        background:#ffffff;
+        border:1px solid #dce6ef;
+        border-radius:16px;
+        box-shadow:0 4px 14px rgba(8,47,73,0.06);
+      ">
+
+        <div style="
+          color:#075985;
+          font-size:13px;
+          font-weight:700;
+          letter-spacing:1px;
+          margin-bottom:10px;
+        ">
+          QUESTION ${i + 1}
+        </div>
+
+        <div style="
+          color:#102a43;
+          font-size:16px;
+          font-weight:700;
+          line-height:1.5;
+          margin-bottom:16px;
+        ">
+          ${q.q}
+        </div>
+
+        <div style="
+          background:#f3f6fa;
+          padding:12px;
+          border-radius:10px;
+          margin-bottom:9px;
+        ">
+          <div style="font-size:11px;color:#64748b;font-weight:700;letter-spacing:1px;">
+            YOUR SELECTION
+          </div>
+          <div style="color:#334155;font-weight:600;margin-top:5px;">
+            ${selectedAnswer}
+          </div>
+        </div>
+
+        <div style="
+          background:#eaf7f5;
+          border:1px solid #ccebe5;
+          padding:12px;
+          border-radius:10px;
+          margin-bottom:12px;
+        ">
+          <div style="font-size:11px;color:#0f766e;font-weight:700;letter-spacing:1px;">
+            EXPECTED RESULT
+          </div>
+          <div style="color:#115e59;font-weight:700;margin-top:5px;">
+            ${correctAnswer}
+          </div>
+        </div>
+
+        <div style="
+          border-left:3px solid #0891b2;
+          padding:9px 12px;
+          background:#f8fafc;
+          border-radius:4px;
+        ">
+          <div style="font-size:11px;color:#075985;font-weight:700;letter-spacing:1px;margin-bottom:5px;">
+            KNOWLEDGE INSIGHT
+          </div>
+          <div style="color:#475569;font-size:14px;line-height:1.6;">
+            ${q.e}
+          </div>
+        </div>
+
       </div>
     `;
   });
