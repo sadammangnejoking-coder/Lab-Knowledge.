@@ -3752,18 +3752,47 @@ window.submitIQAnswers = function () {
     `;
   });
 
+  
   const percentage = score * 10;
 
   document.getElementById("iqResult").innerHTML = `
-    <h2>🎯 Your IQ Practice Result</h2>
-    <h3>Score: ${score}/10</h3>
-    <h3>Percentage: ${percentage}%</h3>
-    <p>Questions attempted: ${answered}/10</p>
-    <hr>
-    <h3>Answer Review</h3>
-    ${explanationHTML}
-    <p><strong>Note:</strong> This is an educational practice quiz,
-    not a validated clinical IQ test.</p>
+    <div class="iq-premium-result">
+
+      <div class="iq-result-header">
+        <div class="iq-result-icon">🏆</div>
+        <h2>IQ Practice Summary</h2>
+        <p>Your performance at a glance</p>
+      </div>
+
+      <div class="iq-score-card">
+        <div class="iq-score-number">${score}<span>/10</span></div>
+        <div class="iq-score-label">TOTAL SCORE</div>
+        <div class="iq-score-progress">
+          <div style="width:${percentage}%"></div>
+        </div>
+        <div class="iq-percentage">${percentage}% Performance</div>
+      </div>
+
+      <div class="iq-attempt-info">
+        <span>Questions Attempted</span>
+        <strong>${answered}/10</strong>
+      </div>
+
+      <div class="iq-review-heading">
+        <h3>📋 Answer Insights</h3>
+        <p>Explore your selections and explanations</p>
+      </div>
+
+      <div class="iq-review-list">
+        ${explanationHTML}
+      </div>
+
+      <div class="iq-result-note">
+        <strong>ⓘ Educational Note</strong>
+        <p>This is an educational practice quiz, not a validated clinical IQ test.</p>
+      </div>
+
+    </div>
   `;
 
   document.getElementById("iqResult").style.display = "block";
@@ -3778,6 +3807,8 @@ window.submitIQAnswers = function () {
 };
 
 })();
+
+
 </script>
 
 </body>
