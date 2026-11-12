@@ -4012,5 +4012,48 @@ window.submitIQAnswers = function () {
 
 </script>
 
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIo6J7xSQE_e4KTEM9WJdLAuL7bF4LzEU",
+  authDomain: "lab-knowledge-a8bf1.firebaseapp.com",
+  projectId: "lab-knowledge-a8bf1",
+  storageBucket: "lab-knowledge-a8bf1.firebasestorage.app",
+  messagingSenderId: "1093417931597",
+  appId: "1:1093417931597:web:deb3069b6a910d1a291d04",
+  measurementId: "G-NXB4WMPDZF"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app);
+
+// Make Firebase available to other website scripts
+window.labFirebase = {
+  db,
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp
+};
+
+console.log("Lab Knowledge Firebase Connected!");
+</script>
+</body>
+
 </body>
 </html>
