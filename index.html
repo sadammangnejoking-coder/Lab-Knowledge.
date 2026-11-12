@@ -1018,10 +1018,8 @@ body[dir="rtl"] .note{
 
 // ======================================
 // LAB KNOWLEDGE - BMI CALCULATOR
-// INCHES TO CM + WEIGHT DIFFERENCE
-// + CLEAR BUTTON
+// PROFESSIONAL BMI + WEIGHT DIFFERENCE
 // ======================================
-
 
 const heightInchesInput =
   document.getElementById("heightInches");
@@ -1039,7 +1037,7 @@ const bmiResult =
   document.getElementById("bmiResult");
 
 
-// AUTOMATIC INCHES TO CM CONVERSION
+// INCHES TO CM CONVERSION
 
 heightInchesInput.addEventListener("input", function() {
 
@@ -1051,7 +1049,6 @@ heightInchesInput.addEventListener("input", function() {
     inches <= 0 ||
     inches > 100
   ) {
-
     bmiHeightInput.value = "";
     cmConversionResult.textContent = "";
     return;
@@ -1095,17 +1092,17 @@ function calculateBMI() {
   const bmi =
     weight / (heightMeters * heightMeters);
 
-  let category = "";
-  let categoryColor = "";
-  let differenceText = "";
-  let differenceColor = "#64748b";
-  let differenceDescription = "";
-
   const minWeight =
     18.5 * heightMeters * heightMeters;
 
   const maxWeight =
-    24.9 * heightMeters * heightMeters;
+    25.0 * heightMeters * heightMeters;
+
+  let category = "";
+  let categoryColor = "";
+  let differenceText = "";
+  let differenceColor = "";
+  let differenceDescription = "";
 
 
   // UNDERWEIGHT
@@ -1113,7 +1110,7 @@ function calculateBMI() {
   if (bmi < 18.5) {
 
     category = "Underweight";
-    categoryColor = "#0369a1";
+    categoryColor = "#0284c7";
 
     const difference = minWeight - weight;
 
@@ -1123,12 +1120,12 @@ function calculateBMI() {
     differenceColor = "#0284c7";
 
     differenceDescription =
-      "Weight needed to reach the healthy range";
+      "Weight needed to reach normal BMI range";
 
 
   // NORMAL WEIGHT
 
-  } else if (bmi < 25) {
+  } else if (bmi < 25.0) {
 
     category = "Normal Weight";
     categoryColor = "#0f766e";
@@ -1146,7 +1143,7 @@ function calculateBMI() {
   } else if (bmi < 30) {
 
     category = "Overweight";
-    categoryColor = "#b45309";
+    categoryColor = "#d97706";
 
     const difference = weight - maxWeight;
 
@@ -1164,7 +1161,7 @@ function calculateBMI() {
   } else {
 
     category = "Obesity";
-    categoryColor = "#9f1239";
+    categoryColor = "#be123c";
 
     const difference = weight - maxWeight;
 
@@ -1179,7 +1176,7 @@ function calculateBMI() {
   }
 
 
-  // DISPLAY RESULT
+  // DISPLAY BMI RESULT
 
   bmiResult.style.display = "block";
 
@@ -1242,7 +1239,7 @@ function calculateBMI() {
 }
 
 
-// CLEAR BMI CALCULATOR
+// CLEAR BMI
 
 function clearBMI() {
 
