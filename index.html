@@ -790,7 +790,7 @@ body[dir="rtl"] .note{
   font-size: 16px;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(7,89,133,.2);
-  margin: 8px 5px 8px 0;
+  margin: 8px 5px 8px 0;4
 }
 
 #iq .action-btn:active {
@@ -4286,19 +4286,25 @@ console.log("Lab Knowledge Firebase Connected!");
 
 <script type="module">
 
-// =====================================
-// LAB KNOWLEDGE - FIREBASE REVIEWS
-// =====================================
+// =============================================
+// LAB KNOWLEDGE - FIREBASE REVIEWS SYSTEM
+// FIXED VERSION
+// =============================================
 
+// FIREBASE CONNECTION
 const firebase = window.labFirebase;
-alert(
-  window.labFirebase
-  ? "Firebase object found"
-  : "Firebase object NOT found"
-);
 
 if (!firebase) {
-  console.error("Firebase connection not available.");
+
+  console.error("Firebase object not found.");
+
+  const msg = document.getElementById("lkReviewMessage");
+
+  if (msg) {
+    msg.textContent = "Firebase connection unavailable. Please refresh.";
+    msg.style.color = "#dc2626";
+  }
+
 } else {
 
   const {
@@ -4309,8 +4315,10 @@ if (!firebase) {
     serverTimestamp
   } = firebase;
 
+  // FIRESTORE COLLECTION
   const reviewsRef = collection(db, "reviews");
 
+  // HTML ELEMENTS
   const form = document.getElementById("lkReviewForm");
   const nameInput = document.getElementById("lkReviewerName");
   const commentInput = document.getElementById("lkReviewComment");
@@ -4318,227 +4326,326 @@ if (!firebase) {
   const message = document.getElementById("lkReviewMessage");
   const container = document.getElementById("lkReviewsContainer");
 
+  const averageElement = document.getElementById("lkAverage");
+  const starsElement = document.getElementById("lkAverageStars");
+  const totalElement = document.getElementById("lkTotalReviews");
+
   let selectedRating = 0;
+  let isSubmitting = false;
 
-  // STAR SELECTION
+  // CHECK REQUIRED HTML ELEMENTS
+  if (
+    !form ||
+    !nameInput ||
+    !commentInput ||
+    !submitButton ||
+    !message ||
+    !container
+  ) {
 
-  const starButtons = document.querySelectorAll(
-    "#lkStarPicker button"
-  );
+    console.error("Review HTML elements are missing.");
 
-  function updateStars() {
+  } else {
+
+    // =====================================
+    // STAR RATING SYSTEM
+    // =====================================
+
+    const starButtons = document.querySelectorAll(
+      "#lkStarPicker button"
+    );
+
+    function updateStars() {
+
+      starButtons.forEach(button => {
+
+        const rating = Number(button.dataset.rating);
+
+        button.classList.toggle(
+          "active",
+          rating <= selectedRating
+        );
+
+      });
+
+    }
 
     starButtons.forEach(button => {
 
-      const rating = Number(button.dataset.rating);
+      button.type = "button";
 
-      button.classList.toggle(
-        "active",
-        rating <= selectedRating
-      );
+      button.addEventListener("click", event => {
 
-    });
+        event.preventDefault();
 
-  }
+        selectedRating = Number(button.dataset.rating);
 
-  starButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      selectedRating = Number(button.dataset.rating);
-
-      updateStars();
-
-    });
-
-  });
-
-  // DISPLAY REVIEWS
-
-  async function loadReviews() {
-
-    container.textContent = "Loading reviews...";
-
-    try {
-
-      const snapshot = await getDocs(reviewsRef);
-
-      const reviews = [];
-
-      snapshot.forEach(doc => {
-
-        reviews.push(doc.data());
+        updateStars();
 
       });
 
-      reviews.sort((a, b) => {
+    });
 
-        const dateA = a.date?.toMillis?.() || 0;
-        const dateB = b.date?.toMillis?.() || 0;
+    // =====================================
+    // LOAD REVIEWS FROM FIRESTORE
+    // =====================================
 
-        return dateB - dateA;
+    async function loadReviews() {
 
-      });
+      container.textContent = "Loading reviews...";
 
-      const total = reviews.length;
+      try {
 
-      const average = total
-        ? reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / total
-        : 0;
+        const snapshot = await getDocs(reviewsRef);
 
-      document.getElementById("lkAverage").textContent =
-        average.toFixed(1) + " / 5";
+        const reviews = [];
 
-      document.getElementById("lkAverageStars").textContent =
-        "★".repeat(Math.round(average)) +
-        "☆".repeat(5 - Math.round(average));
+        snapshot.forEach(doc => {
 
-      document.getElementById("lkTotalReviews").textContent =
-        total + (total === 1 ? " Review" : " Reviews");
+          reviews.push(doc.data());
 
-      container.replaceChildren();
+        });
 
-      if (!total) {
+        // NEWEST REVIEWS FIRST
+        reviews.sort((a, b) => {
 
-        container.textContent = "No reviews yet. Be the first to review!";
+          const dateA = a.date?.toMillis?.() || 0;
+          const dateB = b.date?.toMillis?.() || 0;
+
+          return dateB - dateA;
+
+        });
+
+        // CALCULATE AVERAGE RATING
+        const total = reviews.length;
+
+        const average = total
+          ? reviews.reduce(
+              (sum, review) =>
+                sum + Number(review.rating || 0),
+              0
+            ) / total
+          : 0;
+
+        if (averageElement) {
+          averageElement.textContent =
+            average.toFixed(1) + " / 5";
+        }
+
+        if (starsElement) {
+          starsElement.textContent =
+            "★".repeat(Math.round(average)) +
+            "☆".repeat(5 - Math.round(average));
+        }
+
+        if (totalElement) {
+          totalElement.textContent =
+            total + (total === 1 ? " Review" : " Reviews");
+        }
+
+        // CLEAR OLD REVIEWS
+        container.replaceChildren();
+
+        if (total === 0) {
+
+          container.textContent =
+            "No reviews yet. Be the first to review!";
+
+          return;
+
+        }
+
+        // DISPLAY EACH REVIEW
+        reviews.forEach(review => {
+
+          const card = document.createElement("div");
+          card.className = "lk-review-card";
+
+          const heading = document.createElement("strong");
+          heading.textContent = review.name || "Visitor";
+
+          const stars = document.createElement("div");
+          stars.className = "lk-stars";
+
+          const rating = Math.max(
+            0,
+            Math.min(5, Math.round(Number(review.rating) || 0))
+          );
+
+          stars.textContent =
+            "★".repeat(rating) +
+            "☆".repeat(5 - rating);
+
+          const date = document.createElement("div");
+          date.className = "lk-review-date";
+
+          if (review.date?.toDate) {
+
+            date.textContent =
+              review.date.toDate().toLocaleDateString();
+
+          } else {
+
+            date.textContent = "Recently submitted";
+
+          }
+
+          const comment = document.createElement("p");
+          comment.textContent = review.comment || "";
+
+          card.append(
+            heading,
+            stars,
+            date,
+            comment
+          );
+
+          container.appendChild(card);
+
+        });
+
+        console.log("Reviews loaded:", total);
+
+      } catch (error) {
+
+        console.error("Review loading error:", error);
+
+        container.textContent =
+          "Unable to load reviews. Please try again later.";
+
+      }
+
+    }
+
+    // =====================================
+    // SUBMIT REVIEW TO FIRESTORE
+    // =====================================
+
+    form.addEventListener("submit", async event => {
+
+      event.preventDefault();
+
+      // PREVENT DOUBLE SUBMISSION
+      if (isSubmitting) return;
+
+      const name = nameInput.value.trim();
+      const comment = commentInput.value.trim();
+
+      // VALIDATE NAME
+      if (!name || name.length > 60) {
+
+        message.style.color = "#dc2626";
+        message.textContent =
+          "Please enter your name (maximum 60 characters).";
 
         return;
 
       }
 
-      reviews.forEach(review => {
+      // VALIDATE COMMENT
+      if (!comment || comment.length > 1000) {
 
-        const card = document.createElement("div");
-        card.className = "lk-review-card";
+        message.style.color = "#dc2626";
+        message.textContent =
+          "Please enter your review (maximum 1000 characters).";
 
-        const heading = document.createElement("strong");
-        heading.textContent = review.name || "Visitor";
+        return;
 
-        const stars = document.createElement("div");
-        stars.className = "lk-stars";
-        stars.textContent =
-          "★".repeat(Number(review.rating || 0)) +
-          "☆".repeat(5 - Number(review.rating || 0));
+      }
 
-        const date = document.createElement("div");
-        date.className = "lk-review-date";
+      // VALIDATE RATING
+      if (selectedRating < 1 || selectedRating > 5) {
 
-        if (review.date?.toDate) {
-          date.textContent = review.date.toDate().toLocaleDateString();
-        } else {
-          date.textContent = "Recently submitted";
-        }
+        message.style.color = "#dc2626";
+        message.textContent =
+          "Please select a star rating.";
 
-        const comment = document.createElement("p");
-        comment.textContent = review.comment || "";
+        return;
 
-        card.append(heading, stars, date, comment);
+      }
 
-        container.appendChild(card);
+      isSubmitting = true;
 
-      });
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
 
-    } catch (error) {
+      message.textContent = "";
+      message.style.color = "#dc2626";
 
-      console.error("Review loading error:", error);
+      try {
 
-      container.textContent =
-        "Unable to load reviews. Please try again later.";
+        console.log("Firebase review saving started...");
 
-    }
+        // SAVE REVIEW
+        // NO ARTIFICIAL 15 SECOND TIMEOUT
+
+        const docRef = await addDoc(reviewsRef, {
+
+          name: name,
+          rating: selectedRating,
+          comment: comment,
+          date: serverTimestamp()
+
+        });
+
+        console.log(
+          "Review successfully saved:",
+          docRef.id
+        );
+
+        // SUCCESS MESSAGE
+        message.style.color = "#15803d";
+
+        message.textContent =
+          "Thank you! Your review was submitted successfully.";
+
+        // CLEAR FORM
+        form.reset();
+
+        selectedRating = 0;
+        updateStars();
+
+        // RELOAD SAVED REVIEWS
+        await loadReviews();
+
+      } catch (error) {
+
+        console.error(
+          "Firebase Review Submit Error:",
+          error
+        );
+
+        message.style.color = "#dc2626";
+
+        message.textContent =
+          "Unable to submit review: " +
+          (error.message || "Please try again.");
+
+      } finally {
+
+        isSubmitting = false;
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Review";
+
+      }
+
+    });
+
+    // =====================================
+    // INITIAL LOAD
+    // =====================================
+
+    loadReviews();
+
+    console.log("Lab Knowledge Review System initialized.");
 
   }
-
-  // SUBMIT REVIEW
-
-  form.addEventListener("submit", async event => {
-
-    event.preventDefault();
-
-    const name = nameInput.value.trim();
-    const comment = commentInput.value.trim();
-
-    if (!name || !comment) {
-      message.textContent = "Please complete all fields.";
-      return;
-    }
-
-    if (selectedRating < 1 || selectedRating > 5) {
-      message.textContent = "Please select a star rating.";
-      return;
-    }
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
-
-    message.textContent = "";
-
-    try {
-
-      console.log("REVIEW SAVE STARTED");
-
-const docRef = await Promise.race([
-
-  addDoc(reviewsRef, {
-    name: name,
-    rating: selectedRating,
-    comment: comment,
-    date: serverTimestamp()
-  }),
-
-  new Promise((_, reject) =>
-    setTimeout(
-      () => reject(new Error("Firebase write timed out after 15 seconds")),
-      15000
-    )
-  )
-
-]);
-
-console.log("REVIEW SAVED:", docRef.id);
-
-alert("Review saved successfully! ID: " + docRef.id);
-      message.style.color = "#15803d";
-      message.textContent =
-        "Thank you! Your review was submitted successfully.";
-
-      form.reset();
-
-      selectedRating = 0;
-      updateStars();
-
-      await loadReviews();
-
-    } catch(error) {
-
-  console.error("Review Submit Error:", error);
-
-  alert(
-    "Error Code: " + error.code +
-    "\nMessage: " + error.message
-  );
-
-}
-      message.style.color = "#dc2626";
-      message.textContent =
-        "Unable to submit review. Please try again.";
-
-    } finally {
-
-      submitButton.disabled = false;
-      submitButton.textContent = "Submit Review";
-
-    }
-
-  });
-
-  // INITIAL LOAD
-
-  loadReviews();
 
 }
 
 </script>
+
 
 </body>
 </html>
