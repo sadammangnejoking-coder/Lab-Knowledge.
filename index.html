@@ -4475,15 +4475,29 @@ if (!firebase) {
 
     try {
 
-      await addDoc(reviewsRef, {
+      console.log("REVIEW SAVE STARTED");
 
-        name: name,
-        rating: selectedRating,
-        comment: comment,
-        date: serverTimestamp()
+const docRef = await Promise.race([
 
-      });
+  addDoc(reviewsRef, {
+    name: name,
+    rating: selectedRating,
+    comment: comment,
+    date: serverTimestamp()
+  }),
 
+  new Promise((_, reject) =>
+    setTimeout(
+      () => reject(new Error("Firebase write timed out after 15 seconds")),
+      15000
+    )
+  )
+
+]);
+
+console.log("REVIEW SAVED:", docRef.id);
+
+alert("Review saved successfully! ID: " + docRef.id);
       message.style.color = "#15803d";
       message.textContent =
         "Thank you! Your review was submitted successfully.";
@@ -4498,7 +4512,7 @@ if (!firebase) {
     } catch (error) {
 
       console.error("Review submission error:", error);
-alert(error.code + "\n" + error.message);
+
 
       message.style.color = "#dc2626";
       message.textContent =
