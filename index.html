@@ -4509,11 +4509,16 @@ alert("Review saved successfully! ID: " + docRef.id);
 
       await loadReviews();
 
-    } catch (error) {
+    } catch(error) {
 
-      console.error("Review submission error:", error);
-alert(error.code + "\n" + error.message);
+  console.error("Review Submit Error:", error);
 
+  alert(
+    "Error Code: " + error.code +
+    "\nMessage: " + error.message
+  );
+
+}
       message.style.color = "#dc2626";
       message.textContent =
         "Unable to submit review. Please try again.";
