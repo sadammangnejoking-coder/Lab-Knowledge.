@@ -4017,46 +4017,6 @@ window.submitIQAnswers = function () {
 
 
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDIo6J7xSQE_e4KTEM9WJdLAuL7bF4LzEU",
-  authDomain: "lab-knowledge-a8bf1.firebaseapp.com",
-  projectId: "lab-knowledge-a8bf1",
-  storageBucket: "lab-knowledge-a8bf1.firebasestorage.app",
-  messagingSenderId: "1093417931597",
-  appId: "1:1093417931597:web:deb3069b6a910d1a291d04",
-  measurementId: "G-NXB4WMPDZF"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore
-const db = getFirestore(app);
-
-// Make Firebase available to other website scripts
-window.labFirebase = {
-  db,
-  collection,
-  addDoc,
-  getDocs,
-  serverTimestamp
-};
-
-console.log("Lab Knowledge Firebase Connected!");
-</script>
-
-
 
 
 
@@ -4284,367 +4244,368 @@ console.log("Lab Knowledge Firebase Connected!");
 
 </section>
 
+
 <script type="module">
 
 // =============================================
-// LAB KNOWLEDGE - FIREBASE REVIEWS SYSTEM
-// FIXED VERSION
+// LAB KNOWLEDGE - FIREBASE REVIEW SYSTEM
+// SINGLE INITIALIZATION + SAFE SUBMISSION
 // =============================================
 
-// FIREBASE CONNECTION
-const firebase = window.labFirebase;
+import {
+  initializeApp,
+  getApps,
+  getApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-if (!firebase) {
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-  console.error("Firebase object not found.");
+const firebaseConfig = {
+  apiKey: "AIzaSyDIo6J7xSQE_e4KTEM9WJdLAuL7bF4LzEU",
+  authDomain: "lab-knowledge-a8bf1.firebaseapp.com",
+  projectId: "lab-knowledge-a8bf1",
+  storageBucket: "lab-knowledge-a8bf1.firebasestorage.app",
+  messagingSenderId: "1093417931597",
+  appId: "1:1093417931597:web:deb3069b6a910d1a291d04",
+  measurementId: "G-NXB4WMPDZF"
+};
 
-  const msg = document.getElementById("lkReviewMessage");
+// =============================================
+// FIREBASE INITIALIZATION
+// =============================================
 
-  if (msg) {
-    msg.textContent = "Firebase connection unavailable. Please refresh.";
-    msg.style.color = "#dc2626";
-  }
+const app = getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
 
-} else {
+const db = getFirestore(app);
 
-  const {
-    db,
-    collection,
-    addDoc,
-    getDocs,
-    serverTimestamp
-  } = firebase;
+window.labFirebase = {
+  db,
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp
+};
 
-  // FIRESTORE COLLECTION
-  const reviewsRef = collection(db, "reviews");
+console.log("Lab Knowledge Firebase initialized");
 
-  // HTML ELEMENTS
-  const form = document.getElementById("lkReviewForm");
-  const nameInput = document.getElementById("lkReviewerName");
-  const commentInput = document.getElementById("lkReviewComment");
-  const submitButton = document.getElementById("lkSubmitButton");
-  const message = document.getElementById("lkReviewMessage");
-  const container = document.getElementById("lkReviewsContainer");
+// =============================================
+// REVIEW HTML ELEMENTS
+// =============================================
 
-  const averageElement = document.getElementById("lkAverage");
-  const starsElement = document.getElementById("lkAverageStars");
-  const totalElement = document.getElementById("lkTotalReviews");
+const form = document.getElementById("lkReviewForm");
+const nameInput = document.getElementById("lkReviewerName");
+const commentInput = document.getElementById("lkReviewComment");
 
-  let selectedRating = 0;
-  let isSubmitting = false;
+const submitButton = document.getElementById("lkSubmitButton");
+const message = document.getElementById("lkReviewMessage");
+const container = document.getElementById("lkReviewsContainer");
 
-  // CHECK REQUIRED HTML ELEMENTS
-  if (
-    !form ||
-    !nameInput ||
-    !commentInput ||
-    !submitButton ||
-    !message ||
-    !container
-  ) {
+const averageElement = document.getElementById("lkAverage");
+const starsElement = document.getElementById("lkAverageStars");
+const totalElement = document.getElementById("lkTotalReviews");
 
-    console.error("Review HTML elements are missing.");
+const starButtons = document.querySelectorAll(
+  "#lkStarPicker button"
+);
 
-  } else {
+const reviewsRef = collection(db, "reviews");
 
-    // =====================================
-    // STAR RATING SYSTEM
-    // =====================================
+let selectedRating = 0;
+let isSubmitting = false;
 
-    const starButtons = document.querySelectorAll(
-      "#lkStarPicker button"
-    );
+// =============================================
+// CHECK HTML
+// =============================================
 
-    function updateStars() {
+if (
+  !form ||
+  !nameInput ||
+  !commentInput ||
+  !submitButton ||
+  !message ||
+  !container
+) {
+  console.error("Review HTML elements missing.");
 
-      starButtons.forEach(button => {
+} else if (form.dataset.lkBound !== "true") {
 
-        const rating = Number(button.dataset.rating);
+  form.dataset.lkBound = "true";
 
-        button.classList.toggle(
-          "active",
-          rating <= selectedRating
-        );
+  // ===========================================
+  // STAR RATING
+  // ===========================================
 
-      });
-
-    }
+  function updateStars() {
 
     starButtons.forEach(button => {
 
-      button.type = "button";
+      const rating = Number(button.dataset.rating);
 
-      button.addEventListener("click", event => {
-
-        event.preventDefault();
-
-        selectedRating = Number(button.dataset.rating);
-
-        updateStars();
-
-      });
+      button.classList.toggle(
+        "active",
+        rating <= selectedRating
+      );
 
     });
 
-    // =====================================
-    // LOAD REVIEWS FROM FIRESTORE
-    // =====================================
+  }
 
-    async function loadReviews() {
+  starButtons.forEach(button => {
 
-      container.textContent = "Loading reviews...";
+    button.type = "button";
 
-      try {
-
-        const snapshot = await getDocs(reviewsRef);
-
-        const reviews = [];
-
-        snapshot.forEach(doc => {
-
-          reviews.push(doc.data());
-
-        });
-
-        // NEWEST REVIEWS FIRST
-        reviews.sort((a, b) => {
-
-          const dateA = a.date?.toMillis?.() || 0;
-          const dateB = b.date?.toMillis?.() || 0;
-
-          return dateB - dateA;
-
-        });
-
-        // CALCULATE AVERAGE RATING
-        const total = reviews.length;
-
-        const average = total
-          ? reviews.reduce(
-              (sum, review) =>
-                sum + Number(review.rating || 0),
-              0
-            ) / total
-          : 0;
-
-        if (averageElement) {
-          averageElement.textContent =
-            average.toFixed(1) + " / 5";
-        }
-
-        if (starsElement) {
-          starsElement.textContent =
-            "★".repeat(Math.round(average)) +
-            "☆".repeat(5 - Math.round(average));
-        }
-
-        if (totalElement) {
-          totalElement.textContent =
-            total + (total === 1 ? " Review" : " Reviews");
-        }
-
-        // CLEAR OLD REVIEWS
-        container.replaceChildren();
-
-        if (total === 0) {
-
-          container.textContent =
-            "No reviews yet. Be the first to review!";
-
-          return;
-
-        }
-
-        // DISPLAY EACH REVIEW
-        reviews.forEach(review => {
-
-          const card = document.createElement("div");
-          card.className = "lk-review-card";
-
-          const heading = document.createElement("strong");
-          heading.textContent = review.name || "Visitor";
-
-          const stars = document.createElement("div");
-          stars.className = "lk-stars";
-
-          const rating = Math.max(
-            0,
-            Math.min(5, Math.round(Number(review.rating) || 0))
-          );
-
-          stars.textContent =
-            "★".repeat(rating) +
-            "☆".repeat(5 - rating);
-
-          const date = document.createElement("div");
-          date.className = "lk-review-date";
-
-          if (review.date?.toDate) {
-
-            date.textContent =
-              review.date.toDate().toLocaleDateString();
-
-          } else {
-
-            date.textContent = "Recently submitted";
-
-          }
-
-          const comment = document.createElement("p");
-          comment.textContent = review.comment || "";
-
-          card.append(
-            heading,
-            stars,
-            date,
-            comment
-          );
-
-          container.appendChild(card);
-
-        });
-
-        console.log("Reviews loaded:", total);
-
-      } catch (error) {
-
-        console.error("Review loading error:", error);
-
-        container.textContent =
-          "Unable to load reviews. Please try again later.";
-
-      }
-
-    }
-
-    // =====================================
-    // SUBMIT REVIEW TO FIRESTORE
-    // =====================================
-
-    form.addEventListener("submit", async event => {
+    button.addEventListener("click", event => {
 
       event.preventDefault();
 
-      // PREVENT DOUBLE SUBMISSION
-      if (isSubmitting) return;
+      selectedRating = Number(button.dataset.rating);
 
-      const name = nameInput.value.trim();
-      const comment = commentInput.value.trim();
-
-      // VALIDATE NAME
-      if (!name || name.length > 60) {
-
-        message.style.color = "#dc2626";
-        message.textContent =
-          "Please enter your name (maximum 60 characters).";
-
-        return;
-
-      }
-
-      // VALIDATE COMMENT
-      if (!comment || comment.length > 1000) {
-
-        message.style.color = "#dc2626";
-        message.textContent =
-          "Please enter your review (maximum 1000 characters).";
-
-        return;
-
-      }
-
-      // VALIDATE RATING
-      if (selectedRating < 1 || selectedRating > 5) {
-
-        message.style.color = "#dc2626";
-        message.textContent =
-          "Please select a star rating.";
-
-        return;
-
-      }
-
-      isSubmitting = true;
-
-      submitButton.disabled = true;
-      submitButton.textContent = "Submitting...";
-
-      message.textContent = "";
-      message.style.color = "#dc2626";
-
-      try {
-
-        console.log("Firebase review saving started...");
-
-        // SAVE REVIEW
-        // NO ARTIFICIAL 15 SECOND TIMEOUT
-
-        const docRef = await addDoc(reviewsRef, {
-
-          name: name,
-          rating: selectedRating,
-          comment: comment,
-          date: serverTimestamp()
-
-        });
-
-        console.log(
-          "Review successfully saved:",
-          docRef.id
-        );
-
-        // SUCCESS MESSAGE
-        message.style.color = "#15803d";
-
-        message.textContent =
-          "Thank you! Your review was submitted successfully.";
-
-        // CLEAR FORM
-        form.reset();
-
-        selectedRating = 0;
-        updateStars();
-
-        // RELOAD SAVED REVIEWS
-        await loadReviews();
-
-      } catch (error) {
-
-        console.error(
-          "Firebase Review Submit Error:",
-          error
-        );
-
-        message.style.color = "#dc2626";
-
-        message.textContent =
-          "Unable to submit review: " +
-          (error.message || "Please try again.");
-
-      } finally {
-
-        isSubmitting = false;
-
-        submitButton.disabled = false;
-        submitButton.textContent = "Submit Review";
-
-      }
+      updateStars();
 
     });
 
-    // =====================================
-    // INITIAL LOAD
-    // =====================================
+  });
 
-    loadReviews();
+  // ===========================================
+  // LOAD FIRESTORE REVIEWS
+  // ===========================================
 
-    console.log("Lab Knowledge Review System initialized.");
+  async function loadReviews() {
+
+    try {
+
+      const snapshot = await getDocs(reviewsRef);
+
+      const reviews = [];
+
+      snapshot.forEach(documentSnapshot => {
+
+        reviews.push(documentSnapshot.data());
+
+      });
+
+      reviews.sort((a, b) => {
+
+        const dateA = a.date?.toMillis?.() || 0;
+        const dateB = b.date?.toMillis?.() || 0;
+
+        return dateB - dateA;
+
+      });
+
+      const total = reviews.length;
+
+      const average = total
+        ? reviews.reduce(
+            (sum, review) =>
+              sum + Number(review.rating || 0),
+            0
+          ) / total
+        : 0;
+
+      averageElement.textContent =
+        average.toFixed(1) + " / 5";
+
+      starsElement.textContent =
+        "★".repeat(Math.round(average)) +
+        "☆".repeat(5 - Math.round(average));
+
+      totalElement.textContent =
+        total + (total === 1 ? " Review" : " Reviews");
+
+      container.replaceChildren();
+
+      if (total === 0) {
+
+        container.textContent =
+          "No reviews yet. Be the first to review!";
+
+        return;
+
+      }
+
+      reviews.forEach(review => {
+
+        const card = document.createElement("div");
+        card.className = "lk-review-card";
+
+        const heading = document.createElement("strong");
+        heading.textContent = review.name || "Visitor";
+
+        const stars = document.createElement("div");
+        stars.className = "lk-stars";
+
+        const rating = Math.max(
+          0,
+          Math.min(5, Math.round(Number(review.rating) || 0))
+        );
+
+        stars.textContent =
+          "★".repeat(rating) +
+          "☆".repeat(5 - rating);
+
+        const date = document.createElement("div");
+        date.className = "lk-review-date";
+
+        date.textContent = review.date?.toDate
+          ? review.date.toDate().toLocaleDateString()
+          : "Recently submitted";
+
+        const comment = document.createElement("p");
+        comment.textContent = review.comment || "";
+
+        card.append(
+          heading,
+          stars,
+          date,
+          comment
+        );
+
+        container.appendChild(card);
+
+      });
+
+      console.log("Reviews loaded:", total);
+
+    } catch (error) {
+
+      console.error("Firebase load error:", error);
+
+      container.textContent =
+        "Unable to load reviews: " +
+        (error.code || error.message);
+
+    }
 
   }
+
+  // ===========================================
+  // SUBMIT REVIEW
+  // ===========================================
+
+  form.addEventListener("submit", async event => {
+
+    event.preventDefault();
+
+    if (isSubmitting) return;
+
+    const name = nameInput.value.trim();
+    const comment = commentInput.value.trim();
+
+    if (!name || name.length > 60) {
+
+      message.style.color = "#dc2626";
+      message.textContent = "Please enter a valid name.";
+      return;
+
+    }
+
+    if (!comment || comment.length > 1000) {
+
+      message.style.color = "#dc2626";
+      message.textContent = "Please enter your review.";
+      return;
+
+    }
+
+    if (selectedRating < 1 || selectedRating > 5) {
+
+      message.style.color = "#dc2626";
+      message.textContent = "Please select a star rating.";
+      return;
+
+    }
+
+    isSubmitting = true;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    message.textContent = "";
+    message.style.color = "#dc2626";
+
+    let savedSuccessfully = false;
+
+    try {
+
+      console.log("Starting Firestore submission...");
+
+      const docRef = await addDoc(reviewsRef, {
+
+        name: name,
+        rating: selectedRating,
+        comment: comment,
+        date: serverTimestamp()
+
+      });
+
+      savedSuccessfully = true;
+
+      console.log("Review saved successfully:", docRef.id);
+
+      // CLEAR FORM AFTER SUCCESSFUL SAVE
+
+      form.reset();
+
+      selectedRating = 0;
+      updateStars();
+
+      message.style.color = "#15803d";
+      message.textContent =
+        "Thank you! Your review was submitted successfully.";
+
+    } catch (error) {
+
+      console.error("Review submission failed:", error);
+
+      message.style.color = "#dc2626";
+
+      message.textContent =
+        "Submission failed: " +
+        (error.code || error.message || "Unknown error");
+
+    } finally {
+
+      // ALWAYS STOP LOADING
+
+      isSubmitting = false;
+
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit Review";
+
+    }
+
+    // LOAD REVIEWS SEPARATELY
+    // DO NOT KEEP SUBMIT BUTTON LOADING
+
+    if (savedSuccessfully) {
+
+      loadReviews();
+
+    }
+
+  });
+
+  // ===========================================
+  // INITIAL LOAD
+  // ===========================================
+
+  loadReviews();
+
+  console.log("Lab Knowledge Review System ready.");
 
 }
 
 </script>
+
 
 
 </body>
