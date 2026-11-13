@@ -762,7 +762,7 @@ window.submitIQAnswers = function() {
     performance = "Keep Practicing!";
   }
 
-  iqResultBox.innerHTML = `
+  iqResultBox.style.display = "block";
     <div class="iq-score-summary">
 
       <h2>🎯 Your IQ Practice Result</h2>
