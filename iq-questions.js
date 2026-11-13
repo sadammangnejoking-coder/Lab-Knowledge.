@@ -1,12 +1,13 @@
+(function () {
+"use strict";
+
+
 // ======================================
 // LAB KNOWLEDGE - IQ PRACTICE SYSTEM
 // TOTAL: 300 QUESTIONS
 // 10 RANDOM QUESTIONS PER TEST
 // ======================================
 
-(function () {
-
-"use strict";
 
 const iqQuestionBank = [
 
@@ -510,8 +511,6 @@ const iqQuestionBank = [
 ];
 
 
-(function () {
-"use strict";
 
 // ======================================
 // LAB KNOWLEDGE - IQ PRACTICE SYSTEM
