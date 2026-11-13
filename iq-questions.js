@@ -672,8 +672,9 @@ window.startIQPractice = function() {
   }
 };
 
+
 // ======================================
-// SUBMIT IQ ANSWERS
+// SUBMIT IQ ANSWERS - FIXED
 // ======================================
 
 window.submitIQAnswers = function() {
@@ -705,13 +706,9 @@ window.submitIQAnswers = function() {
     resultHTML += `
       <div class="iq-answer-review">
 
-        <h4>
-          Question ${index + 1}
-        </h4>
+        <h4>Question ${index + 1}</h4>
 
-        <p>
-          ${escapeIQText(question.q)}
-        </p>
+        <p>${escapeIQText(question.q)}</p>
 
         <p>
           Your Answer:
@@ -732,11 +729,7 @@ window.submitIQAnswers = function() {
         </p>
 
         <p>
-          ${
-            isCorrect
-              ? "✅ Correct"
-              : "❌ Incorrect"
-          }
+          ${isCorrect ? "✅ Correct" : "❌ Incorrect"}
         </p>
 
         <p>
@@ -762,22 +755,19 @@ window.submitIQAnswers = function() {
     performance = "Keep Practicing!";
   }
 
+  // SHOW RESULT
   iqResultBox.style.display = "block";
+
+  iqResultBox.innerHTML = `
     <div class="iq-score-summary">
 
       <h2>🎯 Your IQ Practice Result</h2>
 
-      <h3>
-        Score: ${score} / 10
-      </h3>
+      <h3>Score: ${score} / 10</h3>
 
-      <h3>
-        Percentage: ${percentage}%
-      </h3>
+      <h3>Percentage: ${percentage}%</h3>
 
-      <h3>
-        ${performance}
-      </h3>
+      <h3>${performance}</h3>
 
     </div>
 
@@ -793,22 +783,18 @@ window.submitIQAnswers = function() {
     input.disabled = true;
   });
 
+  // Hide Submit button
   if (iqSubmitBtn) {
     iqSubmitBtn.style.display = "none";
   }
 
+  // Show Practice Again button
   if (iqAgainBtn) {
     iqAgainBtn.style.display = "inline-block";
   }
+
 };
 
-// Again button starts a new test
-if (iqAgainBtn) {
-  iqAgainBtn.addEventListener(
-    "click",
-    window.startIQPractice
-  );
-}
 
 // ======================================
 // INITIALIZE IQ PRACTICE
