@@ -1,4 +1,4 @@
-// ======================================
+i// ======================================
 // LAB KNOWLEDGE - IQ PRACTICE SYSTEM
 // TOTAL: 300 QUESTIONS
 // 10 RANDOM QUESTIONS PER TEST
@@ -656,6 +656,16 @@ window.startIQPractice = function() {
   });
 
   iqQuestionsBox.innerHTML = html;
+// Scroll automatically to Question 1
+const firstIQQuestion =
+  iqQuestionsBox.querySelector(".iq-question-card");
+
+if (firstIQQuestion) {
+  firstIQQuestion.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
 
   iqResultBox.innerHTML = "";
 
