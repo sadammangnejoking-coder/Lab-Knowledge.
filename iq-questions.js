@@ -1,4 +1,4 @@
-i// ======================================
+// ======================================
 // LAB KNOWLEDGE - IQ PRACTICE SYSTEM
 // TOTAL: 300 QUESTIONS
 // 10 RANDOM QUESTIONS PER TEST
@@ -993,3 +993,4 @@ if (iqAgainBtn) {
 
 console.log("Lab Knowledge IQ Practice System Ready!");
 
+})(); 
