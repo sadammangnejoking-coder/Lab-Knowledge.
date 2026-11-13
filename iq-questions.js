@@ -509,13 +509,16 @@ const iqQuestionBank = [
 
 ];
 
+
 // ======================================
-// IQ PRACTICE SYSTEM FUNCTIONS
+// LAB KNOWLEDGE - IQ PRACTICE SYSTEM
+// COMPLETE FIXED VERSION
 // ======================================
 
 let currentQuestions = [];
 let usedQuestionIds = [];
 
+// HTML ELEMENTS
 const iqQuestionsBox = document.getElementById("iqQuestions");
 const iqResultBox = document.getElementById("iqResult");
 
@@ -523,21 +526,31 @@ const iqStartBtn = document.getElementById("iqStartBtn");
 const iqSubmitBtn = document.getElementById("iqSubmitBtn");
 const iqAgainBtn = document.getElementById("iqAgainBtn");
 
-// Load previously used questions
+
+// ======================================
+// LOAD USED QUESTIONS
+// ======================================
+
 function loadUsedQuestions() {
   try {
     const saved = localStorage.getItem("labIQUsedQuestions");
+
     usedQuestionIds = saved ? JSON.parse(saved) : [];
 
     if (!Array.isArray(usedQuestionIds)) {
       usedQuestionIds = [];
     }
+
   } catch (error) {
     usedQuestionIds = [];
   }
 }
 
-// Save used questions
+
+// ======================================
+// SAVE USED QUESTIONS
+// ======================================
+
 function saveUsedQuestions() {
   try {
     localStorage.setItem(
@@ -545,27 +558,40 @@ function saveUsedQuestions() {
       JSON.stringify(usedQuestionIds)
     );
   } catch (error) {
-    console.warn("Unable to save IQ question history.");
+    console.warn("Unable to save IQ history.");
   }
 }
 
-// Shuffle questions randomly
+
+// ======================================
+// SHUFFLE QUESTIONS
+// ======================================
+
 function shuffleArray(array) {
+
   const shuffled = [...array];
 
   for (let i = shuffled.length - 1; i > 0; i--) {
+
     const j = Math.floor(Math.random() * (i + 1));
 
     [shuffled[i], shuffled[j]] =
       [shuffled[j], shuffled[i]];
+
   }
 
   return shuffled;
 }
 
-// Escape text before displaying HTML
+
+// ======================================
+// ESCAPE HTML TEXT
+// ======================================
+
 function escapeIQText(value) {
-  return String(value).replace(/[&<>"']/g, function(char) {
+
+  return String(value ?? "").replace(/[&<>"']/g, function(char) {
+
     const entities = {
       "&": "&amp;",
       "<": "&lt;",
@@ -575,8 +601,11 @@ function escapeIQText(value) {
     };
 
     return entities[char];
+
   });
+
 }
+
 
 // ======================================
 // START IQ PRACTICE
@@ -589,38 +618,80 @@ window.startIQPractice = function() {
     return;
   }
 
-  loadUsedQuestions();
-
-  if (iqQuestionBank.length < 10) {
+  // Check question bank
+  if (
+    typeof iqQuestionBank === "undefined" ||
+    !Array.isArray(iqQuestionBank)
+  ) {
     iqResultBox.textContent =
-      "Not enough questions available.";
+      "Question bank is not available.";
+
     return;
   }
 
-  let availableQuestions = iqQuestionBank.filter(
+  // Validate questions
+  const validQuestions = iqQuestionBank.filter(question => {
+
+    return (
+      question &&
+      typeof question.q === "string" &&
+      Array.isArray(question.o) &&
+      question.o.length >= 2 &&
+      Number.isInteger(question.a) &&
+      question.a >= 0 &&
+      question.a < question.o.length &&
+      typeof question.e === "string"
+    );
+
+  });
+
+  if (validQuestions.length < 10) {
+
+    iqResultBox.textContent =
+      "At least 10 valid questions are required.";
+
+    return;
+  }
+
+  loadUsedQuestions();
+
+  // Find unused questions
+  let availableQuestions = validQuestions.filter(
     question => !usedQuestionIds.includes(question.q)
   );
 
-  // Reset history when fewer than 10 questions remain
+  // Reset history when questions are finished
   if (availableQuestions.length < 10) {
+
     usedQuestionIds = [];
+
     saveUsedQuestions();
 
-    availableQuestions = [...iqQuestionBank];
+    availableQuestions = [...validQuestions];
+
   }
 
+  // Select 10 random questions
   currentQuestions = shuffleArray(
     availableQuestions
   ).slice(0, 10);
 
-  // Remember selected questions
+  // Save selected questions
   currentQuestions.forEach(question => {
-    usedQuestionIds.push(question.q);
+
+    if (!usedQuestionIds.includes(question.q)) {
+      usedQuestionIds.push(question.q);
+    }
+
   });
 
   saveUsedQuestions();
 
-  // Display questions
+
+  // ======================================
+  // DISPLAY QUESTIONS
+  // ======================================
+
   let html = "";
 
   currentQuestions.forEach((question, index) => {
@@ -639,63 +710,90 @@ window.startIQPractice = function() {
         <div class="iq-options">
 
           ${question.o.map((option, optionIndex) => `
+
             <label>
+
               <input
                 type="radio"
                 name="iqAnswer${index}"
                 value="${optionIndex}"
               >
+
               ${escapeIQText(option)}
+
             </label>
+
           `).join("")}
 
         </div>
 
       </div>
     `;
+
   });
 
   iqQuestionsBox.innerHTML = html;
-// Scroll automatically to Question 1
-const firstIQQuestion =
-  iqQuestionsBox.querySelector(".iq-question-card");
 
-if (firstIQQuestion) {
-  firstIQQuestion.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
+  // Clear previous results
   iqResultBox.innerHTML = "";
+  iqResultBox.style.display = "none";
 
+
+  // Scroll to first question
+  const firstIQQuestion =
+    iqQuestionsBox.querySelector(".iq-question-card");
+
+  if (firstIQQuestion) {
+
+    firstIQQuestion.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }
+
+
+  // Update buttons
   if (iqStartBtn) {
     iqStartBtn.style.display = "none";
   }
 
   if (iqSubmitBtn) {
     iqSubmitBtn.style.display = "inline-block";
+    iqSubmitBtn.disabled = false;
   }
 
   if (iqAgainBtn) {
     iqAgainBtn.style.display = "none";
   }
+
 };
 
 
 // ======================================
-// SUBMIT IQ ANSWERS - FIXED
+// SUBMIT IQ ANSWERS
 // ======================================
 
 window.submitIQAnswers = function() {
 
-  if (currentQuestions.length === 0) {
+  if (currentQuestions.length !== 10) {
+    return;
+  }
+
+  if (!iqResultBox) {
+    return;
+  }
+
+  // Prevent duplicate submission
+  if (iqSubmitBtn && iqSubmitBtn.disabled) {
     return;
   }
 
   let score = 0;
   let resultHTML = "";
 
+
+  // Check answers
   currentQuestions.forEach((question, index) => {
 
     const selected = document.querySelector(
@@ -714,14 +812,20 @@ window.submitIQAnswers = function() {
     }
 
     resultHTML += `
+
       <div class="iq-answer-review">
 
-        <h4>Question ${index + 1}</h4>
+        <h4>
+          Question ${index + 1}
+        </h4>
 
-        <p>${escapeIQText(question.q)}</p>
+        <p>
+          ${escapeIQText(question.q)}
+        </p>
 
         <p>
           Your Answer:
+
           <strong>
             ${
               selectedAnswer >= 0
@@ -733,74 +837,121 @@ window.submitIQAnswers = function() {
 
         <p>
           Correct Answer:
+
           <strong>
             ${escapeIQText(question.o[question.a])}
           </strong>
         </p>
 
         <p>
-          ${isCorrect ? "✅ Correct" : "❌ Incorrect"}
+          ${
+            isCorrect
+              ? "✅ Correct"
+              : "❌ Incorrect"
+          }
         </p>
 
         <p>
           Explanation:
+
           ${escapeIQText(question.e)}
         </p>
 
       </div>
+
     `;
+
   });
+
+
+  // ======================================
+  // CALCULATE RESULT
+  // ======================================
 
   const percentage = score * 10;
 
   let performance = "";
 
   if (score >= 9) {
-    performance = "Excellent Performance!";
+
+    performance = "Excellent Performance! 🏆";
+
   } else if (score >= 7) {
-    performance = "Very Good!";
+
+    performance = "Very Good! 🌟";
+
   } else if (score >= 5) {
-    performance = "Good Effort!";
+
+    performance = "Good Effort! 👍";
+
   } else {
-    performance = "Keep Practicing!";
+
+    performance = "Keep Practicing! 💪";
+
   }
 
+
+  // ======================================
   // SHOW RESULT
+  // ======================================
+
   iqResultBox.style.display = "block";
 
   iqResultBox.innerHTML = `
+
     <div class="iq-score-summary">
 
-      <h2>🎯 Your IQ Practice Result</h2>
+      <h2>
+        🎯 Your IQ Practice Result
+      </h2>
 
-      <h3>Score: ${score} / 10</h3>
+      <h3>
+        Score: ${score} / 10
+      </h3>
 
-      <h3>Percentage: ${percentage}%</h3>
+      <h3>
+        Percentage: ${percentage}%
+      </h3>
 
-      <h3>${performance}</h3>
+      <h3>
+        ${performance}
+      </h3>
 
     </div>
 
-    <h3>Answer Review</h3>
+    <h3>
+      📋 Answer Review
+    </h3>
 
     ${resultHTML}
+
   `;
 
-  // Disable answers after submission
+
+  // Lock all answers
   document.querySelectorAll(
     "#iqQuestions input[type='radio']"
   ).forEach(input => {
+
     input.disabled = true;
+
   });
+
 
   // Hide Submit button
   if (iqSubmitBtn) {
+
+    iqSubmitBtn.disabled = true;
     iqSubmitBtn.style.display = "none";
+
   }
+
 
   // Show Practice Again button
   if (iqAgainBtn) {
+
     iqAgainBtn.style.display = "inline-block";
+
   }
 
 };
@@ -812,6 +963,33 @@ window.submitIQAnswers = function() {
 
 loadUsedQuestions();
 
-})();
 
+// ======================================
+// BUTTON CONNECTIONS
+// ======================================
+
+if (iqStartBtn) {
+
+  iqStartBtn.onclick = window.startIQPractice;
+
+}
+
+if (iqSubmitBtn) {
+
+  iqSubmitBtn.onclick = window.submitIQAnswers;
+
+}
+
+if (iqAgainBtn) {
+
+  iqAgainBtn.onclick = window.startIQPractice;
+
+}
+
+
+// ======================================
+// IQ PRACTICE SYSTEM READY
+// ======================================
+
+console.log("Lab Knowledge IQ Practice System Ready!");
 
