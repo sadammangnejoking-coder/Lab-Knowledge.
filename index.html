@@ -1674,6 +1674,131 @@ body[dir="rtl"] .note{
 
     </div>
 
+
+<!-- 9. PREGNANCY WEEK COUNTER -->
+
+<div class="health-card pregnancy-card" id="pregnancyTracker">
+
+  <div class="pregnancy-heading">
+    <span class="pregnancy-icon">🤰</span>
+    <div>
+      <h3>9. Pregnancy Week Counter</h3>
+      <p>Track pregnancy weeks and estimated delivery date.</p>
+    </div>
+  </div>
+
+  <div class="pregnancy-method">
+    <button type="button"
+      id="lmpModeBtn"
+      class="pregnancy-mode active"
+      onclick="setPregnancyMode('lmp')">
+      LMP Date
+    </button>
+
+    <button type="button"
+      id="eddModeBtn"
+      class="pregnancy-mode"
+      onclick="setPregnancyMode('edd')">
+      EDD Date
+    </button>
+  </div>
+
+  <!-- LMP INPUT -->
+
+  <div id="lmpInputBox">
+    <label for="pregnancyLMP">
+      Last Menstrual Period (LMP)
+    </label>
+
+    <input type="date" id="pregnancyLMP">
+
+    <p class="pregnancy-hint">
+      Enter the first day of your last menstrual period.
+    </p>
+  </div>
+
+  <!-- EDD INPUT -->
+
+  <div id="eddInputBox" hidden>
+    <label for="pregnancyEDD">
+      Expected Due Date (EDD)
+    </label>
+
+    <input type="date" id="pregnancyEDD">
+
+    <p class="pregnancy-hint">
+      Enter your estimated delivery date.
+    </p>
+  </div>
+
+  <button type="button"
+    class="action-btn pregnancy-calculate"
+    onclick="calculatePregnancy()">
+    🤰 Calculate Pregnancy
+  </button>
+
+  <button type="button"
+    class="action-btn clear-btn"
+    onclick="clearPregnancy()">
+    ↻ Clear
+  </button>
+
+  <!-- RESULT -->
+
+  <div id="pregnancyResult"
+    class="pregnancy-result"
+    style="display:none"
+    aria-live="polite">
+
+    <div class="pregnancy-result-header">
+      <span>🤰</span>
+      <h4>Pregnancy Assessment</h4>
+    </div>
+
+    <div class="pregnancy-week-display">
+      <strong id="pregnancyWeeks">0</strong>
+      <span>Weeks</span>
+      <strong id="pregnancyDays">0</strong>
+      <span>Days</span>
+    </div>
+
+    <p id="pregnancyTrimester" class="pregnancy-trimester"></p>
+
+    <div class="pregnancy-progress-info">
+      <span>Pregnancy Progress</span>
+      <strong id="pregnancyPercent">0%</strong>
+    </div>
+
+    <div class="pregnancy-progress-track">
+      <div id="pregnancyProgressBar"
+        class="pregnancy-progress-bar">
+      </div>
+    </div>
+
+    <div class="pregnancy-dates">
+      <p>
+        <span>📅 Estimated Due Date</span>
+        <strong id="pregnancyDueDate">—</strong>
+      </p>
+
+      <p>
+        <span>⏳ Remaining Days</span>
+        <strong id="pregnancyRemaining">—</strong>
+      </p>
+    </div>
+
+    <div class="pregnancy-development">
+      <h4>👶 Baby Development</h4>
+      <p id="pregnancyDevelopment"></p>
+    </div>
+
+    <p id="pregnancyNote" class="pregnancy-note"></p>
+
+  </div>
+
+</div>
+
+
   </div>
 
 
@@ -2108,6 +2233,235 @@ body[dir="rtl"] .note{
     width: 100%;
   }
 }
+
+
+
+/* ==========================================
+   PREGNANCY WEEK COUNTER - LAB KNOWLEDGE
+========================================== */
+
+.pregnancy-card {
+  border: 1px solid #ccfbf1;
+  background: linear-gradient(145deg, #ffffff, #f0fdfa);
+}
+
+.pregnancy-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.pregnancy-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: #ccfbf1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 29px;
+  flex-shrink: 0;
+}
+
+.pregnancy-heading h3 {
+  margin: 0 0 5px;
+  color: #134e4a;
+}
+
+.pregnancy-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.pregnancy-method {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 5px;
+  background: #e2e8f0;
+  border-radius: 12px;
+}
+
+.pregnancy-mode {
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #475569;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.pregnancy-mode.active {
+  background: #0f766e;
+  color: white;
+  box-shadow: 0 3px 9px rgba(15,118,110,.2);
+}
+
+.pregnancy-hint {
+  color: #64748b;
+  font-size: 12px;
+  margin: 7px 0 15px;
+}
+
+.pregnancy-calculate {
+  background: linear-gradient(135deg,#0f766e,#0891b2) !important;
+  color: white !important;
+  margin-top: 10px;
+}
+
+.pregnancy-result {
+  margin-top: 22px;
+  padding: 17px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #ccfbf1;
+  box-shadow: 0 5px 18px rgba(15,118,110,.07);
+}
+
+.pregnancy-result-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #0f766e;
+}
+
+.pregnancy-result-header span {
+  font-size: 25px;
+}
+
+.pregnancy-result-header h4 {
+  margin: 0;
+}
+
+.pregnancy-week-display {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 22px 0 12px;
+  color: #0f766e;
+}
+
+.pregnancy-week-display strong {
+  font-size: 35px;
+  font-weight: 800;
+}
+
+.pregnancy-week-display span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.pregnancy-trimester {
+  text-align: center;
+  font-weight: 700;
+  color: #0f766e;
+  background: #ccfbf1;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.pregnancy-progress-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 20px 0 9px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.pregnancy-progress-info strong {
+  color: #0f766e;
+}
+
+.pregnancy-progress-track {
+  height: 11px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.pregnancy-progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg,#14b8a6,#0f766e);
+  border-radius: 20px;
+  transition: width .5s ease;
+}
+
+.pregnancy-dates {
+  margin-top: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.pregnancy-dates p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  background: #f0fdfa;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.pregnancy-dates strong {
+  color: #0f766e;
+  text-align: right;
+}
+
+.pregnancy-development {
+  margin-top: 17px;
+  padding: 13px;
+  background: #f8fafc;
+  border-radius: 11px;
+}
+
+.pregnancy-development h4 {
+  margin: 0 0 8px;
+  color: #155e75;
+}
+
+.pregnancy-development p {
+  margin: 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.pregnancy-note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #92400e;
+  background: #fffbeb;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 15px 0 0;
+}
+
+@media(max-width:480px) {
+  .pregnancy-week-display strong {
+    font-size: 29px;
+  }
+
+  .pregnancy-dates p {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pregnancy-dates strong {
+    text-align: left;
+  }
+}
+
 
 </style>
 
@@ -3575,6 +3929,371 @@ initializeHealthChecker();
 
 
 </script>
+
+
+<!-- PREGNANCY WEEK COUNTER ENGINE -->
+
+<script>
+(function () {
+
+"use strict";
+
+let pregnancyMode = "lmp";
+
+const pg = id => document.getElementById(id);
+
+
+// ======================================
+// DATE HELPERS
+// ======================================
+
+function pgDate(value) {
+
+  if (!value) return null;
+
+  const parts = value.split("-").map(Number);
+
+  if (parts.length !== 3) return null;
+
+  const date = new Date(
+    Date.UTC(parts[0], parts[1] - 1, parts[2])
+  );
+
+  if (
+    date.getUTCFullYear() !== parts[0] ||
+    date.getUTCMonth() !== parts[1] - 1 ||
+    date.getUTCDate() !== parts[2]
+  ) return null;
+
+  return date;
+
+}
+
+function pgToday() {
+
+  const now = new Date();
+
+  return new Date(Date.UTC(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  ));
+
+}
+
+function pgAddDays(date, days) {
+
+  const result = new Date(date.getTime());
+
+  result.setUTCDate(result.getUTCDate() + days);
+
+  return result;
+
+}
+
+function pgDaysBetween(first, second) {
+
+  return Math.round(
+    (second.getTime() - first.getTime()) / 86400000
+  );
+
+}
+
+function pgFormatDate(date) {
+
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC"
+  });
+
+}
+
+
+// ======================================
+// SWITCH LMP / EDD MODE
+// ======================================
+
+function setPregnancyMode(mode) {
+
+  if (!["lmp", "edd"].includes(mode)) return;
+
+  pregnancyMode = mode;
+
+  pg("lmpInputBox").hidden = mode !== "lmp";
+
+  pg("eddInputBox").hidden = mode !== "edd";
+
+  pg("lmpModeBtn").classList.toggle(
+    "active", mode === "lmp"
+  );
+
+  pg("eddModeBtn").classList.toggle(
+    "active", mode === "edd"
+  );
+
+  pg("pregnancyResult").style.display = "none";
+
+}
+
+
+// ======================================
+// BABY DEVELOPMENT INFORMATION
+// Educational weekly milestones
+// ======================================
+
+function getPregnancyDevelopment(week) {
+
+  if (week < 4) {
+    return "Very early pregnancy. The embryo is developing and implantation has occurred or is occurring.";
+  }
+
+  if (week < 8) {
+    return "Early development of the brain, spinal cord and major organs is underway.";
+  }
+
+  if (week < 13) {
+    return "Major organ structures continue developing. Early fetal movements may begin.";
+  }
+
+  if (week < 18) {
+    return "The fetus is growing, and bones and muscles continue developing.";
+  }
+
+  if (week < 23) {
+    return "Hearing and movement development continue. Some pregnant people begin feeling movements.";
+  }
+
+  if (week < 28) {
+    return "The brain and lungs continue developing. The fetus responds increasingly to sounds.";
+  }
+
+  if (week < 33) {
+    return "The fetus gains weight, and the brain and lungs continue maturing.";
+  }
+
+  if (week < 37) {
+    return "The fetus continues gaining weight and preparing for birth.";
+  }
+
+  return "The pregnancy is in the late-term period. The fetus continues preparing for birth.";
+}
+
+
+// ======================================
+// CALCULATE PREGNANCY
+// ======================================
+
+function calculatePregnancy() {
+
+  const today = pgToday();
+
+  let startDate;
+  let dueDate;
+  let totalDays;
+
+  if (pregnancyMode === "lmp") {
+
+    startDate = pgDate(
+      pg("pregnancyLMP").value
+    );
+
+    if (!startDate) {
+      alert("Please enter a valid LMP date.");
+      return;
+    }
+
+    if (startDate > today) {
+      alert("LMP date cannot be in the future.");
+      return;
+    }
+
+    totalDays = pgDaysBetween(startDate, today);
+
+    dueDate = pgAddDays(startDate, 280);
+
+  }
+
+  else {
+
+    dueDate = pgDate(
+      pg("pregnancyEDD").value
+    );
+
+    if (!dueDate) {
+      alert("Please enter a valid EDD date.");
+      return;
+    }
+
+    const daysUntilEDD = pgDaysBetween(today, dueDate);
+
+    totalDays = 280 - daysUntilEDD;
+
+    if (totalDays < 0) {
+      alert("EDD is too far in the future for this calculation. Please check the date.");
+      return;
+    }
+
+  }
+
+  const weeks = Math.floor(totalDays / 7);
+
+  const days = totalDays % 7;
+
+  // Pregnancy progress
+  const progress = Math.min(
+    100,
+    Math.round((totalDays / 280) * 100)
+  );
+
+  // Trimester
+  let trimester;
+
+  if (weeks < 14) {
+
+    trimester = "First Trimester";
+
+  }
+
+  else if (weeks < 28) {
+
+    trimester = "Second Trimester";
+
+  }
+
+  else {
+
+    trimester = "Third Trimester";
+
+  }
+
+  // Remaining days
+  const remaining = pgDaysBetween(today, dueDate);
+
+  let remainingText;
+
+  if (remaining > 0) {
+
+    remainingText = remaining + " days";
+
+  }
+
+  else if (remaining === 0) {
+
+    remainingText = "Expected today";
+
+  }
+
+  else {
+
+    remainingText =
+      Math.abs(remaining) + " days overdue";
+
+  }
+
+  // Result display
+  pg("pregnancyWeeks").textContent = weeks;
+
+  pg("pregnancyDays").textContent = days;
+
+  pg("pregnancyTrimester").textContent = trimester;
+
+  pg("pregnancyPercent").textContent = progress + "%";
+
+  pg("pregnancyProgressBar").style.width =
+    progress + "%";
+
+  pg("pregnancyDueDate").textContent =
+    pgFormatDate(dueDate);
+
+  pg("pregnancyRemaining").textContent =
+    remainingText;
+
+  pg("pregnancyDevelopment").textContent =
+    getPregnancyDevelopment(weeks);
+
+  // Clinical caution
+  let note =
+    "This is an estimate based on a standard 280-day pregnancy. Actual pregnancy dating may differ, especially with irregular menstrual cycles. Ultrasound and healthcare professional assessment may provide more accurate dating.";
+
+  if (weeks > 42) {
+
+    note =
+      "Pregnancy is beyond 42 weeks by this estimate. Contact your maternity healthcare team immediately for clinical assessment.";
+
+  }
+
+  else if (weeks >= 40) {
+
+    note =
+      "The estimated due date has arrived or passed. Contact your maternity healthcare team for advice and monitoring.";
+
+  }
+
+  else if (weeks < 37) {
+
+    note +=
+      " If contractions, bleeding, leaking fluid or reduced fetal movement occur, seek prompt maternity assessment.";
+
+  }
+
+  pg("pregnancyNote").textContent = note;
+
+  pg("pregnancyResult").style.display = "block";
+
+  pg("pregnancyResult").scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+
+}
+
+
+// ======================================
+// CLEAR PREGNANCY CALCULATOR
+// ======================================
+
+function clearPregnancy() {
+
+  pg("pregnancyLMP").value = "";
+
+  pg("pregnancyEDD").value = "";
+
+  pg("pregnancyResult").style.display = "none";
+
+  pg("pregnancyWeeks").textContent = "0";
+
+  pg("pregnancyDays").textContent = "0";
+
+  pg("pregnancyProgressBar").style.width = "0%";
+
+  pg("pregnancyPercent").textContent = "0%";
+
+  pg("pregnancyDueDate").textContent = "—";
+
+  pg("pregnancyRemaining").textContent = "—";
+
+  setPregnancyMode("lmp");
+
+}
+
+
+// ======================================
+// HTML BUTTON ACCESS
+// ======================================
+
+window.setPregnancyMode = setPregnancyMode;
+
+window.calculatePregnancy = calculatePregnancy;
+
+window.clearPregnancy = clearPregnancy;
+
+})();
+</script>
+
+
+
 
 
 
