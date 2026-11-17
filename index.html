@@ -5507,38 +5507,35 @@ function searchAbbreviations(){
 showEWS();
 searchAbbreviations();
 
-/* IMPROVED SINGLE SECTION NAVIGATION */
+/* ==========================================
+   LAB KNOWLEDGE - FIXED NAVIGATION SYSTEM
+========================================== */
 
 const websiteSections = [
- "home",
- "bmi",
- "iq",
- "morning",
- "abbreviations",
- "about",
- "contact"
+  "home",
+  "health-checker",
+  "iq",
+  "morning",
+  "abbreviations",
+  "about",
+  "contact"
 ];
-
 
 function showSection(sectionId, options = {}) {
 
-  if(!websiteSections.includes(sectionId)){
+  if (!websiteSections.includes(sectionId)) {
     sectionId = "home";
   }
 
-  // Show selected section and hide others
   websiteSections.forEach(id => {
-
     const section = document.getElementById(id);
 
-    if(section){
+    if (section) {
       section.style.display =
         id === sectionId ? "block" : "none";
     }
-
   });
 
-  // Update active menu item
   document.querySelectorAll("#navLinks a").forEach(link => {
 
     const active =
@@ -5546,116 +5543,111 @@ function showSection(sectionId, options = {}) {
 
     link.classList.toggle("active", active);
 
-    if(active){
-      link.setAttribute("aria-current","page");
-    }else{
+    if (active) {
+      link.setAttribute("aria-current", "page");
+    } else {
       link.removeAttribute("aria-current");
     }
-
   });
 
-  // Close mobile menu
-  $("navLinks").classList.remove("open");
+  const menu = document.getElementById("navLinks");
+
+  if (menu) menu.classList.remove("open");
 
   const menuButton = document.querySelector(".menu-toggle");
 
-  if(menuButton){
-    menuButton.setAttribute("aria-expanded","false");
+  if (menuButton) {
+    menuButton.setAttribute("aria-expanded", "false");
   }
 
-  // Update browser URL
-  if(options.updateURL){
-
-    const newURL =
-      window.location.pathname +
-      window.location.search +
-      "#" + sectionId;
-
+  if (options.updateURL) {
     history.pushState(
-      {section:sectionId},
+      { section: sectionId },
       "",
-      newURL
+      "#" + sectionId
     );
-
   }
 
-  // Scroll to top
-  if(options.scroll !== false){
-
+  if (options.scroll !== false) {
     window.scrollTo({
-      top:0,
-      behavior:options.smooth ? "smooth" : "instant"
+      top: 0,
+      behavior: options.smooth ? "smooth" : "auto"
     });
-
   }
-
 }
 
-// Navigation menu clicks
+/* MOBILE MENU */
+
+function toggleMenu() {
+
+  const menu = document.getElementById("navLinks");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!menu || !button) return;
+
+  const isOpen = menu.classList.toggle("open");
+
+  button.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+}
+
+/* NAVIGATION LINKS */
+
 document.querySelectorAll("#navLinks a").forEach(link => {
 
- link.addEventListener("click",function(e){
+  link.addEventListener("click", function(event) {
 
-  e.preventDefault();
+    event.preventDefault();
 
-  const sectionId =
-   this.getAttribute("href").substring(1);
+    const sectionId =
+      this.getAttribute("href").substring(1);
 
-  showSection(sectionId,{
-   updateURL:true,
-   smooth:true
+    showSection(sectionId, {
+      updateURL: true,
+      smooth: true
+    });
+
   });
 
- });
+});
+
+/* BACK AND FORWARD */
+
+window.addEventListener("popstate", function() {
+
+  const sectionId =
+    location.hash.substring(1) || "home";
+
+  showSection(sectionId, { scroll: true });
 
 });
 
-// Browser Back and Forward buttons
-window.addEventListener("popstate",function(){
+/* DIRECT LINKS */
 
- const sectionId =
-  window.location.hash.substring(1) || "home";
+window.addEventListener("hashchange", function() {
 
- showSection(sectionId,{
-  scroll:true
- });
+  const sectionId =
+    location.hash.substring(1) || "home";
 
-});
-
-// Direct section links and page refresh
-window.addEventListener("hashchange",function(){
-
- const sectionId =
-  window.location.hash.substring(1) || "home";
-
- showSection(sectionId);
+  showSection(sectionId, { scroll: false });
 
 });
 
-// Mobile menu accessibility
-function toggleMenu(){
+/* INITIAL PAGE LOAD */
 
- const menu = $("navLinks");
-
- menu.classList.toggle("open");
-
- const isOpen = menu.classList.contains("open");
-
- document.querySelector(".menu-toggle")
-  .setAttribute("aria-expanded",String(isOpen));
-
-}
-
-// Open the correct section on initial page load
 const initialSection =
- window.location.hash.substring(1) || "home";
+  location.hash.substring(1) || "home";
 
-showSection(initialSection,{
- scroll:false
+showSection(initialSection, {
+  scroll: false
 });
 
-/* DEFAULT SECTION */
-showSection("home");
+/* GLOBAL ACCESS */
+
+window.showSection = showSection;
+window.toggleMenu = toggleMenu;
 
 
 /* CLOSE IMPORTANT NOTE POPUP */
