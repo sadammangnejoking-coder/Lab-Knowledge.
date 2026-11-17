@@ -1233,48 +1233,64 @@ body[dir="rtl"] .note{
 
 
 
+
 <!-- =====================================================
  LAB KNOWLEDGE - PROFESSIONAL HEALTH CHECKERS
- ONE SHARED AGE & GENDER PROFILE
- 8 HEALTH CHECKERS
+ SHARED AGE & GENDER PROFILE
+ TOTAL: 9 HEALTH CHECKERS
 ===================================================== -->
 
 <section class="content-section" id="health-checker">
 
-  <!-- SAVED PROFILE -->
-  <div id="savedHealthProfile" class="saved-health-profile" hidden>
+  <!-- =================================
+       SAVED HEALTH PROFILE
+  ================================== -->
 
-    <div class="profile-avatar" id="profileAvatar">👨🏻‍⚕️</div>
+  <div id="savedHealthProfile"
+       class="saved-health-profile"
+       hidden>
+
+    <div class="profile-avatar" id="profileAvatar">
+      👨🏻‍⚕️
+    </div>
 
     <div class="profile-info">
       <h3>Your Health Profile</h3>
       <p id="profileDetails"></p>
     </div>
 
-    
-<div class="profile-actions">
+    <div class="profile-actions">
 
-  <button
-    type="button"
-    class="profile-btn edit-profile-btn"
-    onclick="editHealthProfile()">
-    <span>✏️</span> Edit Profile
-  </button>
+      <button
+        type="button"
+        class="profile-btn edit-profile-btn"
+        onclick="editHealthProfile()">
 
-  <button
-    type="button"
-    class="profile-btn clear-profile-btn"
-    onclick="clearHealthProfile()">
-    <span>🗑️</span> Clear Profile
-  </button>
+        <span>✏️</span> Edit Profile
 
-</div>
+      </button>
+
+      <button
+        type="button"
+        class="profile-btn clear-profile-btn"
+        onclick="clearHealthProfile()">
+
+        <span>🗑️</span> Clear Profile
+
+      </button>
+
+    </div>
 
   </div>
 
 
-  <!-- PROFILE POPUP -->
-  <div id="healthProfileModal" class="health-modal" hidden>
+  <!-- =================================
+       HEALTH PROFILE SETUP MODAL
+  ================================== -->
+
+  <div id="healthProfileModal"
+       class="health-modal"
+       hidden>
 
     <div class="health-modal-content">
 
@@ -1287,9 +1303,12 @@ body[dir="rtl"] .note{
         Enter your details once to continue.
       </p>
 
-      <label for="healthAge">Your Age (Years)</label>
+      <label for="healthAge">
+        Your Age (Years)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="healthAge"
         placeholder="Enter your age"
         min="0"
@@ -1300,7 +1319,8 @@ body[dir="rtl"] .note{
 
       <div class="gender-options">
 
-        <button type="button"
+        <button
+          type="button"
           class="gender-option"
           data-gender="male"
           onclick="selectHealthGender('male')">
@@ -1311,7 +1331,8 @@ body[dir="rtl"] .note{
 
         </button>
 
-        <button type="button"
+        <button
+          type="button"
           class="gender-option"
           data-gender="female"
           onclick="selectHealthGender('female')">
@@ -1324,7 +1345,8 @@ body[dir="rtl"] .note{
 
       </div>
 
-      <button type="button"
+      <button
+        type="button"
         class="save-profile-btn"
         onclick="saveHealthProfile()">
 
@@ -1341,7 +1363,10 @@ body[dir="rtl"] .note{
   </div>
 
 
-  <!-- MAIN HEADING -->
+  <!-- =================================
+       MAIN HEADING
+  ================================== -->
+
   <h2>🩺 Health Checkers</h2>
 
   <p class="health-intro">
@@ -1350,8 +1375,26 @@ body[dir="rtl"] .note{
   </p>
 
 
-  <!-- ALL CALCULATORS -->
-  <div id="healthCalculators" class="health-calculators" hidden>
+  <!-- =================================
+       MEDICAL DISCLAIMER
+  ================================== -->
+
+  <p class="warning-note">
+    Medical Disclaimer: These tools provide
+    educational screening information only.
+    They cannot diagnose medical conditions.
+    Consult a qualified healthcare professional
+    for clinical assessment.
+  </p>
+
+
+  <!-- =================================
+       ALL HEALTH CALCULATORS
+  ================================== -->
+
+  <div id="healthCalculators"
+       class="health-calculators"
+       hidden>
 
 
     <!-- 1. BMI CALCULATOR -->
@@ -1360,46 +1403,63 @@ body[dir="rtl"] .note{
 
       <h3>⚖️ 1. BMI Calculator</h3>
 
-      <label for="heightInches">Height (Inches)</label>
+      <label for="heightInches">
+        Height (Inches)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="heightInches"
         placeholder="Example: 67"
         min="1"
         max="100"
         step="0.1">
 
-      <label for="bmiHeight">Height (cm)</label>
+      <label for="bmiHeight">
+        Height (cm)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="bmiHeight"
         readonly
         placeholder="Automatically converted">
 
-      <p id="cmConversionResult" class="conversion-result"></p>
+      <p id="cmConversionResult"
+         class="conversion-result"></p>
 
-      <label for="bmiWeight">Weight (kg)</label>
+      <label for="bmiWeight">
+        Weight (kg)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="bmiWeight"
         placeholder="Example: 65"
         min="1"
         max="500"
         step="0.1">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="calculateBMI()">
+
         Calculate BMI
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearBMI()">
+
         ↻ Clear
+
       </button>
 
-      <div id="bmiResult"
+      <div
+        id="bmiResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1414,31 +1474,44 @@ body[dir="rtl"] .note{
 
       <h3>❤️ 2. Blood Pressure Checker</h3>
 
-      <label for="bpSys">Systolic (mmHg)</label>
+      <label for="bpSys">
+        Systolic (mmHg)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="bpSys"
         placeholder="Example: 120">
 
-      <label for="bpDia">Diastolic (mmHg)</label>
+      <label for="bpDia">
+        Diastolic (mmHg)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="bpDia"
         placeholder="Example: 80">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkBP()">
+
         Check Blood Pressure
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('bp')">
+
         ↻ Clear
+
       </button>
 
-      <div id="bpResult"
+      <div
+        id="bpResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1453,33 +1526,51 @@ body[dir="rtl"] .note{
 
       <h3>🩸 3. Blood Sugar Checker</h3>
 
-      <label for="sugarType">Test Type</label>
+      <label for="sugarType">
+        Test Type
+      </label>
 
       <select id="sugarType">
-        <option value="fasting">Fasting Blood Sugar</option>
-        <option value="random">Random Blood Sugar</option>
-        <option value="post">2 Hours After Meal</option>
+        <option value="fasting">
+          Fasting Blood Sugar
+        </option>
+        <option value="random">
+          Random Blood Sugar
+        </option>
+        <option value="post">
+          2 Hours After Meal
+        </option>
       </select>
 
-      <label for="sugarValue">Blood Sugar (mg/dL)</label>
+      <label for="sugarValue">
+        Blood Sugar (mg/dL)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="sugarValue"
         placeholder="Enter glucose value">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkSugar()">
+
         Check Blood Sugar
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('sugar')">
+
         ↻ Clear
+
       </button>
 
-      <div id="sugarResult"
+      <div
+        id="sugarResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1494,25 +1585,35 @@ body[dir="rtl"] .note{
 
       <h3>💓 4. Heart Rate Checker</h3>
 
-      <label for="heartRate">Pulse (BPM)</label>
+      <label for="heartRate">
+        Pulse (BPM)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="heartRate"
         placeholder="Example: 75">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkHeartRate()">
+
         Check Heart Rate
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('heart')">
+
         ↻ Clear
+
       </button>
 
-      <div id="heartResult"
+      <div
+        id="heartResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1521,33 +1622,43 @@ body[dir="rtl"] .note{
     </div>
 
 
-    <!-- 5. SPO2 -->
+    <!-- 5. OXYGEN SATURATION -->
 
     <div class="health-card">
 
       <h3>🫁 5. Oxygen Saturation Checker</h3>
 
-      <label for="spo2Value">SpO₂ (%)</label>
+      <label for="spo2Value">
+        SpO₂ (%)
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="spo2Value"
         placeholder="Example: 98"
         min="50"
         max="100">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkSpO2()">
+
         Check SpO₂
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('spo2')">
+
         ↻ Clear
+
       </button>
 
-      <div id="spo2Result"
+      <div
+        id="spo2Result"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1556,39 +1667,51 @@ body[dir="rtl"] .note{
     </div>
 
 
-    <!-- 6. TEMPERATURE -->
+    <!-- 6. BODY TEMPERATURE -->
 
     <div class="health-card">
 
       <h3>🌡️ 6. Body Temperature Checker</h3>
 
-      <label for="tempValue">Temperature</label>
+      <label for="tempValue">
+        Temperature
+      </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="tempValue"
         placeholder="Example: 37"
         step="0.1">
 
-      <label for="tempUnit">Unit</label>
+      <label for="tempUnit">
+        Unit
+      </label>
 
       <select id="tempUnit">
         <option value="C">Celsius (°C)</option>
         <option value="F">Fahrenheit (°F)</option>
       </select>
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkTemperature()">
+
         Check Temperature
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('temp')">
+
         ↻ Clear
+
       </button>
 
-      <div id="tempResult"
+      <div
+        id="tempResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1597,7 +1720,7 @@ body[dir="rtl"] .note{
     </div>
 
 
-    <!-- 7. WAIST RATIO -->
+    <!-- 7. WAIST-TO-HEIGHT RATIO -->
 
     <div class="health-card">
 
@@ -1607,7 +1730,8 @@ body[dir="rtl"] .note{
         Waist Circumference (cm)
       </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="waistValue"
         placeholder="Example: 85">
 
@@ -1615,23 +1739,31 @@ body[dir="rtl"] .note{
         Height (cm)
       </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="waistHeight"
         placeholder="Example: 170">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkWaist()">
+
         Calculate Ratio
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('waist')">
+
         ↻ Clear
+
       </button>
 
-      <div id="waistResult"
+      <div
+        id="waistResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1650,23 +1782,31 @@ body[dir="rtl"] .note{
         Total Cholesterol (mg/dL)
       </label>
 
-      <input type="number"
+      <input
+        type="number"
         id="cholValue"
         placeholder="Example: 180">
 
-      <button class="action-btn"
+      <button
+        class="action-btn"
         type="button"
         onclick="checkCholesterol()">
+
         Check Cholesterol
+
       </button>
 
-      <button class="action-btn clear-btn"
+      <button
+        class="action-btn clear-btn"
         type="button"
         onclick="clearCheck('chol')">
+
         ↻ Clear
+
       </button>
 
-      <div id="cholResult"
+      <div
+        id="cholResult"
         class="result-box"
         style="display:none"
         aria-live="polite">
@@ -1675,193 +1815,251 @@ body[dir="rtl"] .note{
     </div>
 
 
-<!-- 9. PREGNANCY WEEK COUNTER -->
+    <!-- 9. PREGNANCY WEEK COUNTER -->
 
-<div class="health-card pregnancy-card" id="pregnancyTracker">
+    <div class="health-card pregnancy-card"
+         id="pregnancyTracker">
 
-  <div class="pregnancy-heading">
-    <span class="pregnancy-icon">🤰</span>
-    <div>
-      <h3>9. Pregnancy Week Counter</h3>
-      <p>Track pregnancy weeks and estimated delivery date.</p>
-    </div>
-  </div>
+      <div class="pregnancy-heading">
 
-  <div class="pregnancy-method">
-    <button type="button"
-      id="lmpModeBtn"
-      class="pregnancy-mode active"
-      onclick="setPregnancyMode('lmp')">
-      LMP Date
-    </button>
+        <span class="pregnancy-icon">🤰</span>
 
-    <button type="button"
-      id="eddModeBtn"
-      class="pregnancy-mode"
-      onclick="setPregnancyMode('edd')">
-      EDD Date
-    </button>
-  </div>
+        <div>
+          <h3>9. Pregnancy Week Counter</h3>
+          <p>
+            Track pregnancy weeks and estimated delivery date.
+          </p>
+        </div>
 
-  <!-- LMP INPUT -->
-
-  <div id="lmpInputBox">
-    <label for="pregnancyLMP">
-      Last Menstrual Period (LMP)
-    </label>
-
-    <input type="date" id="pregnancyLMP">
-
-    <p class="pregnancy-hint">
-      Enter the first day of your last menstrual period.
-    </p>
-  </div>
-
-  <!-- EDD INPUT -->
-
-  <div id="eddInputBox" hidden>
-    <label for="pregnancyEDD">
-      Expected Due Date (EDD)
-    </label>
-
-    <input type="date" id="pregnancyEDD">
-
-    <p class="pregnancy-hint">
-      Enter your estimated delivery date.
-    </p>
-  </div>
-
-  <button type="button"
-    class="action-btn pregnancy-calculate"
-    onclick="calculatePregnancy()">
-    🤰 Calculate Pregnancy
-  </button>
-
-  <button type="button"
-    class="action-btn clear-btn"
-    onclick="clearPregnancy()">
-    ↻ Clear
-  </button>
-
-  <!-- RESULT -->
-
-  <div id="pregnancyResult"
-    class="pregnancy-result"
-    style="display:none"
-    aria-live="polite">
-
-    <div class="pregnancy-result-header">
-      <span>🤰</span>
-      <h4>Pregnancy Assessment</h4>
-    </div>
-
-    <div class="pregnancy-week-display">
-      <strong id="pregnancyWeeks">0</strong>
-      <span>Weeks</span>
-      <strong id="pregnancyDays">0</strong>
-      <span>Days</span>
-    </div>
-
-    <p id="pregnancyTrimester" class="pregnancy-trimester"></p>
-
-    <div class="pregnancy-progress-info">
-      <span>Pregnancy Progress</span>
-      <strong id="pregnancyPercent">0%</strong>
-    </div>
-
-    <div class="pregnancy-progress-track">
-      <div id="pregnancyProgressBar"
-        class="pregnancy-progress-bar">
       </div>
-    </div>
-
-    <div class="pregnancy-dates">
-      <p>
-        <span>📅 Estimated Due Date</span>
-        <strong id="pregnancyDueDate">—</strong>
-      </p>
-
-      <p>
-        <span>⏳ Remaining Days</span>
-        <strong id="pregnancyRemaining">—</strong>
-      </p>
-    </div>
-
-    <div class="pregnancy-development">
-      <h4>👶 Baby Development</h4>
-      <p id="pregnancyDevelopment"></p>
-    </div>
-
-    <p id="pregnancyNote" class="pregnancy-note"></p>
-
-  </div>
-
-</div>
 
 
-  </div>
+      <!-- PREGNANCY CALCULATION METHOD -->
+
+      <div class="pregnancy-method">
+
+        <button
+          type="button"
+          id="lmpModeBtn"
+          class="pregnancy-mode active"
+          onclick="setPregnancyMode('lmp')">
+
+          LMP Date
+
+        </button>
+
+        <button
+          type="button"
+          id="eddModeBtn"
+          class="pregnancy-mode"
+          onclick="setPregnancyMode('edd')">
+
+          EDD Date
+
+        </button>
+
+      </div>
 
 
+      <!-- LMP INPUT -->
+
+      <div id="lmpInputBox">
+
+        <label for="pregnancyLMP">
+          Last Menstrual Period (LMP)
+        </label>
+
+        <input
+          type="date"
+          id="pregnancyLMP">
+
+        <p class="pregnancy-hint">
+          Enter the first day of your last menstrual period.
+        </p>
+
+      </div>
 
 
-<!-- PROFESSIONAL CLEAR PROFILE DIALOG -->
+      <!-- EDD INPUT -->
 
-<div id="clearProfileDialog"
-     class="clear-profile-overlay"
-     hidden>
+      <div id="eddInputBox" hidden>
 
-  <div class="clear-profile-modal">
+        <label for="pregnancyEDD">
+          Expected Due Date (EDD)
+        </label>
 
-    <div class="clear-profile-icon">
-      🗑️
-    </div>
+        <input
+          type="date"
+          id="pregnancyEDD">
 
-    <h3>Clear Health Profile?</h3>
+        <p class="pregnancy-hint">
+          Enter your estimated delivery date.
+        </p>
 
-    <p>
-      Are you sure you want to clear your saved
-      health profile?
-    </p>
+      </div>
 
-    <p class="clear-warning">
-      Your saved age, gender and checker information
-      will be reset.
-    </p>
 
-    <div class="clear-profile-actions">
+      <!-- PREGNANCY BUTTONS -->
 
-      <button type="button"
-              class="cancel-clear-btn"
-              onclick="cancelClearProfile()">
-        Cancel
+      <button
+        type="button"
+        class="action-btn pregnancy-calculate"
+        onclick="calculatePregnancy()">
+
+        🤰 Calculate Pregnancy
+
       </button>
 
-      <button type="button"
-              class="confirm-clear-btn"
-              onclick="confirmClearProfile()">
-        Yes, Clear Profile
+      <button
+        type="button"
+        class="action-btn clear-btn"
+        onclick="clearPregnancy()">
+
+        ↻ Clear
+
       </button>
+
+
+      <!-- PREGNANCY RESULT -->
+
+      <div
+        id="pregnancyResult"
+        class="pregnancy-result"
+        style="display:none"
+        aria-live="polite">
+
+        <div class="pregnancy-result-header">
+          <span>🤰</span>
+          <h4>Pregnancy Assessment</h4>
+        </div>
+
+        <div class="pregnancy-week-display">
+
+          <strong id="pregnancyWeeks">0</strong>
+          <span>Weeks</span>
+
+          <strong id="pregnancyDays">0</strong>
+          <span>Days</span>
+
+        </div>
+
+        <p id="pregnancyTrimester"
+           class="pregnancy-trimester">
+        </p>
+
+        <div class="pregnancy-progress-info">
+
+          <span>Pregnancy Progress</span>
+          <strong id="pregnancyPercent">0%</strong>
+
+        </div>
+
+        <div class="pregnancy-progress-track">
+
+          <div
+            id="pregnancyProgressBar"
+            class="pregnancy-progress-bar">
+          </div>
+
+        </div>
+
+        <div class="pregnancy-dates">
+
+          <p>
+            <span>📅 Estimated Due Date</span>
+            <strong id="pregnancyDueDate">—</strong>
+          </p>
+
+          <p>
+            <span>⏳ Remaining Days</span>
+            <strong id="pregnancyRemaining">—</strong>
+          </p>
+
+        </div>
+
+        <div class="pregnancy-development">
+
+          <h4>👶 Baby Development</h4>
+
+          <p id="pregnancyDevelopment"></p>
+
+        </div>
+
+        <p id="pregnancyNote"
+           class="pregnancy-note">
+        </p>
+
+      </div>
 
     </div>
 
   </div>
-</div>
+  <!-- END ALL HEALTH CALCULATORS -->
 
 
-  <!-- MEDICAL DISCLAIMER -->
+  <!-- =================================
+       PROFESSIONAL CLEAR PROFILE DIALOG
+       INDEPENDENT OF CALCULATORS
+  ================================== -->
 
-  <p class="warning-note">
-    Medical Disclaimer: These tools provide
-    educational screening information only.
-    They cannot diagnose medical conditions.
-    Consult a qualified healthcare professional
-    for clinical assessment.
-  </p>
+  <div
+    id="clearProfileDialog"
+    class="clear-profile-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="clearProfileTitle"
+    aria-describedby="clearProfileDescription"
+    hidden>
 
+    <div class="clear-profile-modal">
 
+      <div class="clear-profile-icon">
+        🗑️
+      </div>
 
+      <h3 id="clearProfileTitle">
+        Clear Health Profile?
+      </h3>
+
+      <p id="clearProfileDescription">
+        Are you sure you want to clear your saved
+        health profile?
+      </p>
+
+      <p class="clear-warning">
+        Your saved age, gender and checker information
+        will be reset.
+      </p>
+
+      <div class="clear-profile-actions">
+
+        <button
+          type="button"
+          class="cancel-clear-btn"
+          onclick="cancelClearProfile()">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="button"
+          class="confirm-clear-btn"
+          onclick="confirmClearProfile()">
+
+          Yes, Clear Profile
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- END CLEAR PROFILE DIALOG -->
 
 </section>
+<!-- END HEALTH CHECKER SECTION -->
 
 
 <!-- =====================================================
