@@ -3407,6 +3407,58 @@ function checkCholesterol() {
 
 
 // ==========================================
+// CLEAR HEALTH PROFILE
+// ==========================================
+
+function clearHealthProfile() {
+
+  const confirmClear = confirm(
+    "Are you sure you want to clear your health profile?"
+  );
+
+  if (!confirmClear) return;
+
+  // Remove saved profile
+  localStorage.removeItem(HEALTH_PROFILE_KEY);
+
+  // Reset selected gender
+  selectedHealthGender = "";
+
+  // Hide saved profile card
+  const savedCard = $("savedHealthProfile");
+
+  if (savedCard) {
+    savedCard.hidden = true;
+  }
+
+  // Hide all health calculators
+  const calculators = $("healthCalculators");
+
+  if (calculators) {
+    calculators.hidden = true;
+  }
+
+  // Clear age input
+  const ageInput = $("healthAge");
+
+  if (ageInput) {
+    ageInput.value = "";
+  }
+
+  // Reset gender buttons
+  document.querySelectorAll(
+    "#healthProfileModal .gender-option"
+  ).forEach(button => {
+    button.classList.remove("selected");
+  });
+
+  // Open profile popup again
+  openHealthProfile();
+
+}
+
+
+// ==========================================
 // MAKE FUNCTIONS AVAILABLE TO HTML BUTTONS
 // ==========================================
 
@@ -3417,6 +3469,8 @@ window.saveHealthProfile = saveHealthProfile;
 window.openHealthProfile = openHealthProfile;
 
 window.editHealthProfile = editHealthProfile;
+
+window.clearHealthProfile = clearHealthProfile;
 
 window.calculateBMI = calculateBMI;
 
@@ -3439,41 +3493,15 @@ window.checkCholesterol = checkCholesterol;
 window.clearCheck = clearCheck;
 
 
-// START SYSTEM
+// ==========================================
+// START HEALTH CHECKER SYSTEM
+// ==========================================
 
 initializeHealthChecker();
 
 })();
+</script>
 
-
-function clearHealthProfile() {
-
-  const confirmClear = confirm(
-    "Are you sure you want to clear your health profile?"
-  );
-
-  if (!confirmClear) return;
-
-  localStorage.removeItem(HEALTH_PROFILE_KEY);
-
-  const savedCard =
-    document.getElementById("savedHealthProfile");
-
-  const calculators =
-    document.getElementById("healthCalculators");
-
-  if (savedCard) savedCard.style.display = "none";
-
-  if (calculators) calculators.style.display = "none";
-
-  const ageInput = document.getElementById("healthAge");
-  const genderInput = document.getElementById("healthGender");
-
-  if (ageInput) ageInput.value = "";
-  if (genderInput) genderInput.value = "";
-
-  openHealthProfile();
-}
 
 </script>
 
