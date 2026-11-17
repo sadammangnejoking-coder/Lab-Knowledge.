@@ -1234,25 +1234,22 @@ body[dir="rtl"] .note{
 
 
 
-<!-- =====================================================
+   
+
+
+
+<!-- =========================================================
  LAB KNOWLEDGE - PROFESSIONAL HEALTH CHECKERS
- SHARED AGE & GENDER PROFILE
- TOTAL: 9 HEALTH CHECKERS
-===================================================== -->
+ COMPLETE REPLACEMENT
+ 9 HEALTH CHECKERS | ONE SHARED AGE & GENDER PROFILE
+========================================================= -->
 
 <section class="content-section" id="health-checker">
 
-  <!-- =================================
-       SAVED HEALTH PROFILE
-  ================================== -->
+  <!-- SAVED HEALTH PROFILE -->
+  <div id="savedHealthProfile" class="saved-health-profile" hidden>
 
-  <div id="savedHealthProfile"
-       class="saved-health-profile"
-       hidden>
-
-    <div class="profile-avatar" id="profileAvatar">
-      👨🏻‍⚕️
-    </div>
+    <div class="profile-avatar" id="profileAvatar">👨🏻‍⚕️</div>
 
     <div class="profile-info">
       <h3>Your Health Profile</h3>
@@ -1260,210 +1257,167 @@ body[dir="rtl"] .note{
     </div>
 
     <div class="profile-actions">
-
-      <button
-        type="button"
-        class="profile-btn edit-profile-btn"
+      <button type="button" class="profile-btn edit-profile-btn"
         onclick="editHealthProfile()">
-
-        <span>✏️</span> Edit Profile
-
+        ✏️ Edit Profile
       </button>
 
-      <button
-        type="button"
-        class="profile-btn clear-profile-btn"
+      <button type="button" class="profile-btn clear-profile-btn"
         onclick="clearHealthProfile()">
-
-        <span>🗑️</span> Clear Profile
-
+        🗑️ Clear Profile
       </button>
-
     </div>
 
   </div>
 
 
-  <!-- =================================
-       HEALTH PROFILE SETUP MODAL
-  ================================== -->
+  <!-- HEALTH PROFILE MODAL -->
+  <div id="healthProfileModal" class="health-modal" hidden>
 
-  <div id="healthProfileModal"
-       class="health-modal"
-       hidden>
-
-    <div class="health-modal-content">
+    <div class="health-modal-content" role="dialog"
+      aria-modal="true" aria-labelledby="healthProfileTitle">
 
       <div class="profile-modal-icon">🩺</div>
 
-      <h2>Your Health Profile</h2>
+      <h2 id="healthProfileTitle">Your Health Profile</h2>
 
       <p class="modal-description">
-        Let's personalize your health checkers.
-        Enter your details once to continue.
+        Personalize your health checkers. Enter your age and gender
+        once to use all health assessment tools.
       </p>
 
-      <label for="healthAge">
-        Your Age (Years)
-      </label>
+      <div id="profileFormError" class="profile-form-error" hidden></div>
 
-      <input
-        type="number"
-        id="healthAge"
+      <label for="healthAge">Your Age (Years)</label>
+
+      <input type="number" id="healthAge"
         placeholder="Enter your age"
-        min="0"
-        max="120"
-        step="0.01">
+        min="0" max="120" step="0.01"
+        inputmode="decimal">
 
       <label>Select Your Gender</label>
 
-      <div class="gender-options">
+      <div class="gender-options" role="group"
+        aria-label="Select gender">
 
-        <button
-          type="button"
-          class="gender-option"
+        <button type="button" class="gender-option"
           data-gender="male"
+          aria-pressed="false"
           onclick="selectHealthGender('male')">
 
           <span class="gender-avatar">👨🏻‍⚕️</span>
           <strong>Male</strong>
           <span class="gender-check">✓</span>
-
         </button>
 
-        <button
-          type="button"
-          class="gender-option"
+        <button type="button" class="gender-option"
           data-gender="female"
+          aria-pressed="false"
           onclick="selectHealthGender('female')">
 
           <span class="gender-avatar">👩🏻‍⚕️</span>
           <strong>Female</strong>
           <span class="gender-check">✓</span>
-
         </button>
 
       </div>
 
-      <button
-        type="button"
-        class="save-profile-btn"
+      <button type="button" class="save-profile-btn"
         onclick="saveHealthProfile()">
-
         Save Profile & Continue →
+      </button>
 
+      <button type="button" id="cancelProfileBtn"
+        class="cancel-profile-btn"
+        onclick="cancelHealthProfile()" hidden>
+        Cancel
       </button>
 
       <p class="profile-privacy">
-        🔒 Your profile is saved on this device.
+        🔒 Your profile is stored locally on this device.
       </p>
 
     </div>
-
   </div>
 
 
-  <!-- =================================
-       MAIN HEADING
-  ================================== -->
-
-  <h2>🩺 Health Checkers</h2>
+  <!-- MAIN HEADING -->
+  <div class="health-header">
+    <div class="health-header-icon">🩺</div>
+    <div>
+      <h2>Health Checkers</h2>
+      <p>Professional Health Assessment Tools</p>
+    </div>
+  </div>
 
   <p class="health-intro">
-    Check your health indicators using your age
-    and gender. Enter your profile once.
+    Check common health indicators using your shared age and gender
+    profile. Enter your profile once and use all nine checkers.
   </p>
 
 
-  <!-- =================================
-       MEDICAL DISCLAIMER
-  ================================== -->
+  <!-- MEDICAL DISCLAIMER -->
+  <div class="warning-note">
+    <strong>⚕️ Medical Disclaimer</strong>
+    <p>
+      These tools provide educational screening information only.
+      They cannot diagnose medical conditions or replace clinical
+      examination, laboratory testing or professional medical advice.
+      Always consult a qualified healthcare professional.
+    </p>
+  </div>
 
-  <p class="warning-note">
-    Medical Disclaimer: These tools provide
-    educational screening information only.
-    They cannot diagnose medical conditions.
-    Consult a qualified healthcare professional
-    for clinical assessment.
-  </p>
 
-
-  <!-- =================================
-       ALL HEALTH CALCULATORS
-  ================================== -->
-
-  <div id="healthCalculators"
-       class="health-calculators"
-       hidden>
+  <!-- ALL HEALTH CALCULATORS -->
+  <div id="healthCalculators" class="health-calculators" hidden>
 
 
     <!-- 1. BMI CALCULATOR -->
+    <!-- Unique IDs avoid conflict with the separate BMI section -->
 
     <div class="health-card">
 
-      <h3>⚖️ 1. BMI Calculator</h3>
-
-      <label for="heightInches">
-        Height (Inches)
-      </label>
-
-      <input
-        type="number"
-        id="heightInches"
-        placeholder="Example: 67"
-        min="1"
-        max="100"
-        step="0.1">
-
-      <label for="bmiHeight">
-        Height (cm)
-      </label>
-
-      <input
-        type="number"
-        id="bmiHeight"
-        readonly
-        placeholder="Automatically converted">
-
-      <p id="cmConversionResult"
-         class="conversion-result"></p>
-
-      <label for="bmiWeight">
-        Weight (kg)
-      </label>
-
-      <input
-        type="number"
-        id="bmiWeight"
-        placeholder="Example: 65"
-        min="1"
-        max="500"
-        step="0.1">
-
-      <button
-        class="action-btn"
-        type="button"
-        onclick="calculateBMI()">
-
-        Calculate BMI
-
-      </button>
-
-      <button
-        class="action-btn clear-btn"
-        type="button"
-        onclick="clearBMI()">
-
-        ↻ Clear
-
-      </button>
-
-      <div
-        id="bmiResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
+      <div class="health-card-heading">
+        <span class="card-icon">⚖️</span>
+        <div>
+          <h3>1. BMI Calculator</h3>
+          <p>Body Mass Index Assessment</p>
+        </div>
       </div>
+
+      <label for="hcHeightInches">Height (Inches)</label>
+
+      <input type="number" id="hcHeightInches"
+        placeholder="Example: 67"
+        min="1" max="100" step="0.1"
+        inputmode="decimal">
+
+      <label for="hcBmiHeight">Height (cm)</label>
+
+      <input type="number" id="hcBmiHeight"
+        readonly placeholder="Automatically converted">
+
+      <p id="hcCmConversionResult" class="conversion-result"></p>
+
+      <label for="hcBmiWeight">Weight (kg)</label>
+
+      <input type="number" id="hcBmiWeight"
+        placeholder="Example: 65"
+        min="1" max="500" step="0.1"
+        inputmode="decimal">
+
+      <button type="button" class="action-btn"
+        onclick="calculateHealthBMI()">
+        Calculate BMI
+      </button>
+
+      <button type="button" class="action-btn clear-btn"
+        onclick="clearHealthBMI()">
+        ↻ Clear
+      </button>
+
+      <div id="hcBmiResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1472,50 +1426,40 @@ body[dir="rtl"] .note{
 
     <div class="health-card">
 
-      <h3>❤️ 2. Blood Pressure Checker</h3>
-
-      <label for="bpSys">
-        Systolic (mmHg)
-      </label>
-
-      <input
-        type="number"
-        id="bpSys"
-        placeholder="Example: 120">
-
-      <label for="bpDia">
-        Diastolic (mmHg)
-      </label>
-
-      <input
-        type="number"
-        id="bpDia"
-        placeholder="Example: 80">
-
-      <button
-        class="action-btn"
-        type="button"
-        onclick="checkBP()">
-
-        Check Blood Pressure
-
-      </button>
-
-      <button
-        class="action-btn clear-btn"
-        type="button"
-        onclick="clearCheck('bp')">
-
-        ↻ Clear
-
-      </button>
-
-      <div
-        id="bpResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
+      <div class="health-card-heading">
+        <span class="card-icon">❤️</span>
+        <div>
+          <h3>2. Blood Pressure Checker</h3>
+          <p>Blood Pressure Assessment</p>
+        </div>
       </div>
+
+      <label for="bpSys">Systolic (mmHg)</label>
+
+      <input type="number" id="bpSys"
+        placeholder="Example: 120"
+        min="50" max="300" step="1"
+        inputmode="numeric">
+
+      <label for="bpDia">Diastolic (mmHg)</label>
+
+      <input type="number" id="bpDia"
+        placeholder="Example: 80"
+        min="30" max="200" step="1"
+        inputmode="numeric">
+
+      <button type="button" class="action-btn"
+        onclick="checkBP()">
+        Check Blood Pressure
+      </button>
+
+      <button type="button" class="action-btn clear-btn"
+        onclick="clearCheck('bp')">
+        ↻ Clear
+      </button>
+
+      <div id="bpResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1524,57 +1468,41 @@ body[dir="rtl"] .note{
 
     <div class="health-card">
 
-      <h3>🩸 3. Blood Sugar Checker</h3>
+      <div class="health-card-heading">
+        <span class="card-icon">🩸</span>
+        <div>
+          <h3>3. Blood Sugar Checker</h3>
+          <p>Blood Glucose Assessment</p>
+        </div>
+      </div>
 
-      <label for="sugarType">
-        Test Type
-      </label>
+      <label for="sugarType">Test Type</label>
 
       <select id="sugarType">
-        <option value="fasting">
-          Fasting Blood Sugar
-        </option>
-        <option value="random">
-          Random Blood Sugar
-        </option>
-        <option value="post">
-          2 Hours After Meal
-        </option>
+        <option value="fasting">Fasting Blood Sugar</option>
+        <option value="random">Random Blood Sugar</option>
+        <option value="post">2 Hours After Meal</option>
       </select>
 
-      <label for="sugarValue">
-        Blood Sugar (mg/dL)
-      </label>
+      <label for="sugarValue">Blood Sugar (mg/dL)</label>
 
-      <input
-        type="number"
-        id="sugarValue"
-        placeholder="Enter glucose value">
+      <input type="number" id="sugarValue"
+        placeholder="Enter glucose value"
+        min="1" max="1000"
+        inputmode="decimal">
 
-      <button
-        class="action-btn"
-        type="button"
+      <button type="button" class="action-btn"
         onclick="checkSugar()">
-
         Check Blood Sugar
-
       </button>
 
-      <button
-        class="action-btn clear-btn"
-        type="button"
+      <button type="button" class="action-btn clear-btn"
         onclick="clearCheck('sugar')">
-
         ↻ Clear
-
       </button>
 
-      <div
-        id="sugarResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
-      </div>
+      <div id="sugarResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1583,41 +1511,33 @@ body[dir="rtl"] .note{
 
     <div class="health-card">
 
-      <h3>💓 4. Heart Rate Checker</h3>
-
-      <label for="heartRate">
-        Pulse (BPM)
-      </label>
-
-      <input
-        type="number"
-        id="heartRate"
-        placeholder="Example: 75">
-
-      <button
-        class="action-btn"
-        type="button"
-        onclick="checkHeartRate()">
-
-        Check Heart Rate
-
-      </button>
-
-      <button
-        class="action-btn clear-btn"
-        type="button"
-        onclick="clearCheck('heart')">
-
-        ↻ Clear
-
-      </button>
-
-      <div
-        id="heartResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
+      <div class="health-card-heading">
+        <span class="card-icon">💓</span>
+        <div>
+          <h3>4. Heart Rate Checker</h3>
+          <p>Resting Pulse Assessment</p>
+        </div>
       </div>
+
+      <label for="heartRate">Pulse (BPM)</label>
+
+      <input type="number" id="heartRate"
+        placeholder="Example: 75"
+        min="20" max="250"
+        inputmode="numeric">
+
+      <button type="button" class="action-btn"
+        onclick="checkHeartRate()">
+        Check Heart Rate
+      </button>
+
+      <button type="button" class="action-btn clear-btn"
+        onclick="clearCheck('heart')">
+        ↻ Clear
+      </button>
+
+      <div id="heartResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1626,43 +1546,33 @@ body[dir="rtl"] .note{
 
     <div class="health-card">
 
-      <h3>🫁 5. Oxygen Saturation Checker</h3>
-
-      <label for="spo2Value">
-        SpO₂ (%)
-      </label>
-
-      <input
-        type="number"
-        id="spo2Value"
-        placeholder="Example: 98"
-        min="50"
-        max="100">
-
-      <button
-        class="action-btn"
-        type="button"
-        onclick="checkSpO2()">
-
-        Check SpO₂
-
-      </button>
-
-      <button
-        class="action-btn clear-btn"
-        type="button"
-        onclick="clearCheck('spo2')">
-
-        ↻ Clear
-
-      </button>
-
-      <div
-        id="spo2Result"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
+      <div class="health-card-heading">
+        <span class="card-icon">🫁</span>
+        <div>
+          <h3>5. Oxygen Saturation Checker</h3>
+          <p>Pulse Oximetry Assessment</p>
+        </div>
       </div>
+
+      <label for="spo2Value">SpO₂ (%)</label>
+
+      <input type="number" id="spo2Value"
+        placeholder="Example: 98"
+        min="50" max="100"
+        inputmode="numeric">
+
+      <button type="button" class="action-btn"
+        onclick="checkSpO2()">
+        Check SpO₂
+      </button>
+
+      <button type="button" class="action-btn clear-btn"
+        onclick="clearCheck('spo2')">
+        ↻ Clear
+      </button>
+
+      <div id="spo2Result" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1671,103 +1581,82 @@ body[dir="rtl"] .note{
 
     <div class="health-card">
 
-      <h3>🌡️ 6. Body Temperature Checker</h3>
+      <div class="health-card-heading">
+        <span class="card-icon">🌡️</span>
+        <div>
+          <h3>6. Body Temperature Checker</h3>
+          <p>Temperature Assessment</p>
+        </div>
+      </div>
 
-      <label for="tempValue">
-        Temperature
-      </label>
+      <label for="tempValue">Temperature</label>
 
-      <input
-        type="number"
-        id="tempValue"
+      <input type="number" id="tempValue"
         placeholder="Example: 37"
-        step="0.1">
+        step="0.1"
+        inputmode="decimal">
 
-      <label for="tempUnit">
-        Unit
-      </label>
+      <label for="tempUnit">Unit</label>
 
       <select id="tempUnit">
         <option value="C">Celsius (°C)</option>
         <option value="F">Fahrenheit (°F)</option>
       </select>
 
-      <button
-        class="action-btn"
-        type="button"
+      <button type="button" class="action-btn"
         onclick="checkTemperature()">
-
         Check Temperature
-
       </button>
 
-      <button
-        class="action-btn clear-btn"
-        type="button"
+      <button type="button" class="action-btn clear-btn"
         onclick="clearCheck('temp')">
-
         ↻ Clear
-
       </button>
 
-      <div
-        id="tempResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
-      </div>
+      <div id="tempResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
 
-    <!-- 7. WAIST-TO-HEIGHT RATIO -->
+    <!-- 7. WAIST TO HEIGHT RATIO -->
 
     <div class="health-card">
 
-      <h3>📏 7. Waist-to-Height Ratio</h3>
-
-      <label for="waistValue">
-        Waist Circumference (cm)
-      </label>
-
-      <input
-        type="number"
-        id="waistValue"
-        placeholder="Example: 85">
-
-      <label for="waistHeight">
-        Height (cm)
-      </label>
-
-      <input
-        type="number"
-        id="waistHeight"
-        placeholder="Example: 170">
-
-      <button
-        class="action-btn"
-        type="button"
-        onclick="checkWaist()">
-
-        Calculate Ratio
-
-      </button>
-
-      <button
-        class="action-btn clear-btn"
-        type="button"
-        onclick="clearCheck('waist')">
-
-        ↻ Clear
-
-      </button>
-
-      <div
-        id="waistResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
+      <div class="health-card-heading">
+        <span class="card-icon">📏</span>
+        <div>
+          <h3>7. Waist-to-Height Ratio</h3>
+          <p>Central Adiposity Screening</p>
+        </div>
       </div>
+
+      <label for="waistValue">Waist Circumference (cm)</label>
+
+      <input type="number" id="waistValue"
+        placeholder="Example: 85"
+        min="1" max="300" step="0.1"
+        inputmode="decimal">
+
+      <label for="waistHeight">Height (cm)</label>
+
+      <input type="number" id="waistHeight"
+        placeholder="Example: 170"
+        min="30" max="250" step="0.1"
+        inputmode="decimal">
+
+      <button type="button" class="action-btn"
+        onclick="checkWaist()">
+        Calculate Ratio
+      </button>
+
+      <button type="button" class="action-btn clear-btn"
+        onclick="clearCheck('waist')">
+        ↻ Clear
+      </button>
+
+      <div id="waistResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1776,41 +1665,33 @@ body[dir="rtl"] .note{
 
     <div class="health-card">
 
-      <h3>🧪 8. Cholesterol Checker</h3>
-
-      <label for="cholValue">
-        Total Cholesterol (mg/dL)
-      </label>
-
-      <input
-        type="number"
-        id="cholValue"
-        placeholder="Example: 180">
-
-      <button
-        class="action-btn"
-        type="button"
-        onclick="checkCholesterol()">
-
-        Check Cholesterol
-
-      </button>
-
-      <button
-        class="action-btn clear-btn"
-        type="button"
-        onclick="clearCheck('chol')">
-
-        ↻ Clear
-
-      </button>
-
-      <div
-        id="cholResult"
-        class="result-box"
-        style="display:none"
-        aria-live="polite">
+      <div class="health-card-heading">
+        <span class="card-icon">🧪</span>
+        <div>
+          <h3>8. Cholesterol Checker</h3>
+          <p>Total Cholesterol Assessment</p>
+        </div>
       </div>
+
+      <label for="cholValue">Total Cholesterol (mg/dL)</label>
+
+      <input type="number" id="cholValue"
+        placeholder="Example: 180"
+        min="1" max="1000"
+        inputmode="decimal">
+
+      <button type="button" class="action-btn"
+        onclick="checkCholesterol()">
+        Check Cholesterol
+      </button>
+
+      <button type="button" class="action-btn clear-btn"
+        onclick="clearCheck('chol')">
+        ↻ Clear
+      </button>
+
+      <div id="cholResult" class="result-box"
+        aria-live="polite"></div>
 
     </div>
 
@@ -1818,50 +1699,31 @@ body[dir="rtl"] .note{
     <!-- 9. PREGNANCY WEEK COUNTER -->
 
     <div class="health-card pregnancy-card"
-         id="pregnancyTracker">
+      id="pregnancyTracker">
 
-      <div class="pregnancy-heading">
-
-        <span class="pregnancy-icon">🤰</span>
-
+      <div class="health-card-heading pregnancy-heading">
+        <span class="card-icon pregnancy-icon">🤰</span>
         <div>
           <h3>9. Pregnancy Week Counter</h3>
-          <p>
-            Track pregnancy weeks and estimated delivery date.
-          </p>
+          <p>Pregnancy Progress & Estimated Delivery Date</p>
         </div>
-
       </div>
-
-
-      <!-- PREGNANCY CALCULATION METHOD -->
 
       <div class="pregnancy-method">
 
-        <button
-          type="button"
-          id="lmpModeBtn"
+        <button type="button" id="lmpModeBtn"
           class="pregnancy-mode active"
           onclick="setPregnancyMode('lmp')">
-
           LMP Date
-
         </button>
 
-        <button
-          type="button"
-          id="eddModeBtn"
+        <button type="button" id="eddModeBtn"
           class="pregnancy-mode"
           onclick="setPregnancyMode('edd')">
-
           EDD Date
-
         </button>
 
       </div>
-
-
-      <!-- LMP INPUT -->
 
       <div id="lmpInputBox">
 
@@ -1869,9 +1731,7 @@ body[dir="rtl"] .note{
           Last Menstrual Period (LMP)
         </label>
 
-        <input
-          type="date"
-          id="pregnancyLMP">
+        <input type="date" id="pregnancyLMP">
 
         <p class="pregnancy-hint">
           Enter the first day of your last menstrual period.
@@ -1879,18 +1739,13 @@ body[dir="rtl"] .note{
 
       </div>
 
-
-      <!-- EDD INPUT -->
-
       <div id="eddInputBox" hidden>
 
         <label for="pregnancyEDD">
           Expected Due Date (EDD)
         </label>
 
-        <input
-          type="date"
-          id="pregnancyEDD">
+        <input type="date" id="pregnancyEDD">
 
         <p class="pregnancy-hint">
           Enter your estimated delivery date.
@@ -1898,34 +1753,20 @@ body[dir="rtl"] .note{
 
       </div>
 
-
-      <!-- PREGNANCY BUTTONS -->
-
-      <button
-        type="button"
+      <button type="button"
         class="action-btn pregnancy-calculate"
         onclick="calculatePregnancy()">
-
         🤰 Calculate Pregnancy
-
       </button>
 
-      <button
-        type="button"
+      <button type="button"
         class="action-btn clear-btn"
         onclick="clearPregnancy()">
-
         ↻ Clear
-
       </button>
 
-
-      <!-- PREGNANCY RESULT -->
-
-      <div
-        id="pregnancyResult"
+      <div id="pregnancyResult"
         class="pregnancy-result"
-        style="display:none"
         aria-live="polite">
 
         <div class="pregnancy-result-header">
@@ -1934,33 +1775,23 @@ body[dir="rtl"] .note{
         </div>
 
         <div class="pregnancy-week-display">
-
           <strong id="pregnancyWeeks">0</strong>
           <span>Weeks</span>
-
           <strong id="pregnancyDays">0</strong>
           <span>Days</span>
-
         </div>
 
         <p id="pregnancyTrimester"
-           class="pregnancy-trimester">
-        </p>
+          class="pregnancy-trimester"></p>
 
         <div class="pregnancy-progress-info">
-
           <span>Pregnancy Progress</span>
           <strong id="pregnancyPercent">0%</strong>
-
         </div>
 
         <div class="pregnancy-progress-track">
-
-          <div
-            id="pregnancyProgressBar"
-            class="pregnancy-progress-bar">
-          </div>
-
+          <div id="pregnancyProgressBar"
+            class="pregnancy-progress-bar"></div>
         </div>
 
         <div class="pregnancy-dates">
@@ -1978,32 +1809,23 @@ body[dir="rtl"] .note{
         </div>
 
         <div class="pregnancy-development">
-
           <h4>👶 Baby Development</h4>
-
           <p id="pregnancyDevelopment"></p>
-
         </div>
 
-        <p id="pregnancyNote"
-           class="pregnancy-note">
-        </p>
+        <p id="pregnancyNote" class="pregnancy-note"></p>
 
       </div>
 
     </div>
 
   </div>
-  <!-- END ALL HEALTH CALCULATORS -->
+  <!-- END HEALTH CALCULATORS -->
 
 
-  <!-- =================================
-       PROFESSIONAL CLEAR PROFILE DIALOG
-       INDEPENDENT OF CALCULATORS
-  ================================== -->
+  <!-- CLEAR PROFILE CONFIRMATION DIALOG -->
 
-  <div
-    id="clearProfileDialog"
+  <div id="clearProfileDialog"
     class="clear-profile-overlay"
     role="dialog"
     aria-modal="true"
@@ -2013,152 +1835,208 @@ body[dir="rtl"] .note{
 
     <div class="clear-profile-modal">
 
-      <div class="clear-profile-icon">
-        🗑️
-      </div>
+      <div class="clear-profile-icon">🗑️</div>
 
       <h3 id="clearProfileTitle">
         Clear Health Profile?
       </h3>
 
       <p id="clearProfileDescription">
-        Are you sure you want to clear your saved
-        health profile?
+        Are you sure you want to clear your saved health profile?
       </p>
 
       <p class="clear-warning">
-        Your saved age, gender and checker information
-        will be reset.
+        Your saved age, gender and all health checker entries
+        and results will be reset.
       </p>
 
       <div class="clear-profile-actions">
 
-        <button
-          type="button"
+        <button type="button"
           class="cancel-clear-btn"
           onclick="cancelClearProfile()">
-
           Cancel
-
         </button>
 
-        <button
-          type="button"
+        <button type="button"
           class="confirm-clear-btn"
           onclick="confirmClearProfile()">
-
           Yes, Clear Profile
-
         </button>
 
       </div>
 
     </div>
-
   </div>
-  <!-- END CLEAR PROFILE DIALOG -->
 
 </section>
-<!-- END HEALTH CHECKER SECTION -->
 
 
-<!-- =====================================================
- CSS DESIGN
-===================================================== -->
+<!-- =========================================================
+ PROFESSIONAL HEALTH CHECKERS CSS
+========================================================= -->
 
 <style>
 
 #health-checker {
   width: 100%;
+  box-sizing: border-box;
+}
+
+#health-checker *,
+#health-checker *::before,
+#health-checker *::after {
+  box-sizing: border-box;
 }
 
 #health-checker [hidden] {
   display: none !important;
 }
 
-.health-intro {
-  color: #64748b;
-  line-height: 1.7;
-  margin-bottom: 20px;
-}
 
+/* MAIN HEADER */
 
-/* SAVED PROFILE */
-
-.saved-health-profile {
+#health-checker .health-header {
   display: flex;
   align-items: center;
-  gap: 13px;
-  padding: 16px;
-  margin: 15px 0 22px;
-  background: linear-gradient(135deg,#eff6ff,#ecfeff);
-  border: 1px solid #bae6fd;
-  border-radius: 16px;
+  gap: 14px;
+  margin: 12px 0 15px;
 }
 
-.profile-avatar {
-  width: 52px;
-  height: 52px;
+#health-checker .health-header-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
   display: grid;
   place-items: center;
-  flex-shrink: 0;
-  background: white;
-  border-radius: 50%;
-  font-size: 27px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,#e0f2fe,#cffafe);
+  font-size: 29px;
 }
 
-.profile-info {
-  flex: 1;
+#health-checker .health-header h2 {
+  margin: 0;
+  color: #082f49;
+  font-size: 23px;
+}
+
+#health-checker .health-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+#health-checker .health-intro {
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+
+/* PROFILE CARD */
+
+#health-checker .saved-health-profile {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+  padding: 17px;
+  margin: 12px 0 23px;
+  border: 1px solid #bae6fd;
+  border-radius: 17px;
+  background: linear-gradient(135deg,#eff6ff,#ecfeff);
+  box-shadow: 0 4px 15px rgba(8,47,73,.05);
+}
+
+#health-checker .profile-avatar {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 50%;
+  font-size: 29px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.06);
+}
+
+#health-checker .profile-info {
+  flex: 1 1 130px;
   min-width: 0;
 }
 
-.profile-info h3 {
-  margin: 0 0 5px;
+#health-checker .profile-info h3 {
+  margin: 0 0 6px;
   color: #075985;
   font-size: 16px;
 }
 
-.profile-info p {
+#health-checker .profile-info p {
   margin: 0;
-  font-size: 13px;
   color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.edit-profile-btn {
-  padding: 9px 12px;
-  border: none;
-  border-radius: 9px;
-  background: #075985;
-  color: white;
-  font-weight: 600;
+#health-checker .profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+#health-checker .profile-btn {
+  min-height: 43px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
+  transition: .2s ease;
+}
+
+#health-checker .edit-profile-btn {
+  color: #075985;
+  background: #e0f2fe;
+  border-color: #bae6fd;
+}
+
+#health-checker .clear-profile-btn {
+  color: #be123c;
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+#health-checker .profile-btn:active {
+  transform: scale(.97);
 }
 
 
 /* PROFILE MODAL */
 
-.health-modal {
+#health-checker .health-modal {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgba(15,23,42,0.78);
-  backdrop-filter: blur(5px);
+  background: rgba(8,25,45,.78);
+  backdrop-filter: blur(6px);
   overflow-y: auto;
 }
 
-.health-modal-content {
+#health-checker .health-modal-content {
   width: 100%;
   max-width: 430px;
-  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
   overflow-y: auto;
   padding: 28px 23px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 22px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  box-shadow: 0 22px 65px rgba(0,0,0,.25);
   text-align: center;
   animation: healthModalIn .25s ease;
 }
@@ -2174,613 +2052,591 @@ body[dir="rtl"] .note{
   }
 }
 
-.profile-modal-icon {
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 13px;
+#health-checker .profile-modal-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 14px;
   display: grid;
   place-items: center;
-  background: #e0f2fe;
-  border-radius: 50%;
-  font-size: 35px;
+  border-radius: 21px;
+  background: linear-gradient(135deg,#e0f2fe,#cffafe);
+  font-size: 36px;
 }
 
-.health-modal-content h2 {
-  margin: 8px 0;
+#health-checker .health-modal-content h2 {
   color: #075985;
+  margin: 8px 0;
+  font-size: 23px;
 }
 
-.modal-description {
+#health-checker .modal-description {
   color: #64748b;
   font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 22px;
+  line-height: 1.7;
+  margin: 10px 0 22px;
 }
 
-.health-modal-content label {
+#health-checker .health-modal-content label {
   display: block;
   text-align: left;
+  margin: 15px 0 7px;
   font-weight: 700;
+  font-size: 14px;
   color: #334155;
-  margin: 14px 0 6px;
 }
 
-.health-modal-content input {
+#health-checker .health-modal-content input {
   width: 100%;
-  box-sizing: border-box;
   padding: 14px;
   border: 1px solid #cbd5e1;
   border-radius: 11px;
+  background: #fff;
+  color: #0f172a;
   font-size: 16px;
-  outline: none;
 }
 
-.health-modal-content input:focus {
+#health-checker .health-modal-content input:focus {
+  outline: none;
   border-color: #0284c7;
   box-shadow: 0 0 0 3px rgba(2,132,199,.12);
+}
+
+#health-checker .profile-form-error {
+  padding: 10px;
+  margin-bottom: 12px;
+  color: #be123c;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: 9px;
+  text-align: left;
+  font-size: 13px;
 }
 
 
 /* GENDER OPTIONS */
 
-.gender-options {
+#health-checker .gender-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin: 12px 0 20px;
 }
 
-.gender-option {
+#health-checker .gender-option {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
-  padding: 16px 10px;
+  gap: 8px;
+  padding: 17px 10px;
   border: 2px solid #e2e8f0;
-  border-radius: 14px;
+  border-radius: 15px;
   background: #f8fafc;
   color: #334155;
   cursor: pointer;
-  transition: .2s;
+  transition: .2s ease;
 }
 
-.gender-option.selected {
+#health-checker .gender-option.selected {
   border-color: #0284c7;
   background: #eff6ff;
   color: #075985;
+  box-shadow: 0 3px 12px rgba(2,132,199,.1);
 }
 
-.gender-avatar {
-  font-size: 34px;
+#health-checker .gender-avatar {
+  font-size: 35px;
 }
 
-.gender-check {
+#health-checker .gender-check {
   display: none;
   color: #0284c7;
-  font-weight: bold;
+  font-weight: 900;
 }
 
-.gender-option.selected .gender-check {
+#health-checker .gender-option.selected .gender-check {
   display: block;
 }
 
-.save-profile-btn {
+#health-checker .save-profile-btn {
   width: 100%;
   padding: 15px;
   border: none;
   border-radius: 12px;
   background: linear-gradient(135deg,#075985,#0891b2);
-  color: white;
+  color: #fff;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(7,89,133,.18);
 }
 
-.save-profile-btn:active,
-.action-btn:active {
-  transform: scale(.98);
+#health-checker .cancel-profile-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 11px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.profile-privacy {
+#health-checker .profile-privacy {
   margin: 16px 0 0;
   color: #64748b;
   font-size: 12px;
 }
 
 
-/* HEALTH CALCULATOR CARDS */
-
-.health-card {
-  padding: 20px;
-  margin: 18px 0;
-  background: var(--card-bg,#ffffff);
-  border: 1px solid #dbeafe;
-  border-radius: 17px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.06);
-}
-
-.health-card h3 {
-  color: #075985;
-  margin: 0 0 16px;
-  font-size: 18px;
-}
-
-.health-card label {
-  display: block;
-  margin-top: 13px;
-  font-weight: 600;
-  color: #334155;
-}
-
-.health-card input,
-.health-card select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px;
-  margin-top: 6px;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 15px;
-  background: var(--card-bg,#ffffff);
-  color: inherit;
-}
-
-.health-card input:focus,
-.health-card select:focus {
-  outline: none;
-  border-color: #0284c7;
-  box-shadow: 0 0 0 3px rgba(2,132,199,.10);
-}
-
-.health-card input[readonly] {
-  background: #f1f5f9;
-}
-
-.conversion-result {
-  font-size: 12px;
-  color: #0284c7;
-  margin: 6px 0;
-}
-
-
-/* ACTION BUTTONS */
-
-.health-card .action-btn {
-  padding: 11px 14px;
-  margin-top: 14px;
-  margin-right: 5px;
-  border: none;
-  border-radius: 9px;
-  background: #075985;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.health-card .clear-btn {
-  background: #64748b;
-}
-
-
-/* RESULTS */
-
-.health-card .result-box {
-  padding: 16px;
-  margin-top: 16px;
-  border-radius: 11px;
-  background: #f0f9ff;
-  border: 1px solid #bae6fd;
-  line-height: 1.8;
-  overflow-wrap: anywhere;
-  color: #334155;
-}
-
-.health-card .result-box h4 {
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-
-
-/* DISCLAIMER */
+/* MEDICAL DISCLAIMER */
 
 #health-checker .warning-note {
-  padding: 14px;
-  margin-top: 22px;
+  padding: 15px;
+  margin: 20px 0;
   background: #fff7ed;
+  border: 1px solid #fed7aa;
   border-left: 4px solid #f59e0b;
-  border-radius: 9px;
+  border-radius: 11px;
   color: #92400e;
+}
+
+#health-checker .warning-note strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+#health-checker .warning-note p {
+  margin: 0;
   font-size: 13px;
   line-height: 1.7;
 }
 
 
-/* MOBILE */
+/* CALCULATOR CARDS */
 
-@media(max-width:480px) {
-
-  .health-card {
-    padding: 15px;
-  }
-
-  .health-modal-content {
-    padding: 23px 17px;
-  }
-
-  .saved-health-profile {
-    gap: 9px;
-    padding: 12px;
-  }
-
-  .edit-profile-btn {
-    padding: 8px;
-    font-size: 12px;
-  }
-
+#health-checker .health-card {
+  padding: 21px;
+  margin: 19px 0;
+  border: 1px solid #dbeafe;
+  border-radius: 18px;
+  background: var(--card-bg,#fff);
+  box-shadow: 0 5px 18px rgba(15,23,42,.055);
+  transition: box-shadow .2s ease;
 }
 
-
-/* =====================================
-   HEALTH PROFILE ACTION BUTTONS
-===================================== */
-
-.profile-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.profile-btn {
-  flex: 1;
-  min-width: 140px;
-  min-height: 46px;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 18px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.25s ease;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-}
-
-.edit-profile-btn {
-  color: #075985;
-  background: #e0f2fe;
-  border: 1px solid #bae6fd;
-}
-
-.clear-profile-btn {
-  color: #be123c;
-  background: #fff1f2;
-  border: 1px solid #fecdd3;
-}
-
-.profile-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-}
-
-.profile-btn:active {
-  transform: scale(0.97);
-}
-
-@media (max-width: 480px) {
-  .profile-actions {
-    flex-direction: column;
-  }
-
-  .profile-btn {
-    width: 100%;
-  }
-}
-
-
-
-/* ==========================================
-   PREGNANCY WEEK COUNTER - LAB KNOWLEDGE
-========================================== */
-
-.pregnancy-card {
-  border: 1px solid #ccfbf1;
-  background: linear-gradient(145deg, #ffffff, #f0fdfa);
-}
-
-.pregnancy-heading {
+#health-checker .health-card-heading {
   display: flex;
   align-items: center;
   gap: 13px;
-  margin-bottom: 20px;
+  margin-bottom: 19px;
 }
 
-.pregnancy-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
-  background: #ccfbf1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 29px;
+#health-checker .card-icon {
+  width: 49px;
+  height: 49px;
   flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: #eff6ff;
+  font-size: 26px;
 }
 
-.pregnancy-heading h3 {
+#health-checker .health-card-heading h3 {
   margin: 0 0 5px;
+  color: #075985;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+#health-checker .health-card-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#health-checker .health-card label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#health-checker .health-card input,
+#health-checker .health-card select {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: var(--card-bg,#fff);
+  color: inherit;
+  font-size: 15px;
+}
+
+#health-checker .health-card input:focus,
+#health-checker .health-card select:focus {
+  outline: none;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2,132,199,.10);
+}
+
+#health-checker .health-card input[readonly] {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+#health-checker .conversion-result {
+  min-height: 16px;
+  margin: 6px 0;
+  color: #0284c7;
+  font-size: 12px;
+}
+
+
+/* ACTION BUTTONS */
+
+#health-checker .action-btn {
+  min-height: 43px;
+  padding: 11px 15px;
+  margin-top: 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#075985,#0891b2);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+#health-checker .action-btn:active {
+  transform: scale(.97);
+}
+
+#health-checker .action-btn.clear-btn {
+  background: #64748b;
+}
+
+
+/* RESULT BOXES */
+
+#health-checker .result-box {
+  display: none;
+  padding: 16px;
+  margin-top: 17px;
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  background: #f0f9ff;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+#health-checker .result-box h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+#health-checker .result-box.status-normal {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+#health-checker .result-box.status-normal h4 {
+  color: #15803d;
+}
+
+#health-checker .result-box.status-warning {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+#health-checker .result-box.status-warning h4 {
+  color: #b45309;
+}
+
+#health-checker .result-box.status-danger {
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+#health-checker .result-box.status-danger h4 {
+  color: #be123c;
+}
+
+#health-checker .result-box.status-info {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+#health-checker .result-box.status-info h4 {
+  color: #0369a1;
+}
+
+
+/* PREGNANCY CARD */
+
+#health-checker .pregnancy-card {
+  border-color: #ccfbf1;
+  background: linear-gradient(145deg,#fff,#f0fdfa);
+}
+
+#health-checker .pregnancy-heading .card-icon {
+  background: #ccfbf1;
+}
+
+#health-checker .pregnancy-heading h3 {
   color: #134e4a;
 }
 
-.pregnancy-heading p {
-  margin: 0;
-  color: #64748b;
-  font-size: 13px;
-}
-
-.pregnancy-method {
+#health-checker .pregnancy-method {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 8px;
   padding: 5px;
+  margin-bottom: 19px;
   background: #e2e8f0;
   border-radius: 12px;
 }
 
-.pregnancy-mode {
+#health-checker .pregnancy-mode {
   flex: 1;
-  padding: 12px 8px;
+  min-height: 43px;
+  padding: 10px;
   border: none;
   border-radius: 9px;
   background: transparent;
   color: #475569;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.25s;
 }
 
-.pregnancy-mode.active {
+#health-checker .pregnancy-mode.active {
   background: #0f766e;
-  color: white;
+  color: #fff;
   box-shadow: 0 3px 9px rgba(15,118,110,.2);
 }
 
-.pregnancy-hint {
+#health-checker .pregnancy-hint {
+  margin: 7px 0 13px;
   color: #64748b;
   font-size: 12px;
-  margin: 7px 0 15px;
+  line-height: 1.6;
 }
 
-.pregnancy-calculate {
-  background: linear-gradient(135deg,#0f766e,#0891b2) !important;
-  color: white !important;
-  margin-top: 10px;
+#health-checker .pregnancy-calculate {
+  background: linear-gradient(135deg,#0f766e,#0891b2);
 }
 
-.pregnancy-result {
-  margin-top: 22px;
-  padding: 17px;
-  border-radius: 16px;
-  background: white;
+#health-checker .pregnancy-result {
+  display: none;
+  padding: 18px;
+  margin-top: 21px;
   border: 1px solid #ccfbf1;
+  border-radius: 16px;
+  background: #fff;
   box-shadow: 0 5px 18px rgba(15,118,110,.07);
 }
 
-.pregnancy-result-header {
+#health-checker .pregnancy-result-header {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   color: #0f766e;
 }
 
-.pregnancy-result-header span {
+#health-checker .pregnancy-result-header span {
   font-size: 25px;
 }
 
-.pregnancy-result-header h4 {
+#health-checker .pregnancy-result-header h4 {
   margin: 0;
 }
 
-.pregnancy-week-display {
+#health-checker .pregnancy-week-display {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap: 7px;
   flex-wrap: wrap;
-  margin: 22px 0 12px;
+  gap: 8px;
+  margin: 22px 0 13px;
   color: #0f766e;
 }
 
-.pregnancy-week-display strong {
+#health-checker .pregnancy-week-display strong {
   font-size: 35px;
   font-weight: 800;
 }
 
-.pregnancy-week-display span {
+#health-checker .pregnancy-week-display span {
   color: #64748b;
   font-size: 13px;
 }
 
-.pregnancy-trimester {
-  text-align: center;
-  font-weight: 700;
-  color: #0f766e;
-  background: #ccfbf1;
-  padding: 10px;
+#health-checker .pregnancy-trimester {
+  padding: 11px;
   border-radius: 10px;
+  background: #ccfbf1;
+  color: #0f766e;
+  font-weight: 700;
+  text-align: center;
 }
 
-.pregnancy-progress-info {
+#health-checker .pregnancy-progress-info {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  margin: 20px 0 9px;
+  margin: 19px 0 9px;
   color: #475569;
   font-size: 13px;
 }
 
-.pregnancy-progress-info strong {
+#health-checker .pregnancy-progress-info strong {
   color: #0f766e;
 }
 
-.pregnancy-progress-track {
+#health-checker .pregnancy-progress-track {
   height: 11px;
-  background: #e2e8f0;
-  border-radius: 20px;
   overflow: hidden;
+  border-radius: 20px;
+  background: #e2e8f0;
 }
 
-.pregnancy-progress-bar {
-  height: 100%;
+#health-checker .pregnancy-progress-bar {
   width: 0;
-  background: linear-gradient(90deg,#14b8a6,#0f766e);
+  height: 100%;
   border-radius: 20px;
+  background: linear-gradient(90deg,#14b8a6,#0f766e);
   transition: width .5s ease;
 }
 
-.pregnancy-dates {
-  margin-top: 20px;
+#health-checker .pregnancy-dates {
   display: grid;
   gap: 10px;
+  margin-top: 20px;
 }
 
-.pregnancy-dates p {
+#health-checker .pregnancy-dates p {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 10px;
-  margin: 0;
   padding: 12px;
-  background: #f0fdfa;
+  margin: 0;
   border-radius: 10px;
+  background: #f0fdfa;
   font-size: 13px;
 }
 
-.pregnancy-dates strong {
+#health-checker .pregnancy-dates strong {
   color: #0f766e;
   text-align: right;
 }
 
-.pregnancy-development {
+#health-checker .pregnancy-development {
+  padding: 14px;
   margin-top: 17px;
-  padding: 13px;
-  background: #f8fafc;
   border-radius: 11px;
+  background: #f8fafc;
 }
 
-.pregnancy-development h4 {
+#health-checker .pregnancy-development h4 {
   margin: 0 0 8px;
   color: #155e75;
 }
 
-.pregnancy-development p {
+#health-checker .pregnancy-development p {
   margin: 0;
   color: #475569;
   font-size: 13px;
   line-height: 1.7;
 }
 
-.pregnancy-note {
-  font-size: 12px;
-  line-height: 1.6;
-  color: #92400e;
-  background: #fffbeb;
+#health-checker .pregnancy-note {
   padding: 12px;
-  border-radius: 10px;
   margin: 15px 0 0;
-}
-
-@media(max-width:480px) {
-  .pregnancy-week-display strong {
-    font-size: 29px;
-  }
-
-  .pregnancy-dates p {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .pregnancy-dates strong {
-    text-align: left;
-  }
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 
-/* PROFESSIONAL CLEAR PROFILE DIALOG */
+/* CLEAR PROFILE DIALOG */
 
-.clear-profile-overlay {
+#health-checker .clear-profile-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99999;
-  background: rgba(8, 25, 45, 0.65);
-  backdrop-filter: blur(5px);
+  z-index: 100001;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 18px;
+  background: rgba(8,25,45,.70);
+  backdrop-filter: blur(5px);
 }
 
-.clear-profile-overlay[hidden] {
-  display: none !important;
-}
-
-.clear-profile-modal {
+#health-checker .clear-profile-modal {
   width: 100%;
-  max-width: 380px;
-  background: #ffffff;
+  max-width: 390px;
+  padding: 27px 22px;
   border-radius: 20px;
-  padding: 28px 22px;
+  background: #fff;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.22);
-  animation: clearPopupIn 0.25s ease;
+  box-shadow: 0 20px 60px rgba(0,0,0,.23);
+  animation: healthModalIn .25s ease;
 }
 
-.clear-profile-icon {
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 16px;
+#health-checker .clear-profile-icon {
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 15px;
   border-radius: 50%;
   background: #fff1f2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
+  font-size: 29px;
 }
 
-.clear-profile-modal h3 {
+#health-checker .clear-profile-modal h3 {
+  margin: 0 0 11px;
   color: #082f49;
   font-size: 21px;
-  margin: 0 0 12px;
 }
 
-.clear-profile-modal p {
+#health-checker .clear-profile-modal p {
   color: #475569;
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.7;
 }
 
-.clear-profile-modal .clear-warning {
-  color: #b45309;
-  background: #fffbeb;
+#health-checker .clear-profile-modal .clear-warning {
+  padding: 11px;
   border-radius: 10px;
-  padding: 10px;
+  background: #fffbeb;
+  color: #92400e;
   font-size: 12px;
 }
 
-.clear-profile-actions {
+#health-checker .clear-profile-actions {
   display: flex;
   gap: 10px;
   margin-top: 22px;
 }
 
-.clear-profile-actions button {
+#health-checker .clear-profile-actions button {
   flex: 1;
-  min-height: 45px;
+  min-height: 46px;
+  padding: 10px;
   border: none;
   border-radius: 11px;
   font-size: 13px;
@@ -2788,57 +2644,94 @@ body[dir="rtl"] .note{
   cursor: pointer;
 }
 
-.cancel-clear-btn {
+#health-checker .cancel-clear-btn {
   background: #e2e8f0;
   color: #334155;
 }
 
-.confirm-clear-btn {
+#health-checker .confirm-clear-btn {
   background: #dc2626;
-  color: #ffffff;
+  color: #fff;
 }
 
-.clear-profile-actions button:active {
-  transform: scale(0.97);
-}
 
-@keyframes clearPopupIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px) scale(0.96);
+/* MOBILE RESPONSIVE */
+
+@media(max-width:600px) {
+
+  #health-checker .health-card {
+    padding: 16px;
+    margin: 15px 0;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+  #health-checker .health-header h2 {
+    font-size: 21px;
   }
+
+  #health-checker .saved-health-profile {
+    padding: 13px;
+  }
+
+  #health-checker .profile-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #health-checker .profile-btn {
+    width: 100%;
+    padding: 10px 6px;
+    font-size: 12px;
+  }
+
+  #health-checker .health-modal-content {
+    padding: 23px 17px;
+  }
+
+  #health-checker .pregnancy-week-display strong {
+    font-size: 29px;
+  }
+
+  #health-checker .pregnancy-dates p {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #health-checker .pregnancy-dates strong {
+    text-align: left;
+  }
+
+  #health-checker .clear-profile-actions {
+    flex-direction: column-reverse;
+  }
+
 }
-
-
 
 </style>
 
 
-<!-- =====================================================
- JAVASCRIPT - HEALTH CHECKER ENGINE
-===================================================== -->
+<!-- =========================================================
+ JAVASCRIPT - COMPLETE HEALTH CHECKER ENGINE
+ ONE SCRIPT | ALL FUNCTIONS CONNECTED
+========================================================= -->
 
 <script>
-
 (function () {
 
 "use strict";
 
-
-// ==========================================
-// PROFILE SETTINGS
-// ==========================================
-
 const HEALTH_PROFILE_KEY = "labKnowledgeHealthProfile";
-
-let selectedHealthGender = "";
 
 const $ = id => document.getElementById(id);
 
+let selectedHealthGender = "";
+let pregnancyMode = "lmp";
+let previousBodyOverflow = "";
+
+
+/* =========================================
+   PROFILE STORAGE
+========================================= */
 
 function getSavedHealthProfile() {
 
@@ -2851,6 +2744,7 @@ function getSavedHealthProfile() {
     const profile = JSON.parse(raw);
 
     if (
+      !profile ||
       !Number.isFinite(profile.age) ||
       profile.age < 0 ||
       profile.age > 120 ||
@@ -2864,6 +2758,7 @@ function getSavedHealthProfile() {
   } catch (error) {
 
     console.error("Health profile loading error:", error);
+
     return null;
 
   }
@@ -2876,13 +2771,8 @@ function getProfile() {
   const profile = getSavedHealthProfile();
 
   if (!profile) {
-
-    alert("Please save your Health Profile first.");
-
     openHealthProfile();
-
     return null;
-
   }
 
   return profile;
@@ -2890,9 +2780,9 @@ function getProfile() {
 }
 
 
-// ==========================================
-// GENDER SELECTION
-// ==========================================
+/* =========================================
+   GENDER SELECTION
+========================================= */
 
 function selectHealthGender(gender) {
 
@@ -2901,22 +2791,53 @@ function selectHealthGender(gender) {
   selectedHealthGender = gender;
 
   document.querySelectorAll(
-    "#healthProfileModal .gender-option"
+    "#health-checker .gender-option"
   ).forEach(button => {
 
-    button.classList.toggle(
-      "selected",
-      button.dataset.gender === gender
-    );
+    const selected = button.dataset.gender === gender;
+
+    button.classList.toggle("selected",selected);
+
+    button.setAttribute("aria-pressed",String(selected));
 
   });
+
+  hideProfileError();
 
 }
 
 
-// ==========================================
-// OPEN PROFILE POPUP
-// ==========================================
+/* =========================================
+   PROFILE ERROR
+========================================= */
+
+function showProfileError(message) {
+
+  const error = $("profileFormError");
+
+  if (!error) return;
+
+  error.textContent = message;
+  error.hidden = false;
+
+}
+
+
+function hideProfileError() {
+
+  const error = $("profileFormError");
+
+  if (!error) return;
+
+  error.textContent = "";
+  error.hidden = true;
+
+}
+
+
+/* =========================================
+   OPEN PROFILE MODAL
+========================================= */
 
 function openHealthProfile() {
 
@@ -2931,15 +2852,32 @@ function openHealthProfile() {
   selectedHealthGender = "";
 
   if (saved) {
+
     selectHealthGender(saved.gender);
+
   } else {
 
     document.querySelectorAll(
-      "#healthProfileModal .gender-option"
+      "#health-checker .gender-option"
     ).forEach(button => {
+
       button.classList.remove("selected");
+      button.setAttribute("aria-pressed","false");
+
     });
 
+  }
+
+  hideProfileError();
+
+  const cancelButton = $("cancelProfileBtn");
+
+  if (cancelButton) {
+    cancelButton.hidden = !saved;
+  }
+
+  if (modal.hidden) {
+    previousBodyOverflow = document.body.style.overflow;
   }
 
   modal.hidden = false;
@@ -2949,17 +2887,47 @@ function openHealthProfile() {
 }
 
 
-// ==========================================
-// SAVE PROFILE
-// ==========================================
+/* =========================================
+   CLOSE PROFILE MODAL
+========================================= */
+
+function closeHealthProfile() {
+
+  const modal = $("healthProfileModal");
+
+  if (!modal) return;
+
+  modal.hidden = true;
+
+  document.body.style.overflow = previousBodyOverflow;
+
+}
+
+
+/* =========================================
+   CANCEL PROFILE EDIT
+========================================= */
+
+function cancelHealthProfile() {
+
+  if (!getSavedHealthProfile()) return;
+
+  closeHealthProfile();
+
+}
+
+
+/* =========================================
+   SAVE PROFILE
+========================================= */
 
 function saveHealthProfile() {
 
   const ageInput = $("healthAge");
 
-  const age = Number(ageInput.value);
+  if (!ageInput) return;
 
-  const gender = selectedHealthGender;
+  const age = Number(ageInput.value);
 
   if (
     ageInput.value.trim() === "" ||
@@ -2968,7 +2936,9 @@ function saveHealthProfile() {
     age > 120
   ) {
 
-    alert("Please enter a valid age between 0 and 120.");
+    showProfileError(
+      "Please enter a valid age between 0 and 120 years."
+    );
 
     ageInput.focus();
 
@@ -2976,9 +2946,9 @@ function saveHealthProfile() {
 
   }
 
-  if (!["male","female"].includes(gender)) {
+  if (!["male","female"].includes(selectedHealthGender)) {
 
-    alert("Please select Male or Female.");
+    showProfileError("Please select Male or Female.");
 
     return;
 
@@ -2986,7 +2956,7 @@ function saveHealthProfile() {
 
   const profile = {
     age: age,
-    gender: gender
+    gender: selectedHealthGender
   };
 
   try {
@@ -2998,9 +2968,11 @@ function saveHealthProfile() {
 
   } catch (error) {
 
-    alert("Unable to save profile on this device.");
+    console.error("Profile save error:",error);
 
-    console.error(error);
+    showProfileError(
+      "Unable to save your profile on this device. Please check browser storage settings."
+    );
 
     return;
 
@@ -3008,24 +2980,27 @@ function saveHealthProfile() {
 
   updateHealthProfile();
 
-  $("healthProfileModal").hidden = true;
-
-  document.body.style.overflow = "";
-
-  $("healthCalculators").hidden = false;
+  closeHealthProfile();
 
 }
 
 
-// ==========================================
-// UPDATE SAVED PROFILE DISPLAY
-// ==========================================
+/* =========================================
+   UPDATE PROFILE CARD
+========================================= */
 
 function updateHealthProfile() {
 
   const profile = getSavedHealthProfile();
 
-  if (!profile) return;
+  if (!profile) {
+
+    $("savedHealthProfile").hidden = true;
+    $("healthCalculators").hidden = true;
+
+    return;
+
+  }
 
   $("savedHealthProfile").hidden = false;
 
@@ -3034,7 +3009,7 @@ function updateHealthProfile() {
 
   $("profileDetails").textContent =
     "Age: " + profile.age +
-    " years | Gender: " +
+    " years  |  Gender: " +
     (profile.gender === "male" ? "Male" : "Female");
 
   $("healthCalculators").hidden = false;
@@ -3042,9 +3017,9 @@ function updateHealthProfile() {
 }
 
 
-// ==========================================
-// EDIT PROFILE
-// ==========================================
+/* =========================================
+   EDIT PROFILE
+========================================= */
 
 function editHealthProfile() {
 
@@ -3053,9 +3028,9 @@ function editHealthProfile() {
 }
 
 
-// ==========================================
-// INITIALIZE
-// ==========================================
+/* =========================================
+   NAVIGATION - OPEN PROFILE WHEN NEEDED
+========================================= */
 
 function initializeHealthChecker() {
 
@@ -3067,9 +3042,8 @@ function initializeHealthChecker() {
 
   } else {
 
-    $("healthCalculators").hidden = true;
-
     $("savedHealthProfile").hidden = true;
+    $("healthCalculators").hidden = true;
 
   }
 
@@ -3085,18 +3059,19 @@ function initializeHealthChecker() {
 }
 
 
-// ==========================================
-// MENU CLICK - OPEN PROFILE IF NOT SAVED
-// ==========================================
+/* Listen to website navigation */
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click",function(event) {
 
   const target = event.target;
 
   if (!target || typeof target.closest !== "function") return;
 
   const link = target.closest(
-    'a[href="#health-checker"]'
+    'a[href="#health-checker"],' +
+    'a[data-section="health-checker"],' +
+    '[data-target="#health-checker"],' +
+    '[data-section="health-checker"]'
   );
 
   if (!link) return;
@@ -3104,50 +3079,60 @@ document.addEventListener("click", function(event) {
   if (!getSavedHealthProfile()) {
 
     setTimeout(function() {
-
       openHealthProfile();
-
-    }, 150);
+    },120);
 
   }
 
 });
 
 
-// ==========================================
-// RESULT DISPLAY
-// ==========================================
+/* Support direct hash navigation */
 
-function showHealthResult(id, title, message, status) {
+window.addEventListener("hashchange",function() {
+
+  if (
+    window.location.hash === "#health-checker" &&
+    !getSavedHealthProfile()
+  ) {
+
+    openHealthProfile();
+
+  }
+
+});
+
+
+/* =========================================
+   RESULT DISPLAY
+========================================= */
+
+function showHealthResult(id,title,message,status) {
 
   const box = $(id);
 
   if (!box) return;
 
-  const colors = {
+  const allowed = ["normal","warning","danger","info"];
 
-    normal: "#0f766e",
-    warning: "#d97706",
-    danger: "#be123c",
-    info: "#0369a1"
+  if (!allowed.includes(status)) {
+    status = "info";
+  }
 
-  };
+  box.className = "result-box status-" + status;
+
+  box.innerHTML =
+    "<h4>" + title + "</h4>" +
+    "<div>" + message + "</div>";
 
   box.style.display = "block";
-
-  box.innerHTML = `
-    <h4 style="color:${colors[status] || colors.info}">
-      ${title}
-    </h4>
-    <div>${message}</div>
-  `;
 
 }
 
 
-// ==========================================
-// CLEAR CHECKER
-// ==========================================
+/* =========================================
+   CLEAR INDIVIDUAL CHECKER
+========================================= */
 
 function clearCheck(prefix) {
 
@@ -3171,7 +3156,9 @@ function clearCheck(prefix) {
 
   (fields[prefix] || []).forEach(id => {
 
-    $(id).value = "";
+    const field = $(id);
+
+    if (field) field.value = "";
 
   });
 
@@ -3200,7 +3187,7 @@ function clearCheck(prefix) {
   if (result) {
 
     result.innerHTML = "";
-
+    result.className = "result-box";
     result.style.display = "none";
 
   }
@@ -3208,29 +3195,30 @@ function clearCheck(prefix) {
 }
 
 
-// ==========================================
-// 1. BMI CALCULATOR
-// ==========================================
+/* =========================================
+   1. BMI CALCULATOR
+   Unique IDs prevent separate BMI conflicts
+========================================= */
 
-const heightInchesInput = $("heightInches");
+function convertHealthHeight() {
 
-const bmiHeightInput = $("bmiHeight");
+  const inchesInput = $("hcHeightInches");
 
+  const heightInput = $("hcBmiHeight");
 
-heightInchesInput.addEventListener("input", function() {
+  const conversion = $("hcCmConversionResult");
 
-  const inches = Number(this.value);
+  const inches = Number(inchesInput.value);
 
   if (
-    this.value.trim() === "" ||
+    inchesInput.value.trim() === "" ||
     !Number.isFinite(inches) ||
     inches <= 0 ||
     inches > 100
   ) {
 
-    bmiHeightInput.value = "";
-
-    $("cmConversionResult").textContent = "";
+    heightInput.value = "";
+    conversion.textContent = "";
 
     return;
 
@@ -3238,30 +3226,31 @@ heightInchesInput.addEventListener("input", function() {
 
   const cm = inches * 2.54;
 
-  bmiHeightInput.value = cm.toFixed(2);
+  heightInput.value = cm.toFixed(2);
 
-  $("cmConversionResult").textContent =
-    "Height converted: " + cm.toFixed(2) + " cm";
+  conversion.textContent =
+    "✓ Height converted: " + cm.toFixed(2) + " cm";
 
-});
+}
 
 
-function calculateBMI() {
+function calculateHealthBMI() {
 
   const profile = getProfile();
 
   if (!profile) return;
 
-  const height = Number(bmiHeightInput.value);
+  const height = Number($("hcBmiHeight").value);
 
-  const weight = Number($("bmiWeight").value);
+  const weight = Number($("hcBmiWeight").value);
 
   if (
+    $("hcBmiHeight").value.trim() === "" ||
+    $("hcBmiWeight").value.trim() === "" ||
     !Number.isFinite(height) ||
     !Number.isFinite(weight) ||
     height < 30 ||
     height > 250 ||
-    $("bmiWeight").value.trim() === "" ||
     weight <= 0 ||
     weight > 500
   ) {
@@ -3280,7 +3269,6 @@ function calculateBMI() {
 
   let status = "info";
 
-
   if (profile.age < 2) {
 
     message =
@@ -3291,8 +3279,8 @@ function calculateBMI() {
   else if (profile.age < 20) {
 
     message =
-      "BMI: " + bmi.toFixed(2) +
-      ". Children and adolescents require BMI-for-age percentiles based on age and sex. Adult BMI categories must not be used.";
+      "BMI: <strong>" + bmi.toFixed(2) + "</strong><br>" +
+      "Children and adolescents require BMI-for-age percentiles based on age and sex. Adult BMI categories must not be used.";
 
   }
 
@@ -3303,7 +3291,6 @@ function calculateBMI() {
     if (bmi < 18.5) {
 
       category = "Underweight";
-
       status = "warning";
 
     }
@@ -3311,7 +3298,6 @@ function calculateBMI() {
     else if (bmi < 25) {
 
       category = "Normal Weight";
-
       status = "normal";
 
     }
@@ -3319,7 +3305,6 @@ function calculateBMI() {
     else if (bmi < 30) {
 
       category = "Overweight";
-
       status = "warning";
 
     }
@@ -3327,7 +3312,6 @@ function calculateBMI() {
     else {
 
       category = "Obesity";
-
       status = "danger";
 
     }
@@ -3336,17 +3320,16 @@ function calculateBMI() {
 
     const max = 24.9 * hm * hm;
 
-    message = `
-      BMI: <strong>${bmi.toFixed(2)}</strong><br>
-      Category: <strong>${category}</strong><br>
-      Reference healthy weight range:
-      ${min.toFixed(1)} - ${max.toFixed(1)} kg
-    `;
+    message =
+      "BMI: <strong>" + bmi.toFixed(2) + "</strong><br>" +
+      "Category: <strong>" + category + "</strong><br>" +
+      "Reference healthy weight range: " +
+      min.toFixed(1) + " - " + max.toFixed(1) + " kg";
 
   }
 
   showHealthResult(
-    "bmiResult",
+    "hcBmiResult",
     "⚖️ BMI Assessment",
     message,
     status
@@ -3355,29 +3338,28 @@ function calculateBMI() {
 }
 
 
-function clearBMI() {
+function clearHealthBMI() {
 
-  $("heightInches").value = "";
+  $("hcHeightInches").value = "";
 
-  bmiHeightInput.value = "";
+  $("hcBmiHeight").value = "";
 
-  $("bmiWeight").value = "";
+  $("hcBmiWeight").value = "";
 
-  $("cmConversionResult").textContent = "";
+  $("hcCmConversionResult").textContent = "";
 
-  const result = $("bmiResult");
+  const result = $("hcBmiResult");
 
   result.innerHTML = "";
-
+  result.className = "result-box";
   result.style.display = "none";
 
 }
 
 
-// ==========================================
-// 2. BLOOD PRESSURE
-// Adult AHA screening categories
-// ==========================================
+/* =========================================
+   2. BLOOD PRESSURE
+========================================= */
 
 function checkBP() {
 
@@ -3428,7 +3410,7 @@ function checkBP() {
     showHealthResult(
       "bpResult",
       "Pediatric BP Assessment",
-      "Children and adolescents require age, sex and height-percentile-specific BP references. Please consult a pediatric healthcare professional.",
+      "Children and adolescents require age, sex and height-percentile-specific blood pressure references. Please consult a pediatric healthcare professional.",
       "info"
     );
 
@@ -3443,7 +3425,6 @@ function checkBP() {
   if (sys >= 180 || dia >= 120) {
 
     category = "Severely High Blood Pressure";
-
     status = "danger";
 
   }
@@ -3451,7 +3432,6 @@ function checkBP() {
   else if (sys >= 140 || dia >= 90) {
 
     category = "Stage 2 Hypertension Range";
-
     status = "danger";
 
   }
@@ -3459,15 +3439,13 @@ function checkBP() {
   else if (sys >= 130 || dia >= 80) {
 
     category = "Stage 1 Hypertension Range";
-
     status = "warning";
 
   }
 
-  else if (sys >= 120 && dia < 80) {
+  else if (sys >= 120 && sys < 130 && dia < 80) {
 
     category = "Elevated Blood Pressure";
-
     status = "warning";
 
   }
@@ -3475,7 +3453,6 @@ function checkBP() {
   else if (sys < 90 || dia < 60) {
 
     category = "Low Blood Pressure Reading";
-
     status = "warning";
 
   }
@@ -3483,7 +3460,6 @@ function checkBP() {
   else {
 
     category = "Normal Range";
-
     status = "normal";
 
   }
@@ -3494,23 +3470,24 @@ function checkBP() {
   if (sys >= 180 || dia >= 120) {
 
     advice =
-      "Repeat after at least one minute. Seek immediate medical advice. If chest pain, breathlessness, weakness, vision changes or neurological symptoms occur, seek emergency care immediately.";
+      "Repeat after at least one minute and seek immediate medical advice. If chest pain, breathlessness, weakness, vision changes or neurological symptoms occur, seek emergency care immediately.";
 
   }
 
   showHealthResult(
     "bpResult",
     "❤️ " + category,
-    `Reading: ${sys}/${dia} mmHg<br>${advice}`,
+    "Reading: <strong>" + sys + "/" + dia +
+    " mmHg</strong><br>" + advice,
     status
   );
 
 }
 
 
-// ==========================================
-// 3. BLOOD SUGAR
-// ==========================================
+/* =========================================
+   3. BLOOD SUGAR
+========================================= */
 
 function checkSugar() {
 
@@ -3548,15 +3525,13 @@ function checkSugar() {
 
   let advice = "";
 
-
   if (value < 70) {
 
     category = "Low Blood Sugar";
-
     status = "danger";
 
     advice =
-      "If conscious and able to swallow, take 15 g of fast-acting carbohydrate and recheck after 15 minutes. Severe symptoms require emergency care.";
+      "If conscious and able to swallow, take 15 g of fast-acting carbohydrate and recheck after 15 minutes. If unconscious, having a seizure or unable to swallow, seek emergency help. Never give food or drink by mouth to an unconscious person.";
 
   }
 
@@ -3565,7 +3540,6 @@ function checkSugar() {
     if (value < 100) {
 
       category = "Normal Fasting Range";
-
       status = "normal";
 
     }
@@ -3573,7 +3547,6 @@ function checkSugar() {
     else if (value < 126) {
 
       category = "Prediabetes Range";
-
       status = "warning";
 
     }
@@ -3581,7 +3554,6 @@ function checkSugar() {
     else {
 
       category = "Diabetes Range";
-
       status = "danger";
 
     }
@@ -3593,7 +3565,6 @@ function checkSugar() {
     if (value < 140) {
 
       category = "Below 140 mg/dL";
-
       status = "normal";
 
     }
@@ -3601,7 +3572,6 @@ function checkSugar() {
     else if (value < 200) {
 
       category = "Elevated Post-meal Reading";
-
       status = "warning";
 
     }
@@ -3609,7 +3579,6 @@ function checkSugar() {
     else {
 
       category = "High Post-meal Reading";
-
       status = "danger";
 
     }
@@ -3621,7 +3590,6 @@ function checkSugar() {
     if (value < 200) {
 
       category = "Interpretation Depends on Context";
-
       status = "info";
 
     }
@@ -3629,7 +3597,6 @@ function checkSugar() {
     else {
 
       category = "High Random Glucose";
-
       status = "danger";
 
       advice =
@@ -3642,25 +3609,25 @@ function checkSugar() {
   if (!advice) {
 
     advice =
-      "A single home glucose reading cannot diagnose diabetes. Confirm abnormal results with laboratory testing and clinical assessment. Post-meal screening thresholds are not interchangeable with a diagnostic oral glucose tolerance test.";
+      "A single home glucose reading cannot diagnose diabetes. Confirm abnormal results with appropriate laboratory testing and clinical assessment. Two-hour post-meal readings are not interchangeable with a diagnostic oral glucose tolerance test.";
 
   }
 
   showHealthResult(
     "sugarResult",
     "🩸 " + category,
-    `Glucose: ${value} mg/dL<br>
-     Age: ${profile.age} years<br>
-     ${advice}`,
+    "Glucose: <strong>" + value +
+    " mg/dL</strong><br>Age: " +
+    profile.age + " years<br>" + advice,
     status
   );
 
 }
 
 
-// ==========================================
-// 4. HEART RATE
-// ==========================================
+/* =========================================
+   4. HEART RATE
+========================================= */
 
 function checkHeartRate() {
 
@@ -3697,7 +3664,6 @@ function checkHeartRate() {
   if (profile.age < 1) {
 
     low = 100;
-
     high = 160;
 
   }
@@ -3705,7 +3671,6 @@ function checkHeartRate() {
   else if (profile.age < 3) {
 
     low = 90;
-
     high = 150;
 
   }
@@ -3713,7 +3678,6 @@ function checkHeartRate() {
   else if (profile.age < 6) {
 
     low = 80;
-
     high = 140;
 
   }
@@ -3721,7 +3685,6 @@ function checkHeartRate() {
   else if (profile.age < 13) {
 
     low = 70;
-
     high = 120;
 
   }
@@ -3729,7 +3692,6 @@ function checkHeartRate() {
   else {
 
     low = 60;
-
     high = 100;
 
   }
@@ -3741,7 +3703,6 @@ function checkHeartRate() {
   if (pulse < low) {
 
     category = "Below Typical Resting Range";
-
     status = "warning";
 
   }
@@ -3749,7 +3710,6 @@ function checkHeartRate() {
   else if (pulse > high) {
 
     category = "Above Typical Resting Range";
-
     status = "warning";
 
   }
@@ -3757,7 +3717,6 @@ function checkHeartRate() {
   else {
 
     category = "Within Typical Resting Range";
-
     status = "normal";
 
   }
@@ -3765,18 +3724,18 @@ function checkHeartRate() {
   showHealthResult(
     "heartResult",
     "💓 " + category,
-    `Pulse: ${pulse} BPM<br>
-     Approximate reference: ${low}-${high} BPM<br>
-     Check while resting. Symptoms such as fainting, chest pain or breathlessness need urgent assessment.`,
+    "Pulse: <strong>" + pulse + " BPM</strong><br>" +
+    "Approximate reference: " + low + "-" + high +
+    " BPM<br>Check while resting. Symptoms such as fainting, chest pain or breathlessness need urgent assessment.",
     status
   );
 
 }
 
 
-// ==========================================
-// 5. SPO2 CHECKER
-// ==========================================
+/* =========================================
+   5. SPO2 CHECKER
+========================================= */
 
 function checkSpO2() {
 
@@ -3800,7 +3759,7 @@ function checkSpO2() {
     value > 100
   ) {
 
-    alert("Enter SpO2 between 50 and 100.");
+    alert("Enter SpO₂ between 50 and 100.");
 
     return;
 
@@ -3815,29 +3774,26 @@ function checkSpO2() {
   if (value <= 91) {
 
     category = "Low Oxygen Saturation";
-
     status = "danger";
 
     advice =
-      "Seek urgent medical assessment. If severe breathlessness, blue lips or confusion occur, seek emergency care.";
+      "Seek urgent medical assessment. If severe breathlessness, blue lips, chest pain or confusion occur, seek emergency care.";
 
   }
 
   else if (value <= 94) {
 
     category = "Below Expected Range";
-
     status = "warning";
 
     advice =
-      "Repeat measurement and contact a healthcare professional promptly.";
+      "Repeat the measurement carefully and contact a healthcare professional promptly, especially if this reading is unusual for you.";
 
   }
 
   else {
 
     category = "Typical Range at Sea Level";
-
     status = "normal";
 
     advice =
@@ -3848,19 +3804,19 @@ function checkSpO2() {
   showHealthResult(
     "spo2Result",
     "🫁 " + category,
-    `SpO₂: ${value}%<br>
-     Age: ${profile.age} years<br>
-     ${advice}<br>
-     Note: Altitude and chronic lung conditions may change interpretation.`,
+    "SpO₂: <strong>" + value +
+    "%</strong><br>Age: " + profile.age +
+    " years<br>" + advice +
+    "<br>Note: Altitude, circulation, device accuracy and chronic lung conditions can affect interpretation.",
     status
   );
 
 }
 
 
-// ==========================================
-// 6. TEMPERATURE CHECKER
-// ==========================================
+/* =========================================
+   6. TEMPERATURE CHECKER
+========================================= */
 
 function checkTemperature() {
 
@@ -3907,11 +3863,9 @@ function checkTemperature() {
 
   let advice;
 
-
   if (celsius < 35) {
 
     category = "Low Body Temperature";
-
     status = "danger";
 
     advice =
@@ -3922,18 +3876,16 @@ function checkTemperature() {
   else if (profile.age < 0.25 && celsius >= 38) {
 
     category = "Fever in Young Infant";
-
     status = "danger";
 
     advice =
-      "A baby under 3 months with temperature of 38°C or higher needs urgent medical assessment.";
+      "A baby under 3 months with a temperature of 38°C or higher needs urgent medical assessment.";
 
   }
 
   else if (celsius >= 38) {
 
     category = "Fever";
-
     status = "warning";
 
     advice =
@@ -3944,40 +3896,39 @@ function checkTemperature() {
   else if (celsius < 36) {
 
     category = "Below Typical Temperature";
-
     status = "warning";
 
     advice =
-      "Repeat measurement and consider clinical assessment if persistent or symptomatic.";
+      "Repeat measurement and consider clinical assessment if persistent or accompanied by symptoms.";
 
   }
 
   else {
 
     category = "Typical Temperature Range";
-
     status = "normal";
 
     advice =
-      "Interpret according to measurement site and symptoms.";
+      "Interpret according to measurement site, time of day and symptoms.";
 
   }
 
   showHealthResult(
     "tempResult",
     "🌡️ " + category,
-    `Temperature: ${celsius.toFixed(1)} °C<br>
-     Fahrenheit: ${(celsius * 9 / 5 + 32).toFixed(1)} °F<br>
-     ${advice}`,
+    "Temperature: <strong>" + celsius.toFixed(1) +
+    " °C</strong><br>Fahrenheit: " +
+    (celsius * 9 / 5 + 32).toFixed(1) +
+    " °F<br>" + advice,
     status
   );
 
 }
 
 
-// ==========================================
-// 7. WAIST-TO-HEIGHT RATIO
-// ==========================================
+/* =========================================
+   7. WAIST-TO-HEIGHT RATIO
+========================================= */
 
 function checkWaist() {
 
@@ -4006,7 +3957,8 @@ function checkWaist() {
     waist <= 0 ||
     height <= 0 ||
     waist > 300 ||
-    height > 250
+    height > 250 ||
+    height < 30
   ) {
 
     alert("Enter valid waist and height.");
@@ -4020,7 +3972,7 @@ function checkWaist() {
     showHealthResult(
       "waistResult",
       "Pediatric Assessment",
-      "Adult waist-to-height screening thresholds are not intended for children. Use pediatric growth assessment.",
+      "Adult waist-to-height screening thresholds are not intended for children. Use an appropriate pediatric assessment.",
       "info"
     );
 
@@ -4037,7 +3989,6 @@ function checkWaist() {
   if (ratio < 0.4) {
 
     category = "Below General Reference Range";
-
     status = "info";
 
   }
@@ -4045,7 +3996,6 @@ function checkWaist() {
   else if (ratio < 0.5) {
 
     category = "Generally Lower Central Adiposity Risk";
-
     status = "normal";
 
   }
@@ -4053,7 +4003,6 @@ function checkWaist() {
   else if (ratio < 0.6) {
 
     category = "Increased Central Adiposity Risk";
-
     status = "warning";
 
   }
@@ -4061,7 +4010,6 @@ function checkWaist() {
   else {
 
     category = "High Central Adiposity Risk";
-
     status = "danger";
 
   }
@@ -4069,19 +4017,19 @@ function checkWaist() {
   showHealthResult(
     "waistResult",
     "📏 " + category,
-    `Waist: ${waist} cm<br>
-     Height: ${height} cm<br>
-     Ratio: ${ratio.toFixed(2)}<br>
-     General guide: Keep your waist below half your height.`,
+    "Waist: <strong>" + waist +
+    " cm</strong><br>Height: " + height +
+    " cm<br>Ratio: <strong>" + ratio.toFixed(2) +
+    "</strong><br>General guide: Keep your waist below half your height. This is a screening guide, not a diagnosis.",
     status
   );
 
 }
 
 
-// ==========================================
-// 8. TOTAL CHOLESTEROL
-// ==========================================
+/* =========================================
+   8. TOTAL CHOLESTEROL
+========================================= */
 
 function checkCholesterol() {
 
@@ -4120,7 +4068,6 @@ function checkCholesterol() {
     if (value < 170) {
 
       category = "Acceptable";
-
       status = "normal";
 
     }
@@ -4128,7 +4075,6 @@ function checkCholesterol() {
     else if (value < 200) {
 
       category = "Borderline High";
-
       status = "warning";
 
     }
@@ -4136,7 +4082,6 @@ function checkCholesterol() {
     else {
 
       category = "High";
-
       status = "danger";
 
     }
@@ -4148,7 +4093,6 @@ function checkCholesterol() {
     if (value < 200) {
 
       category = "Desirable";
-
       status = "normal";
 
     }
@@ -4156,7 +4100,6 @@ function checkCholesterol() {
     else if (value < 240) {
 
       category = "Borderline High";
-
       status = "warning";
 
     }
@@ -4164,7 +4107,6 @@ function checkCholesterol() {
     else {
 
       category = "High";
-
       status = "danger";
 
     }
@@ -4174,87 +4116,91 @@ function checkCholesterol() {
   showHealthResult(
     "cholResult",
     "🧪 " + category,
-    `Total Cholesterol: ${value} mg/dL<br>
-     Age: ${profile.age} years<br>
-     A complete lipid profile (LDL, HDL and triglycerides) is needed for proper cardiovascular risk assessment.`,
+    "Total Cholesterol: <strong>" + value +
+    " mg/dL</strong><br>Age: " + profile.age +
+    " years<br>A complete lipid profile (LDL, HDL and triglycerides) is needed for proper cardiovascular risk assessment.",
     status
   );
 
 }
 
 
-// ==========================================
-// PROFESSIONAL CLEAR HEALTH PROFILE
-// ==========================================
+/* =========================================
+   PROFESSIONAL CLEAR PROFILE
+========================================= */
 
 function clearHealthProfile() {
 
-  // Professional confirmation dialog
-  const dialog = document.getElementById("clearProfileDialog");
+  const dialog = $("clearProfileDialog");
 
-  if (!dialog) {
-    alert("Confirmation dialog is missing.");
-    return;
-  }
+  if (!dialog) return;
 
   dialog.hidden = false;
-  dialog.classList.add("show");
 
 }
 
-// ==========================================
-// CANCEL CLEAR PROFILE
-// ==========================================
+
+/* =========================================
+   CANCEL CLEAR PROFILE
+========================================= */
 
 function cancelClearProfile() {
 
-  const dialog = document.getElementById("clearProfileDialog");
+  const dialog = $("clearProfileDialog");
 
   if (dialog) {
-    dialog.classList.remove("show");
     dialog.hidden = true;
   }
 
 }
 
-// ==========================================
-// CONFIRM CLEAR PROFILE
-// ==========================================
+
+/* =========================================
+   CONFIRM CLEAR PROFILE
+========================================= */
 
 function confirmClearProfile() {
 
-  // Close dialog
+  try {
+
+    localStorage.removeItem(HEALTH_PROFILE_KEY);
+
+  } catch (error) {
+
+    console.error("Profile removal error:",error);
+
+    alert("Unable to clear your saved profile. Please check browser storage settings.");
+
+    return;
+
+  }
+
   cancelClearProfile();
 
-  // Remove saved profile
-  localStorage.removeItem(HEALTH_PROFILE_KEY);
-
-  // Reset gender
   selectedHealthGender = "";
 
-  // Hide saved profile
-  const savedCard = $("savedHealthProfile");
+  /* Clear profile fields */
 
-  if (savedCard) savedCard.hidden = true;
+  $("healthAge").value = "";
 
-  // Hide calculators
-  const calculators = $("healthCalculators");
+  hideProfileError();
 
-  if (calculators) calculators.hidden = true;
-
-  // Clear age
-  const ageInput = $("healthAge");
-
-  if (ageInput) ageInput.value = "";
-
-  // Reset gender buttons
   document.querySelectorAll(
-    "#healthProfileModal .gender-option"
+    "#health-checker .gender-option"
   ).forEach(button => {
+
     button.classList.remove("selected");
+
+    button.setAttribute("aria-pressed","false");
+
   });
 
-  // Clear all checker fields and results
+  /* Clear BMI */
+
+  clearHealthBMI();
+
+  /* Clear remaining checkers */
+
   [
     "bp",
     "sugar",
@@ -4265,43 +4211,29 @@ function confirmClearProfile() {
     "chol"
   ].forEach(prefix => clearCheck(prefix));
 
-// Clear BMI data
-clearBMI();
+  /* Clear pregnancy */
 
-// Clear Pregnancy data
-clearPregnancy();
+  clearPregnancy();
 
-  // Open profile setup again
+  /* Hide saved profile and calculators */
+
+  $("savedHealthProfile").hidden = true;
+
+  $("healthCalculators").hidden = true;
+
+  /* Reopen profile setup */
+
   openHealthProfile();
 
 }
 
-// Make functions globally available
-window.clearHealthProfile = clearHealthProfile;
-window.cancelClearProfile = cancelClearProfile;
-window.confirmClearProfile = confirmClearProfile;
 
-</script>
+/* =====================================================
+   9. PREGNANCY WEEK COUNTER ENGINE
+===================================================== */
 
 
-</script>
-
-
-<!-- PREGNANCY WEEK COUNTER ENGINE -->
-
-<script>
-(function () {
-
-"use strict";
-
-let pregnancyMode = "lmp";
-
-const pg = id => document.getElementById(id);
-
-
-// ======================================
-// DATE HELPERS
-// ======================================
+/* DATE HELPERS */
 
 function pgDate(value) {
 
@@ -4312,18 +4244,19 @@ function pgDate(value) {
   if (parts.length !== 3) return null;
 
   const date = new Date(
-    Date.UTC(parts[0], parts[1] - 1, parts[2])
+    Date.UTC(parts[0],parts[1]-1,parts[2])
   );
 
   if (
     date.getUTCFullYear() !== parts[0] ||
-    date.getUTCMonth() !== parts[1] - 1 ||
+    date.getUTCMonth() !== parts[1]-1 ||
     date.getUTCDate() !== parts[2]
   ) return null;
 
   return date;
 
 }
+
 
 function pgToday() {
 
@@ -4337,173 +4270,200 @@ function pgToday() {
 
 }
 
-function pgAddDays(date, days) {
+
+function pgAddDays(date,days) {
 
   const result = new Date(date.getTime());
 
-  result.setUTCDate(result.getUTCDate() + days);
+  result.setUTCDate(result.getUTCDate()+days);
 
   return result;
 
 }
 
-function pgDaysBetween(first, second) {
+
+function pgDaysBetween(first,second) {
 
   return Math.round(
-    (second.getTime() - first.getTime()) / 86400000
+    (second.getTime()-first.getTime())/86400000
   );
 
 }
 
+
 function pgFormatDate(date) {
 
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC"
+  return date.toLocaleDateString("en-GB",{
+    day:"2-digit",
+    month:"short",
+    year:"numeric",
+    timeZone:"UTC"
   });
 
 }
 
 
-// ======================================
-// SWITCH LMP / EDD MODE
-// ======================================
+/* SWITCH LMP / EDD */
 
 function setPregnancyMode(mode) {
 
-  if (!["lmp", "edd"].includes(mode)) return;
+  if (!["lmp","edd"].includes(mode)) return;
 
   pregnancyMode = mode;
 
-  pg("lmpInputBox").hidden = mode !== "lmp";
+  $("lmpInputBox").hidden = mode !== "lmp";
 
-  pg("eddInputBox").hidden = mode !== "edd";
+  $("eddInputBox").hidden = mode !== "edd";
 
-  pg("lmpModeBtn").classList.toggle(
-    "active", mode === "lmp"
+  $("lmpModeBtn").classList.toggle(
+    "active",mode === "lmp"
   );
 
-  pg("eddModeBtn").classList.toggle(
-    "active", mode === "edd"
+  $("eddModeBtn").classList.toggle(
+    "active",mode === "edd"
   );
 
-  pg("pregnancyResult").style.display = "none";
+  $("pregnancyResult").style.display = "none";
 
 }
 
 
-// ======================================
-// BABY DEVELOPMENT INFORMATION
-// Educational weekly milestones
-// ======================================
+/* BABY DEVELOPMENT */
 
 function getPregnancyDevelopment(week) {
 
   if (week < 4) {
+
     return "Very early pregnancy. The embryo is developing and implantation has occurred or is occurring.";
+
   }
 
   if (week < 8) {
+
     return "Early development of the brain, spinal cord and major organs is underway.";
+
   }
 
   if (week < 13) {
+
     return "Major organ structures continue developing. Early fetal movements may begin.";
+
   }
 
   if (week < 18) {
+
     return "The fetus is growing, and bones and muscles continue developing.";
+
   }
 
   if (week < 23) {
+
     return "Hearing and movement development continue. Some pregnant people begin feeling movements.";
+
   }
 
   if (week < 28) {
+
     return "The brain and lungs continue developing. The fetus responds increasingly to sounds.";
+
   }
 
   if (week < 33) {
+
     return "The fetus gains weight, and the brain and lungs continue maturing.";
+
   }
 
   if (week < 37) {
+
     return "The fetus continues gaining weight and preparing for birth.";
+
   }
 
   return "The pregnancy is in the late-term period. The fetus continues preparing for birth.";
+
 }
 
 
-// ======================================
-// CALCULATE PREGNANCY
-// ======================================
+/* CALCULATE PREGNANCY */
 
 function calculatePregnancy() {
 
   const today = pgToday();
 
   let startDate;
+
   let dueDate;
+
   let totalDays;
 
   if (pregnancyMode === "lmp") {
 
     startDate = pgDate(
-      pg("pregnancyLMP").value
+      $("pregnancyLMP").value
     );
 
     if (!startDate) {
+
       alert("Please enter a valid LMP date.");
+
       return;
+
     }
 
     if (startDate > today) {
+
       alert("LMP date cannot be in the future.");
+
       return;
+
     }
 
-    totalDays = pgDaysBetween(startDate, today);
+    totalDays = pgDaysBetween(startDate,today);
 
-    dueDate = pgAddDays(startDate, 280);
+    dueDate = pgAddDays(startDate,280);
 
   }
 
   else {
 
     dueDate = pgDate(
-      pg("pregnancyEDD").value
+      $("pregnancyEDD").value
     );
 
     if (!dueDate) {
+
       alert("Please enter a valid EDD date.");
+
       return;
+
     }
 
-    const daysUntilEDD = pgDaysBetween(today, dueDate);
+    const daysUntilEDD = pgDaysBetween(today,dueDate);
 
-    totalDays = 280 - daysUntilEDD;
+    totalDays = 280-daysUntilEDD;
 
     if (totalDays < 0) {
+
       alert("EDD is too far in the future for this calculation. Please check the date.");
+
       return;
+
     }
 
   }
 
-  const weeks = Math.floor(totalDays / 7);
+  const weeks = Math.floor(totalDays/7);
 
-  const days = totalDays % 7;
+  const days = totalDays%7;
 
-  // Pregnancy progress
   const progress = Math.min(
     100,
-    Math.round((totalDays / 280) * 100)
+    Math.max(0,Math.round((totalDays/280)*100))
   );
 
-  // Trimester
+  /* Trimester */
+
   let trimester;
 
   if (weeks < 14) {
@@ -4524,8 +4484,9 @@ function calculatePregnancy() {
 
   }
 
-  // Remaining days
-  const remaining = pgDaysBetween(today, dueDate);
+  /* Remaining days */
+
+  const remaining = pgDaysBetween(today,dueDate);
 
   let remainingText;
 
@@ -4548,28 +4509,30 @@ function calculatePregnancy() {
 
   }
 
-  // Result display
-  pg("pregnancyWeeks").textContent = weeks;
+  /* Display results */
 
-  pg("pregnancyDays").textContent = days;
+  $("pregnancyWeeks").textContent = weeks;
 
-  pg("pregnancyTrimester").textContent = trimester;
+  $("pregnancyDays").textContent = days;
 
-  pg("pregnancyPercent").textContent = progress + "%";
+  $("pregnancyTrimester").textContent = trimester;
 
-  pg("pregnancyProgressBar").style.width =
-    progress + "%";
+  $("pregnancyPercent").textContent = progress+"%";
 
-  pg("pregnancyDueDate").textContent =
+  $("pregnancyProgressBar").style.width =
+    progress+"%";
+
+  $("pregnancyDueDate").textContent =
     pgFormatDate(dueDate);
 
-  pg("pregnancyRemaining").textContent =
+  $("pregnancyRemaining").textContent =
     remainingText;
 
-  pg("pregnancyDevelopment").textContent =
+  $("pregnancyDevelopment").textContent =
     getPregnancyDevelopment(weeks);
 
-  // Clinical caution
+  /* Clinical caution */
+
   let note =
     "This is an estimate based on a standard 280-day pregnancy. Actual pregnancy dating may differ, especially with irregular menstrual cycles. Ultrasound and healthcare professional assessment may provide more accurate dating.";
 
@@ -4594,59 +4557,124 @@ function calculatePregnancy() {
 
   }
 
-  pg("pregnancyNote").textContent = note;
+  $("pregnancyNote").textContent = note;
 
-  pg("pregnancyResult").style.display = "block";
+  $("pregnancyResult").style.display = "block";
 
-  pg("pregnancyResult").scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
+  $("pregnancyResult").scrollIntoView({
+    behavior:"smooth",
+    block:"nearest"
   });
 
 }
 
 
-// ======================================
-// CLEAR PREGNANCY CALCULATOR
-// ======================================
+/* CLEAR PREGNANCY */
 
 function clearPregnancy() {
 
-  pg("pregnancyLMP").value = "";
+  $("pregnancyLMP").value = "";
 
-  pg("pregnancyEDD").value = "";
+  $("pregnancyEDD").value = "";
 
-  pg("pregnancyResult").style.display = "none";
+  $("pregnancyResult").style.display = "none";
 
-  pg("pregnancyWeeks").textContent = "0";
+  $("pregnancyWeeks").textContent = "0";
 
-  pg("pregnancyDays").textContent = "0";
+  $("pregnancyDays").textContent = "0";
 
-  pg("pregnancyProgressBar").style.width = "0%";
+  $("pregnancyTrimester").textContent = "";
 
-  pg("pregnancyPercent").textContent = "0%";
+  $("pregnancyProgressBar").style.width = "0%";
 
-  pg("pregnancyDueDate").textContent = "—";
+  $("pregnancyPercent").textContent = "0%";
 
-  pg("pregnancyRemaining").textContent = "—";
+  $("pregnancyDueDate").textContent = "—";
+
+  $("pregnancyRemaining").textContent = "—";
+
+  $("pregnancyDevelopment").textContent = "";
+
+  $("pregnancyNote").textContent = "";
 
   setPregnancyMode("lmp");
 
 }
 
 
-// ======================================
-// HTML BUTTON ACCESS
-// ======================================
+/* =====================================================
+   CONNECT ALL BUTTON FUNCTIONS TO HTML
+   IMPORTANT: GLOBAL FUNCTION EXPORTS
+===================================================== */
 
-window.setPregnancyMode = setPregnancyMode;
+Object.assign(window,{
 
-window.calculatePregnancy = calculatePregnancy;
+  selectHealthGender,
+  openHealthProfile,
+  editHealthProfile,
+  saveHealthProfile,
+  cancelHealthProfile,
 
-window.clearPregnancy = clearPregnancy;
+  calculateHealthBMI,
+  clearHealthBMI,
+
+  checkBP,
+  checkSugar,
+  checkHeartRate,
+  checkSpO2,
+  checkTemperature,
+  checkWaist,
+  checkCholesterol,
+
+  clearCheck,
+
+  clearHealthProfile,
+  cancelClearProfile,
+  confirmClearProfile,
+
+  setPregnancyMode,
+  calculatePregnancy,
+  clearPregnancy
+
+});
+
+
+/* =====================================================
+   INITIALIZE WHEN PAGE IS READY
+===================================================== */
+
+if (document.readyState === "loading") {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeHealthChecker,
+    {once:true}
+  );
+
+} else {
+
+  initializeHealthChecker();
+
+}
+
+
+/* BMI HEIGHT CONVERSION LISTENER */
+
+const healthHeightInput = $("hcHeightInches");
+
+if (healthHeightInput) {
+
+  healthHeightInput.addEventListener(
+    "input",
+    convertHealthHeight
+  );
+
+}
 
 })();
 </script>
+
+
 
 
 
