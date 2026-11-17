@@ -1812,6 +1812,51 @@ body[dir="rtl"] .note{
     for clinical assessment.
   </p>
 
+
+
+<!-- PROFESSIONAL CLEAR PROFILE DIALOG -->
+
+<div id="clearProfileDialog"
+     class="clear-profile-overlay"
+     hidden>
+
+  <div class="clear-profile-modal">
+
+    <div class="clear-profile-icon">
+      🗑️
+    </div>
+
+    <h3>Clear Health Profile?</h3>
+
+    <p>
+      Are you sure you want to clear your saved
+      health profile?
+    </p>
+
+    <p class="clear-warning">
+      Your saved age, gender and checker information
+      will be reset.
+    </p>
+
+    <div class="clear-profile-actions">
+
+      <button type="button"
+              class="cancel-clear-btn"
+              onclick="cancelClearProfile()">
+        Cancel
+      </button>
+
+      <button type="button"
+              class="confirm-clear-btn"
+              onclick="confirmClearProfile()">
+        Yes, Clear Profile
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
 </section>
 
 
@@ -2461,6 +2506,111 @@ body[dir="rtl"] .note{
     text-align: left;
   }
 }
+
+
+/* PROFESSIONAL CLEAR PROFILE DIALOG */
+
+.clear-profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(8, 25, 45, 0.65);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.clear-profile-overlay[hidden] {
+  display: none !important;
+}
+
+.clear-profile-modal {
+  width: 100%;
+  max-width: 380px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+  animation: clearPopupIn 0.25s ease;
+}
+
+.clear-profile-icon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #fff1f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.clear-profile-modal h3 {
+  color: #082f49;
+  font-size: 21px;
+  margin: 0 0 12px;
+}
+
+.clear-profile-modal p {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+
+.clear-profile-modal .clear-warning {
+  color: #b45309;
+  background: #fffbeb;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.clear-profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.clear-profile-actions button {
+  flex: 1;
+  min-height: 45px;
+  border: none;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-clear-btn {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.confirm-clear-btn {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.clear-profile-actions button:active {
+  transform: scale(0.97);
+}
+
+@keyframes clearPopupIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 
 
 </style>
@@ -3832,43 +3982,68 @@ function checkCholesterol() {
 
 
 // ==========================================
-// CLEAR HEALTH PROFILE
+// PROFESSIONAL CLEAR HEALTH PROFILE
 // ==========================================
 
 function clearHealthProfile() {
 
-  const confirmClear = confirm(
-    "Are you sure you want to clear your health profile?"
-  );
+  // Professional confirmation dialog
+  const dialog = document.getElementById("clearProfileDialog");
 
-  if (!confirmClear) return;
+  if (!dialog) {
+    alert("Confirmation dialog is missing.");
+    return;
+  }
+
+  dialog.hidden = false;
+  dialog.classList.add("show");
+
+}
+
+// ==========================================
+// CANCEL CLEAR PROFILE
+// ==========================================
+
+function cancelClearProfile() {
+
+  const dialog = document.getElementById("clearProfileDialog");
+
+  if (dialog) {
+    dialog.classList.remove("show");
+    dialog.hidden = true;
+  }
+
+}
+
+// ==========================================
+// CONFIRM CLEAR PROFILE
+// ==========================================
+
+function confirmClearProfile() {
+
+  // Close dialog
+  cancelClearProfile();
 
   // Remove saved profile
   localStorage.removeItem(HEALTH_PROFILE_KEY);
 
-  // Reset selected gender
+  // Reset gender
   selectedHealthGender = "";
 
-  // Hide saved profile card
+  // Hide saved profile
   const savedCard = $("savedHealthProfile");
 
-  if (savedCard) {
-    savedCard.hidden = true;
-  }
+  if (savedCard) savedCard.hidden = true;
 
-  // Hide all health calculators
+  // Hide calculators
   const calculators = $("healthCalculators");
 
-  if (calculators) {
-    calculators.hidden = true;
-  }
+  if (calculators) calculators.hidden = true;
 
-  // Clear age input
+  // Clear age
   const ageInput = $("healthAge");
 
-  if (ageInput) {
-    ageInput.value = "";
-  }
+  if (ageInput) ageInput.value = "";
 
   // Reset gender buttons
   document.querySelectorAll(
@@ -3877,54 +4052,27 @@ function clearHealthProfile() {
     button.classList.remove("selected");
   });
 
-  // Open profile popup again
+  // Clear all checker fields and results
+  [
+    "bp",
+    "sugar",
+    "heart",
+    "spo2",
+    "temp",
+    "waist",
+    "chol"
+  ].forEach(prefix => clearCheck(prefix));
+
+  // Open profile setup again
   openHealthProfile();
 
 }
 
-
-// ==========================================
-// MAKE FUNCTIONS AVAILABLE TO HTML BUTTONS
-// ==========================================
-
-window.selectHealthGender = selectHealthGender;
-
-window.saveHealthProfile = saveHealthProfile;
-
-window.openHealthProfile = openHealthProfile;
-
-window.editHealthProfile = editHealthProfile;
-
+// Make functions globally available
 window.clearHealthProfile = clearHealthProfile;
+window.cancelClearProfile = cancelClearProfile;
+window.confirmClearProfile = confirmClearProfile;
 
-window.calculateBMI = calculateBMI;
-
-window.clearBMI = clearBMI;
-
-window.checkBP = checkBP;
-
-window.checkSugar = checkSugar;
-
-window.checkHeartRate = checkHeartRate;
-
-window.checkSpO2 = checkSpO2;
-
-window.checkTemperature = checkTemperature;
-
-window.checkWaist = checkWaist;
-
-window.checkCholesterol = checkCholesterol;
-
-window.clearCheck = clearCheck;
-
-
-// ==========================================
-// START HEALTH CHECKER SYSTEM
-// ==========================================
-
-initializeHealthChecker();
-
-})();
 </script>
 
 
