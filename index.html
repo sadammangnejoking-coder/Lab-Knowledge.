@@ -1048,110 +1048,461 @@ body[dir="rtl"] .note{
 </section>
 
 
-<!-- BMI CALCULATOR -->
+<!-- ==========================================
+ LAB KNOWLEDGE - COMPLETE HEALTH CHECKERS
+ SHARED AGE & GENDER PROFILE
+ 8 WORKING HEALTH CHECKERS
+========================================== -->
+
 <section class="content-section" id="bmi">
 
-  <h2 id="bmiTitle">⚖️ BMI Calculator</h2>
+  <h2>🩺 Health Checkers</h2>
 
-  <p id="bmiDescription">
-    Calculate Body Mass Index using height and weight.
+  <p>
+    Check your health indicators using your age
+    and gender. Enter your profile once.
   </p>
 
-  <!-- HEIGHT IN INCHES -->
-  <label for="heightInches">Height (Inches)</label>
+  <!-- SHARED PROFILE -->
 
-  <input
-    type="number"
-    id="heightInches"
-    placeholder="Example: 67"
-    min="1"
-    max="100"
-    step="any"
-  >
+  <div class="health-profile"
+       style="padding:18px;background:#eff6ff;
+       border-radius:14px;margin:18px 0;">
 
-  <!-- AUTOMATIC HEIGHT IN CM -->
-  <label for="bmiHeight">
-    Height (cm) - Automatically Calculated
-  </label>
+    <h3>👤 Your Health Profile</h3>
 
-  <input
-    type="number"
-    id="bmiHeight"
-    placeholder="Height in cm"
-    readonly
-  >
+    <label for="healthAge">Age (Years)</label>
+    <input type="number" id="healthAge"
+      placeholder="Enter your age"
+      min="0" max="120" step="0.1">
 
-  <p id="cmConversionResult"></p>
+    <label for="healthGender">Gender</label>
+    <select id="healthGender">
+      <option value="">Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
 
-  <!-- WEIGHT -->
-  <label id="weightLabel" for="bmiWeight">
-    Weight (kg)
-  </label>
-
-  <input
-    type="number"
-    id="bmiWeight"
-    placeholder="Example: 65"
-    min="1"
-    max="500"
-    step="any"
-  >
-
-  <!-- BUTTONS -->
-  <div style="
-    display:flex;
-    gap:12px;
-    margin-top:15px;
-  ">
-
-    <button
-      type="button"
-      class="action-btn"
-      id="calculateBMIBtn"
-      onclick="calculateBMI()"
-      style="flex:1;"
-    >
-      Calculate BMI
-    </button>
-
-    <button
-      type="button"
-      class="action-btn"
-      id="clearBMIBtn"
-      onclick="clearBMI()"
-      style="
-        flex:1;
-        background:#64748b;
-      "
-    >
-      ↻ Clear
-    </button>
+    <p style="font-size:12px;color:#475569;">
+      Your age and gender will be used by all
+      health checkers.
+    </p>
 
   </div>
 
-  <!-- RESULT -->
-  <div
-    id="bmiResult"
-    class="result-box"
-    style="display:none"
-    aria-live="polite"
-  ></div>
+  <!-- CHECKER 1: BMI -->
 
-  <p class="warning-note" id="bmiWarning">
-    BMI is a screening measure, not a diagnosis.
-    Adult BMI categories are not intended for children,
-    pregnancy or every clinical situation.
+  <div class="health-card">
+
+    <h3>⚖️ 1. BMI Calculator</h3>
+
+    <label for="heightInches">Height (Inches)</label>
+    <input type="number" id="heightInches"
+      placeholder="Example: 67" min="1" max="100">
+
+    <label for="bmiHeight">Height (cm)</label>
+    <input type="number" id="bmiHeight" readonly>
+
+    <p id="cmConversionResult"></p>
+
+    <label for="bmiWeight">Weight (kg)</label>
+    <input type="number" id="bmiWeight"
+      placeholder="Example: 65" min="1" max="500">
+
+    <button class="action-btn"
+      type="button" onclick="calculateBMI()">
+      Calculate BMI
+    </button>
+
+    <button class="action-btn"
+      type="button" onclick="clearBMI()">
+      ↻ Clear
+    </button>
+
+    <div id="bmiResult" class="result-box"
+      style="display:none" aria-live="polite"></div>
+
+  </div>
+
+  <!-- CHECKER 2: BLOOD PRESSURE -->
+
+  <div class="health-card">
+
+    <h3>❤️ 2. Blood Pressure Checker</h3>
+
+    <label for="bpSys">Systolic (mmHg)</label>
+    <input type="number" id="bpSys"
+      placeholder="Example: 120">
+
+    <label for="bpDia">Diastolic (mmHg)</label>
+    <input type="number" id="bpDia"
+      placeholder="Example: 80">
+
+    <button class="action-btn"
+      onclick="checkBP()" type="button">
+      Check Blood Pressure
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('bp')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="bpResult" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <!-- CHECKER 3: BLOOD SUGAR -->
+
+  <div class="health-card">
+
+    <h3>🩸 3. Blood Sugar Checker</h3>
+
+    <label for="sugarType">Test Type</label>
+
+    <select id="sugarType">
+      <option value="fasting">Fasting Blood Sugar</option>
+      <option value="random">Random Blood Sugar</option>
+      <option value="post">2 Hours After Meal</option>
+    </select>
+
+    <label for="sugarValue">Blood Sugar (mg/dL)</label>
+    <input type="number" id="sugarValue"
+      placeholder="Enter glucose value">
+
+    <button class="action-btn"
+      onclick="checkSugar()" type="button">
+      Check Blood Sugar
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('sugar')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="sugarResult" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <!-- CHECKER 4: HEART RATE -->
+
+  <div class="health-card">
+
+    <h3>💓 4. Heart Rate Checker</h3>
+
+    <label for="heartRate">Pulse (BPM)</label>
+    <input type="number" id="heartRate"
+      placeholder="Example: 75">
+
+    <button class="action-btn"
+      onclick="checkHeartRate()" type="button">
+      Check Heart Rate
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('heart')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="heartResult" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <!-- CHECKER 5: SPO2 -->
+
+  <div class="health-card">
+
+    <h3>🫁 5. Oxygen Saturation Checker</h3>
+
+    <label for="spo2Value">SpO₂ (%)</label>
+    <input type="number" id="spo2Value"
+      placeholder="Example: 98" min="50" max="100">
+
+    <button class="action-btn"
+      onclick="checkSpO2()" type="button">
+      Check SpO₂
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('spo2')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="spo2Result" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <!-- CHECKER 6: TEMPERATURE -->
+
+  <div class="health-card">
+
+    <h3>🌡️ 6. Body Temperature Checker</h3>
+
+    <label for="tempValue">Temperature</label>
+    <input type="number" id="tempValue"
+      placeholder="Example: 37" step="0.1">
+
+    <label for="tempUnit">Unit</label>
+    <select id="tempUnit">
+      <option value="C">Celsius (°C)</option>
+      <option value="F">Fahrenheit (°F)</option>
+    </select>
+
+    <button class="action-btn"
+      onclick="checkTemperature()" type="button">
+      Check Temperature
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('temp')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="tempResult" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <!-- CHECKER 7: WAIST RATIO -->
+
+  <div class="health-card">
+
+    <h3>📏 7. Waist-to-Height Ratio</h3>
+
+    <label for="waistValue">Waist Circumference (cm)</label>
+    <input type="number" id="waistValue"
+      placeholder="Example: 85">
+
+    <label for="waistHeight">Height (cm)</label>
+    <input type="number" id="waistHeight"
+      placeholder="Example: 170">
+
+    <button class="action-btn"
+      onclick="checkWaist()" type="button">
+      Calculate Ratio
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('waist')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="waistResult" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <!-- CHECKER 8: CHOLESTEROL -->
+
+  <div class="health-card">
+
+    <h3>🧪 8. Cholesterol Checker</h3>
+
+    <label for="cholValue">
+      Total Cholesterol (mg/dL)
+    </label>
+
+    <input type="number" id="cholValue"
+      placeholder="Example: 180">
+
+    <button class="action-btn"
+      onclick="checkCholesterol()" type="button">
+      Check Cholesterol
+    </button>
+
+    <button class="action-btn"
+      onclick="clearCheck('chol')" type="button">
+      ↻ Clear
+    </button>
+
+    <div id="cholResult" class="result-box"
+      style="display:none"></div>
+
+  </div>
+
+  <p class="warning-note">
+    Medical Disclaimer: These tools provide
+    educational screening information only.
+    They cannot diagnose medical conditions.
+    Consult a qualified healthcare professional
+    for clinical assessment.
   </p>
 
 </section>
 
 
+<style>
+
+/* HEALTH CHECKER DESIGN */
+
+.health-card {
+  background: var(--card-bg, #ffffff);
+  padding: 18px;
+  margin: 18px 0;
+  border-radius: 16px;
+  border: 1px solid #dbeafe;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.health-card h3 {
+  color: #075985;
+  margin-bottom: 15px;
+}
+
+.health-card label {
+  display: block;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.health-card input,
+.health-card select,
+.health-profile input,
+.health-profile select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  font-size: 15px;
+}
+
+.health-card .action-btn {
+  margin-top: 12px;
+  margin-right: 5px;
+}
+
+.health-card .result-box {
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+  background: #f0f9ff;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.health-card .result-box h4 {
+  margin: 0 0 8px;
+}
+
+.health-profile h3 {
+  color: #075985;
+}
+
+@media(max-width:480px) {
+  .health-card {
+    padding: 14px;
+  }
+}
+
+</style>
+
+
 <script>
 
-// ======================================
-// LAB KNOWLEDGE - BMI CALCULATOR
-// PROFESSIONAL BMI + WEIGHT DIFFERENCE
-// ======================================
+// ==========================================
+// LAB KNOWLEDGE - HEALTH CHECKER ENGINE
+// SHARED AGE & GENDER PROFILE
+// ==========================================
+
+"use strict";
+
+function getProfile() {
+
+  const age = Number(
+    document.getElementById("healthAge").value
+  );
+
+  const gender =
+    document.getElementById("healthGender").value;
+
+  if (
+    document.getElementById("healthAge").value === "" ||
+    !Number.isFinite(age) ||
+    age < 0 || age > 120 ||
+    !gender
+  ) {
+    alert("Please enter valid age and select gender.");
+    return null;
+  }
+
+  return { age, gender };
+}
+
+
+// ==========================================
+// RESULT DISPLAY
+// ==========================================
+
+function showHealthResult(id, title, message, status) {
+
+  const box = document.getElementById(id);
+
+  const colors = {
+    normal: "#0f766e",
+    warning: "#d97706",
+    danger: "#be123c",
+    info: "#0369a1"
+  };
+
+  box.style.display = "block";
+
+  box.innerHTML = `
+    <h4 style="color:${colors[status] || colors.info}">
+      ${title}
+    </h4>
+    <div>${message}</div>
+  `;
+}
+
+
+// ==========================================
+// CLEAR CHECKER
+// ==========================================
+
+function clearCheck(prefix) {
+
+  const fields = {
+    bp: ["bpSys", "bpDia"],
+    sugar: ["sugarValue"],
+    heart: ["heartRate"],
+    spo2: ["spo2Value"],
+    temp: ["tempValue"],
+    waist: ["waistValue", "waistHeight"],
+    chol: ["cholValue"]
+  };
+
+  (fields[prefix] || []).forEach(id => {
+    document.getElementById(id).value = "";
+  });
+
+  const resultIds = {
+    bp: "bpResult",
+    sugar: "sugarResult",
+    heart: "heartResult",
+    spo2: "spo2Result",
+    temp: "tempResult",
+    waist: "waistResult",
+    chol: "cholResult"
+  };
+
+  const result = document.getElementById(
+    resultIds[prefix]
+  );
+
+  result.innerHTML = "";
+  result.style.display = "none";
+}
+
+
+// ==========================================
+// 1. BMI CALCULATOR
+// ==========================================
 
 const heightInchesInput =
   document.getElementById("heightInches");
@@ -1159,30 +1510,20 @@ const heightInchesInput =
 const bmiHeightInput =
   document.getElementById("bmiHeight");
 
-const bmiWeightInput =
-  document.getElementById("bmiWeight");
-
-const cmConversionResult =
-  document.getElementById("cmConversionResult");
-
-const bmiResult =
-  document.getElementById("bmiResult");
-
-
-// INCHES TO CM CONVERSION
-
 heightInchesInput.addEventListener("input", function() {
 
-  const inches = parseFloat(this.value);
+  const inches = Number(this.value);
 
   if (
-    !this.value ||
+    this.value === "" ||
     !Number.isFinite(inches) ||
     inches <= 0 ||
     inches > 100
   ) {
     bmiHeightInput.value = "";
-    cmConversionResult.textContent = "";
+    document.getElementById(
+      "cmConversionResult"
+    ).textContent = "";
     return;
   }
 
@@ -1190,202 +1531,593 @@ heightInchesInput.addEventListener("input", function() {
 
   bmiHeightInput.value = cm.toFixed(2);
 
-  cmConversionResult.textContent =
+  document.getElementById(
+    "cmConversionResult"
+  ).textContent =
     "Height converted: " + cm.toFixed(2) + " cm";
 
 });
 
 
-// BMI CALCULATION
-
 function calculateBMI() {
 
-  const height = parseFloat(bmiHeightInput.value);
-  const weight = parseFloat(bmiWeightInput.value);
+  const profile = getProfile();
+  if (!profile) return;
+
+  const height = Number(bmiHeightInput.value);
+  const weight = Number(
+    document.getElementById("bmiWeight").value
+  );
 
   if (
     !Number.isFinite(height) ||
     !Number.isFinite(weight) ||
-    height <= 0 ||
-    weight <= 0 ||
-    weight > 500
+    height < 30 || height > 250 ||
+    weight <= 0 || weight > 500
   ) {
-
-    bmiResult.style.display = "block";
-
-    bmiResult.innerHTML =
-      "<h3>Please enter valid height and weight.</h3>";
-
+    alert("Please enter valid height and weight.");
     return;
   }
 
-  const heightMeters = height / 100;
+  const hm = height / 100;
+  const bmi = weight / (hm * hm);
 
-  const bmi =
-    weight / (heightMeters * heightMeters);
+  let message = "";
+  let status = "info";
 
-  const minWeight =
-    18.5 * heightMeters * heightMeters;
+  if (profile.age < 2) {
 
-  const maxWeight =
-    25.0 * heightMeters * heightMeters;
+    message =
+      "BMI classification is not appropriate for children under 2 years. Use an appropriate infant growth assessment.";
 
-  let category = "";
-  let categoryColor = "";
-  let differenceText = "";
-  let differenceColor = "";
-  let differenceDescription = "";
+  } else if (profile.age < 20) {
 
-
-  // UNDERWEIGHT
-
-  if (bmi < 18.5) {
-
-    category = "Underweight";
-    categoryColor = "#0284c7";
-
-    const difference = minWeight - weight;
-
-    differenceText =
-      "+" + difference.toFixed(1) + " kg";
-
-    differenceColor = "#0284c7";
-
-    differenceDescription =
-      "Weight needed to reach normal BMI range";
-
-
-  // NORMAL WEIGHT
-
-  } else if (bmi < 25.0) {
-
-    category = "Normal Weight";
-    categoryColor = "#0f766e";
-
-    differenceText = "Healthy Range";
-
-    differenceColor = "#0f766e";
-
-    differenceDescription =
-      "Your weight is within the healthy BMI range";
-
-
-  // OVERWEIGHT
-
-  } else if (bmi < 30) {
-
-    category = "Overweight";
-    categoryColor = "#d97706";
-
-    const difference = weight - maxWeight;
-
-    differenceText =
-      "+" + difference.toFixed(1) + " kg";
-
-    differenceColor = "#d97777";
-
-    differenceDescription =
-      "Above the healthy weight range";
-
-
-  // OBESITY
+    message =
+      "BMI: " + bmi.toFixed(2) +
+      ". Children and adolescents require BMI-for-age percentiles based on age and sex. Adult BMI categories must not be used.";
 
   } else {
 
-    category = "Obesity";
-    categoryColor = "#be123c";
+    let category;
 
-    const difference = weight - maxWeight;
+    if (bmi < 18.5) {
+      category = "Underweight";
+      status = "warning";
+    } else if (bmi < 25) {
+      category = "Normal Weight";
+      status = "normal";
+    } else if (bmi < 30) {
+      category = "Overweight";
+      status = "warning";
+    } else {
+      category = "Obesity";
+      status = "danger";
+    }
 
-    differenceText =
-      "+" + difference.toFixed(1) + " kg";
+    const min = 18.5 * hm * hm;
+    const max = 24.9 * hm * hm;
 
-    differenceColor = "#d97777";
-
-    differenceDescription =
-      "Above the healthy weight range";
-
+    message = `
+      BMI: <strong>${bmi.toFixed(2)}</strong><br>
+      Category: <strong>${category}</strong><br>
+      Reference healthy weight range:
+      ${min.toFixed(1)} - ${max.toFixed(1)} kg
+    `;
   }
 
-
-  // DISPLAY BMI RESULT
-
-  bmiResult.style.display = "block";
-
-  bmiResult.innerHTML = `
-
-    <h3>⚖️ Your BMI Result</h3>
-
-    <div class="bmi-score">
-      ${bmi.toFixed(2)}
-    </div>
-
-    <div class="bmi-category"
-         style="color:${categoryColor}">
-      ${category}
-    </div>
-
-    <div style="
-      text-align:center;
-      margin:8px 0 18px;
-    ">
-
-      <div style="
-        font-size:25px;
-        font-weight:700;
-        color:${differenceColor};
-      ">
-        ${differenceText}
-      </div>
-
-      <div style="
-        font-size:13px;
-        color:#64748b;
-        margin-top:4px;
-      ">
-        ${differenceDescription}
-      </div>
-
-    </div>
-
-    <div class="healthy-range">
-
-      <strong>Healthy Weight Range</strong>
-
-      <br>
-
-      ${minWeight.toFixed(1)} -
-      ${maxWeight.toFixed(1)} kg
-
-    </div>
-
-    <p style="
-      margin-top:15px;
-      font-size:13px;
-    ">
-      BMI is a screening tool, not a medical diagnosis.
-    </p>
-
-  `;
+  showHealthResult(
+    "bmiResult",
+    "⚖️ BMI Assessment",
+    message,
+    status
+  );
 
 }
 
 
-// CLEAR BMI
-
 function clearBMI() {
 
-  heightInchesInput.value = "";
-
+  document.getElementById("heightInches").value = "";
   bmiHeightInput.value = "";
+  document.getElementById("bmiWeight").value = "";
 
-  bmiWeightInput.value = "";
+  document.getElementById(
+    "cmConversionResult"
+  ).textContent = "";
 
-  cmConversionResult.textContent = "";
+  const result = document.getElementById("bmiResult");
+  result.innerHTML = "";
+  result.style.display = "none";
 
-  bmiResult.innerHTML = "";
+}
 
-  bmiResult.style.display = "none";
+
+// ==========================================
+// 2. BLOOD PRESSURE
+// Adult AHA screening categories
+// ==========================================
+
+function checkBP() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const sys = Number(
+    document.getElementById("bpSys").value
+  );
+
+  const dia = Number(
+    document.getElementById("bpDia").value
+  );
+
+  if (
+    !Number.isFinite(sys) ||
+    !Number.isFinite(dia) ||
+    sys < 50 || sys > 300 ||
+    dia < 30 || dia > 200
+  ) {
+    alert("Please enter valid BP readings.");
+    return;
+  }
+
+  if (sys <= dia) {
+    alert("Systolic pressure should be higher than diastolic pressure.");
+    return;
+  }
+
+  if (profile.age < 18) {
+
+    showHealthResult(
+      "bpResult",
+      "Pediatric BP Assessment",
+      "Children and adolescents require age, sex and height-percentile-specific BP references. Please consult a pediatric healthcare professional.",
+      "info"
+    );
+    return;
+  }
+
+  let category;
+  let status;
+
+  if (sys >= 180 || dia >= 120) {
+    category = "Severely High Blood Pressure";
+    status = "danger";
+  } else if (sys >= 140 || dia >= 90) {
+    category = "Stage 2 Hypertension Range";
+    status = "danger";
+  } else if (sys >= 130 || dia >= 80) {
+    category = "Stage 1 Hypertension Range";
+    status = "warning";
+  } else if (sys >= 120 && dia < 80) {
+    category = "Elevated Blood Pressure";
+    status = "warning";
+  } else if (sys < 90 || dia < 60) {
+    category = "Low Blood Pressure Reading";
+    status = "warning";
+  } else {
+    category = "Normal Range";
+    status = "normal";
+  }
+
+  let advice =
+    "Rest quietly and repeat the measurement using a properly fitted cuff.";
+
+  if (sys >= 180 || dia >= 120) {
+    advice =
+      "Repeat after at least one minute. Seek immediate medical advice. If chest pain, breathlessness, weakness, vision changes or neurological symptoms occur, seek emergency care immediately.";
+  }
+
+  showHealthResult(
+    "bpResult",
+    "❤️ " + category,
+    `Reading: ${sys}/${dia} mmHg<br>${advice}`,
+    status
+  );
+
+}
+
+
+// ==========================================
+// 3. BLOOD SUGAR
+// Screening thresholds in mg/dL
+// ==========================================
+
+function checkSugar() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const value = Number(
+    document.getElementById("sugarValue").value
+  );
+
+  const type =
+    document.getElementById("sugarType").value;
+
+  if (
+    !Number.isFinite(value) ||
+    value <= 0 || value > 1000
+  ) {
+    alert("Please enter a valid glucose reading.");
+    return;
+  }
+
+  let category;
+  let status;
+  let advice = "";
+
+  if (value < 70) {
+
+    category = "Low Blood Sugar";
+    status = "danger";
+    advice = "If conscious and able to swallow, take 15 g of fast-acting carbohydrate and recheck after 15 minutes. Severe symptoms require emergency care.";
+
+  } else if (type === "fasting") {
+
+    if (value < 100) {
+      category = "Normal Fasting Range";
+      status = "normal";
+    } else if (value < 126) {
+      category = "Prediabetes Range";
+      status = "warning";
+    } else {
+      category = "Diabetes Range";
+      status = "danger";
+    }
+
+  } else if (type === "post") {
+
+    if (value < 140) {
+      category = "Below 140 mg/dL";
+      status = "normal";
+    } else if (value < 200) {
+      category = "Elevated Post-meal Reading";
+      status = "warning";
+    } else {
+      category = "High Post-meal Reading";
+      status = "danger";
+    }
+
+  } else {
+
+    if (value < 200) {
+      category = "Interpretation Depends on Context";
+      status = "info";
+    } else {
+      category = "High Random Glucose";
+      status = "danger";
+      advice = "A random glucose of 200 mg/dL or higher with classic symptoms needs prompt clinical assessment.";
+    }
+
+  }
+
+  if (!advice) {
+    advice =
+      "A single home glucose reading cannot diagnose diabetes. Confirm abnormal results with laboratory testing and clinical assessment.";
+  }
+
+  showHealthResult(
+    "sugarResult",
+    "🩸 " + category,
+    `Glucose: ${value} mg/dL<br>
+     Age: ${profile.age} years<br>${advice}`,
+    status
+  );
+
+}
+
+
+// ==========================================
+// 4. HEART RATE
+// Approximate resting pulse reference bands
+// ==========================================
+
+function checkHeartRate() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const pulse = Number(
+    document.getElementById("heartRate").value
+  );
+
+  if (
+    !Number.isFinite(pulse) ||
+    pulse < 20 || pulse > 250
+  ) {
+    alert("Please enter a valid pulse.");
+    return;
+  }
+
+  let low, high;
+
+  if (profile.age < 1) {
+    low = 100; high = 160;
+  } else if (profile.age < 3) {
+    low = 90; high = 150;
+  } else if (profile.age < 6) {
+    low = 80; high = 140;
+  } else if (profile.age < 13) {
+    low = 70; high = 120;
+  } else {
+    low = 60; high = 100;
+  }
+
+  let category;
+  let status;
+
+  if (pulse < low) {
+    category = "Below Typical Resting Range";
+    status = "warning";
+  } else if (pulse > high) {
+    category = "Above Typical Resting Range";
+    status = "warning";
+  } else {
+    category = "Within Typical Resting Range";
+    status = "normal";
+  }
+
+  showHealthResult(
+    "heartResult",
+    "💓 " + category,
+    `Pulse: ${pulse} BPM<br>
+     Approximate reference: ${low}-${high} BPM<br>
+     Check while resting. Symptoms such as fainting, chest pain or breathlessness need urgent assessment.`,
+    status
+  );
+
+}
+
+
+// ==========================================
+// 5. SPO2 CHECKER
+// ==========================================
+
+function checkSpO2() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const value = Number(
+    document.getElementById("spo2Value").value
+  );
+
+  if (
+    !Number.isFinite(value) ||
+    value < 50 || value > 100
+  ) {
+    alert("Enter SpO2 between 50 and 100.");
+    return;
+  }
+
+  let category;
+  let status;
+  let advice;
+
+  if (value <= 91) {
+    category = "Low Oxygen Saturation";
+    status = "danger";
+    advice = "Seek urgent medical assessment. If severe breathlessness, blue lips or confusion occur, seek emergency care.";
+  } else if (value <= 94) {
+    category = "Below Expected Range";
+    status = "warning";
+    advice = "Repeat measurement and contact a healthcare professional promptly.";
+  } else {
+    category = "Typical Range at Sea Level";
+    status = "normal";
+    advice = "Compare with your usual reading and clinical condition.";
+  }
+
+  showHealthResult(
+    "spo2Result",
+    "🫁 " + category,
+    `SpO₂: ${value}%<br>
+     Age: ${profile.age} years<br>
+     ${advice}<br>
+     Note: Altitude and chronic lung conditions may change interpretation.`,
+    status
+  );
+
+}
+
+
+// ==========================================
+// 6. TEMPERATURE CHECKER
+// ==========================================
+
+function checkTemperature() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const value = Number(
+    document.getElementById("tempValue").value
+  );
+
+  const unit =
+    document.getElementById("tempUnit").value;
+
+  if (!Number.isFinite(value)) {
+    alert("Please enter temperature.");
+    return;
+  }
+
+  const celsius =
+    unit === "F" ? (value - 32) * 5 / 9 : value;
+
+  if (celsius < 25 || celsius > 45) {
+    alert("Please check the temperature reading.");
+    return;
+  }
+
+  let category;
+  let status;
+  let advice;
+
+  if (celsius < 35) {
+    category = "Low Body Temperature";
+    status = "danger";
+    advice = "Possible hypothermia. Seek emergency medical care.";
+  } else if (profile.age < 0.25 && celsius >= 38) {
+    category = "Fever in Young Infant";
+    status = "danger";
+    advice = "A baby under 3 months with temperature of 38°C or higher needs urgent medical assessment.";
+  } else if (celsius >= 38) {
+    category = "Fever";
+    status = "warning";
+    advice = "Monitor symptoms, maintain hydration and seek medical advice when needed.";
+  } else if (celsius < 36) {
+    category = "Below Typical Temperature";
+    status = "warning";
+    advice = "Repeat measurement and consider clinical assessment if persistent or symptomatic.";
+  } else {
+    category = "Typical Temperature Range";
+    status = "normal";
+    advice = "Interpret according to measurement site and symptoms.";
+  }
+
+  showHealthResult(
+    "tempResult",
+    "🌡️ " + category,
+    `Temperature: ${celsius.toFixed(1)} °C<br>
+     Fahrenheit: ${(celsius * 9 / 5 + 32).toFixed(1)} °F<br>
+     ${advice}`,
+    status
+  );
+
+}
+
+
+// ==========================================
+// 7. WAIST-TO-HEIGHT RATIO
+// Adult screening only
+// ==========================================
+
+function checkWaist() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const waist = Number(
+    document.getElementById("waistValue").value
+  );
+
+  const height = Number(
+    document.getElementById("waistHeight").value
+  );
+
+  if (
+    !Number.isFinite(waist) ||
+    !Number.isFinite(height) ||
+    waist <= 0 || height <= 0 ||
+    waist > 300 || height > 250
+  ) {
+    alert("Enter valid waist and height.");
+    return;
+  }
+
+  if (profile.age < 18) {
+    showHealthResult(
+      "waistResult",
+      "Pediatric Assessment",
+      "Adult waist-to-height screening thresholds are not intended for children. Use pediatric growth assessment.",
+      "info"
+    );
+    return;
+  }
+
+  const ratio = waist / height;
+
+  let category;
+  let status;
+
+  if (ratio < 0.4) {
+    category = "Below General Reference Range";
+    status = "info";
+  } else if (ratio < 0.5) {
+    category = "Generally Lower Central Adiposity Risk";
+    status = "normal";
+  } else if (ratio < 0.6) {
+    category = "Increased Central Adiposity Risk";
+    status = "warning";
+  } else {
+    category = "High Central Adiposity Risk";
+    status = "danger";
+  }
+
+  showHealthResult(
+    "waistResult",
+    "📏 " + category,
+    `Waist: ${waist} cm<br>
+     Height: ${height} cm<br>
+     Ratio: ${ratio.toFixed(2)}<br>
+     General guide: Keep your waist below half your height.`,
+    status
+  );
+
+}
+
+
+// ==========================================
+// 8. TOTAL CHOLESTEROL
+// ==========================================
+
+function checkCholesterol() {
+
+  const profile = getProfile();
+  if (!profile) return;
+
+  const value = Number(
+    document.getElementById("cholValue").value
+  );
+
+  if (
+    !Number.isFinite(value) ||
+    value <= 0 || value > 1000
+  ) {
+    alert("Please enter valid cholesterol.");
+    return;
+  }
+
+  let category;
+  let status;
+
+  if (profile.age < 20) {
+
+    if (value < 170) {
+      category = "Acceptable";
+      status = "normal";
+    } else if (value < 200) {
+      category = "Borderline High";
+      status = "warning";
+    } else {
+      category = "High";
+      status = "danger";
+    }
+
+  } else {
+
+    if (value < 200) {
+      category = "Desirable";
+      status = "normal";
+    } else if (value < 240) {
+      category = "Borderline High";
+      status = "warning";
+    } else {
+      category = "High";
+      status = "danger";
+    }
+
+  }
+
+  showHealthResult(
+    "cholResult",
+    "🧪 " + category,
+    `Total Cholesterol: ${value} mg/dL<br>
+     Age: ${profile.age} years<br>
+     A complete lipid profile (LDL, HDL and triglycerides) is needed for proper cardiovascular risk assessment.`,
+    status
+  );
 
 }
 
