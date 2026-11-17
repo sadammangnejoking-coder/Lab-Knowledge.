@@ -1252,13 +1252,23 @@ body[dir="rtl"] .note{
     </div>
 
     
-<button onclick="editHealthProfile()">
-  ✏️ Edit
-</button>
+<div class="profile-actions">
 
-<button onclick="clearHealthProfile()">
-  🗑️ Clear Profile
-</button>
+  <button
+    type="button"
+    class="profile-btn edit-profile-btn"
+    onclick="editHealthProfile()">
+    <span>✏️</span> Edit Profile
+  </button>
+
+  <button
+    type="button"
+    class="profile-btn clear-profile-btn"
+    onclick="clearHealthProfile()">
+    <span>🗑️</span> Clear Profile
+  </button>
+
+</div>
 
   </div>
 
@@ -2036,6 +2046,67 @@ body[dir="rtl"] .note{
     font-size: 12px;
   }
 
+}
+
+
+/* =====================================
+   HEALTH PROFILE ACTION BUTTONS
+===================================== */
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.profile-btn {
+  flex: 1;
+  min-width: 140px;
+  min-height: 46px;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.edit-profile-btn {
+  color: #075985;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+}
+
+.clear-profile-btn {
+  color: #be123c;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+}
+
+.profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.profile-btn:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 480px) {
+  .profile-actions {
+    flex-direction: column;
+  }
+
+  .profile-btn {
+    width: 100%;
+  }
 }
 
 </style>
