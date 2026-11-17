@@ -957,6 +957,189 @@ body[dir="rtl"] .note{
   }
 }
 
+
+
+/* HEALTH PROFILE DASHBOARD */
+
+.saved-health-profile {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 16px;
+  margin: 18px 0;
+  background: linear-gradient(135deg,#082f49,#075985,#0891b2);
+  color: white;
+  border-radius: 17px;
+  box-shadow: 0 6px 18px rgba(8,47,73,.18);
+}
+
+.saved-health-profile[hidden],
+.health-modal[hidden],
+.health-calculators[hidden] {
+  display: none !important;
+}
+
+.profile-avatar {
+  font-size: 43px;
+  background: white;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h3 {
+  margin: 0 0 5px;
+  color: white;
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.edit-profile-btn {
+  background: white;
+  color: #075985;
+  border: none;
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-weight: bold;
+}
+
+/* PROFILE MODAL */
+
+.health-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(2,15,30,.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.health-modal-content {
+  background: white;
+  width: 100%;
+  max-width: 410px;
+  padding: 25px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(0,0,0,.25);
+}
+
+.profile-modal-icon {
+  font-size: 43px;
+}
+
+.health-modal-content h2 {
+  color: #075985;
+  margin: 10px 0;
+}
+
+.health-modal-content p {
+  color: #64748b;
+}
+
+.health-modal-content label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin-top: 17px;
+}
+
+.health-modal-content input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  margin-top: 7px;
+  font-size: 16px;
+}
+
+.gender-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.gender-option {
+  position: relative;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 15px 8px;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.gender-avatar {
+  font-size: 42px;
+}
+
+.gender-option.selected {
+  border-color: #0891b2;
+  background: #ecfeff;
+  color: #075985;
+}
+
+.gender-check {
+  display: none;
+  color: #0891b2;
+  font-weight: bold;
+}
+
+.gender-option.selected .gender-check {
+  display: block;
+}
+
+.save-profile-btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 22px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(135deg,#075985,#0891b2);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.profile-privacy {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+.health-calculators {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+}
+
+@media(min-width:650px) {
+  .health-calculators {
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+  }
+}
+
+
 </style>
 </head>
 
@@ -1002,7 +1185,7 @@ body[dir="rtl"] .note{
 
   <div class="nav-links" id="navLinks">
    <a href="#home">Home</a>
-   <a href="#bmi">🩺 Health Checkers</a>
+   <a href="#health-checker"> 🩺 Health Checkr </a>
 <a href="#iq">🧠 IQ Practice</a>
    <a href="#morning">Early Warning Signs</a>
    <a href="#abbreviations">Medical Abbreviations</a>
@@ -1054,7 +1237,68 @@ body[dir="rtl"] .note{
  8 WORKING HEALTH CHECKERS
 ========================================== -->
 
-<section class="content-section" id="bmi">
+<section class="content-section" id="health-checker">
+
+
+<!-- SAVED HEALTH PROFILE -->
+<div id="savedHealthProfile" class="saved-health-profile" hidden>
+  <div class="profile-avatar" id="profileAvatar">👨🏻‍⚕️</div>
+  <div class="profile-info">
+    <h3>Your Health Profile</h3>
+    <p id="profileDetails"></p>
+  </div>
+  <button type="button" class="edit-profile-btn"
+    onclick="editHealthProfile()">✏️ Edit</button>
+</div>
+
+<!-- PROFILE POPUP -->
+<div id="healthProfileModal" class="health-modal" hidden>
+  <div class="health-modal-content">
+
+    <div class="profile-modal-icon">🩺</div>
+    <h2>Your Health Profile</h2>
+    <p>Let's personalize your health checkers.</p>
+
+    <label for="healthAge">Your Age (Years)</label>
+    <input type="number" id="healthAge"
+      placeholder="Enter your age"
+      min="0" max="120" step="0.1">
+
+    <label>Select Your Gender</label>
+
+    <div class="gender-options">
+
+      <button type="button" class="gender-option"
+        data-gender="male" onclick="selectHealthGender('male')">
+        <span class="gender-avatar">👨🏻‍⚕️</span>
+        <strong>Male</strong>
+        <span class="gender-check">✓</span>
+      </button>
+
+      <button type="button" class="gender-option"
+        data-gender="female" onclick="selectHealthGender('female')">
+        <span class="gender-avatar">👩🏻‍⚕️</span>
+        <strong>Female</strong>
+        <span class="gender-check">✓</span>
+      </button>
+
+    </div>
+
+    <input type="hidden" id="healthGender">
+
+    <button type="button" class="save-profile-btn"
+      onclick="saveHealthProfile()">
+      Save Profile & Continue →
+    </button>
+
+    <p class="profile-privacy">
+      Your profile is saved on this device.
+    </p>
+
+  </div>
+</div>
+
+
 
   <h2>🩺 Health Checkers</h2>
 
@@ -1089,6 +1333,8 @@ body[dir="rtl"] .note{
     </p>
 
   </div>
+
+<div id="healthCalculators" class="health-calculators" hidden>
 
   <!-- CHECKER 1: BMI -->
 
@@ -1324,6 +1570,9 @@ body[dir="rtl"] .note{
 
   </div>
 
+
+</div>
+
   <p class="warning-note">
     Medical Disclaimer: These tools provide
     educational screening information only.
@@ -1410,29 +1659,198 @@ body[dir="rtl"] .note{
 // SHARED AGE & GENDER PROFILE
 // ==========================================
 
-"use strict";
+
+// ==========================================
+// HEALTH PROFILE - SAVE & LOAD SYSTEM
+// ==========================================
+
+let selectedHealthGender = "";
+
+const HEALTH_PROFILE_KEY = "labKnowledgeHealthProfile";
+
+function selectHealthGender(gender) {
+
+  selectedHealthGender = gender;
+
+  document.querySelectorAll(".gender-option")
+    .forEach(card => {
+      card.classList.toggle(
+        "selected",
+        card.dataset.gender === gender
+      );
+    });
+
+  document.getElementById("healthGender").value = gender;
+}
+
 
 function getProfile() {
 
-  const age = Number(
-    document.getElementById("healthAge").value
-  );
+  const saved = localStorage.getItem(HEALTH_PROFILE_KEY);
 
-  const gender =
-    document.getElementById("healthGender").value;
-
-  if (
-    document.getElementById("healthAge").value === "" ||
-    !Number.isFinite(age) ||
-    age < 0 || age > 120 ||
-    !gender
-  ) {
-    alert("Please enter valid age and select gender.");
+  if (!saved) {
+    alert("Please save your Health Profile first.");
+    openHealthProfile();
     return null;
   }
 
-  return { age, gender };
+  try {
+    const profile = JSON.parse(saved);
+
+    if (
+      !Number.isFinite(profile.age) ||
+      profile.age < 0 ||
+      profile.age > 120 ||
+      !["male","female"].includes(profile.gender)
+    ) {
+      return null;
+    }
+
+    return profile;
+
+  } catch (error) {
+    return null;
+  }
 }
+
+
+function openHealthProfile() {
+
+  const modal = document.getElementById("healthProfileModal");
+
+  const saved = getSavedHealthProfile();
+
+  if (saved) {
+    document.getElementById("healthAge").value = saved.age;
+    selectHealthGender(saved.gender);
+  }
+
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+
+function getSavedHealthProfile() {
+
+  try {
+    return JSON.parse(
+      localStorage.getItem(HEALTH_PROFILE_KEY)
+    );
+  } catch (error) {
+    return null;
+  }
+}
+
+
+function saveHealthProfile() {
+
+  const ageInput = document.getElementById("healthAge");
+  const age = Number(ageInput.value);
+  const gender = selectedHealthGender;
+
+  if (
+    ageInput.value.trim() === "" ||
+    !Number.isFinite(age) ||
+    age < 0 || age > 120
+  ) {
+    alert("Please enter a valid age between 0 and 120.");
+    return;
+  }
+
+  if (!["male","female"].includes(gender)) {
+    alert("Please select Male or Female.");
+    return;
+  }
+
+  const profile = { age, gender };
+
+  try {
+    localStorage.setItem(
+      HEALTH_PROFILE_KEY,
+      JSON.stringify(profile)
+    );
+  } catch (error) {
+    alert("Unable to save profile on this device.");
+    return;
+  }
+
+  updateHealthProfile();
+
+  document.getElementById("healthProfileModal").hidden = true;
+  document.body.style.overflow = "";
+
+  document.getElementById("healthCalculators").hidden = false;
+}
+
+
+function updateHealthProfile() {
+
+  const profile = getSavedHealthProfile();
+
+  if (!profile) return;
+
+  document.getElementById("savedHealthProfile").hidden = false;
+
+  document.getElementById("profileAvatar").textContent =
+    profile.gender === "male" ? "👨🏻‍⚕️" : "👩🏻‍⚕️";
+
+  document.getElementById("profileDetails").textContent =
+    "Age: " + profile.age + " years | Gender: " +
+    (profile.gender === "male" ? "Male" : "Female");
+
+  document.getElementById("healthCalculators").hidden = false;
+}
+
+
+function editHealthProfile() {
+
+  const profile = getSavedHealthProfile();
+
+  if (profile) {
+    document.getElementById("healthAge").value = profile.age;
+    selectHealthGender(profile.gender);
+  }
+
+  openHealthProfile();
+}
+
+
+// ==========================================
+// INITIALIZE HEALTH CHECKER
+// ==========================================
+
+(function initializeHealthChecker() {
+
+  const profile = getSavedHealthProfile();
+
+  if (profile) {
+    updateHealthProfile();
+  } else {
+    document.getElementById("healthCalculators").hidden = true;
+    document.getElementById("savedHealthProfile").hidden = true;
+  }
+
+})();
+
+
+// ==========================================
+// OPEN POPUP WHEN HEALTH CHECKER MENU CLICKED
+// ==========================================
+
+document.addEventListener("click", function(event) {
+
+  const link = event.target.closest(
+    'a[href="#health-checker"]'
+  );
+
+  if (!link) return;
+
+  if (!getSavedHealthProfile()) {
+    setTimeout(openHealthProfile, 100);
+  }
+
+});
+
 
 
 // ==========================================
