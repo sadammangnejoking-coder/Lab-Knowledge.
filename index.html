@@ -7342,138 +7342,113 @@ function initializeReviewSystem() {
   // LOAD REVIEWS FROM FIRESTORE
   // ===================================================
 
-  async function loadReviews() {
+  
+async function loadReviews() {
 
-    container.textContent = "Loading reviews...";
+  container.textContent = "Loading reviews...";
 
-    try {
+  try {
 
-      const snapshot = await getDocs(reviewsRef);
+    const snapshot = await getDocs(reviewsRef);
+    const reviews = [];
 
-      const reviews = [];
+    snapshot.forEach(doc => {
 
-      snapshot.forEach(doc => {
+      const data = doc.data();
 
-        const data = doc.data();
+      // SUPPORT OLD AND NEW FIELD NAMES
 
-        const rating = Number(data.rating);
+      const name = data.name ?? data.Name ?? "Visitor";
+      const comment = data.comment ?? data.Comment ?? "";
+      const rating = Number(data.rating ?? data.Rating);
+      const date = data.date ?? data.Date ?? null;
 
-        if (
-          typeof data.name === "string" &&
-          typeof data.comment === "string" &&
-          Number.isInteger(rating) &&
-          rating >= 1 &&
-          rating <= 5
-        ) {
+      if (
+        Number.isInteger(rating) &&
+        rating >= 1 &&
+        rating <= 5
+      ) {
 
-          reviews.push({
-            name: data.name,
-            rating: rating,
-            comment: data.comment,
-            date: data.date || null
-          });
-
-        }
-
-      });
-
-      // NEWEST REVIEWS FIRST
-
-      reviews.sort((a, b) => {
-
-        const dateA = a.date?.toMillis?.() || 0;
-        const dateB = b.date?.toMillis?.() || 0;
-
-        return dateB - dateA;
-
-      });
-
-      // CALCULATE AVERAGE
-
-      const total = reviews.length;
-
-      const average = total
-        ? reviews.reduce(
-            (sum, review) => sum + review.rating,
-            0
-          ) / total
-        : 0;
-
-      averageElement.textContent =
-        average.toFixed(1) + " / 5";
-
-      const roundedAverage = Math.round(average);
-
-      starsElement.textContent =
-        "★".repeat(roundedAverage) +
-        "☆".repeat(5 - roundedAverage);
-
-      totalElement.textContent =
-        total + (total === 1 ? " Review" : " Reviews");
-
-      // CLEAR OLD REVIEWS
-
-      container.replaceChildren();
-
-      if (total === 0) {
-
-        container.textContent =
-          "No reviews yet. Be the first to review!";
-
-        return;
+        reviews.push({
+          name,
+          comment,
+          rating,
+          date
+        });
 
       }
 
-      // DISPLAY REVIEWS
+    });
 
-      reviews.forEach(review => {
+    reviews.sort((a, b) => {
+      const da = a.date?.toMillis?.() || 0;
+      const db = b.date?.toMillis?.() || 0;
+      return db - da;
+    });
 
-        const card = document.createElement("div");
-        card.className = "lk-review-card";
+    const total = reviews.length;
 
-        const heading = document.createElement("strong");
-        heading.textContent = review.name;
+    const average = total
+      ? reviews.reduce((sum, r) => sum + r.rating, 0) / total
+      : 0;
 
-        const stars = document.createElement("div");
-        stars.className = "lk-stars";
+    averageElement.textContent = average.toFixed(1) + " / 5";
 
-        stars.textContent =
-          "★".repeat(review.rating) +
-          "☆".repeat(5 - review.rating);
+    const rounded = Math.round(average);
 
-        const date = document.createElement("div");
-        date.className = "lk-review-date";
+    starsElement.textContent =
+      "★".repeat(rounded) + "☆".repeat(5 - rounded);
 
-        date.textContent = review.date?.toDate
-          ? review.date.toDate().toLocaleDateString()
-          : "Recently submitted";
+    totalElement.textContent =
+      total + (total === 1 ? " Review" : " Reviews");
 
-        const comment = document.createElement("p");
-        comment.textContent = review.comment;
+    container.replaceChildren();
 
-        card.append(
-          heading,
-          stars,
-          date,
-          comment
-        );
-
-        container.appendChild(card);
-
-      });
-
-      console.log("Reviews successfully loaded:", total);
-
-    } catch (error) {
-
-      console.error("Review loading error:", error);
-
-      container.textContent =
-        "Unable to load reviews. Please refresh the page.";
-
+    if (!total) {
+      container.textContent = "No reviews yet. Be the first!";
+      return;
     }
 
+    reviews.forEach(review => {
+
+      const card = document.createElement("div");
+      card.className = "lk-review-card";
+
+      const heading = document.createElement("strong");
+      heading.textContent = review.name;
+
+      const stars = document.createElement("div");
+      stars.className = "lk-stars";
+      stars.textContent =
+        "★".repeat(review.rating) +
+        "☆".repeat(5 - review.rating);
+
+      const date = document.createElement("div");
+      date.className = "lk-review-date";
+      date.textContent = review.date?.toDate
+        ? review.date.toDate().toLocaleDateString()
+        : "Recently submitted";
+
+      const comment = document.createElement("p");
+      comment.textContent = review.comment;
+
+      card.append(heading, stars, date, comment);
+      container.appendChild(card);
+
+    });
+
+    console.log("Reviews displayed:", total);
+
+  } catch (error) {
+
+    console.error("Review loading error:", error);
+
+    container.textContent =
+      "Unable to load reviews: " + error.message;
+
   }
+
+}
 
   // ===================================================
   // FIXED REVIEW SUBMISSION
