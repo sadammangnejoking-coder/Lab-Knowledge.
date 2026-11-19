@@ -7476,7 +7476,8 @@ function initializeReviewSystem() {
   }
 
   // ===================================================
-  // SUBMIT REVIEW
+  // FIXED REVIEW SUBMISSION
+  // SAVE + CLEAR + STOP LOADING + RELOAD
   // ===================================================
 
   form.addEventListener("submit", async event => {
@@ -7488,128 +7489,83 @@ function initializeReviewSystem() {
     const name = nameInput.value.trim();
     const comment = commentInput.value.trim();
 
-    // VALIDATE NAME
-
     if (name.length < 2 || name.length > 60) {
-
-      showError("Please enter a name between 2 and 60 characters.");
-      nameInput.focus();
+      showError("Please enter a valid name.");
       return;
-
     }
-
-    // VALIDATE COMMENT
 
     if (comment.length < 1 || comment.length > 1000) {
-
-      showError("Please enter a review between 1 and 1000 characters.");
-      commentInput.focus();
+      showError("Please enter your review.");
       return;
-
     }
 
-    // VALIDATE RATING
-
-    if (
-      !Number.isInteger(selectedRating) ||
-      selectedRating < 1 ||
-      selectedRating > 5
-    ) {
-
+    if (!Number.isInteger(selectedRating) ||
+        selectedRating < 1 || selectedRating > 5) {
       showError("Please select your star rating.");
       return;
-
     }
 
-    // START SUBMISSION
-
     isSubmitting = true;
-
     submitButton.disabled = true;
     submitButton.textContent = "Submitting...";
-
     message.textContent = "";
+
+    let saved = false;
 
     try {
 
-      console.log("Submitting visitor review...");
-
-      // SAVE TO FIRESTORE
+      // SAVE REVIEW TO FIRESTORE
 
       const docRef = await addDoc(reviewsRef, {
-
         name: name,
         rating: selectedRating,
         comment: comment,
         date: serverTimestamp()
-
       });
 
-      console.log("Review saved successfully:", docRef.id);
+      console.log("Review permanently saved:", docRef.id);
 
-      // RESET FORM ONLY AFTER SUCCESS
+      saved = true;
+
+      // CLEAR FORM IMMEDIATELY
 
       form.reset();
 
       selectedRating = 0;
-
       updateStars();
 
       message.style.color = "#15803d";
-
       message.textContent =
-        "Thank you! Your review was submitted successfully.";
-
-      // RELOAD REVIEWS
-
-      await loadReviews();
-
-      // RESTORE SUCCESS MESSAGE
-
-      message.style.color = "#15803d";
-
-      message.textContent =
-        "Thank you! Your review was submitted successfully.";
+        "Thank you! Your review has been submitted successfully.";
 
     } catch (error) {
 
-      console.error("Review submission error:", error);
+      console.error("Review save error:", error);
 
       message.style.color = "#dc2626";
-
-      if (error.code === "permission-denied") {
-
-        message.textContent =
-          "Permission denied. Please check Firebase Firestore Rules.";
-
-      } else if (error.code === "unavailable") {
-
-        message.textContent =
-          "Network unavailable. Please check your internet connection.";
-
-      } else if (error.code === "unauthenticated") {
-
-        message.textContent =
-          "Firebase authentication is required for this operation.";
-
-      } else {
-
-        message.textContent =
-          "Review submission failed: " +
-          (error.code || error.message || "Unknown error");
-
-      }
+      message.textContent =
+        "Unable to save review: " +
+        (error.code || error.message);
 
     } finally {
 
-      isSubmitting = false;
+      // STOP LOADING IMMEDIATELY
 
+      isSubmitting = false;
       submitButton.disabled = false;
       submitButton.textContent = "Submit Review";
 
     }
 
+    // RELOAD REVIEWS AFTER SUBMISSION
+    // WITHOUT BLOCKING THE BUTTON
+
+    if (saved) {
+      loadReviews();
+    }
+
   });
+
 
   // ===================================================
   // INITIAL LOAD
