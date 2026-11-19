@@ -6949,146 +6949,188 @@ if ("serviceWorker" in navigator) {
 
 
 
-<!-- =====================================
- LAB KNOWLEDGE - VISITOR RATING & REVIEWS
- FIREBASE FIRESTORE INTEGRATION
-===================================== -->
+<!-- =====================================================
+ LAB KNOWLEDGE - PROFESSIONAL RATING & REVIEW SYSTEM
+ FIREBASE FIRESTORE + ADMIN APPROVAL
+ PUBLIC REVIEWS + ADMIN DASHBOARD
+===================================================== -->
 
 <style>
 .lk-review-section {
-  max-width: 850px;
-  margin: 35px auto;
-  padding: 22px;
-  background: #ffffff;
-  border: 1px solid #dbeafe;
-  border-radius: 18px;
-  box-shadow: 0 5px 22px rgba(8,47,73,.09);
-  color: #082f49;
+  max-width:850px;
+  margin:35px auto;
+  padding:22px;
+  background:#fff;
+  border:1px solid #dbeafe;
+  border-radius:18px;
+  box-shadow:0 5px 22px rgba(8,47,73,.09);
+  color:#082f49;
 }
-
 .lk-review-section h2 {
-  text-align: center;
-  color: #075985;
-  margin-bottom: 8px;
+  text-align:center;
+  color:#075985;
 }
-
 .lk-review-section .review-subtitle {
-  text-align: center;
-  color: #64748b;
+  text-align:center;
+  color:#64748b;
 }
-
 .lk-rating-summary {
-  text-align: center;
-  padding: 18px;
-  background: #f0f9ff;
-  border-radius: 14px;
-  margin: 20px 0;
+  text-align:center;
+  padding:20px;
+  background:#f0f9ff;
+  border-radius:14px;
+  margin:20px 0;
 }
-
 .lk-average {
-  font-size: 38px;
-  font-weight: 800;
-  color: #075985;
+  font-size:38px;
+  font-weight:800;
+  color:#075985;
 }
-
 .lk-stars {
-  color: #f59e0b;
-  font-size: 28px;
-  letter-spacing: 3px;
+  color:#f59e0b;
+  font-size:25px;
+  letter-spacing:3px;
 }
-
-.lk-review-section label {
-  display: block;
-  font-weight: 600;
-  margin: 14px 0 6px;
+.lk-review-section label,
+.lk-admin-section label {
+  display:block;
+  font-weight:600;
+  margin:14px 0 6px;
 }
-
 .lk-review-section input,
-.lk-review-section textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 15px;
+.lk-review-section textarea,
+.lk-admin-section input {
+  width:100%;
+  box-sizing:border-box;
+  padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  font-size:15px;
 }
-
 .lk-review-section textarea {
-  min-height: 110px;
-  resize: vertical;
+  min-height:110px;
+  resize:vertical;
 }
-
 .lk-star-picker {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 12px 0;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:12px 0;
 }
-
 .lk-star-picker button {
-  border: none;
-  background: transparent;
-  color: #cbd5e1;
-  font-size: 34px;
-  cursor: pointer;
+  border:0;
+  background:transparent;
+  color:#cbd5e1;
+  font-size:35px;
+  cursor:pointer;
 }
-
 .lk-star-picker button.active {
-  color: #f59e0b;
+  color:#f59e0b;
 }
-
-.lk-submit-review {
-  width: 100%;
-  padding: 14px;
-  margin-top: 18px;
-  background: linear-gradient(90deg,#075985,#0891b2);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+.lk-submit-review,
+.lk-admin-button {
+  width:100%;
+  padding:13px;
+  margin-top:15px;
+  background:linear-gradient(90deg,#075985,#0891b2);
+  color:white;
+  border:0;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
 }
-
-.lk-submit-review:disabled {
-  opacity: .6;
-  cursor: wait;
+.lk-admin-button.approve {
+  background:#15803d;
 }
-
-.lk-review-message {
-  text-align: center;
-  margin-top: 12px;
-  font-weight: 600;
+.lk-admin-button.reject {
+  background:#dc2626;
 }
-
-.lk-review-card {
-  padding: 16px;
-  margin-top: 14px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  overflow-wrap: anywhere;
+.lk-submit-review:disabled,
+.lk-admin-button:disabled {
+  opacity:.6;
+  cursor:wait;
 }
-
+.lk-review-message,
+.lk-admin-message {
+  text-align:center;
+  margin-top:12px;
+  font-weight:600;
+}
+.lk-review-card,
+.lk-admin-card {
+  padding:16px;
+  margin-top:14px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  overflow-wrap:anywhere;
+}
 .lk-review-card strong {
-  color: #075985;
+  color:#075985;
 }
-
 .lk-review-date {
-  font-size: 12px;
-  color: #64748b;
+  font-size:12px;
+  color:#64748b;
+  margin-top:5px;
 }
-
 .lk-review-card p {
-  margin-bottom: 0;
-  white-space: pre-wrap;
+  margin-bottom:0;
+  white-space:pre-wrap;
 }
-
 .lk-review-list {
-  margin-top: 20px;
+  margin-top:20px;
 }
-
+.lk-admin-section {
+  max-width:850px;
+  margin:30px auto;
+  padding:22px;
+  background:#fff;
+  border:1px solid #cbd5e1;
+  border-radius:16px;
+  box-shadow:0 5px 18px rgba(8,47,73,.07);
+  color:#082f49;
+}
+.lk-admin-section h2 {
+  color:#075985;
+  text-align:center;
+}
+.lk-admin-card {
+  background:#fff;
+}
+.lk-admin-status {
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  background:#fef3c7;
+  color:#92400e;
+}
+.lk-admin-actions {
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+.lk-admin-actions button {
+  flex:1;
+}
+.lk-admin-hidden {
+  display:none !important;
+}
+@media(max-width:480px) {
+  .lk-review-section,
+  .lk-admin-section {
+    padding:15px;
+    margin:20px 10px;
+  }
+  .lk-admin-actions {
+    flex-direction:column;
+  }
+}
 </style>
+
+<!-- PUBLIC REVIEW SECTION -->
 
 <section class="lk-review-section" id="visitorReviews">
 
@@ -7099,21 +7141,14 @@ if ("serviceWorker" in navigator) {
   </p>
 
   <div class="lk-rating-summary">
-
     <div class="lk-average" id="lkAverage">0.0 / 5</div>
-
-    <div class="lk-stars" id="lkAverageStars">
-      ☆☆☆☆☆
-    </div>
-
+    <div class="lk-stars" id="lkAverageStars">☆☆☆☆☆</div>
     <p id="lkTotalReviews">0 Reviews</p>
-
   </div>
 
   <form id="lkReviewForm">
 
     <label for="lkReviewerName">Your Name</label>
-
     <input
       type="text"
       id="lkReviewerName"
@@ -7125,17 +7160,14 @@ if ("serviceWorker" in navigator) {
     <label>Your Rating</label>
 
     <div class="lk-star-picker" id="lkStarPicker">
-
       <button type="button" data-rating="1" aria-label="1 star">★</button>
       <button type="button" data-rating="2" aria-label="2 stars">★</button>
       <button type="button" data-rating="3" aria-label="3 stars">★</button>
       <button type="button" data-rating="4" aria-label="4 stars">★</button>
       <button type="button" data-rating="5" aria-label="5 stars">★</button>
-
     </div>
 
     <label for="lkReviewComment">Your Review</label>
-
     <textarea
       id="lkReviewComment"
       maxlength="1000"
@@ -7143,30 +7175,69 @@ if ("serviceWorker" in navigator) {
       required
     ></textarea>
 
-    <button
-      type="submit"
-      class="lk-submit-review"
-      id="lkSubmitButton"
-    >
+    <button type="submit" class="lk-submit-review"
+      id="lkSubmitButton">
       Submit Review
     </button>
 
-    <div
+    <div id="lkReviewMessage"
       class="lk-review-message"
-      id="lkReviewMessage"
       role="status"
-      aria-live="polite"
-    ></div>
+      aria-live="polite"></div>
 
   </form>
 
   <div class="lk-review-list">
-
     <h3>💬 Visitor Reviews</h3>
+    <div id="lkReviewsContainer">Loading reviews...</div>
+  </div>
 
-    <div id="lkReviewsContainer">
-      Loading reviews...
-    </div>
+</section>
+
+
+<!-- ADMIN DASHBOARD -->
+
+<section class="lk-admin-section" id="lkAdminSection">
+
+  <h2>🔐 Review Administration</h2>
+
+  <p style="text-align:center;color:#64748b">
+    Authorized administrator access only.
+  </p>
+
+  <form id="lkAdminLogin">
+
+    <label for="lkAdminEmail">Admin Email</label>
+    <input type="email" id="lkAdminEmail"
+      placeholder="Admin email" required>
+
+    <label for="lkAdminPassword">Admin Password</label>
+    <input type="password" id="lkAdminPassword"
+      placeholder="Admin password" required>
+
+    <button class="lk-admin-button" type="submit"
+      id="lkAdminLoginButton">
+      Admin Login
+    </button>
+
+  </form>
+
+  <div id="lkAdminMessage"
+    class="lk-admin-message"
+    role="status"></div>
+
+  <div id="lkAdminDashboard" class="lk-admin-hidden">
+
+    <h3>Pending & Existing Reviews</h3>
+
+    <p id="lkAdminCount">Loading...</p>
+
+    <div id="lkAdminReviews"></div>
+
+    <button type="button" class="lk-admin-button"
+      id="lkAdminLogout">
+      Logout
+    </button>
 
   </div>
 
@@ -7174,11 +7245,6 @@ if ("serviceWorker" in navigator) {
 
 
 <script type="module">
-
-// =====================================================
-// LAB KNOWLEDGE - FIXED RATING & REVIEW SYSTEM
-// FIREBASE FIRESTORE | SAFE INITIALIZATION
-// =====================================================
 
 import {
   initializeApp,
@@ -7190,10 +7256,24 @@ import {
   collection,
   addDoc,
   getDocs,
+  query,
+  where,
+  updateDoc,
+  doc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// FIREBASE CONFIGURATION
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+/* ==========================================
+   FIREBASE CONFIGURATION
+========================================== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyDIo6J7xSQe_e4KTEM9WJdLAuL7bF4LzEU",
@@ -7205,180 +7285,131 @@ const firebaseConfig = {
   measurementId: "G-NXB4WMPDZF"
 };
 
-// =====================================================
-// FIREBASE INITIALIZATION
-// =====================================================
 
-let db;
+/* ==========================================
+   IMPORTANT: SET YOUR ADMIN UID
+========================================== */
 
-try {
+const ADMIN_UID = "PASTE_ADMIN_UID_HERE";
 
-  const existingApp = getApps().find(
-    app => app.options.projectId === firebaseConfig.projectId
-  );
 
-  const app = existingApp || initializeApp(
-    firebaseConfig,
-    "LabKnowledgeReviews"
-  );
+/* ==========================================
+   INITIALIZE FIREBASE
+========================================== */
 
-  db = getFirestore(app);
+const existingApp = getApps().find(
+  app => app.options.projectId === firebaseConfig.projectId
+);
 
-  console.log("Lab Knowledge Reviews Firebase Connected");
+const app = existingApp || initializeApp(firebaseConfig);
 
-} catch (error) {
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-  console.error("Firebase initialization error:", error);
+const reviewsRef = collection(db, "reviews");
+
+
+/* ==========================================
+   PUBLIC REVIEW ELEMENTS
+========================================== */
+
+const form = document.getElementById("lkReviewForm");
+const nameInput = document.getElementById("lkReviewerName");
+const commentInput = document.getElementById("lkReviewComment");
+const submitButton = document.getElementById("lkSubmitButton");
+const message = document.getElementById("lkReviewMessage");
+const container = document.getElementById("lkReviewsContainer");
+
+const averageElement = document.getElementById("lkAverage");
+const starsElement = document.getElementById("lkAverageStars");
+const totalElement = document.getElementById("lkTotalReviews");
+
+const starButtons = document.querySelectorAll(
+  "#lkStarPicker button"
+);
+
+let selectedRating = 0;
+let isSubmitting = false;
+
+
+/* ==========================================
+   SAFE DATE FORMAT
+========================================== */
+
+function formatDate(value) {
+
+  if (!value) return "Recently submitted";
+
+  const date = value.toDate
+    ? value.toDate()
+    : new Date(value);
+
+  if (isNaN(date.getTime())) return "Recently submitted";
+
+  return date.toLocaleDateString();
 
 }
 
-// =====================================================
-// INITIALIZE REVIEW SYSTEM
-// =====================================================
 
-function initializeReviewSystem() {
+/* ==========================================
+   STAR SELECTION
+========================================== */
 
-  const form = document.getElementById("lkReviewForm");
-
-  const nameInput = document.getElementById("lkReviewerName");
-  const commentInput = document.getElementById("lkReviewComment");
-
-  const submitButton = document.getElementById("lkSubmitButton");
-  const message = document.getElementById("lkReviewMessage");
-
-  const container = document.getElementById("lkReviewsContainer");
-
-  const averageElement = document.getElementById("lkAverage");
-  const starsElement = document.getElementById("lkAverageStars");
-  const totalElement = document.getElementById("lkTotalReviews");
-
-  const starButtons = document.querySelectorAll(
-    "#lkStarPicker button"
-  );
-
-  if (
-    !form || !nameInput || !commentInput ||
-    !submitButton || !message || !container ||
-    !averageElement || !starsElement || !totalElement
-  ) {
-
-    console.error("Rating & Review HTML elements missing.");
-    return;
-
-  }
-
-  if (!db) {
-
-    message.textContent = "Firebase connection failed. Please try again later.";
-    message.style.color = "#dc2626";
-    container.textContent = "Unable to connect to the review service.";
-    return;
-
-  }
-
-  // PREVENT DUPLICATE EVENT LISTENERS
-
-  if (form.dataset.lkBound === "true") return;
-
-  form.dataset.lkBound = "true";
-
-  const reviewsRef = collection(db, "reviews");
-
-  let selectedRating = 0;
-  let isSubmitting = false;
-
-  // ===================================================
-  // STAR RATING
-  // ===================================================
-
-  function updateStars() {
-
-    starButtons.forEach(button => {
-
-      const rating = Number(button.dataset.rating);
-
-      button.classList.toggle(
-        "active",
-        rating <= selectedRating
-      );
-
-      button.setAttribute(
-        "aria-pressed",
-        String(rating === selectedRating)
-      );
-
-    });
-
-  }
+function updateStars() {
 
   starButtons.forEach(button => {
 
-    button.type = "button";
+    const rating = Number(button.dataset.rating);
 
-    button.addEventListener("click", () => {
+    button.classList.toggle(
+      "active",
+      rating <= selectedRating
+    );
 
-      selectedRating = Number(button.dataset.rating);
-
-      updateStars();
-
-      message.textContent = "";
-
-    });
+    button.setAttribute(
+      "aria-pressed",
+      String(rating === selectedRating)
+    );
 
   });
 
-  // ===================================================
-  // SHOW ERROR MESSAGE
-  // ===================================================
+}
 
-  function showError(text) {
+starButtons.forEach(button => {
 
-    message.style.color = "#dc2626";
-    message.textContent = text;
+  button.addEventListener("click", () => {
 
-  }
+    selectedRating = Number(button.dataset.rating);
+    updateStars();
 
-  // ===================================================
-  // LOAD REVIEWS FROM FIRESTORE
-  // ===================================================
+    message.textContent = "";
 
-  
-async function loadReviews() {
+  });
+
+});
+
+
+/* ==========================================
+   PUBLIC REVIEWS - APPROVED ONLY
+========================================== */
+
+async function loadPublicReviews() {
 
   container.textContent = "Loading reviews...";
 
   try {
 
-    const snapshot = await getDocs(reviewsRef);
-    const reviews = [];
+    const approvedQuery = query(
+      reviewsRef,
+      where("status", "==", "approved")
+    );
 
-    snapshot.forEach(doc => {
+    const snapshot = await getDocs(approvedQuery);
 
-      const data = doc.data();
-
-      // SUPPORT OLD AND NEW FIELD NAMES
-
-      const name = data.name ?? data.Name ?? "Visitor";
-      const comment = data.comment ?? data.Comment ?? "";
-      const rating = Number(data.rating ?? data.Rating);
-      const date = data.date ?? data.Date ?? null;
-
-      if (
-        Number.isInteger(rating) &&
-        rating >= 1 &&
-        rating <= 5
-      ) {
-
-        reviews.push({
-          name,
-          comment,
-          rating,
-          date
-        });
-
-      }
-
-    });
+    const reviews = snapshot.docs.map(item => ({
+      ...item.data(),
+      id: item.id
+    }));
 
     reviews.sort((a, b) => {
       const da = a.date?.toMillis?.() || 0;
@@ -7389,7 +7420,7 @@ async function loadReviews() {
     const total = reviews.length;
 
     const average = total
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / total
+      ? reviews.reduce((sum, r) => sum + Number(r.rating), 0) / total
       : 0;
 
     averageElement.textContent = average.toFixed(1) + " / 5";
@@ -7405,7 +7436,8 @@ async function loadReviews() {
     container.replaceChildren();
 
     if (!total) {
-      container.textContent = "No reviews yet. Be the first!";
+      container.textContent =
+        "No approved reviews yet. Be the first!";
       return;
     }
 
@@ -7415,7 +7447,7 @@ async function loadReviews() {
       card.className = "lk-review-card";
 
       const heading = document.createElement("strong");
-      heading.textContent = review.name;
+      heading.textContent = review.name || "Visitor";
 
       const stars = document.createElement("div");
       stars.className = "lk-stars";
@@ -7425,144 +7457,383 @@ async function loadReviews() {
 
       const date = document.createElement("div");
       date.className = "lk-review-date";
-      date.textContent = review.date?.toDate
-        ? review.date.toDate().toLocaleDateString()
-        : "Recently submitted";
+      date.textContent = formatDate(review.date);
 
       const comment = document.createElement("p");
-      comment.textContent = review.comment;
+      comment.textContent = review.comment || "";
 
       card.append(heading, stars, date, comment);
       container.appendChild(card);
 
     });
 
-    console.log("Reviews displayed:", total);
-
   } catch (error) {
 
-    console.error("Review loading error:", error);
+    console.error("Public review error:", error);
 
     container.textContent =
-      "Unable to load reviews: " + error.message;
+      "Unable to load reviews. Please try again later.";
 
   }
 
 }
 
-  // ===================================================
-  // FIXED REVIEW SUBMISSION
-  // SAVE + CLEAR + STOP LOADING + RELOAD
-  // ===================================================
 
-  form.addEventListener("submit", async event => {
+/* ==========================================
+   SUBMIT REVIEW - PENDING STATUS
+========================================== */
 
-    event.preventDefault();
+form.addEventListener("submit", async event => {
 
-    if (isSubmitting) return;
+  event.preventDefault();
 
-    const name = nameInput.value.trim();
-    const comment = commentInput.value.trim();
+  if (isSubmitting) return;
 
-    if (name.length < 2 || name.length > 60) {
-      showError("Please enter a valid name.");
+  const name = nameInput.value.trim();
+  const comment = commentInput.value.trim();
+
+  if (name.length < 2 || name.length > 60) {
+    message.style.color = "#dc2626";
+    message.textContent = "Please enter a valid name.";
+    return;
+  }
+
+  if (comment.length < 1 || comment.length > 1000) {
+    message.style.color = "#dc2626";
+    message.textContent = "Please enter a valid review.";
+    return;
+  }
+
+  if (!Number.isInteger(selectedRating) ||
+      selectedRating < 1 || selectedRating > 5) {
+
+    message.style.color = "#dc2626";
+    message.textContent = "Please select your star rating.";
+    return;
+  }
+
+  isSubmitting = true;
+  submitButton.disabled = true;
+  submitButton.textContent = "Submitting...";
+
+  try {
+
+    await addDoc(reviewsRef, {
+
+      name,
+      rating: selectedRating,
+      comment,
+      status: "pending",
+      date: serverTimestamp()
+
+    });
+
+    form.reset();
+
+    selectedRating = 0;
+    updateStars();
+
+    message.style.color = "#15803d";
+    message.textContent =
+      "Thank you! Your review has been submitted and is awaiting admin approval.";
+
+  } catch (error) {
+
+    console.error("Review submission error:", error);
+
+    message.style.color = "#dc2626";
+    message.textContent =
+      "Unable to submit review. Please try again later.";
+
+  } finally {
+
+    isSubmitting = false;
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Review";
+
+  }
+
+});
+
+
+/* ==========================================
+   ADMIN ELEMENTS
+========================================== */
+
+const adminLogin = document.getElementById("lkAdminLogin");
+const adminMessage = document.getElementById("lkAdminMessage");
+const adminDashboard = document.getElementById("lkAdminDashboard");
+const adminReviews = document.getElementById("lkAdminReviews");
+const adminCount = document.getElementById("lkAdminCount");
+const adminLogout = document.getElementById("lkAdminLogout");
+
+
+/* ==========================================
+   ADMIN LOGIN
+========================================== */
+
+adminLogin.addEventListener("submit", async event => {
+
+  event.preventDefault();
+
+  const email = document.getElementById("lkAdminEmail").value.trim();
+  const password = document.getElementById("lkAdminPassword").value;
+
+  const loginButton = document.getElementById("lkAdminLoginButton");
+
+  loginButton.disabled = true;
+  loginButton.textContent = "Signing in...";
+
+  try {
+
+    const result = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    if (result.user.uid !== ADMIN_UID) {
+
+      await signOut(auth);
+
+      throw new Error("This account is not authorized as administrator.");
+
+    }
+
+    adminMessage.style.color = "#15803d";
+    adminMessage.textContent = "Admin login successful.";
+
+  } catch (error) {
+
+    console.error("Admin login error:", error);
+
+    adminMessage.style.color = "#dc2626";
+    adminMessage.textContent = error.message;
+
+  } finally {
+
+    loginButton.disabled = false;
+    loginButton.textContent = "Admin Login";
+
+  }
+
+});
+
+
+/* ==========================================
+   ADMIN AUTHENTICATION STATE
+========================================== */
+
+onAuthStateChanged(auth, user => {
+
+  if (user && user.uid === ADMIN_UID) {
+
+    adminLogin.classList.add("lk-admin-hidden");
+    adminDashboard.classList.remove("lk-admin-hidden");
+
+    loadAdminReviews();
+
+  } else {
+
+    adminLogin.classList.remove("lk-admin-hidden");
+    adminDashboard.classList.add("lk-admin-hidden");
+
+  }
+
+});
+
+
+/* ==========================================
+   LOAD ADMIN REVIEWS
+   PENDING + LEGACY REVIEWS
+========================================== */
+
+async function loadAdminReviews() {
+
+  adminReviews.textContent = "Loading reviews...";
+
+  try {
+
+    const snapshot = await getDocs(reviewsRef);
+
+    const items = snapshot.docs.map(item => ({
+      ...item.data(),
+      id: item.id
+    }));
+
+    const pending = items.filter(item =>
+      item.status === "pending" ||
+      !item.status
+    );
+
+    adminCount.textContent =
+      pending.length + " Reviews awaiting attention";
+
+    adminReviews.replaceChildren();
+
+    if (!pending.length) {
+
+      adminReviews.textContent = "No pending reviews.";
       return;
-    }
-
-    if (comment.length < 1 || comment.length > 1000) {
-      showError("Please enter your review.");
-      return;
-    }
-
-    if (!Number.isInteger(selectedRating) ||
-        selectedRating < 1 || selectedRating > 5) {
-      showError("Please select your star rating.");
-      return;
-    }
-
-    isSubmitting = true;
-    submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
-    message.textContent = "";
-
-    let saved = false;
-
-    try {
-
-      // SAVE REVIEW TO FIRESTORE
-
-      const docRef = await addDoc(reviewsRef, {
-        name: name,
-        rating: selectedRating,
-        comment: comment,
-        date: serverTimestamp()
-      });
-
-      console.log("Review permanently saved:", docRef.id);
-
-      saved = true;
-
-      // CLEAR FORM IMMEDIATELY
-
-      form.reset();
-
-      selectedRating = 0;
-      updateStars();
-
-      message.style.color = "#15803d";
-      message.textContent =
-        "Thank you! Your review has been submitted successfully.";
-
-    } catch (error) {
-
-      console.error("Review save error:", error);
-
-      message.style.color = "#dc2626";
-      message.textContent =
-        "Unable to save review: " +
-        (error.code || error.message);
-
-    } finally {
-
-      // STOP LOADING IMMEDIATELY
-
-      isSubmitting = false;
-      submitButton.disabled = false;
-      submitButton.textContent = "Submit Review";
 
     }
 
-    // RELOAD REVIEWS AFTER SUBMISSION
-    // WITHOUT BLOCKING THE BUTTON
+    pending.forEach(review => {
 
-    if (saved) {
-      loadReviews();
-    }
+      const card = document.createElement("div");
+      card.className = "lk-admin-card";
 
-  });
+      const name = document.createElement("strong");
+      name.textContent = review.name || "Visitor";
 
+      const stars = document.createElement("div");
+      stars.className = "lk-stars";
 
-  // ===================================================
-  // INITIAL LOAD
-  // ===================================================
+      const rating = Number(review.rating) || 0;
 
-  updateStars();
+      stars.textContent =
+        "★".repeat(rating) + "☆".repeat(5 - rating);
 
-  loadReviews();
+      const date = document.createElement("div");
+      date.className = "lk-review-date";
+      date.textContent = formatDate(review.date);
 
-  console.log("Lab Knowledge Rating & Review System Ready.");
+      const comment = document.createElement("p");
+      comment.textContent = review.comment || "";
+
+      const status = document.createElement("div");
+      status.className = "lk-admin-status";
+
+      status.textContent = review.status
+        ? "PENDING"
+        : "LEGACY REVIEW";
+
+      const actions = document.createElement("div");
+      actions.className = "lk-admin-actions";
+
+      const approve = document.createElement("button");
+      approve.className = "lk-admin-button approve";
+      approve.textContent = "Approve";
+
+      const reject = document.createElement("button");
+      reject.className = "lk-admin-button reject";
+      reject.textContent = "Reject";
+
+      approve.addEventListener("click", () =>
+        changeReviewStatus(review.id, "approved", approve, reject)
+      );
+
+      reject.addEventListener("click", () =>
+        changeReviewStatus(review.id, "rejected", approve, reject)
+      );
+
+      actions.append(approve, reject);
+
+      card.append(name, stars, date, comment, status, actions);
+
+      adminReviews.appendChild(card);
+
+    });
+
+  } catch (error) {
+
+    console.error("Admin loading error:", error);
+
+    adminReviews.textContent =
+      "Unable to load admin reviews: " + error.message;
+
+  }
 
 }
 
-// =====================================================
-// START SYSTEM
-// =====================================================
 
-initializeReviewSystem();
+/* ==========================================
+   APPROVE / REJECT REVIEW
+========================================== */
+
+async function changeReviewStatus(id, status, approve, reject) {
+
+  if (!auth.currentUser ||
+      auth.currentUser.uid !== ADMIN_UID) {
+
+    adminMessage.textContent = "Unauthorized action.";
+    return;
+
+  }
+
+  if (!confirm(
+    status === "approved"
+      ? "Approve this review?"
+      : "Reject this review?"
+  )) return;
+
+  approve.disabled = true;
+  reject.disabled = true;
+
+  try {
+
+    await updateDoc(
+      doc(db, "reviews", id),
+      { status: status }
+    );
+
+    adminMessage.style.color = "#15803d";
+    adminMessage.textContent =
+      status === "approved"
+        ? "Review approved successfully."
+        : "Review rejected successfully.";
+
+    await loadAdminReviews();
+    await loadPublicReviews();
+
+  } catch (error) {
+
+    console.error("Status update error:", error);
+
+    adminMessage.style.color = "#dc2626";
+    adminMessage.textContent =
+      "Unable to update review: " + error.message;
+
+    approve.disabled = false;
+    reject.disabled = false;
+
+  }
+
+}
+
+
+/* ==========================================
+   ADMIN LOGOUT
+========================================== */
+
+adminLogout.addEventListener("click", async () => {
+
+  try {
+
+    await signOut(auth);
+
+    adminMessage.textContent = "Logged out successfully.";
+
+  } catch (error) {
+
+    adminMessage.textContent = error.message;
+
+  }
+
+});
+
+
+/* ==========================================
+   START
+========================================== */
+
+updateStars();
+loadPublicReviews();
+
+console.log("Lab Knowledge Review System Ready.");
 
 </script>
 
-    
 
 
 <script src="iq-questions.js"></script>
