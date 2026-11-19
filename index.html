@@ -2744,15 +2744,21 @@ body[dir="rtl"] .note{
 </style>
 
 
+
+
 <!-- =========================================================
- JAVASCRIPT - COMPLETE HEALTH CHECKER ENGINE
+ LAB KNOWLEDGE - COMPLETE HEALTH CHECKER ENGINE
  ONE SCRIPT | ALL FUNCTIONS CONNECTED
+ 9 CALCULATORS | PROFILE | PREGNANCY | PRINT
 ========================================================= -->
 
 <script>
 (function () {
-
 "use strict";
+
+/* =========================================
+   CONFIGURATION
+========================================= */
 
 const HEALTH_PROFILE_KEY = "labKnowledgeHealthProfile";
 
@@ -2762,15 +2768,70 @@ let selectedHealthGender = "";
 let pregnancyMode = "lmp";
 let previousBodyOverflow = "";
 
+const healthPrintReports = [
+  {id:"hcBmiResult",title:"BMI Assessment"},
+  {id:"bpResult",title:"Blood Pressure Assessment"},
+  {id:"sugarResult",title:"Blood Sugar Assessment"},
+  {id:"heartResult",title:"Heart Rate Assessment"},
+  {id:"spo2Result",title:"Oxygen Saturation Assessment"},
+  {id:"tempResult",title:"Body Temperature Assessment"},
+  {id:"waistResult",title:"Waist-to-Height Ratio"},
+  {id:"cholResult",title:"Cholesterol Assessment"},
+  {id:"pregnancyResult",title:"Pregnancy Assessment"}
+];
+
+
+/* =========================================
+   SAFE HELPERS
+========================================= */
+
+function setText(id,value) {
+  const el = $(id);
+  if (el) el.textContent = value;
+}
+
+function setValue(id,value) {
+  const el = $(id);
+  if (el) el.value = value;
+}
+
+function setHidden(id,value) {
+  const el = $(id);
+  if (el) el.hidden = value;
+}
+
+function setDisplay(id,value) {
+  const el = $(id);
+  if (el) el.style.display = value;
+}
+
+function getNumber(id) {
+  const el = $(id);
+  if (!el || el.value.trim() === "") return null;
+
+  const value = Number(el.value);
+
+  return Number.isFinite(value) ? value : null;
+}
+
+function resetResult(id) {
+  const result = $(id);
+  if (!result) return;
+
+  result.innerHTML = "";
+  result.className = "result-box";
+  result.style.display = "none";
+
+  setHealthPrintVisibility(id,false);
+}
+
 
 /* =========================================
    PROFILE STORAGE
 ========================================= */
 
 function getSavedHealthProfile() {
-
   try {
-
     const raw = localStorage.getItem(HEALTH_PROFILE_KEY);
 
     if (!raw) return null;
@@ -2790,18 +2851,12 @@ function getSavedHealthProfile() {
     return profile;
 
   } catch (error) {
-
-    console.error("Health profile loading error:", error);
-
+    console.error("Profile loading error:",error);
     return null;
-
   }
-
 }
 
-
 function getProfile() {
-
   const profile = getSavedHealthProfile();
 
   if (!profile) {
@@ -2810,7 +2865,6 @@ function getProfile() {
   }
 
   return profile;
-
 }
 
 
@@ -2819,7 +2873,6 @@ function getProfile() {
 ========================================= */
 
 function selectHealthGender(gender) {
-
   if (!["male","female"].includes(gender)) return;
 
   selectedHealthGender = gender;
@@ -2827,79 +2880,60 @@ function selectHealthGender(gender) {
   document.querySelectorAll(
     "#health-checker .gender-option"
   ).forEach(button => {
-
     const selected = button.dataset.gender === gender;
 
     button.classList.toggle("selected",selected);
-
     button.setAttribute("aria-pressed",String(selected));
-
   });
 
   hideProfileError();
-
 }
 
 
 /* =========================================
-   PROFILE ERROR
+   PROFILE ERRORS
 ========================================= */
 
 function showProfileError(message) {
-
   const error = $("profileFormError");
-
   if (!error) return;
 
   error.textContent = message;
   error.hidden = false;
-
 }
 
-
 function hideProfileError() {
-
   const error = $("profileFormError");
-
   if (!error) return;
 
   error.textContent = "";
   error.hidden = true;
-
 }
 
 
 /* =========================================
-   OPEN PROFILE MODAL
+   OPEN PROFILE
 ========================================= */
 
 function openHealthProfile() {
-
   const modal = $("healthProfileModal");
-
   if (!modal) return;
 
   const saved = getSavedHealthProfile();
 
-  $("healthAge").value = saved ? saved.age : "";
+  setValue("healthAge",saved ? saved.age : "");
 
   selectedHealthGender = "";
 
   if (saved) {
-
     selectHealthGender(saved.gender);
-
   } else {
-
     document.querySelectorAll(
       "#health-checker .gender-option"
     ).forEach(button => {
-
       button.classList.remove("selected");
       button.setAttribute("aria-pressed","false");
-
     });
-
   }
 
   hideProfileError();
@@ -2915,39 +2949,25 @@ function openHealthProfile() {
   }
 
   modal.hidden = false;
-
   document.body.style.overflow = "hidden";
-
 }
 
 
 /* =========================================
-   CLOSE PROFILE MODAL
+   CLOSE PROFILE
 ========================================= */
 
 function closeHealthProfile() {
-
   const modal = $("healthProfileModal");
-
   if (!modal) return;
 
   modal.hidden = true;
-
   document.body.style.overflow = previousBodyOverflow;
-
 }
 
-
-/* =========================================
-   CANCEL PROFILE EDIT
-========================================= */
-
 function cancelHealthProfile() {
-
   if (!getSavedHealthProfile()) return;
-
   closeHealthProfile();
-
 }
 
 
@@ -2956,9 +2976,7 @@ function cancelHealthProfile() {
 ========================================= */
 
 function saveHealthProfile() {
-
   const ageInput = $("healthAge");
-
   if (!ageInput) return;
 
   const age = Number(ageInput.value);
@@ -2969,53 +2987,39 @@ function saveHealthProfile() {
     age < 0 ||
     age > 120
   ) {
-
     showProfileError(
       "Please enter a valid age between 0 and 120 years."
     );
-
     ageInput.focus();
-
     return;
-
   }
 
   if (!["male","female"].includes(selectedHealthGender)) {
-
     showProfileError("Please select Male or Female.");
-
     return;
-
   }
 
   const profile = {
-    age: age,
-    gender: selectedHealthGender
+    age:age,
+    gender:selectedHealthGender
   };
 
   try {
-
     localStorage.setItem(
       HEALTH_PROFILE_KEY,
       JSON.stringify(profile)
     );
-
   } catch (error) {
-
     console.error("Profile save error:",error);
 
     showProfileError(
-      "Unable to save your profile on this device. Please check browser storage settings."
+      "Unable to save profile. Please check browser storage settings."
     );
-
     return;
-
   }
 
   updateHealthProfile();
-
   closeHealthProfile();
-
 }
 
 
@@ -3024,79 +3028,65 @@ function saveHealthProfile() {
 ========================================= */
 
 function updateHealthProfile() {
-
   const profile = getSavedHealthProfile();
 
   if (!profile) {
-
-    $("savedHealthProfile").hidden = true;
-    $("healthCalculators").hidden = true;
-
+    setHidden("savedHealthProfile",true);
+    setHidden("healthCalculators",true);
     return;
-
   }
 
-  $("savedHealthProfile").hidden = false;
+  setHidden("savedHealthProfile",false);
+  setHidden("healthCalculators",false);
 
-  $("profileAvatar").textContent =
-    profile.gender === "male" ? "👨🏻‍⚕️" : "👩🏻‍⚕️";
+  setText(
+    "profileAvatar",
+    profile.gender === "male" ? "👨🏻‍⚕️" : "👩🏻‍⚕️"
+  );
 
-  $("profileDetails").textContent =
+  setText(
+    "profileDetails",
     "Age: " + profile.age +
-    " years  |  Gender: " +
-    (profile.gender === "male" ? "Male" : "Female");
-
-  $("healthCalculators").hidden = false;
-
+    " years | Gender: " +
+    (profile.gender === "male" ? "Male" : "Female")
+  );
 }
-
-
-/* =========================================
-   EDIT PROFILE
-========================================= */
 
 function editHealthProfile() {
-
   openHealthProfile();
-
 }
 
 
 /* =========================================
-   NAVIGATION - OPEN PROFILE WHEN NEEDED
+   INITIALIZE PROFILE
 ========================================= */
 
 function initializeHealthChecker() {
-
   const profile = getSavedHealthProfile();
 
   if (profile) {
-
     updateHealthProfile();
-
   } else {
-
-    $("savedHealthProfile").hidden = true;
-    $("healthCalculators").hidden = true;
-
+    setHidden("savedHealthProfile",true);
+    setHidden("healthCalculators",true);
   }
+
+  initializeHealthPrintButtons();
 
   if (
     !profile &&
     window.location.hash === "#health-checker"
   ) {
-
     openHealthProfile();
-
   }
-
 }
 
 
-/* Listen to website navigation */
+/* =========================================
+   NAVIGATION
+========================================= */
 
 document.addEventListener("click",function(event) {
-
   const target = event.target;
 
   if (!target || typeof target.closest !== "function") return;
@@ -3111,29 +3101,17 @@ document.addEventListener("click",function(event) {
   if (!link) return;
 
   if (!getSavedHealthProfile()) {
-
-    setTimeout(function() {
-      openHealthProfile();
-    },120);
-
+    setTimeout(openHealthProfile,120);
   }
-
 });
 
-
-/* Support direct hash navigation */
-
 window.addEventListener("hashchange",function() {
-
   if (
     window.location.hash === "#health-checker" &&
     !getSavedHealthProfile()
   ) {
-
     openHealthProfile();
-
   }
-
 });
 
 
@@ -3142,51 +3120,38 @@ window.addEventListener("hashchange",function() {
 ========================================= */
 
 function showHealthResult(id,title,message,status) {
-
   const box = $(id);
-
   if (!box) return;
 
   const allowed = ["normal","warning","danger","info"];
 
-  if (!allowed.includes(status)) {
-    status = "info";
-  }
+  if (!allowed.includes(status)) status = "info";
 
   box.className = "result-box status-" + status;
 
-  box.innerHTML =
-    "<h4>" + title + "</h4>" +
-    "<div>" + message + "</div>";
+  const heading = document.createElement("h4");
+  heading.textContent = title;
 
+  const content = document.createElement("div");
+
+  // Messages are generated internally by this calculator.
+  // Preserve the existing formatted medical result content.
+  content.innerHTML = message;
+
+  box.replaceChildren(heading,content);
   box.style.display = "block";
-  setHealthPrintVisibility(id, true);
 
+  setHealthPrintVisibility(id,true);
 }
 
 
 /* =========================================
-   HEALTH CHECKER - INDIVIDUAL PRINT SYSTEM
-   9 CALCULATORS
+   PRINT BUTTON INITIALIZATION
 ========================================= */
 
-const healthPrintReports = [
-  {id:"hcBmiResult", title:"BMI Assessment"},
-  {id:"bpResult", title:"Blood Pressure Assessment"},
-  {id:"sugarResult", title:"Blood Sugar Assessment"},
-  {id:"heartResult", title:"Heart Rate Assessment"},
-  {id:"spo2Result", title:"Oxygen Saturation Assessment"},
-  {id:"tempResult", title:"Body Temperature Assessment"},
-  {id:"waistResult", title:"Waist-to-Height Ratio"},
-  {id:"cholResult", title:"Cholesterol Assessment"},
-  {id:"pregnancyResult", title:"Pregnancy Assessment"}
-];
-
 function initializeHealthPrintButtons() {
-
   healthPrintReports.forEach(report => {
-
-    const result = document.getElementById(report.id);
+    const result = $(report.id);
 
     if (!result || result.dataset.printReady === "true") return;
 
@@ -3196,23 +3161,20 @@ function initializeHealthPrintButtons() {
     button.className = "health-print-btn";
     button.textContent = "🖨️ Print " + report.title;
 
-    button.addEventListener("click", function() {
-      printHealthReport(report.id, report.title);
+    button.style.display = "none";
+
+    button.addEventListener("click",function() {
+      printHealthReport(report.id,report.title);
     });
 
-    result.insertAdjacentElement("afterend", button);
+    result.insertAdjacentElement("afterend",button);
 
     result.dataset.printReady = "true";
-    result.dataset.printButton = "true";
-
   });
-
 }
 
-function setHealthPrintVisibility(resultId, visible) {
-
-  const result = document.getElementById(resultId);
-
+function setHealthPrintVisibility(resultId,visible) {
+  const result = $(resultId);
   if (!result) return;
 
   const button = result.nextElementSibling;
@@ -3223,25 +3185,19 @@ function setHealthPrintVisibility(resultId, visible) {
   ) {
     button.style.display = visible ? "block" : "none";
   }
-
 }
 
-function printHealthReport(resultId, title) {
 
-  const result = document.getElementById(resultId);
+/* =========================================
+   INDIVIDUAL PRINT REPORT
+========================================= */
 
-  if (!result) return;
+function printHealthReport(resultId,title) {
+  const result = $(resultId);
 
-  const pregnancy = resultId === "pregnancyResult";
-
-  const isVisible = pregnancy
-    ? result.style.display !== "none"
-    : result.style.display !== "none" && result.innerHTML.trim() !== "";
-
-  if (!isVisible || !result.innerHTML.trim()) {
-
+  if (!result || !result.innerHTML.trim() ||
+      result.style.display === "none") {
     alert("Please calculate a result before printing.");
-
     return;
   }
 
@@ -3252,323 +3208,261 @@ function printHealthReport(resultId, title) {
       (profile.gender === "male" ? "Male" : "Female")
     : "Profile not available";
 
-  const printWindow = window.open("", "_blank");
+  const printWindow = window.open("","_blank");
 
   if (!printWindow) {
-
     alert("Please allow pop-ups to print your report.");
-
     return;
   }
 
+  const escapeHTML = value => String(value).replace(
+    /[&<>"']/g,
+    char => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    })[char]
+  );
+
   const reportHTML = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>${title} - Lab Knowledge</title>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${escapeHTML(title)} - Lab Knowledge</title>
 
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          padding: 25px;
-          color: #1e293b;
-          line-height: 1.7;
-        }
+    <style>
+      body {
+        font-family:Arial,sans-serif;
+        padding:25px;
+        color:#1e293b;
+        line-height:1.7;
+      }
 
-        .header {
-          text-align: center;
-          border-bottom: 2px solid #075985;
-          padding-bottom: 15px;
-          margin-bottom: 20px;
-        }
+      .header {
+        text-align:center;
+        border-bottom:2px solid #075985;
+        padding-bottom:15px;
+        margin-bottom:20px;
+      }
 
-        .header h1 {
-          color: #075985;
-          margin: 0;
-        }
+      .header h1 {
+        color:#075985;
+        margin:0;
+      }
 
-        .header p {
-          margin: 5px 0;
-          color: #64748b;
-        }
+      .header p {
+        color:#64748b;
+      }
 
-        .details {
-          background: #f1f5f9;
-          padding: 12px;
-          border-radius: 8px;
-          margin-bottom: 20px;
-        }
+      .details {
+        background:#f1f5f9;
+        padding:12px;
+        border-radius:8px;
+        margin-bottom:20px;
+      }
 
-        .report {
-          border: 1px solid #cbd5e1;
-          border-radius: 10px;
-          padding: 18px;
-          margin-bottom: 20px;
-        }
+      .report {
+        border:1px solid #cbd5e1;
+        border-radius:10px;
+        padding:18px;
+      }
 
-        .report h4 {
-          color: #075985;
-          margin-top: 0;
-        }
+      .report h4 {
+        color:#075985;
+        margin-top:0;
+      }
 
-        .disclaimer {
-          border-top: 1px solid #cbd5e1;
-          padding-top: 12px;
-          font-size: 12px;
-          color: #64748b;
-        }
+      .disclaimer {
+        border-top:1px solid #cbd5e1;
+        padding-top:12px;
+        margin-top:20px;
+        font-size:12px;
+        color:#64748b;
+      }
 
-        @page {
-          margin: 15mm;
-        }
+      @page { margin:15mm; }
 
-        @media print {
-          body {
-            padding: 0;
-          }
-        }
-      </style>
-    </head>
+      @media print {
+        body { padding:0; }
+      }
+    </style>
+  </head>
 
-    <body>
+  <body>
+    <div class="header">
+      <h1>🔬 Lab Knowledge</h1>
+      <p>Laboratory Investigations Theory</p>
+      <h2>${escapeHTML(title)}</h2>
+    </div>
 
-      <div class="header">
-        <h1>🔬 Lab Knowledge</h1>
-        <p>Laboratory Investigations Theory</p>
-        <h2>${title}</h2>
-      </div>
+    <div class="details">
+      <strong>Patient Profile:</strong><br>
+      ${escapeHTML(profileText)}<br>
+      <strong>Report Date:</strong>
+      ${escapeHTML(new Date().toLocaleString())}
+    </div>
 
-      <div class="details">
-        <strong>Patient Profile:</strong><br>
-        ${profileText}<br>
-        <strong>Report Date:</strong>
-        ${new Date().toLocaleString()}
-      </div>
+    <div class="report">
+      ${result.innerHTML}
+    </div>
 
-      <div class="report">
-        ${result.innerHTML}
-      </div>
-
-      <div class="disclaimer">
-        <strong>Medical Disclaimer:</strong>
-        This report is for educational screening purposes only.
-        It is not a medical diagnosis. Consult a qualified
-        healthcare professional for clinical interpretation.
-        <br><br>
-        Copyright © Lab Knowledge
-      </div>
-
-    </body>
-    </html>
-  `;
+    <div class="disclaimer">
+      <strong>Medical Disclaimer:</strong>
+      This report is for educational screening purposes only.
+      It is not a medical diagnosis. Consult a qualified
+      healthcare professional for clinical interpretation.
+      <br><br>
+      Copyright © Lab Knowledge
+    </div>
+  </body>
+  </html>`;
 
   printWindow.document.open();
   printWindow.document.write(reportHTML);
   printWindow.document.close();
 
   printWindow.onload = function() {
-
     printWindow.focus();
 
     setTimeout(function() {
       printWindow.print();
-    }, 500);
-
+    },500);
   };
-
 }
 
 
 /* =========================================
-   CLEAR INDIVIDUAL CHECKER
+   CLEAR INDIVIDUAL CHECKERS
 ========================================= */
 
 function clearCheck(prefix) {
-
   const fields = {
-
-    bp: ["bpSys","bpDia"],
-
-    sugar: ["sugarValue"],
-
-    heart: ["heartRate"],
-
-    spo2: ["spo2Value"],
-
-    temp: ["tempValue"],
-
-    waist: ["waistValue","waistHeight"],
-
-    chol: ["cholValue"]
-
+    bp:["bpSys","bpDia"],
+    sugar:["sugarValue"],
+    heart:["heartRate"],
+    spo2:["spo2Value"],
+    temp:["tempValue"],
+    waist:["waistValue","waistHeight"],
+    chol:["cholValue"]
   };
 
-  (fields[prefix] || []).forEach(id => {
+  (fields[prefix] || []).forEach(id => setValue(id,""));
 
-    const field = $(id);
-
-    if (field) field.value = "";
-
-  });
-
-  if (prefix === "sugar") {
-    $("sugarType").value = "fasting";
-  }
-
-  if (prefix === "temp") {
-    $("tempUnit").value = "C";
-  }
+  if (prefix === "sugar") setValue("sugarType","fasting");
+  if (prefix === "temp") setValue("tempUnit","C");
 
   const resultIds = {
-
-    bp: "bpResult",
-    sugar: "sugarResult",
-    heart: "heartResult",
-    spo2: "spo2Result",
-    temp: "tempResult",
-    waist: "waistResult",
-    chol: "cholResult"
-
+    bp:"bpResult",
+    sugar:"sugarResult",
+    heart:"heartResult",
+    spo2:"spo2Result",
+    temp:"tempResult",
+    waist:"waistResult",
+    chol:"cholResult"
   };
 
-  const result = $(resultIds[prefix]);
-
-  if (result) {
-
-    result.innerHTML = "";
-    result.className = "result-box";
-    result.style.display = "none";
-
+  if (resultIds[prefix]) {
+    resetResult(resultIds[prefix]);
   }
-
 }
 
 
 /* =========================================
    1. BMI CALCULATOR
-   Unique IDs prevent separate BMI conflicts
 ========================================= */
 
 function convertHealthHeight() {
-
   const inchesInput = $("hcHeightInches");
-
   const heightInput = $("hcBmiHeight");
-
   const conversion = $("hcCmConversionResult");
 
-  const inches = Number(inchesInput.value);
+  if (!inchesInput || !heightInput) return;
+
+  const raw = inchesInput.value;
+  const inches = Number(raw);
 
   if (
-    inchesInput.value.trim() === "" ||
+    raw.trim() === "" ||
     !Number.isFinite(inches) ||
     inches <= 0 ||
     inches > 100
   ) {
-
     heightInput.value = "";
-    conversion.textContent = "";
-
+    if (conversion) conversion.textContent = "";
     return;
-
   }
 
   const cm = inches * 2.54;
 
   heightInput.value = cm.toFixed(2);
 
-  conversion.textContent =
-    "✓ Height converted: " + cm.toFixed(2) + " cm";
-
+  if (conversion) {
+    conversion.textContent =
+      "✓ Height converted: " + cm.toFixed(2) + " cm";
+  }
 }
 
-
 function calculateHealthBMI() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  const height = Number($("hcBmiHeight").value);
-
-  const weight = Number($("hcBmiWeight").value);
+  const height = getNumber("hcBmiHeight");
+  const weight = getNumber("hcBmiWeight");
 
   if (
-    $("hcBmiHeight").value.trim() === "" ||
-    $("hcBmiWeight").value.trim() === "" ||
-    !Number.isFinite(height) ||
-    !Number.isFinite(weight) ||
+    height === null ||
+    weight === null ||
     height < 30 ||
     height > 250 ||
     weight <= 0 ||
     weight > 500
   ) {
-
     alert("Please enter valid height and weight.");
-
     return;
-
   }
 
   const hm = height / 100;
-
   const bmi = weight / (hm * hm);
 
   let message = "";
-
   let status = "info";
 
   if (profile.age < 2) {
-
     message =
       "BMI classification is not appropriate for children under 2 years. Use an appropriate infant growth assessment.";
-
   }
 
   else if (profile.age < 20) {
-
     message =
       "BMI: <strong>" + bmi.toFixed(2) + "</strong><br>" +
       "Children and adolescents require BMI-for-age percentiles based on age and sex. Adult BMI categories must not be used.";
-
   }
 
   else {
-
     let category;
 
     if (bmi < 18.5) {
-
       category = "Underweight";
       status = "warning";
-
     }
-
     else if (bmi < 25) {
-
       category = "Normal Weight";
       status = "normal";
-
     }
-
     else if (bmi < 30) {
-
       category = "Overweight";
       status = "warning";
-
     }
-
     else {
-
       category = "Obesity";
       status = "danger";
-
     }
 
     const min = 18.5 * hm * hm;
-
     const max = 24.9 * hm * hm;
 
     message =
@@ -3576,7 +3470,6 @@ function calculateHealthBMI() {
       "Category: <strong>" + category + "</strong><br>" +
       "Reference healthy weight range: " +
       min.toFixed(1) + " - " + max.toFixed(1) + " kg";
-
   }
 
   showHealthResult(
@@ -3585,26 +3478,15 @@ function calculateHealthBMI() {
     message,
     status
   );
-
 }
 
-
 function clearHealthBMI() {
+  setValue("hcHeightInches","");
+  setValue("hcBmiHeight","");
+  setValue("hcBmiWeight","");
+  setText("hcCmConversionResult","");
 
-  $("hcHeightInches").value = "";
-
-  $("hcBmiHeight").value = "";
-
-  $("hcBmiWeight").value = "";
-
-  $("hcCmConversionResult").textContent = "";
-
-  const result = $("hcBmiResult");
-
-  result.innerHTML = "";
-  result.className = "result-box";
-  result.style.display = "none";
-
+  resetResult("hcBmiResult");
 }
 
 
@@ -3613,116 +3495,70 @@ function clearHealthBMI() {
 ========================================= */
 
 function checkBP() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if (
-    $("bpSys").value.trim() === "" ||
-    $("bpDia").value.trim() === ""
-  ) {
-
-    alert("Please enter both BP readings.");
-
-    return;
-
-  }
-
-  const sys = Number($("bpSys").value);
-
-  const dia = Number($("bpDia").value);
+  const sys = getNumber("bpSys");
+  const dia = getNumber("bpDia");
 
   if (
-    !Number.isFinite(sys) ||
-    !Number.isFinite(dia) ||
-    sys < 50 ||
-    sys > 300 ||
-    dia < 30 ||
-    dia > 200
+    sys === null || dia === null ||
+    sys < 50 || sys > 300 ||
+    dia < 30 || dia > 200
   ) {
-
     alert("Please enter valid BP readings.");
-
     return;
-
   }
 
   if (sys <= dia) {
-
     alert("Systolic pressure should be higher than diastolic pressure.");
-
     return;
-
   }
 
   if (profile.age < 18) {
-
     showHealthResult(
       "bpResult",
       "Pediatric BP Assessment",
       "Children and adolescents require age, sex and height-percentile-specific blood pressure references. Please consult a pediatric healthcare professional.",
       "info"
     );
-
     return;
-
   }
 
   let category;
-
   let status;
 
   if (sys >= 180 || dia >= 120) {
-
     category = "Severely High Blood Pressure";
     status = "danger";
-
   }
-
   else if (sys >= 140 || dia >= 90) {
-
     category = "Stage 2 Hypertension Range";
     status = "danger";
-
   }
-
   else if (sys >= 130 || dia >= 80) {
-
     category = "Stage 1 Hypertension Range";
     status = "warning";
-
   }
-
   else if (sys >= 120 && sys < 130 && dia < 80) {
-
     category = "Elevated Blood Pressure";
     status = "warning";
-
   }
-
   else if (sys < 90 || dia < 60) {
-
     category = "Low Blood Pressure Reading";
     status = "warning";
-
   }
-
   else {
-
     category = "Normal Range";
     status = "normal";
-
   }
 
   let advice =
     "Rest quietly and repeat the measurement using a properly fitted cuff. A single reading does not establish a diagnosis.";
 
   if (sys >= 180 || dia >= 120) {
-
     advice =
       "Repeat after at least one minute and seek immediate medical advice. If chest pain, breathlessness, weakness, vision changes or neurological symptoms occur, seek emergency care immediately.";
-
   }
 
   showHealthResult(
@@ -3732,7 +3568,6 @@ function checkBP() {
     " mmHg</strong><br>" + advice,
     status
   );
-
 }
 
 
@@ -3741,127 +3576,83 @@ function checkBP() {
 ========================================= */
 
 function checkSugar() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if ($("sugarValue").value.trim() === "") {
-
-    alert("Please enter a blood sugar reading.");
-
-    return;
-
-  }
-
-  const value = Number($("sugarValue").value);
-
-  const type = $("sugarType").value;
+  const value = getNumber("sugarValue");
+  const typeElement = $("sugarType");
 
   if (
-    !Number.isFinite(value) ||
+    value === null ||
     value <= 0 ||
-    value > 1000
+    value > 1000 ||
+    !typeElement
   ) {
-
-    alert("Please enter a valid glucose reading.");
-
+    alert("Please enter a valid blood sugar reading.");
     return;
-
   }
 
+  const type = typeElement.value;
+
   let category;
-
   let status;
-
   let advice = "";
 
   if (value < 70) {
-
     category = "Low Blood Sugar";
     status = "danger";
 
     advice =
       "If conscious and able to swallow, take 15 g of fast-acting carbohydrate and recheck after 15 minutes. If unconscious, having a seizure or unable to swallow, seek emergency help. Never give food or drink by mouth to an unconscious person.";
-
   }
 
   else if (type === "fasting") {
-
     if (value < 100) {
-
       category = "Normal Fasting Range";
       status = "normal";
-
     }
-
     else if (value < 126) {
-
       category = "Prediabetes Range";
       status = "warning";
-
     }
-
     else {
-
       category = "Diabetes Range";
       status = "danger";
-
     }
-
   }
 
   else if (type === "post") {
-
     if (value < 140) {
-
       category = "Below 140 mg/dL";
       status = "normal";
-
     }
-
     else if (value < 200) {
-
       category = "Elevated Post-meal Reading";
       status = "warning";
-
     }
-
     else {
-
       category = "High Post-meal Reading";
       status = "danger";
-
     }
-
   }
 
   else {
-
     if (value < 200) {
-
       category = "Interpretation Depends on Context";
       status = "info";
-
     }
-
     else {
-
       category = "High Random Glucose";
       status = "danger";
 
       advice =
         "A random glucose of 200 mg/dL or higher with classic symptoms needs prompt clinical assessment.";
-
     }
-
   }
 
   if (!advice) {
-
     advice =
       "A single home glucose reading cannot diagnose diabetes. Confirm abnormal results with appropriate laboratory testing and clinical assessment. Two-hour post-meal readings are not interchangeable with a diagnostic oral glucose tolerance test.";
-
   }
 
   showHealthResult(
@@ -3872,7 +3663,6 @@ function checkSugar() {
     profile.age + " years<br>" + advice,
     status
   );
-
 }
 
 
@@ -3881,106 +3671,69 @@ function checkSugar() {
 ========================================= */
 
 function checkHeartRate() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if ($("heartRate").value.trim() === "") {
-
-    alert("Please enter pulse reading.");
-
-    return;
-
-  }
-
-  const pulse = Number($("heartRate").value);
+  const pulse = getNumber("heartRate");
 
   if (
-    !Number.isFinite(pulse) ||
+    pulse === null ||
     pulse < 20 ||
     pulse > 250
   ) {
-
     alert("Please enter a valid pulse.");
-
     return;
-
   }
 
   let low;
-
   let high;
 
   if (profile.age < 1) {
-
     low = 100;
     high = 160;
-
   }
-
   else if (profile.age < 3) {
-
     low = 90;
     high = 150;
-
   }
-
   else if (profile.age < 6) {
-
     low = 80;
     high = 140;
-
   }
-
   else if (profile.age < 13) {
-
     low = 70;
     high = 120;
-
   }
-
   else {
-
     low = 60;
     high = 100;
-
   }
 
   let category;
-
   let status;
 
   if (pulse < low) {
-
     category = "Below Typical Resting Range";
     status = "warning";
-
   }
-
   else if (pulse > high) {
-
     category = "Above Typical Resting Range";
     status = "warning";
-
   }
-
   else {
-
     category = "Within Typical Resting Range";
     status = "normal";
-
   }
 
   showHealthResult(
     "heartResult",
     "💓 " + category,
-    "Pulse: <strong>" + pulse + " BPM</strong><br>" +
-    "Approximate reference: " + low + "-" + high +
+    "Pulse: <strong>" + pulse +
+    " BPM</strong><br>Approximate reference: " +
+    low + "-" + high +
     " BPM<br>Check while resting. Symptoms such as fainting, chest pain or breathlessness need urgent assessment.",
     status
   );
-
 }
 
 
@@ -3989,67 +3742,44 @@ function checkHeartRate() {
 ========================================= */
 
 function checkSpO2() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if ($("spo2Value").value.trim() === "") {
-
-    alert("Please enter SpO₂ reading.");
-
-    return;
-
-  }
-
-  const value = Number($("spo2Value").value);
+  const value = getNumber("spo2Value");
 
   if (
-    !Number.isFinite(value) ||
+    value === null ||
     value < 50 ||
     value > 100
   ) {
-
     alert("Enter SpO₂ between 50 and 100.");
-
     return;
-
   }
 
   let category;
-
   let status;
-
   let advice;
 
   if (value <= 91) {
-
     category = "Low Oxygen Saturation";
     status = "danger";
 
     advice =
       "Seek urgent medical assessment. If severe breathlessness, blue lips, chest pain or confusion occur, seek emergency care.";
-
   }
-
   else if (value <= 94) {
-
     category = "Below Expected Range";
     status = "warning";
 
     advice =
       "Repeat the measurement carefully and contact a healthcare professional promptly, especially if this reading is unusual for you.";
-
   }
-
   else {
-
     category = "Typical Range at Sea Level";
     status = "normal";
 
     advice =
       "Compare with your usual reading and clinical condition.";
-
   }
 
   showHealthResult(
@@ -4061,7 +3791,6 @@ function checkSpO2() {
     "<br>Note: Altitude, circulation, device accuracy and chronic lung conditions can affect interpretation.",
     status
   );
-
 }
 
 
@@ -4070,98 +3799,72 @@ function checkSpO2() {
 ========================================= */
 
 function checkTemperature() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if ($("tempValue").value.trim() === "") {
+  const value = getNumber("tempValue");
+  const unitElement = $("tempUnit");
 
+  if (value === null || !unitElement) {
     alert("Please enter temperature.");
-
     return;
-
   }
 
-  const value = Number($("tempValue").value);
-
-  const unit = $("tempUnit").value;
-
-  if (!Number.isFinite(value)) {
-
-    alert("Please enter a valid temperature.");
-
-    return;
-
-  }
+  const unit = unitElement.value;
 
   const celsius =
     unit === "F"
       ? (value - 32) * 5 / 9
       : value;
 
-  if (celsius < 25 || celsius > 45) {
-
+  if (!Number.isFinite(celsius) ||
+      celsius < 25 || celsius > 45) {
     alert("Please check the temperature reading.");
-
     return;
-
   }
 
   let category;
-
   let status;
-
   let advice;
 
   if (celsius < 35) {
-
     category = "Low Body Temperature";
     status = "danger";
 
     advice =
       "Possible hypothermia. Seek emergency medical care.";
-
   }
 
   else if (profile.age < 0.25 && celsius >= 38) {
-
     category = "Fever in Young Infant";
     status = "danger";
 
     advice =
       "A baby under 3 months with a temperature of 38°C or higher needs urgent medical assessment.";
-
   }
 
   else if (celsius >= 38) {
-
     category = "Fever";
     status = "warning";
 
     advice =
       "Monitor symptoms, maintain hydration and seek medical advice when needed.";
-
   }
 
   else if (celsius < 36) {
-
     category = "Below Typical Temperature";
     status = "warning";
 
     advice =
       "Repeat measurement and consider clinical assessment if persistent or accompanied by symptoms.";
-
   }
 
   else {
-
     category = "Typical Temperature Range";
     status = "normal";
 
     advice =
       "Interpret according to measurement site, time of day and symptoms.";
-
   }
 
   showHealthResult(
@@ -4173,7 +3876,6 @@ function checkTemperature() {
     " °F<br>" + advice,
     status
   );
-
 }
 
 
@@ -4182,87 +3884,55 @@ function checkTemperature() {
 ========================================= */
 
 function checkWaist() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if (
-    $("waistValue").value.trim() === "" ||
-    $("waistHeight").value.trim() === ""
-  ) {
-
-    alert("Please enter waist and height.");
-
-    return;
-
-  }
-
-  const waist = Number($("waistValue").value);
-
-  const height = Number($("waistHeight").value);
+  const waist = getNumber("waistValue");
+  const height = getNumber("waistHeight");
 
   if (
-    !Number.isFinite(waist) ||
-    !Number.isFinite(height) ||
+    waist === null ||
+    height === null ||
     waist <= 0 ||
-    height <= 0 ||
     waist > 300 ||
+    height <= 0 ||
     height > 250 ||
     height < 30
   ) {
-
     alert("Enter valid waist and height.");
-
     return;
-
   }
 
   if (profile.age < 18) {
-
     showHealthResult(
       "waistResult",
       "Pediatric Assessment",
       "Adult waist-to-height screening thresholds are not intended for children. Use an appropriate pediatric assessment.",
       "info"
     );
-
     return;
-
   }
 
   const ratio = waist / height;
 
   let category;
-
   let status;
 
   if (ratio < 0.4) {
-
     category = "Below General Reference Range";
     status = "info";
-
   }
-
   else if (ratio < 0.5) {
-
     category = "Generally Lower Central Adiposity Risk";
     status = "normal";
-
   }
-
   else if (ratio < 0.6) {
-
     category = "Increased Central Adiposity Risk";
     status = "warning";
-
   }
-
   else {
-
     category = "High Central Adiposity Risk";
     status = "danger";
-
   }
 
   showHealthResult(
@@ -4274,7 +3944,6 @@ function checkWaist() {
     "</strong><br>General guide: Keep your waist below half your height. This is a screening guide, not a diagnosis.",
     status
   );
-
 }
 
 
@@ -4283,85 +3952,51 @@ function checkWaist() {
 ========================================= */
 
 function checkCholesterol() {
-
   const profile = getProfile();
-
   if (!profile) return;
 
-  if ($("cholValue").value.trim() === "") {
-
-    alert("Please enter cholesterol reading.");
-
-    return;
-
-  }
-
-  const value = Number($("cholValue").value);
+  const value = getNumber("cholValue");
 
   if (
-    !Number.isFinite(value) ||
+    value === null ||
     value <= 0 ||
     value > 1000
   ) {
-
     alert("Please enter valid cholesterol.");
-
     return;
-
   }
 
   let category;
-
   let status;
 
   if (profile.age < 20) {
-
     if (value < 170) {
-
       category = "Acceptable";
       status = "normal";
-
     }
-
     else if (value < 200) {
-
       category = "Borderline High";
       status = "warning";
-
     }
-
     else {
-
       category = "High";
       status = "danger";
-
     }
-
   }
 
   else {
-
     if (value < 200) {
-
       category = "Desirable";
       status = "normal";
-
     }
-
     else if (value < 240) {
-
       category = "Borderline High";
       status = "warning";
-
     }
-
     else {
-
       category = "High";
       status = "danger";
-
     }
-
   }
 
   showHealthResult(
@@ -4372,37 +4007,25 @@ function checkCholesterol() {
     " years<br>A complete lipid profile (LDL, HDL and triglycerides) is needed for proper cardiovascular risk assessment.",
     status
   );
-
 }
 
 
 /* =========================================
-   PROFESSIONAL CLEAR PROFILE
+   CLEAR PROFILE DIALOG
 ========================================= */
 
 function clearHealthProfile() {
-
   const dialog = $("clearProfileDialog");
-
-  if (!dialog) return;
-
-  dialog.hidden = false;
-
-}
-
-
-/* =========================================
-   CANCEL CLEAR PROFILE
-========================================= */
-
-function cancelClearProfile() {
-
-  const dialog = $("clearProfileDialog");
-
-  if (dialog) {
-    dialog.hidden = true;
+  if (!dialog) {
+    alert("Clear profile dialog is not available.");
+    return;
   }
 
+  dialog.hidden = false;
+}
+
+function cancelClearProfile() {
+  setHidden("clearProfileDialog",true);
 }
 
 
@@ -4411,46 +4034,30 @@ function cancelClearProfile() {
 ========================================= */
 
 function confirmClearProfile() {
-
   try {
-
     localStorage.removeItem(HEALTH_PROFILE_KEY);
-
   } catch (error) {
-
     console.error("Profile removal error:",error);
-
-    alert("Unable to clear your saved profile. Please check browser storage settings.");
-
+    alert("Unable to clear your saved profile.");
     return;
-
   }
 
   cancelClearProfile();
 
   selectedHealthGender = "";
 
-  /* Clear profile fields */
-
-  $("healthAge").value = "";
+  setValue("healthAge","");
 
   hideProfileError();
 
   document.querySelectorAll(
     "#health-checker .gender-option"
   ).forEach(button => {
-
     button.classList.remove("selected");
-
     button.setAttribute("aria-pressed","false");
-
   });
 
-  /* Clear BMI */
-
   clearHealthBMI();
-
-  /* Clear remaining checkers */
 
   [
     "bp",
@@ -4460,34 +4067,27 @@ function confirmClearProfile() {
     "temp",
     "waist",
     "chol"
-  ].forEach(prefix => clearCheck(prefix));
-
-  /* Clear pregnancy */
+  ].forEach(clearCheck);
 
   clearPregnancy();
 
-  /* Hide saved profile and calculators */
-
-  $("savedHealthProfile").hidden = true;
-
-  $("healthCalculators").hidden = true;
-
-  /* Reopen profile setup */
+  setHidden("savedHealthProfile",true);
+  setHidden("healthCalculators",true);
 
   openHealthProfile();
-
 }
 
 
 /* =====================================================
-   9. PREGNANCY WEEK COUNTER ENGINE
+   9. PREGNANCY WEEK COUNTER
 ===================================================== */
 
 
-/* DATE HELPERS */
+/* =========================================
+   DATE HELPERS
+========================================= */
 
 function pgDate(value) {
-
   if (!value) return null;
 
   const parts = value.split("-").map(Number);
@@ -4505,12 +4105,9 @@ function pgDate(value) {
   ) return null;
 
   return date;
-
 }
 
-
 function pgToday() {
-
   const now = new Date();
 
   return new Date(Date.UTC(
@@ -4518,176 +4115,138 @@ function pgToday() {
     now.getMonth(),
     now.getDate()
   ));
-
 }
 
-
 function pgAddDays(date,days) {
-
   const result = new Date(date.getTime());
 
   result.setUTCDate(result.getUTCDate()+days);
 
   return result;
-
 }
 
-
 function pgDaysBetween(first,second) {
-
   return Math.round(
     (second.getTime()-first.getTime())/86400000
   );
-
 }
 
-
 function pgFormatDate(date) {
-
   return date.toLocaleDateString("en-GB",{
     day:"2-digit",
     month:"short",
     year:"numeric",
     timeZone:"UTC"
   });
-
 }
 
 
-/* SWITCH LMP / EDD */
+/* =========================================
+   LMP / EDD SWITCH
+========================================= */
 
 function setPregnancyMode(mode) {
-
   if (!["lmp","edd"].includes(mode)) return;
 
   pregnancyMode = mode;
 
-  $("lmpInputBox").hidden = mode !== "lmp";
+  setHidden("lmpInputBox",mode !== "lmp");
+  setHidden("eddInputBox",mode !== "edd");
 
-  $("eddInputBox").hidden = mode !== "edd";
+  const lmpButton = $("lmpModeBtn");
+  const eddButton = $("eddModeBtn");
 
-  $("lmpModeBtn").classList.toggle(
-    "active",mode === "lmp"
-  );
+  if (lmpButton) {
+    lmpButton.classList.toggle("active",mode === "lmp");
+  }
 
-  $("eddModeBtn").classList.toggle(
-    "active",mode === "edd"
-  );
+  if (eddButton) {
+    eddButton.classList.toggle("active",mode === "edd");
+  }
 
-  $("pregnancyResult").style.display = "none";
-
+  resetResult("pregnancyResult");
 }
 
 
-/* BABY DEVELOPMENT */
+/* =========================================
+   BABY DEVELOPMENT
+========================================= */
 
 function getPregnancyDevelopment(week) {
-
   if (week < 4) {
-
     return "Very early pregnancy. The embryo is developing and implantation has occurred or is occurring.";
-
   }
 
   if (week < 8) {
-
     return "Early development of the brain, spinal cord and major organs is underway.";
-
   }
 
   if (week < 13) {
-
     return "Major organ structures continue developing. Early fetal movements may begin.";
-
   }
 
   if (week < 18) {
-
     return "The fetus is growing, and bones and muscles continue developing.";
-
   }
 
   if (week < 23) {
-
     return "Hearing and movement development continue. Some pregnant people begin feeling movements.";
-
   }
 
   if (week < 28) {
-
     return "The brain and lungs continue developing. The fetus responds increasingly to sounds.";
-
   }
 
   if (week < 33) {
-
     return "The fetus gains weight, and the brain and lungs continue maturing.";
-
   }
 
   if (week < 37) {
-
     return "The fetus continues gaining weight and preparing for birth.";
-
   }
 
   return "The pregnancy is in the late-term period. The fetus continues preparing for birth.";
-
 }
 
 
-/* CALCULATE PREGNANCY */
+/* =========================================
+   PREGNANCY CALCULATOR
+========================================= */
 
 function calculatePregnancy() {
-
   const today = pgToday();
 
   let startDate;
-
   let dueDate;
-
   let totalDays;
 
   if (pregnancyMode === "lmp") {
-
     startDate = pgDate(
-      $("pregnancyLMP").value
+      $("pregnancyLMP")?.value
     );
 
     if (!startDate) {
-
       alert("Please enter a valid LMP date.");
-
       return;
-
     }
 
     if (startDate > today) {
-
       alert("LMP date cannot be in the future.");
-
       return;
-
     }
 
     totalDays = pgDaysBetween(startDate,today);
-
     dueDate = pgAddDays(startDate,280);
-
   }
 
   else {
-
     dueDate = pgDate(
-      $("pregnancyEDD").value
+      $("pregnancyEDD")?.value
     );
 
     if (!dueDate) {
-
       alert("Please enter a valid EDD date.");
-
       return;
-
     }
 
     const daysUntilEDD = pgDaysBetween(today,dueDate);
@@ -4695,17 +4254,12 @@ function calculatePregnancy() {
     totalDays = 280-daysUntilEDD;
 
     if (totalDays < 0) {
-
       alert("EDD is too far in the future for this calculation. Please check the date.");
-
       return;
-
     }
-
   }
 
   const weeks = Math.floor(totalDays/7);
-
   const days = totalDays%7;
 
   const progress = Math.min(
@@ -4713,163 +4267,127 @@ function calculatePregnancy() {
     Math.max(0,Math.round((totalDays/280)*100))
   );
 
-  /* Trimester */
-
   let trimester;
 
   if (weeks < 14) {
-
     trimester = "First Trimester";
-
   }
-
   else if (weeks < 28) {
-
     trimester = "Second Trimester";
-
   }
-
   else {
-
     trimester = "Third Trimester";
-
   }
-
-  /* Remaining days */
 
   const remaining = pgDaysBetween(today,dueDate);
 
   let remainingText;
 
   if (remaining > 0) {
-
     remainingText = remaining + " days";
-
   }
-
   else if (remaining === 0) {
-
     remainingText = "Expected today";
-
   }
-
   else {
-
-    remainingText =
-      Math.abs(remaining) + " days overdue";
-
+    remainingText = Math.abs(remaining) + " days overdue";
   }
 
-  /* Display results */
+  setText("pregnancyWeeks",weeks);
+  setText("pregnancyDays",days);
+  setText("pregnancyTrimester",trimester);
+  setText("pregnancyPercent",progress+"%");
 
-  $("pregnancyWeeks").textContent = weeks;
+  const progressBar = $("pregnancyProgressBar");
 
-  $("pregnancyDays").textContent = days;
+  if (progressBar) {
+    progressBar.style.width = progress+"%";
+  }
 
-  $("pregnancyTrimester").textContent = trimester;
+  setText("pregnancyDueDate",pgFormatDate(dueDate));
+  setText("pregnancyRemaining",remainingText);
 
-  $("pregnancyPercent").textContent = progress+"%";
-
-  $("pregnancyProgressBar").style.width =
-    progress+"%";
-
-  $("pregnancyDueDate").textContent =
-    pgFormatDate(dueDate);
-
-  $("pregnancyRemaining").textContent =
-    remainingText;
-
-  $("pregnancyDevelopment").textContent =
-    getPregnancyDevelopment(weeks);
-
-  /* Clinical caution */
+  setText(
+    "pregnancyDevelopment",
+    getPregnancyDevelopment(weeks)
+  );
 
   let note =
     "This is an estimate based on a standard 280-day pregnancy. Actual pregnancy dating may differ, especially with irregular menstrual cycles. Ultrasound and healthcare professional assessment may provide more accurate dating.";
 
   if (weeks > 42) {
-
     note =
       "Pregnancy is beyond 42 weeks by this estimate. Contact your maternity healthcare team immediately for clinical assessment.";
-
   }
-
   else if (weeks >= 40) {
-
     note =
       "The estimated due date has arrived or passed. Contact your maternity healthcare team for advice and monitoring.";
-
   }
-
   else if (weeks < 37) {
-
     note +=
       " If contractions, bleeding, leaking fluid or reduced fetal movement occur, seek prompt maternity assessment.";
-
   }
 
-  $("pregnancyNote").textContent = note;
+  setText("pregnancyNote",note);
 
-  $("pregnancyResult").style.display = "block";
-  setHealthPrintVisibility("pregnancyResult", true);
+  const result = $("pregnancyResult");
 
+  if (result) {
+    result.style.display = "block";
+    setHealthPrintVisibility("pregnancyResult",true);
 
-
-  $("pregnancyResult").scrollIntoView({
-    behavior:"smooth",
-    block:"nearest"
-  });
-
+    result.scrollIntoView({
+      behavior:"smooth",
+      block:"nearest"
+    });
+  }
 }
 
 
-/* CLEAR PREGNANCY */
+/* =========================================
+   CLEAR PREGNANCY
+========================================= */
 
 function clearPregnancy() {
+  setValue("pregnancyLMP","");
+  setValue("pregnancyEDD","");
 
-  $("pregnancyLMP").value = "";
+  resetResult("pregnancyResult");
 
-  $("pregnancyEDD").value = "";
+  setText("pregnancyWeeks","0");
+  setText("pregnancyDays","0");
+  setText("pregnancyTrimester","");
+  setText("pregnancyPercent","0%");
+  setText("pregnancyDueDate","—");
+  setText("pregnancyRemaining","—");
+  setText("pregnancyDevelopment","");
+  setText("pregnancyNote","");
 
-  $("pregnancyResult").style.display = "none";
+  const bar = $("pregnancyProgressBar");
 
-  $("pregnancyWeeks").textContent = "0";
-
-  $("pregnancyDays").textContent = "0";
-
-  $("pregnancyTrimester").textContent = "";
-
-  $("pregnancyProgressBar").style.width = "0%";
-
-  $("pregnancyPercent").textContent = "0%";
-
-  $("pregnancyDueDate").textContent = "—";
-
-  $("pregnancyRemaining").textContent = "—";
-
-  $("pregnancyDevelopment").textContent = "";
-
-  $("pregnancyNote").textContent = "";
+  if (bar) {
+    bar.style.width = "0%";
+  }
 
   setPregnancyMode("lmp");
-
 }
 
 
 /* =====================================================
-   CONNECT ALL BUTTON FUNCTIONS TO HTML
-   IMPORTANT: GLOBAL FUNCTION EXPORTS
+   EXPORT FUNCTIONS FOR HTML BUTTONS
 ===================================================== */
 
 Object.assign(window,{
 
   selectHealthGender,
   openHealthProfile,
+  closeHealthProfile,
   editHealthProfile,
   saveHealthProfile,
   cancelHealthProfile,
 
   calculateHealthBMI,
+  convertHealthHeight,
   clearHealthBMI,
 
   checkBP,
@@ -4888,48 +4406,56 @@ Object.assign(window,{
 
   setPregnancyMode,
   calculatePregnancy,
-  clearPregnancy
+  clearPregnancy,
+
+  printHealthReport
 
 });
 
 
 /* =====================================================
-   INITIALIZE WHEN PAGE IS READY
+   EVENT LISTENERS
+===================================================== */
+
+function initializeHealthEvents() {
+
+  const heightInput = $("hcHeightInches");
+
+  if (heightInput &&
+      heightInput.dataset.conversionReady !== "true") {
+
+    heightInput.addEventListener(
+      "input",
+      convertHealthHeight
+    );
+
+    heightInput.dataset.conversionReady = "true";
+  }
+
+  initializeHealthChecker();
+}
+
+
+/* =====================================================
+   DOM READY
 ===================================================== */
 
 if (document.readyState === "loading") {
 
   document.addEventListener(
     "DOMContentLoaded",
-    initializeHealthChecker,
+    initializeHealthEvents,
     {once:true}
   );
 
 } else {
 
-  initializeHealthChecker();
-
-}
-
-
-/* BMI HEIGHT CONVERSION LISTENER */
-
-const healthHeightInput = $("hcHeightInches");
-
-if (healthHeightInput) {
-
-  healthHeightInput.addEventListener(
-    "input",
-    convertHealthHeight
-  );
+  initializeHealthEvents();
 
 }
 
 })();
 </script>
-
-
-
 
 
 
