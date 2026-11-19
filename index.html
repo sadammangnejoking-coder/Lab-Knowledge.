@@ -2711,6 +2711,36 @@ body[dir="rtl"] .note{
 
 }
 
+
+
+
+/* HEALTH CHECKER PRINT BUTTON */
+
+#health-checker .health-print-btn {
+  display: none;
+  width: 100%;
+  min-height: 45px;
+  margin-top: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#164e63,#0891b2);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#health-checker .health-print-btn:active {
+  transform: scale(.98);
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+}
+
 </style>
 
 
@@ -3130,6 +3160,223 @@ function showHealthResult(id,title,message,status) {
     "<div>" + message + "</div>";
 
   box.style.display = "block";
+  setHealthPrintVisibility(id, true);
+
+}
+
+
+/* =========================================
+   HEALTH CHECKER - INDIVIDUAL PRINT SYSTEM
+   9 CALCULATORS
+========================================= */
+
+const healthPrintReports = [
+  {id:"hcBmiResult", title:"BMI Assessment"},
+  {id:"bpResult", title:"Blood Pressure Assessment"},
+  {id:"sugarResult", title:"Blood Sugar Assessment"},
+  {id:"heartResult", title:"Heart Rate Assessment"},
+  {id:"spo2Result", title:"Oxygen Saturation Assessment"},
+  {id:"tempResult", title:"Body Temperature Assessment"},
+  {id:"waistResult", title:"Waist-to-Height Ratio"},
+  {id:"cholResult", title:"Cholesterol Assessment"},
+  {id:"pregnancyResult", title:"Pregnancy Assessment"}
+];
+
+function initializeHealthPrintButtons() {
+
+  healthPrintReports.forEach(report => {
+
+    const result = document.getElementById(report.id);
+
+    if (!result || result.dataset.printReady === "true") return;
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "health-print-btn";
+    button.textContent = "🖨️ Print " + report.title;
+
+    button.addEventListener("click", function() {
+      printHealthReport(report.id, report.title);
+    });
+
+    result.insertAdjacentElement("afterend", button);
+
+    result.dataset.printReady = "true";
+    result.dataset.printButton = "true";
+
+  });
+
+}
+
+function setHealthPrintVisibility(resultId, visible) {
+
+  const result = document.getElementById(resultId);
+
+  if (!result) return;
+
+  const button = result.nextElementSibling;
+
+  if (
+    button &&
+    button.classList.contains("health-print-btn")
+  ) {
+    button.style.display = visible ? "block" : "none";
+  }
+
+}
+
+function printHealthReport(resultId, title) {
+
+  const result = document.getElementById(resultId);
+
+  if (!result) return;
+
+  const pregnancy = resultId === "pregnancyResult";
+
+  const isVisible = pregnancy
+    ? result.style.display !== "none"
+    : result.style.display !== "none" && result.innerHTML.trim() !== "";
+
+  if (!isVisible || !result.innerHTML.trim()) {
+
+    alert("Please calculate a result before printing.");
+
+    return;
+  }
+
+  const profile = getSavedHealthProfile();
+
+  const profileText = profile
+    ? "Age: " + profile.age + " years | Gender: " +
+      (profile.gender === "male" ? "Male" : "Female")
+    : "Profile not available";
+
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+
+    alert("Please allow pop-ups to print your report.");
+
+    return;
+  }
+
+  const reportHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>${title} - Lab Knowledge</title>
+
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 25px;
+          color: #1e293b;
+          line-height: 1.7;
+        }
+
+        .header {
+          text-align: center;
+          border-bottom: 2px solid #075985;
+          padding-bottom: 15px;
+          margin-bottom: 20px;
+        }
+
+        .header h1 {
+          color: #075985;
+          margin: 0;
+        }
+
+        .header p {
+          margin: 5px 0;
+          color: #64748b;
+        }
+
+        .details {
+          background: #f1f5f9;
+          padding: 12px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+        }
+
+        .report {
+          border: 1px solid #cbd5e1;
+          border-radius: 10px;
+          padding: 18px;
+          margin-bottom: 20px;
+        }
+
+        .report h4 {
+          color: #075985;
+          margin-top: 0;
+        }
+
+        .disclaimer {
+          border-top: 1px solid #cbd5e1;
+          padding-top: 12px;
+          font-size: 12px;
+          color: #64748b;
+        }
+
+        @page {
+          margin: 15mm;
+        }
+
+        @media print {
+          body {
+            padding: 0;
+          }
+        }
+      </style>
+    </head>
+
+    <body>
+
+      <div class="header">
+        <h1>🔬 Lab Knowledge</h1>
+        <p>Laboratory Investigations Theory</p>
+        <h2>${title}</h2>
+      </div>
+
+      <div class="details">
+        <strong>Patient Profile:</strong><br>
+        ${profileText}<br>
+        <strong>Report Date:</strong>
+        ${new Date().toLocaleString()}
+      </div>
+
+      <div class="report">
+        ${result.innerHTML}
+      </div>
+
+      <div class="disclaimer">
+        <strong>Medical Disclaimer:</strong>
+        This report is for educational screening purposes only.
+        It is not a medical diagnosis. Consult a qualified
+        healthcare professional for clinical interpretation.
+        <br><br>
+        Copyright © Lab Knowledge
+      </div>
+
+    </body>
+    </html>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write(reportHTML);
+  printWindow.document.close();
+
+  printWindow.onload = function() {
+
+    printWindow.focus();
+
+    setTimeout(function() {
+      printWindow.print();
+    }, 500);
+
+  };
 
 }
 
@@ -4564,6 +4811,9 @@ function calculatePregnancy() {
   $("pregnancyNote").textContent = note;
 
   $("pregnancyResult").style.display = "block";
+  setHealthPrintVisibility("pregnancyResult", true);
+
+
 
   $("pregnancyResult").scrollIntoView({
     behavior:"smooth",
