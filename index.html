@@ -8146,12 +8146,12 @@ body{font-family:Arial,sans-serif;color:#183044;margin:0;line-height:1.55}
 <strong>Patient Name:</strong> ${esc(profile.name || "Not provided")}<br>
 <strong>Age:</strong> ${esc(profile.age == null ? "Not provided" : profile.age + " years")}<br>
 <strong>Gender:</strong> ${esc(profile.gender ? (profile.gender==="male"?"Male":"Female") : "Not provided")}<br>
-
+<strong>Report Date &amp; Time:</strong> ${esc(reportDate)}
 </div>
 ${reportRows}
 <footer class="report-footer">
 <div>This is a computer-generated educational reference. No signature is required.</div>
-<div class="printed-date">Printed Date &amp; Time: ${esc(reportDate)}</div>
+</div class="printed-date">Printed Date &amp; Time: ${esc(reportDate)}</div>
 <div>Copyright © ${new Date().getFullYear()} Lab Knowledge | Sadam H Mangnejo</div>
 <div>Educational reference only. This report is not a medical diagnosis. Please consult a qualified healthcare professional for clinical decisions.</div>
 </footer>
