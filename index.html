@@ -8091,57 +8091,7 @@ console.log("Lab Knowledge Review System Ready.");
     reportWindow.document.open();
     reportWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lab Knowledge - Combined Health Report</title>
 <style>*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#183044;margin:28px;line-height:1.55}header{border-bottom:3px solid #0e7490;padding-bottom:14px;margin-bottom:20px}h1{font-size:24px;color:#075985;margin:0 0 4px}header p{margin:0;color:#64748b;font-size:13px}.profile{background:#eff6ff;border:1px solid #bae6fd;border-radius:10px;padding:13px;margin:18px 0}.profile strong{color:#075985}.report-card{border:1px solid #dbe4ec;border-radius:10px;padding:14px;margin:13px 0;break-inside:avoid}.report-card h2{font-size:16px;color:#075985;margin:0 0 8px}.report-card p{white-space:normal;margin:0;font-size:14px}footer{border-top:1px solid #cbd5e1;margin-top:24px;padding-top:10px;font-size:11px;color:#64748b;text-align:center}@media print{body{margin:15mm}.report-card{break-inside:avoid}button{display:none}}</style></head><body>
-
-  const testUrl =
-    websiteUrl + "?test=" + encodeURIComponent(t.name) + "#home";
-
-  $("printArea").innerHTML = `
-
-    <header style="
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:15px;
-      padding:18px;
-      color:white;
-      background:linear-gradient(135deg,#082f49,#075985,#0891b2);
-      -webkit-print-color-adjust:exact;
-      print-color-adjust:exact;
-    ">
-
-      <div style="display:flex;align-items:center;gap:12px;flex:1;">
-
-        <img src="./lab-knowledge-logo.png"
-          style="width:75px;height:75px;object-fit:contain;"
-          alt="Lab Knowledge Logo">
-
-        <div>
-          <h1 style="margin:0;font-size:25px;">
-            Lab Knowledge
-          </h1>
-
-          <p style="margin:5px 0;">
-            Laboratory Investigations Theory
-          </p>
-
-          <p style="margin:0;font-size:12px;">
-            Learn • Understand • Explore
-          </p>
-        </div>
-
-      </div>
-
-      <div style="text-align:center;min-width:110px;">
-        <div id="printQR"
-          style="background:white;padding:5px;width:110px;margin:auto;">
-        </div>
-
-        <p style="font-size:10px;margin:5px 0;">
-          Scan to Open Test
-        </p>
-      </div>
-
-    </header>
+<heaser><h1> Lab Knowledge <h1><p> Combined Health Assessnent Report </p> </header>
 <div class="profile"><strong>Health Profile:</strong> ${esc(profileText)}<br><strong>Report Date:</strong> ${esc(new Date().toLocaleString())}</div>
 ${reportRows}<footer>Educational reference only. This report is not a medical diagnosis. Please consult a qualified healthcare professional for clinical decisions.<br>Copyright © ${new Date().getFullYear()} Lab Knowledge</footer>
 <script>window.onload=function(){window.focus();window.print();};<\/script></body></html>`);
