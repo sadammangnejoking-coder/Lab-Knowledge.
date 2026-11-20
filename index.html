@@ -8156,6 +8156,11 @@ ${reportRows}
 <div>Educational reference only. This report is not a medical diagnosis. Please consult a qualified healthcare professional for clinical decisions.</div>
 </footer>
 <script>
+window.onload=function(){
+ const logo=document.querySelector(".report-logo");
+ const printNow=function(){window.focus();window.print();};
+ if(logo&&!logo.complete){logo.onload=printNow;logo.onerror=printNow;}else{printNow();}
+};
 
 <\/script></body></html>`);
     reportWindow.document.close();
